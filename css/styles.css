@@ -1,0 +1,47 @@
+@font-face {
+    font-family: checfont1;
+    src: url('../fonts/VAGRoundedStd-Light.otf');
+}
+body{
+    font-family: checfont1;
+}
+
+a.navbar-brand{
+    width: 50%;
+    font-size: 1.4em;
+    color: white !important;
+}
+a.navbar-brand:hover{
+    color: #e8e8e8 !important;
+}
+
+ul.navbar-nav{
+    margin-left: 40%;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+li.nav-item.active{
+    display: flex;
+    align-items: center;
+}
+nav.navbar{
+    background-color: rgb(156, 193, 43);
+}
+span.h5{
+    margin-bottom: 0;
+    color: white;
+}
+a.nav-link{
+    color: white !important;
+}
+a.nav-link:hover{
+    color: #e8e8e8 !important;
+}
+button.navbar-toggler{
+    background-color: white;
+}
+button.navbar-toggler:hover{
+    background-color: #e8e8e8;
+}
