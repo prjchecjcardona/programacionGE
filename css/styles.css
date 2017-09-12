@@ -56,3 +56,24 @@ div.container{
 label.radio-inline{
   margin-right: 1em;
 }
+.list-group-item.active{
+    background-color: rgb(156, 193, 43);
+    border-color: rgb(156, 193, 43);
+}
+div.columna-intervenciones{
+    height: 30em;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+}
+
+div.container{
+    color: rgb(0, 120, 43);
+}
+.btn-success{
+    background-color: rgb(0, 120, 43);
+    border-color: #1e7e34;
+}
+div.list-group{
+    margin-top: 1em;
+}
