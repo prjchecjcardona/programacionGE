@@ -66,3 +66,7 @@ div.container {
 label.radio-inline {
   margin-right: 1em;
 }
+
+#preguntaContacto{
+  display:none;
+}
