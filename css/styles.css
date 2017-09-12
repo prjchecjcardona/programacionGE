@@ -1,59 +1,69 @@
 @font-face {
-    font-family: checfont1;
-    src: url('../fonts/VAGRoundedStd-Light.otf');
-}
-body{
-    font-family: checfont1;
+  font-family: checfont1;
+  src: url('../fonts/VAGRoundedStd-Light.otf');
 }
 
-a.navbar-brand{
-    width: 50%;
-    font-size: 1.4em;
-    color: white !important;
-}
-a.navbar-brand:hover{
-    color: #e8e8e8 !important;
+body {
+  font-family: checfont1;
 }
 
-ul.navbar-nav{
-    margin-left: 40%;
-    width: 60%;
-    display: flex;
-    justify-content: space-between;
+a.navbar-brand {
+  width: 50%;
+  font-size: 1.4em;
+  color: white !important;
 }
 
-li.nav-item.active{
-    display: flex;
-    align-items: center;
+a.navbar-brand:hover {
+  color: #e8e8e8 !important;
 }
-nav.navbar{
-    background-color: rgb(156, 193, 43);
+
+ul.navbar-nav {
+  margin-left: 40%;
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
 }
-span.h5{
-    margin-bottom: 0;
-    color: white;
+
+li.nav-item.active {
+  display: flex;
+  align-items: center;
 }
-a.nav-link{
-    color: white !important;
+
+nav.navbar {
+  background-color: rgb(156, 193, 43);
 }
-a.nav-link:hover{
-    color: #e8e8e8 !important;
+
+span.h5 {
+  margin-bottom: 0;
+  color: white;
 }
-button.navbar-toggler{
-    background-color: white;
+
+a.nav-link {
+  color: white !important;
 }
-button.navbar-toggler:hover{
-    background-color: #e8e8e8;
+
+a.nav-link:hover {
+  color: #e8e8e8 !important;
 }
-img.logo-min{
-    width: 7%;
-    margin-right: 0.4em;
+
+button.navbar-toggler {
+  background-color: white;
 }
-div.container{
+
+button.navbar-toggler:hover {
+  background-color: #e8e8e8;
+}
+
+img.logo-min {
+  width: 7%;
+  margin-right: 0.4em;
+}
+
+div.container {
   margin-top: 2em;
 }
 
-label.radio-inline{
+label.radio-inline {
   margin-right: 1em;
 }
 .list-group-item.active{
@@ -76,4 +86,8 @@ div.container{
 }
 div.list-group{
     margin-top: 1em;
+}
+
+#preguntaContacto{
+  display:none;
 }
