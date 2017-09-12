@@ -45,3 +45,7 @@ button.navbar-toggler{
 button.navbar-toggler:hover{
     background-color: #e8e8e8;
 }
+img.logo-min{
+    width: 7%;
+    margin-right: 0.4em;
+}
