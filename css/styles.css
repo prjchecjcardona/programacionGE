@@ -49,3 +49,10 @@ img.logo-min{
     width: 7%;
     margin-right: 0.4em;
 }
+div.container{
+  margin-top: 2em;
+}
+
+label.radio-inline{
+  margin-right: 1em;
+}
