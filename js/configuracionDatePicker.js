@@ -19,12 +19,11 @@ $.datepicker.regional['es'] = {
  $.datepicker.setDefaults($.datepicker.regional['es']);
 
 //Activacion datepicker (Fecha)
-$(function () {
-$("#fecha").datepicker();
-});
-  $(function() {
-    $("#datepicker").datepicker({
+
+$(function (){
+  $("#datepicker").datepicker({
     dateFormat: "yy-mm-dd",
     changeYear: true,
     changeMonth: true
-    });
+  });
+});
