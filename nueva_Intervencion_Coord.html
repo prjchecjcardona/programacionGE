@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Nueva Intervención</title>
+  <title>Nueva Intervención Coordinadora</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/styles.css">
@@ -43,14 +43,13 @@
         <form class="form-horizontal">
           <fieldset>
             <!-- Form Name -->
-            <legend>Nueva Intervención</legend>
+            <legend>Nueva Intervención Coordinadora</legend>
 
             <!-- Zona -->
             <div class="form-group">
               <label class="col-md-12 control-label" for="zonainput">Zona</label>
               <div class="col-md-12">
-                <input id="zonainput" name="zonainput" type="text" placeholder="Nombre Zona" class="form-control input-md" required="">
-
+                <span>Zona Norte</span>
               </div>
             </div>
 
@@ -139,7 +138,6 @@
               <label class="col-md-12 control-label" for="textinputTelefono">Teléfono</label>
               <div class="col-md-12">
                 <input id="textinputTelefono" name="textinputTelefono" type="text" placeholder="" class="form-control input-md">
-
               </div>
             </div>
 
@@ -149,6 +147,45 @@
               <div class="col-md-12">
                 <input id="textinputDireccion" name="textinputDireccion" type="text" placeholder="" class="form-control input-md">
 
+              </div>
+            </div>
+
+            <!-- Seleccion Tipo de Intervención -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="selectbasicTipoInvervencion">Tipo de Intervención</label>
+              <div class="col-md-12">
+                <select id="selectbasicTipoInvervencion" name="selectbasicTipoInvervencion" class="form-control">
+                    <option value="1">Opción 1</option>
+                    <option value="2">Opción 2</option>
+                  </select>
+              </div>
+            </div>
+
+            <!-- Seleccion Comportamiento -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="selectbasicComportamiento">Comportamiento</label>
+              <div class="col-md-12">
+                <select id="selectbasicComportamiento" name="selectbasicComportamiento" class="form-control">
+                    <option value="1">Opción 1</option>
+                    <option value="2">Opción 2</option>
+                  </select>
+              </div>
+            </div>
+
+            <!-- Indicadores -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="selectbasicComportamiento">Indicadores</label>
+              <div class="col-md-12">
+
+                <div class="checkbox">
+                  <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
+                </div>
+                <div class="checkbox">
+                  <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
+                </div>
+                <div class="checkbox">
+                  <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
+                </div>
               </div>
             </div>
 
