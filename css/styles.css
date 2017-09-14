@@ -91,3 +91,6 @@ div.list-group{
 #preguntaContacto{
   display:none;
 }
+td.fc-event-container{
+  cursor: pointer;
+}

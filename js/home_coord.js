@@ -8,6 +8,13 @@ $(function(){
                 alert('There was an error while fetching events.');
                 console.log(err)
             }
+        },
+        eventClick: function(calEvent, jsEvent, view){
+            $('.modal-title').html(calEvent.title);
+            $('#eventFecha').html(calEvent.start);
+            $('#eventLugar').html(calEvent.lugar);
+            $('#eventDescripcion').html(calEvent.descripcion);
+            $('#eventModal').modal()
         }
     })
 })
