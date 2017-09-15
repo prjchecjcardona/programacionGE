@@ -21,7 +21,7 @@ $.datepicker.regional['es'] = {
 //Activacion datepicker (Fecha)
 
 $(function (){
-  $("#datepicker").datepicker({
+  $(".datepicker").datepicker({
     dateFormat: "yy-mm-dd",
     changeYear: true,
     changeMonth: true
