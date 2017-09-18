@@ -98,8 +98,57 @@ div.list-group{
 td.fc-event-container{
   cursor: pointer;
 }
-label.grisTexto{
+
+.grisTexto{
   color: rgb(139, 141, 142);
+}
+
+.filaTitulos{
+  font-size: 0.9em;
+  text-align: center;
+
+}
+
+.filaRadio{
+  font-size: 0.9em;
+  text-align: center;
+
+}
+
+.centerRadio{
+  display: flex;
+  justify-content: center;
+}
+
+label.radio-inline{
+  margin: 0;
+}
+
+.lineaCentro{
+  border-left: 1px solid rgb(230, 234, 236);
+  padding-left: 6em;
+  margin-left: 10em;
+}
+
+.fecha-ejec-form{
+  width: 100%;
+}
+.lineaCentro .row{
+  margin-bottom: 1em;
+}
+.centrado-vertical{
+  display: flex;
+  align-items: center;
+}
+.centrado-vertical label{
+  margin: 0;
+}
+
+.filaRadio{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 .container-fluid .row.coord-main{
   margin-top: 2em;
