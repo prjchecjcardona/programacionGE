@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Geográfico</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="css/datatables.min.css">
+  <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">
+                <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
+                Gestión Educativa
+            </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    <div class="collapse navbar-collapse" id="menuSaludo">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <span class="h5">Hola, {Juan}</span>
+          <!-- Inserción dinamica del nombre del usuario logueado -->
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" id="nav_home" href="#">
+              <i class="fa fa-home fa-2x"></i>
+          </a>
+          <a class="nav-link" id="nav_banco" href="#">
+              <i class="fa fa-wrench fa-2x"></i>
+          </a>
+          <a class="nav-link" id="nav_out" href="#">
+              <i class="fa fa-sign-out fa-2x"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <form class="form-horizontal">
+          <fieldset>
+
+            <!-- Form Name -->
+            <legend>Administración Geográfica</legend>
+
+            <!-- Acá Empieza el Acordeon con los abributos -->
+            <div id="accordion" role="tablist">
+
+              <!-- Añadir Departamento -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addDepartamento">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapseDepartamento" aria-expanded="true" aria-controls="collapseDepartamento">
+                      <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                      Añadir Departamento
+                    </a>
+                  </h5>
+                </div>
+                <!-- Formulario Departamento -->
+                <div id="collapseDepartamento" class="collapse" role="tabpanel" aria-labelledby="addDepartamento" data-parent="#accordion">
+                  <div class="card-body">
+                    <label class="col-md-12 control-label" for="textinputDepartamento">Nombre del Departamento</label>
+                    <div class="col-md-12">
+                      <input id="textinputDepartamento" name="textinputDepartamento" type="text" placeholder="Ingrese el Nombre del Departamento" class="form-control input-md">
+                    </div>
+                  </div>
+                  <!-- Boton Departamento -->
+                  <div class="botonContenedor">
+                    <button id="buttonDepartamento" name="btnDepartamento" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Añadir Zona -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addZona">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapseZona" aria-expanded="true" aria-controls="collapseZona">
+                      <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                      Añadir Zona
+                    </a>
+                  </h5>
+                </div>
+                <!-- Formulario Zona -->
+                <div id="collapseZona" class="collapse" role="tabpanel" aria-labelledby="addZona" data-parent="#accordion">
+                  <div class="card-body">
+                    <label class="col-md-12 control-label" for="textinputZona">Nombre de la Zona</label>
+                    <div class="col-md-12">
+                      <input id="textinputZona" name="textinputZona" type="text" placeholder="Ingrese el Nombre la Zona" class="form-control input-md" required>
+                    </div>
+                  </div>
+                  <!-- Boton Zona -->
+                  <div class="botonContenedor">
+                    <button id="buttonZona" name="btnZona" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Añadir Municipio -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addMunicipio">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapseMunicipio" aria-expanded="true" aria-controls="collapseMunicipio">
+                      <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                      Añadir Municipio
+                    </a>
+                  </h5>
+                </div>
+
+                <!-- Formulario Municipio -->
+                <div id="collapseMunicipio" class="collapse" role="tabpanel" aria-labelledby="addMunicipio" data-parent="#accordion">
+                  <div class="card-body">
+                    <!-- Seleccion Departamento -->
+                    <label class="col-md-12 control-label" for="textinputMunicipio">Departamento</label>
+                    <div class="col-md-12">
+                      <select id="selectbasicDepartamento" name="selectbasicDepartamento" class="form-control">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                      </select>
+                    </div>
+                    <!-- Seleccion Zona -->
+                    <label class="col-md-12 control-label espaciado" for="textinputMunicipio">Zona</label>
+                    <div class="col-md-12">
+                      <select id="selectbasicZona" name="selectbasicZona" class="form-control">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                      </select>
+                    </div>
+                    <!-- Campo Nombre Municipio -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputMunicipio">Nombre del Municipio</label>
+                      <input id="textinputMunicipio" name="textinputMunicipio" type="text" placeholder="Ingrese el Nombre del Municipio" class="form-control input-md">
+                    </div>
+                    <!-- Campo Latitud Municipio -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputMunicipioLan">Latitud</label>
+                      <input id="textinputMunicipioLan" name="textinputMunicipioLan" type="text" placeholder="Ingrese la Latitud del Municipio" class="form-control input-md">
+                    </div>
+                    <!-- Campo Longitud Municipio -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputMunicipioLon">Longitud</label>
+                      <input id="textinputMunicipioLon" name="textinputMunicipioLon" type="text" placeholder="Ingrese la Longitud del Municipio" class="form-control input-md">
+                    </div>
+
+                    <!-- Boton Municipio -->
+                    <div class="botonContenedor espaciado">
+                      <button id="buttonMunicipio" name="btnMunicipio" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Añadir Comuna -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addComuna">
+                  <h5 class="mb-0">
+                  <a data-toggle="collapse" href="#collapseComuna" aria-expanded="true" aria-controls="collapseComuna">
+                    <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                    Añadir Comuna
+                  </a>
+                </h5>
+                </div>
+
+                <!-- Formulario Comuna -->
+                <div id="collapseComuna" class="collapse" role="tabpanel" aria-labelledby="addComuna" data-parent="#accordion">
+                  <div class="card-body">
+                    <!-- Seleccion Municipio -->
+                    <label class="col-md-12 control-label" for="textinputMunicipio">Municipio</label>
+                    <div class="col-md-12">
+                      <select id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
+                      <option value="1">Opción 1</option>
+                      <option value="2">Opción 2</option>
+                    </select>
+                    </div>
+
+                    <!-- Campo Comuna -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputComuna">Nombre de la Comuna</label>
+                      <input id="textinputComuna" name="textinputComuna" type="text" placeholder="Ingrese el Nombre de la Comuna" class="form-control input-md">
+                    </div>
+
+                    <!-- Boton Comuna -->
+                    <div class="botonContenedor espaciado">
+                      <button id="buttonComuna" name="btnComuna" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Añadir Barrio -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addBarrio">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapseBarrio" aria-expanded="true" aria-controls="collapseBarrio">
+                      <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                      Añadir Barrio
+                    </a>
+                  </h5>
+                </div>
+
+                <!-- Formulario Barrio -->
+                <div id="collapseBarrio" class="collapse" role="tabpanel" aria-labelledby="addBarrio" data-parent="#accordion">
+                  <div class="card-body">
+                    <!-- Seleccion Comuna -->
+                    <label class="col-md-12 control-label" for="textinputComuna">Comuna</label>
+                    <div class="col-md-12">
+                      <select id="selectbasicComuna" name="selectbasicComuna" class="form-control">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                      </select>
+                    </div>
+
+                    <!-- Campo Barrio -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputBarrio">Nombre del Barrio</label>
+                      <input id="textinputBarrio" name="textinputBarrio" type="text" placeholder="Ingrese el Nombre del Barrio" class="form-control input-md">
+                    </div>
+
+                    <!-- Campo Latitud Barrio -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputBarrioLan">Latitud</label>
+                      <input id="textinputBarrioLan" name="textinputBarrioLan" type="text" placeholder="Ingrese la Latitud del Barrio" class="form-control input-md">
+                    </div>
+                    <!-- Campo Longitud Barrio -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputBarrioLon">Longitud</label>
+                      <input id="textinputBarrioLon" name="textinputBarrioLon" type="text" placeholder="Ingrese la Longitud del Barrio" class="form-control input-md">
+                    </div>
+
+                    <!-- Boton Barrio -->
+                    <div class="botonContenedor espaciado">
+                      <button id="buttonBarrio" name="btnBarrio" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Añadir Vereda -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addVereda">
+                  <h5 class="mb-0">
+                      <a data-toggle="collapse" href="#collapseVereda" aria-expanded="true" aria-controls="collapseVereda">
+                        <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                        Añadir Vereda
+                      </a>
+                    </h5>
+                </div>
+
+                <!-- Formulario Vereda -->
+                <div id="collapseVereda" class="collapse" role="tabpanel" aria-labelledby="addVereda" data-parent="#accordion">
+                  <div class="card-body">
+                    <!-- Seleccion Municipio -->
+                    <label class="col-md-12 control-label" for="textinputMunicipio">Municipio</label>
+                    <div class="col-md-12">
+                      <select id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
+                          <option value="1">Opción 1</option>
+                          <option value="2">Opción 2</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo Vereda -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputVereda">Nombre de la Vereda</label>
+                      <input id="textinputVereda" name="textinputVereda" type="text" placeholder="Ingrese el Nombre de la Vereda" class="form-control input-md">
+                    </div>
+
+                    <!-- Campo Latitud Vereda -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputVeredaLan">Latitud</label>
+                      <input id="textinputVeredaLan" name="textinputVeredaLan" type="text" placeholder="Ingrese la Latitud del Vereda" class="form-control input-md">
+                    </div>
+                    <!-- Campo Longitud Vereda -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputVeredaLon">Longitud</label>
+                      <input id="textinputVeredaLon" name="textinputVeredaLon" type="text" placeholder="Ingrese la Longitud del Vereda" class="form-control input-md">
+                    </div>
+
+                    <!-- Boton Vereda -->
+                    <div class="botonContenedor espaciado">
+                      <button id="buttonVereda" name="btnVereda" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Añadir Tipo deEntidad -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addTipoEntidad">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapseTipoEntidad" aria-expanded="true" aria-controls="collapseTipoEntidad">
+                      <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                      Añadir Tipo de Entidad
+                    </a>
+                  </h5>
+                </div>
+                <!-- Formulario Tipo de Entidad -->
+                <div id="collapseTipoEntidad" class="collapse" role="tabpanel" aria-labelledby="addTipoEntidad" data-parent="#accordion">
+                  <div class="card-body">
+                    <label class="col-md-12 control-label" for="textinputTipoEntidad">Nombre del Tipo de Entidad</label>
+                    <div class="col-md-12">
+                      <input id="textinputTipoEntidad" name="textinputTipoEntidad" type="text" placeholder="Ingrese el Nombre del Tipo de Entidad" class="form-control input-md" required>
+                    </div>
+                  </div>
+                  <!-- Boton Tipo de Entidad -->
+                  <div class="botonContenedor">
+                    <button id="buttonTipoEntidad" name="btnTipoEntidad" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Añadir Entidad -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addEntidad">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapseEntidad" aria-expanded="true" aria-controls="collapseEntidad">
+                      <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                      Añadir Entidad
+                    </a>
+                  </h5>
+                </div>
+
+                <!-- Formulario Entidad -->
+                <div id="collapseEntidad" class="collapse" role="tabpanel" aria-labelledby="addEntidad" data-parent="#accordion">
+                  <div class="card-body">
+
+                    <!-- Campo Nombre Entidad -->
+                    <div class="col-md-12">
+                      <label class="col-md-12control-label" for="textinputEntidad">Nombre de la Entidad</label>
+                      <input id="textinputEntidad" name="textinputEntidad" type="text" placeholder="Ingrese el Nombre de la Entidad" class="form-control input-md">
+                    </div>
+                  <!-- Campo Seleccion Barrio - Entidad -->
+                    <label class="col-md-12 control-label espaciado" for="textinputBarrio">Barrio</label>
+                    <div class="col-md-12">
+                      <select id="selectbasicBarrio" name="selectbasicBarrio" class="form-control">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                      </select>
+                    </div>
+                    <!-- Campo Seleccion Vereda - Entidad -->
+                    <label class="col-md-12 control-label espaciado" for="textinputVereda">Vereda</label>
+                    <div class="col-md-12">
+                      <select id="selectbasicVereda" name="selectbasicVereda" class="form-control">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                      </select>
+                    </div>
+                    <!-- Campo Direccion Entidad -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputDireccionEntidad">Dirección</label>
+                      <input id="textinputDireccionEntidad" name="textinputDireccionEntidad" type="text" placeholder="Ingrese la Dirección de la Entidad" class="form-control input-md">
+                    </div>
+                    <!-- Campo Telefono Entidad -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputTelefonoEntidad">Teléfono</label>
+                      <input id="textinputTelefonoEntidad" name="textinputTelefonoEntidad" type="text" placeholder="Ingrese el Teléfono de la Entidad" class="form-control input-md">
+                    </div>
+                    <!-- Seleccion Tipo de Entidad -->
+                    <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">Tipo de Entidad</label>
+                    <div class="col-md-12">
+                      <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                      </select>
+                    </div>
+                    <!-- Campo Nodo Entidad -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputNodoEntidad">Nodo</label>
+                      <input id="textinputNodoEntidad" name="textinputNodoEntidad" type="text" placeholder="Ingrese el Nodo de la Entidad" class="form-control input-md">
+                    </div>
+
+                    <!-- Boton Entidad -->
+                    <div class="botonContenedor espaciado">
+                      <button id="buttonEntidad" name="btnEntidad" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </fieldset>
+        </form>
+
+      </div>
+
+      <div class="col-md-8">
+        <!-- Tabla de eventos planeados -->
+        <legend>{Visualización de datos guardados}</legend>
+        <table id="administracion_geografica" class="display">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Etapa</th>
+              <th>Estrategia</th>
+              <th>Táctico</th>
+              <th>Tema</th>
+              <th>Ejecución</th>
+              <th>Evaluación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{fecha1}</td>
+              <td>{Etapa1}</td>
+              <td>{Estrategia1}</td>
+              <td>{Táctico1}</td>
+              <td>{Tema1}</td>
+              <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-book"></span></a></td>
+              <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-pencil-square-o"></span></a></td>
+            </tr>
+            <tr>
+              <td>{fecha2}</td>
+              <td>{Etapa2}</td>
+              <td>{Estrategia2}</td>
+              <td>{Táctico2}</td>
+              <td>{Tema2}</td>
+              <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-book"></span></a></td>
+              <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-pencil-square-o"></span></a></td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/configuracionDatePicker.js"></script>
+  <script src="js/dataTable/datatables.min.js"></script>
+  <script src="js/dataTable/jquery.dataTables.min.js"></script>
+  <script src="js/dataTable/dataTables.bootstrap4.min.js"></script>
+  <script src="js/administracion_Geografica.js"></script>
+
+  <script src="js/planeacion.js"></script>
+
+</body>
+
+</html>

@@ -13,38 +13,41 @@
 
 <body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#">
-            <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
-            Gestión Educativa
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="menuSaludo">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <span class="h5">Hola, {Juan}</span>
-                    <!-- Inserción dinamica del nombre del usuario logueado -->
-                </li>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <a class="navbar-brand" href="#">
+                <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
+                Gestión Educativa
+            </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    <div class="collapse navbar-collapse" id="menuSaludo">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <span class="h5">Hola, {Juan}</span>
+          <!-- Inserción dinamica del nombre del usuario logueado -->
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" id="nav_home" href="#">
-                        <i class="fa fa-home fa-2x"></i>
-                    </a>
-                    <a class="nav-link" id="nav_out" href="#">
-                        <i class="fa fa-sign-out fa-2x"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <li class="nav-item">
+          <a class="nav-link" id="nav_home" href="#">
+              <i class="fa fa-home fa-2x"></i>
+          </a>
+          <a class="nav-link" id="nav_banco" href="#">
+              <i class="fa fa-wrench fa-2x"></i>
+          </a>
+          <a class="nav-link" id="nav_out" href="#">
+              <i class="fa fa-sign-out fa-2x"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
+  <!-- Inicio Formulario Nueva Intervencion Gestora -->
   <div class="container">
     <div class="row">
-      <div class="col-md-4 col-md-offset-2">
+      <div class="col-md-4">
         <form class="form-horizontal">
           <fieldset>
             <!-- Form Name -->
@@ -206,6 +209,10 @@
           </fieldset>
         </form>
 
+      </div>
+
+      <div class="col-md-8 estatica">
+        <img src="img/MunequitaNuevaIntervencion.png">
       </div>
     </div>
   </div>
