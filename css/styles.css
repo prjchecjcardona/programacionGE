@@ -13,7 +13,6 @@ a.navbar-brand {
   color: white !important;
 }
 
-
 a.navbar-brand:hover {
   color: #e8e8e8 !important;
 }
@@ -25,12 +24,13 @@ ul.navbar-nav {
   justify-content: space-between;
 }
 
-li.nav-item.active, li.nav-item  {
+li.nav-item.active, li.nav-item {
   display: flex;
   align-items: center;
 }
-#nav_home{
-  margin-right: 1em;
+
+.nav-link {
+  margin-left: 1em;
 }
 
 nav.navbar {
@@ -70,114 +70,125 @@ div.container {
 label.radio-inline {
   margin-right: 1em;
 }
-.list-group-item.active{
-    background-color: rgb(156, 193, 43);
-    border-color: rgb(156, 193, 43);
-}
-div.columna-intervenciones{
-    height: 30em;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
+
+.list-group-item.active {
+  background-color: rgb(156, 193, 43);
+  border-color: rgb(156, 193, 43);
 }
 
-div.container, div.container-fluid{
-    color: rgb(0, 120, 43);
-}
-.btn-success{
-    background-color: rgb(0, 120, 43);
-    border-color: #1e7e34;
-}
-div.list-group{
-    margin-top: 1em;
+div.columna-intervenciones {
+  height: 30em;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
 }
 
-#preguntaContacto{
-  display:none;
+div.container, div.container-fluid {
+  color: rgb(0, 120, 43);
 }
-td.fc-event-container{
+
+.btn-success {
+  background-color: rgb(0, 120, 43);
+  border-color: #1e7e34;
+}
+
+div.list-group {
+  margin-top: 1em;
+}
+
+#preguntaContacto {
+  display: none;
+}
+
+td.fc-event-container {
   cursor: pointer;
 }
 
-.grisTexto{
+.grisTexto {
   color: rgb(139, 141, 142);
 }
 
-.filaTitulos{
+.filaTitulos {
   font-size: 0.9em;
   text-align: center;
-
 }
 
-.filaRadio{
+.filaRadio {
   font-size: 0.9em;
   text-align: center;
-
 }
 
-.centerRadio{
+.centerRadio {
   display: flex;
   justify-content: center;
 }
 
-label.radio-inline{
+label.radio-inline {
   margin: 0;
 }
 
-.lineaCentro{
+.lineaCentro {
   border-left: 1px solid rgb(230, 234, 236);
   padding-left: 6em;
   margin-left: 10em;
 }
 
-.fecha-ejec-form{
+.fecha-ejec-form {
   width: 100%;
 }
-.lineaCentro .row{
+
+.lineaCentro .row {
   margin-bottom: 1em;
 }
-.centrado-vertical{
+
+.centrado-vertical {
   display: flex;
   align-items: center;
 }
-.centrado-vertical label{
+
+.centrado-vertical label {
   margin: 0;
 }
 
-.filaRadio{
+.filaRadio {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
-.container-fluid .row.coord-main{
+
+.container-fluid .row.coord-main {
   margin-top: 2em;
 }
-a.card-link{
+
+a.card-link {
   color: rgb(0, 120, 43);
 }
-a.card-link:hover{
+
+a.card-link:hover {
   color: rgb(2, 145, 52);
 }
-div.card-actions{
+
+div.card-actions {
   margin-top: 1em;
 }
-.card-body{
+
+.card-body {
   padding-bottom: 0.5em;
 }
-.card{
+
+.card {
   margin-top: 0.5em;
   background-color: #F5F5F5;
 }
 
-#map{
+#map {
   width: 100%;
   height: 25em;
   border: 1px solid rgb(139, 141, 142);
   border-radius: 10px;
 }
 
-.boton-dashboard{
+.boton-dashboard {
   width: 7em;
   height: 7em;
   padding: 1em;
@@ -191,32 +202,84 @@ div.card-actions{
   cursor: pointer;
 }
 
-.botones-container{
+.botones-container {
   display: flex;
   justify-content: space-between;
-  align-items:flex-end;
+  align-items: flex-end;
   width: 100%;
   padding: 1em;
   padding-right: 0;
 }
-.boton-dashboard.btn-verde{
+
+.boton-dashboard.btn-verde {
   background-color: rgb(156, 193, 43);
 }
-.boton-dashboard.btn-gris{
+
+.boton-dashboard.btn-gris {
   background-color: rgb(139, 141, 142);
 }
-.boton-dashboard.btn-verde:hover{
+
+.boton-dashboard.btn-verde:hover {
   background-color: rgb(189, 221, 83);
 }
-.boton-dashboard.btn-gris:hover{
+
+.boton-dashboard.btn-gris:hover {
   background-color: rgb(190, 190, 190);
 }
 
-.col-interv-coord{
+.col-interv-coord {
   height: 34em;
   overflow: auto;
 }
 
-.sub-cont-botones{
+.sub-cont-botones {
   display: flex;
+}
+
+.botonContenedor{
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+.espaciado{
+  margin-top: 0.7em;
+}
+
+.estatica{
+position:fixed !important;
+right:-200px;
+top:125px;
+z-index:10 !important;
+}
+
+.estatica2{
+position:fixed !important;
+right:-100px;
+top:50px;
+z-index:10 !important;
+}
+
+.centrado-welcome{
+  right:-200px;
+}
+
+.bigTittle h1{
+  font-size: 3em;
+}
+
+nav.fixed-top{
+  position: sticky;
+}
+
+.imgwelcome{
+  position: fixed;
+  right: 400px;
+  bottom: 200px;
+
+}
+
+.posicioningreso{
+  position: fixed;
+  right:  300px;
+  bottom: 260px;
+
 }
