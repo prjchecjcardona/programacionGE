@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Planeación</title>
+  <title>Planeación Coordinadora</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/styles.css">
@@ -17,35 +17,38 @@
 
 <body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#">
-            <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
-            Gestión Educativa
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="menuSaludo">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <span class="h5">Hola, {Juan}</span>
-                    <!-- Inserción dinamica del nombre del usuario logueado -->
-                </li>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">
+                <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
+                Gestión Educativa
+            </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    <div class="collapse navbar-collapse" id="menuSaludo">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <span class="h5">Hola, {Juan}</span>
+          <!-- Inserción dinamica del nombre del usuario logueado -->
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" id="nav_home" href="#">
-                        <i class="fa fa-home fa-2x"></i>
-                    </a>
-                    <a class="nav-link" id="nav_out" href="#">
-                        <i class="fa fa-sign-out fa-2x"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <li class="nav-item">
+          <a class="nav-link" id="nav_home" href="#">
+              <i class="fa fa-home fa-2x"></i>
+          </a>
+          <a class="nav-link" id="nav_banco" href="#">
+              <i class="fa fa-wrench fa-2x"></i>
+          </a>
+          <a class="nav-link" id="nav_out" href="#">
+              <i class="fa fa-sign-out fa-2x"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
+  <!-- Inicio Nueva Planeacion -->
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-md-offset-2">
@@ -58,12 +61,12 @@
             <!-- Button (Triple) -->
             <div class="form-group">
 
-                <label class="col-md-12 control-label" for="textinputEtapa">Etapa</label>
-                  <div class="btn-group">
-                    <button id="button1id" name="button1id" class="btn btn-success">Reconocimiento</button>
-                    <button id="button2id" name="button2id" class="btn btn-success">Gestión Redes</button>
-                    <button id="button1id" name="button1id" class="btn btn-success">Gestión Educativa</button>
-                  </div>
+              <label class="col-md-12 control-label" for="textinputEtapa">Etapa</label>
+              <div class="btn-group">
+                <button id="button1id" name="button1id" class="btn btn-success">Reconocimiento</button>
+                <button id="button2id" name="button2id" class="btn btn-success">Gestión Redes</button>
+                <button id="button1id" name="button1id" class="btn btn-success">Gestión Educativa</button>
+              </div>
             </div>
 
             <!-- Fecha de Encuentro -->
@@ -88,7 +91,8 @@
               <label class="col-md-12 control-label" for="selectbasicJornada">Jornada</label>
               <div class="col-md-12">
                 <select id="selectbasicJornada" name="selectbasicJornada" class="form-control">
-                      
+                      <option value="1">Opción 1</option>
+                      <option value="2">Opción 2</option>
                     </select>
               </div>
             </div>
@@ -187,21 +191,23 @@
               <div class="form-group">
                 <label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>
                 <div class="col-md-12">
-                  <select onChange="recargarTactico(this.value)" id="selectbasicEstrategia" name="selectbasicEstrategia" class="form-control">
-                        
+                  <select id="selectbasicEstrategia" name="selectbasicEstrategia" class="form-control">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
                   </select>
                 </div>
               </div>
 
-            <!-- Táctico Planeación -->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
-              <div class="col-md-12">
-                <select id="selectbasicTactico" name="selectbasicTactico" class="form-control">
-                     
+              <!-- Táctico Planeación -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
+                <div class="col-md-12">
+                  <select id="selectbasicTactico" name="selectbasicTactico" class="form-control">
+                      <option value="1">Opción 1</option>
+                      <option value="2">Opción 2</option>
                 </select>
+                </div>
               </div>
-            </div>
 
               <!-- Tema Planeación -->
               <div class="form-group">
@@ -263,7 +269,7 @@
   <script src="js/includes/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
   <script src="js/includes/bootstrap.min.js"></script>
-  <script src="js/planeacion.js"></script>
+  <script src="js/planeacion_Coordinadora.js"></script>
   <script src="js/includes/configuracionDatePicker.js"></script>
   <!-- <script type="text/javascript" src="js/funciones.js"></script>  -->
 </body>
