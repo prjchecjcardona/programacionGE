@@ -61,3 +61,8 @@ function interevensionesPorZona()
 						
 				},"json");
 }
+
+function mostrarDetalleIntervencion(idIntervencion)
+{
+	window.location.href = "detalle_Intervencion_Coordinadora.html?id="+idIntervencion;
+}

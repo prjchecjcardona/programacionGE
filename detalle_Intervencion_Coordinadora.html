@@ -32,7 +32,7 @@
     <div class="collapse navbar-collapse" id="menuSaludo">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <span class="h5">Hola, {Juan}</span>
+          <span class="h5">Hola, &nbsp;</span><span class="h5" id="Nombre">
           <!-- Inserción dinamica del nombre del usuario logueado -->
         </li>
 
@@ -55,13 +55,13 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4">
-        <legend>Detalle de Intervención Coordinadora</legend>
+        <legend>Detalle de Intervención</legend>
         <form>
 
           <!-- Label Municipio -->
           <div class="row">
             <div class="col-md-5">
-              <label class="mr-sm-2">{Municipio}</label>
+              <label class="mr-sm-2" id="lblMunicipio">{Municipio}</label>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="fechaInd">Fecha Indicada</span>
@@ -71,7 +71,7 @@
           <!-- Label Entidad -->
           <div class="row">
             <div class="col-md-5">
-              <label class="mr-sm-2">{Entidad}</label>
+              <label class="mr-sm-2" id="lblEntidad">{Entidad}</label>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="lugarInd">Lugar Indicado</span>
@@ -81,7 +81,7 @@
           <!-- Label Comportamiento -->
           <div class="row">
             <div class="col-md-5">
-              <label class="mr-sm-2">{Comportamiento}</label>
+              <label class="mr-sm-2" id="lblCoportamiento">{Comportamiento}</label>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="municipioInd">Municipio Indicado</span>
@@ -91,7 +91,7 @@
           <!-- Label Competencia -->
           <div class="row">
             <div class="col-md-5">
-              <label class="mr-sm-2">{Competencia}</label>
+              <label class="mr-sm-2" id="lblCompetencia">{Competencia}</label>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="comportamientoInd">Comportamiento Indicado</span>
@@ -101,7 +101,7 @@
           <!-- Label Indicador CHEC -->
           <div class="row">
             <div class="col-md-5">
-              <li><label class="mr-sm-2">{Indicador CHEC}</label></li>
+              <li><label class="mr-sm-2" id="lblIndicadorChec1">{Indicador CHEC}</label></li>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="competenciaInd">Competencia Indicada</span>
@@ -111,7 +111,7 @@
           <!-- Label Indicador CHEC -->
           <div class="row">
             <div class="col-md-5">
-              <li><label class="mr-sm-2">{Indicador CHEC}</label></li>
+              <li><label class="mr-sm-2" id="lblIndicadorChec2">{Indicador CHEC}</label></li>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="estrategiaInd">Estrategia Indicad</span>
@@ -121,7 +121,7 @@
           <!-- Label Indicador CHEC -->
           <div class="row">
             <div class="col-md-5">
-              <li><label class="mr-sm-2">{Indicador CHEC}</label></li>
+              <li><label class="mr-sm-2" id="lblIndicadorChec2">{Indicador CHEC}</label></li>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="tacticoInd">Táctico Indicad</span>
@@ -131,7 +131,7 @@
           <!-- Label Tipo de Intervención -->
           <div class="row">
             <div class="col-md-5">
-              <label class="mr-sm-2">{Tipo Intervención}</label>
+              <label class="mr-sm-2" id="lblTipoIntervencion">{Tipo Intervención}</label>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="tacticoInd">Táctico Indicad</span>
@@ -146,43 +146,44 @@
         <!-- Tabla de eventos planeados -->
         <legend>Eventos Planeados</legend>
         <table id="coordinadora_tabla" class="display">
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Etapa</th>
-              <th>Estrategia</th>
-              <th>Táctico</th>
-              <th>Tema</th>
-              <th>Ejecución</th>
-              <th>Evaluación</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{fecha1}</td>
-              <td>{Etapa1}</td>
-              <td>{Estrategia1}</td>
-              <td>{Táctico1}</td>
-              <td>{Tema1}</td>
-              <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-book"></span></a></td>
-              <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-pencil-square-o"></span></a></td>
-            </tr>
-            <tr>
-              <td>{fecha2}</td>
-              <td>{Etapa2}</td>
-              <td>{Estrategia2}</td>
-              <td>{Táctico2}</td>
-              <td>{Tema2}</td>
-              <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-book"></span></a></td>
-              <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-pencil-square-o"></span></a></td>
-            </tr>
-          </tbody>
+          <!-- <thead> -->
+            <!-- <tr> -->
+              <!-- <th>Fecha</th> -->
+              <!-- <th>Etapa</th> -->
+              <!-- <th>Estrategia</th> -->
+              <!-- <th>Táctico</th> -->
+              <!-- <th>Tema</th> -->
+              <!-- <th>Ejecución</th> -->
+              <!-- <th>Evaluación</th> -->
+            <!-- </tr> -->
+          <!-- </thead> -->
+          <!-- <tbody> -->
+            <!-- <tr> -->
+              <!-- <td>{fecha1}</td> -->
+              <!-- <td>{Etapa1}</td> -->
+              <!-- <td>{Estrategia1}</td> -->
+              <!-- <td>{Táctico1}</td> -->
+              <!-- <td>{Tema1}</td> -->
+              <!-- <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-book"></span></a></td> -->
+              <!-- <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-pencil-square-o"></span></a></td> -->
+            <!-- </tr> -->
+            <!-- <tr> -->
+              <!-- <td>{fecha2}</td> -->
+              <!-- <td>{Etapa2}</td> -->
+              <!-- <td>{Estrategia2}</td> -->
+              <!-- <td>{Táctico2}</td> -->
+              <!-- <td>{Tema2}</td> -->
+              <!-- <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-book"></span></a></td> -->
+              <!-- <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-pencil-square-o"></span></a></td> -->
+            <!-- </tr> -->
+          <!-- </tbody> -->
         </table>
 
         <!-- Boton añadir -->
         <p></p>
         <div>
-          <a href="#" class="btn btn-sm btn-success"><span class="fa fa-plus"></span> Añadir</a>
+          <!-- <a href="#" class="btn btn-sm btn-success"><span class="fa fa-plus"></span> Añadir</a> -->
+          <button id="btnNuevaPlaneacion" class="btn btn-sm btn-success" ><span class="fa fa-plus"></span> Añadir</button>
         </div>
 
       </div>
@@ -195,13 +196,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
   <script src="js/includes/bootstrap.min.js"></script>
   <script src="js/includes/configuracionDatePicker.js"></script>
-  <script src="js/fileInput/fileinput.js"></script>
-  <script src="js/fileInput/sortable.min.js"></script>
-  <script src="js/fileInput/theme.min.js"></script>
-  <script src="js/fileInput/locales/es.js"></script>
-  <script src="js/dataTable/datatables.min.js"></script>
-  <script src="js/dataTable/jquery.dataTables.min.js"></script>
-  <script src="js/dataTable/dataTables.bootstrap4.min.js"></script>
+  <script src="js/includes/fileInput/fileinput.js"></script>
+  <script src="js/includes/fileInput/sortable.min.js"></script>
+  <script src="js/includes/fileInput/theme.min.js"></script>
+  <script src="js/includes/fileInput/locales/es.js"></script>
+  <script src="js/includes/dataTable/datatables.min.js"></script>
+  <script src="js/includes/dataTable/jquery.dataTables.min.js"></script>
+  <script src="js/includes/dataTable/dataTables.bootstrap4.min.js"></script>
   <script src="js/detalle_Intervencion_Coordinadora.js"></script>
 </body>
 
