@@ -1,15 +1,15 @@
 <?php
 
 $tipoformulario = $_POST["TipoFormulario"];
-if (isset($_POST['button1id']) == "Cancelar")
+if (isset($_POST['accion']) and $_POST['accion'] == 'guardarIntervencion')
 {
+	$data = array('error'=>0, 'mensaje'=>'');
+
+	//codigo para guardar
+
     header("Location: ../nueva_Intervencion_Coordinadora.html");
-}
-if($_POST["button2id"] == "Enviar")
-{
-	switch($tipoformulario)
-	{
-		case "IntervencionCoordinadora":			
+
+	 "IntervencionCoordinadora":			
 			$Id_Zona = $_POST["selectbasicZona"];
 			$Id_Municipio = $_POST["selectbasicMunicipio"];
 			$Id_Territorio = $_POST["radiosMunicipio"];
@@ -25,6 +25,7 @@ if($_POST["button2id"] == "Enviar")
 			$Id_Comportamiento= $_POST["selectbasicComportamiento"];
 			$Id_TipoIntervencion = $_POST["selectbasicTipoInvervencion"];
 			$Cantidad_Indicador = $_POST["cant_indicador"];
+			$id_entidad = $_POST["id_Entidades"];
 			for($i=1;$i<=$Cantidad_Indicador;$i++)
 			{
 				if(isset($_POST["Indicador".$i]))
@@ -34,11 +35,15 @@ if($_POST["button2id"] == "Enviar")
 				}
 				
 			}
-			?>
-			<script>alert("Datos alamcenados");</script>
-			<?php
-		break;
-		case "Asistencia":
+			if($id_entidad==0)//no encontró una entidad en la base de datos, se recogen los datos de direccion y telefono
+			{
+				$telefono = $_POST["textinputTelefono"];
+				$direccion = $_POST["textinputDireccion"];
+			}
+			
+			
+		
+		/*case "Asistencia":
 			$Id_TipoDocumento = $_POST["selectbasicTipoDocumento"];
 			$Numero_Documento = $_POST["textinputDocumento"];
 			$Nombres = $_POST["textinputNombres"];
@@ -56,8 +61,9 @@ if($_POST["button2id"] == "Enviar")
 			?>
 			<script>alert("Datos alamcenados");</script>
 			<?php
-		break;
-	}
+		break;*/
+	echo json_encode($data);
+
 	
 }
 ?>

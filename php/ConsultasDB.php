@@ -1,5 +1,5 @@
 <?php
- include('conexion.php');
+ include('conexion.php'); 
 $TipoConsulta=$_GET["consulta"];
 //if($TipoConsulta=='1') 
 switch ($TipoConsulta) {
@@ -30,8 +30,7 @@ switch ($TipoConsulta) {
 		  // Parse returned data, and displays them
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 		       echo '<option value="'.$row['Id_Municipio'].'">'.$row['Municipio'].'</option>';
-		  }
-		  $conn = null;        // Disconnect
+		  }		  
 		}
 		break;
 	case '3':
@@ -53,8 +52,7 @@ switch ($TipoConsulta) {
 		  // Parse returned data, and displays them
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 		       echo '<option value="'.$row['Id_Comuna'].'">'.$row['Comuna'].'</option>';
-		  }
-		  $conn = null;        // Disconnect
+		  }		  
 		}
 	 	break;
 	 case '4':
@@ -67,8 +65,7 @@ switch ($TipoConsulta) {
 		  // Parse returned data, and displays them
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 		       echo '<option value="'.$row['Id_Veredas'].'">'.$row['Vereda'].'</option>';
-		  }
-		  $conn = null;        // Disconnect
+		  }		  
 		}
 		break;
 	case '5':
@@ -81,8 +78,7 @@ switch ($TipoConsulta) {
 		  // Parse returned data, and displays them
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 		       echo '<option value="'.$row['Id_Barrio'].'">'.$row['Barrio'].'</option>';
-		  }
-		  $conn = null;        // Disconnect
+		  }		  
 		}
 		break;
 	case '6':
@@ -135,7 +131,7 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 {
     //echo $str['NombreEntidad'];    
    //$array = array();
-   echo '<div class="suggest-element"><a data="'.$str['NombreEntidad'].'" id="service'.$str['Id_Entidad'].'">'.$str['NombreEntidad'].'</a></div>';
+   echo '<div class="suggest-element"><a data="'.$str['NombreEntidad'].'" id="'.$str['Id_Entidad'].'">'.$str['NombreEntidad'].'</a></div>';
         
         //$json[] = $str['NombreEntidad'];// $str['NombreEntidad'];
 }
@@ -164,7 +160,7 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 		       echo '<option value="'.$row['Id_TipoEntidad'].'">'.$row['TipoEntidad'].'</option>';
 		  }
 
-		  $conn = null;        // Disconnect
+		  
 		}
 	break;
 	case '8':
@@ -178,8 +174,7 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 		       echo '<option value="'.$row['id_Tipo_intervencion'].'">'.$row['Tipo_intervencion'].'</option>';
 		  }
-
-		  $conn = null;        // Disconnect
+		  
 		}
 	break;
 	case '9':
@@ -193,8 +188,7 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 		       echo '<option value="'.$row['Id_Comportamientos'].'">'.$row['Comportamientos'].'</option>';
 		  }
-
-		  $conn = null;        // Disconnect
+		  
 		}
 	break;
 	case '10':
@@ -210,11 +204,12 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 				$cont++;
 				 echo '<div class="checkbox">
-                  <label class="grisTexto"><input type="checkbox" name="Indicador'.$cont.'" value="'.$row['id_Indicadores_CHEC'].'">'.$row['Indicador'].'</label>
+                  <label class="grisTexto"><input type="checkbox" name="Indicador'.$cont.'"  id="Indicador'.$cont.'" value="'.$row['id_Indicadores_CHEC'].'">'.$row['Indicador'].'</label>
                 </div>';
 		  }
+
 		  echo '<input type="hidden" name="cant_indicador" value="'.$cont.'">';
-		  $conn = null;        // Disconnect
+		  
 		}
 	break;
 	case '11':
@@ -227,7 +222,7 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 			  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 			       echo '<option value="'.$row['id_Tipo_Documento'].'">'.$row['Tipo_Documento'].'</option>';
 		  }
-		  $conn = null;        // Disconnect
+		  
 		}
 		break;
 	case '12':
@@ -240,7 +235,7 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 			  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 			       echo '<option value="'.$row['Id_Jornada'].'">'.$row['Jornada'].'</option>';
 		  }
-		  $conn = null;        // Disconnect
+		  
 		}
 		break;
 	case '13':
@@ -253,7 +248,7 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 			  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 			       echo '<option value="'.$row['Id_TipoPoblacion'].'">'.$row['TipoPoblacion'].'</option>';
 		  }
-		  $conn = null;        // Disconnect
+		  
 		}
 		break;
 	case '14':
@@ -266,7 +261,7 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 			  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 			       echo '<option value="'.$row['Id_Estrategia'].'">'.$row['NombreEstrategia'].'</option>';
 		  }
-		  $conn = null;        // Disconnect
+		  
 		}
 		break;
 	case '15':
@@ -280,9 +275,82 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 		       echo '<option value="'.$row['Id_Tactico'].'">'.$row['NombreTactico'].'</option>';
 		  }
+		  
+		}
+		break;
+	case '16':
+
+		$id_zona=$_GET["Id_Zona"];
+		if( $con ) {
+	    	$sql = "SELECT * FROM municipios where Id_Zona = '".$id_zona."'";
+	  		$result = $con->query($sql);
+
+		  // Parse returned data, and displays them
+		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+		       echo '<option value="'.$row['Id_Municipio'].'">'.$row['Municipio'].'</option>';
+		  }
+		  
+		}
+		break;
+	case '17':
+
+		$id_entidad=$_GET["Id_Entidad"];
+		if( $con ) {
+	    	$sql = "SELECT Direccion, Telefono FROM entidades where Id_Entidad = '".$id_entidad."'";
+	  		$result = $con->query($sql);
+			$arr = array();
+		  // Parse returned data, and displays them
+		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+		  		//$direccion = $row["Direccion"];
+		  		//$telefono = $row["Telefono"];
+		      $arr=array(0=>$row["Direccion"], 1=>$row["Telefono"]);
+		  		//$arr[0]=$direccion;
+		  		//$arr[1]=$telefono;
+		  }
+		  echo json_encode($arr);		  
+		}
+		break;
+	case '18':
+		// if( $con ) {
+	    	// $sql = "SELECT NumeroIdentificacion, Nombres, Apellidos FROM personas where Id_Cargo= '2'";
+	  		// $result = $con->query($sql);
+			// $arr = array();
+		  // // Parse returned data, and displays them
+			// echo '<option value="0">Selecciona tu opción</option>';
+		  // while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+		  		// echo '<option value="'.$row['NumeroIdentificacion'].'">'.$row['Nombres'].' '.$row['Apellidos'].'</option>';
+		  // }
+		  //echo json_encode($arr);		  
+		}
+		break;
+	case '19':
+		if( $con ) {
+	    	$sql = "SELECT NumeroIdentificacion, Nombres, Apellidos FROM personas where Id_Cargo= '4'";
+	  		$result = $con->query($sql);
+			$arr = array();
+		  // Parse returned data, and displays them
+			echo '<option value="0">Selecciona tu opción</option>';
+		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+		  		echo '<option value="'.$row['NumeroIdentificacion'].'">'.$row['Nombres'].' '.$row['Apellidos'].'</option>';
+		  }
+		  //echo json_encode($arr);		  
+		}
+		break;
+/*
+	case '20':
+		$id_coordinadora=$_SESSION["Coordinadora"];
+		if( $con ) {
+	    	$sql = "SELECT Nombres, Apellidos FROM personas where NumeroIdentificacion= '".$id_coordinadora."'";
+	  		$result = $con->query($sql);		
+		  // Parse returned data, and displays them			
+		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+		  		echo $row['Nombres'].' '.$row['Apellidos'];
+		  }
+		  //echo json_encode($arr);
 		  $conn = null;        // Disconnect
 		}
 		break;
+		*/
 	default:
 		# code...
 		break;
