@@ -25,18 +25,18 @@
     <div class="collapse navbar-collapse" id="menuSaludo">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <span class="h5">Hola, {Juan}</span>
+          <span class="h5">Hola, &nbsp;</span><span class="h5" id="Nombre"></span>
           <!-- Inserción dinamica del nombre del usuario logueado -->
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" id="nav_home" href="#">
+          <a class="nav-link" id="nav_home" href="home_Gestora.html">
               <i class="fa fa-home fa-2x"></i>
           </a>
           <a class="nav-link" id="nav_banco" href="#">
               <i class="fa fa-wrench fa-2x"></i>
           </a>
-          <a class="nav-link" id="nav_out" href="#">
+          <a class="nav-link" id="nav_out" href="php/LogoutGestora.php">
               <i class="fa fa-sign-out fa-2x"></i>
           </a>
         </li>
@@ -48,16 +48,17 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4">
-        <form class="form-horizontal">
+        <form class="form-horizontal" id="formularioGestora" name="formularioGestora" method="post" action="php/Gestoras.php">
           <fieldset>
             <!-- Form Name -->
+
             <legend>Nueva Intervención Gestora</legend>
 
             <!-- Zona -->
             <div class="form-group">
               <label class="col-md-12 control-label" for="zonainput">Zona</label>
               <div class="col-md-12">
-                <span>Zona Norte</span>
+                <span class="h6">Zona &nbsp;</span><span id="NombreZona"></span>
               </div>
             </div>
 
@@ -65,9 +66,8 @@
             <div class="form-group">
               <label class="col-md-12 control-label" for="selectbasicMunicipio">Municipio</label>
               <div class="col-md-12">
-                <select id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
-                    <option value="1">Opción 1</option>
-                    <option value="2">Opción 2</option>
+                <select  onChange="recargarComunas(this.value)" id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
+                    
                   </select>
               </div>
             </div>
@@ -77,11 +77,11 @@
               <label class="col-md-12 control-label" for="radiosMunicipio">Ubicación Municipio</label>
               <div class="col-md-12">
                 <label class="radio-inline" for="radiosMunicipio-0">
-                    <input type="radio" name="radiosMunicipio" id="radiosMunicipio-0" value="1" checked="checked">
+                    <input onChange="validarRadio(this.value)" type="radio" name="radiosMunicipio" id="radiosMunicipio-0" value="1" checked="checked">
                     Rural
                   </label>
                 <label class="radio-inline" for="radiosMunicipio-1">
-                    <input type="radio" name="radiosMunicipio" id="radiosMunicipio-1" value="2">
+                    <input onChange="validarRadio(this.value)" type="radio" name="radiosMunicipio" id="radiosMunicipio-1" value="2">
                     Urbano
                   </label>
               </div>
@@ -91,9 +91,8 @@
             <div class="form-group">
               <label class="col-md-12 control-label" for="selectbasicComuna">Comuna</label>
               <div class="col-md-12">
-                <select id="selectbasicComuna" name="selectbasicComuna" class="form-control">
-                    <option value="1">Opción 1</option>
-                    <option value="2">Opción 2</option>
+                <select onChange="recargarBarrios(this.value)" id="selectbasicComuna" name="selectbasicComuna" class="form-control">
+                    
                   </select>
               </div>
             </div>
@@ -102,9 +101,8 @@
             <div class="form-group">
               <label class="col-md-12 control-label" for="selectbasicBarrio">Barrio</label>
               <div class="col-md-12">
-                <select id="selectbasicBarrio" name="selectbasicBarrio" class="form-control">
-                    <option value="1">Opción 1</option>
-                    <option value="2">Opción 2</option>
+                <select id="selectbasicBarrio" name="selectbasicBarrio" class="form-control"  disabled="true">
+                <option value="0">Seleccione...</option>
                   </select>
               </div>
             </div>
@@ -114,8 +112,7 @@
               <label class="col-md-12 control-label" for="selectbasicVereda">Vereda</label>
               <div class="col-md-12">
                 <select id="selectbasicVereda" name="selectbasicVereda" class="form-control">
-                    <option value="1">Opción 1</option>
-                    <option value="2">Opción 2</option>
+                   <option value="0">Seleccione...</option>
                   </select>
 
               </div>
@@ -125,9 +122,12 @@
             <div class="form-group">
               <label class="col-md-12 control-label" for="textinputNombreEntidad">Nombre Entidad</label>
               <div class="col-md-12">
-                <input id="textinputNombreEntidad" name="textinputNombreEntidad" type="text" placeholder="" class="form-control input-md">
+                <input onkeyup="buscarEntidad()" id="textinputNombreEntidad" name="textinputNombreEntidad" type="text" placeholder="" class="form-control input-md">
 
               </div>
+              <div id="suggestions">                   
+                 </div>
+                 <input type="hidden" id="id_Entidades" name="id_Entidades" value="0">
             </div>
 
             <!-- Seleccion Tipo Entidad -->
@@ -135,9 +135,9 @@
               <label class="col-md-12 control-label" for="selectbasicTipoEntidad">Tipo de Entidad</label>
               <div class="col-md-12">
                 <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
-                    <option value="1">Opción 1</option>
-                    <option value="2">Opción 2</option>
+                    
                   </select>
+                  <input type="hidden" name="cant_indicador" id="cant_indicador">
               </div>
             </div>
 
@@ -163,8 +163,7 @@
               <label class="col-md-12 control-label" for="selectbasicTipoInvervencion">Tipo de Intervención</label>
               <div class="col-md-12">
                 <select id="selectbasicTipoInvervencion" name="selectbasicTipoInvervencion" class="form-control">
-                    <option value="1">Opción 1</option>
-                    <option value="2">Opción 2</option>
+                    
                   </select>
               </div>
             </div>
@@ -173,9 +172,8 @@
             <div class="form-group">
               <label class="col-md-12 control-label" for="selectbasicComportamiento">Comportamiento</label>
               <div class="col-md-12">
-                <select id="selectbasicComportamiento" name="selectbasicComportamiento" class="form-control">
-                    <option value="1">Opción 1</option>
-                    <option value="2">Opción 2</option>
+                <select onChange="recargarIndicadores(this.value)" id="selectbasicComportamiento" name="selectbasicComportamiento" class="form-control">
+                    
                   </select>
               </div>
             </div>
@@ -185,15 +183,10 @@
               <label class="col-md-12 control-label" for="selectbasicComportamiento">Indicadores</label>
               <div class="col-md-12">
 
-                <div class="checkbox">
-                  <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
-                </div>
-                <div class="checkbox">
-                  <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
-                </div>
-                <div class="checkbox">
-                  <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
-                </div>
+                <div class="comportamiento">
+
+                
+              </div>
               </div>
             </div>
 
@@ -217,8 +210,11 @@
     </div>
   </div>
 
-  <script src="js/jquery-3.2.1.min" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="js/includes/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/nueva_Intervencion_Gestora.js"></script> 
+  <script type="text/javascript" src="js/ValidarSesion.js"></script>
+  <!-- <script type="text/javascript" src="js/gestoras.js"></script> -->
 </body>
 
 </html>
