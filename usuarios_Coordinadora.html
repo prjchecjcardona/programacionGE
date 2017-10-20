@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Geográfico</title>
+  <title>Usuarios</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
@@ -22,7 +22,7 @@
 <body>
 
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <a class="navbar-brand" href="#">
                 <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
                 Gestión Educativa
@@ -85,16 +85,205 @@
                       <label class="col-md-12control-label" for="textinputRol">Nombre del Rol</label>
                       <input id="textinputRol" name="textinputRol" type="text" placeholder="Ingrese el Nombre del Rol" class="form-control input-md">
                     </div>
-00000000000000000000
+
                     <!-- Campo Latitud Rol -->
                     <div class="col-md-12 espaciado">
-                      <label class="col-md-12control-label" for="textinputRolLan">Latitud</label>
-                      <textarea id="textinputRolLan" name="textinputRolLan" type="text" placeholder="Ingrese la Latitud del Rol" class="form-control input-md"></textarea>
+                      <label class="col-md-12control-label" for="textinputRolLan">Descripción</label>
+                      <textarea id="textinputRolLan" name="textinputRolLan" type="text" placeholder="Ingrese la descripción del Rol" class="form-control input-md"></textarea>
                     </div>
 
                     <!-- Boton Rol -->
                     <div class="botonContenedor espaciado">
                       <button id="buttonRol" name="btnRol" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Añadir Persona -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addPersona">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapsePersona" aria-expanded="true" aria-controls="collapsePersona">
+                      <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                      Añadir Persona
+                    </a>
+                  </h5>
+                </div>
+
+                <!-- Formulario Persona -->
+                <div id="collapsePersona" class="collapse" role="tabpanel" aria-labelledby="addPersona" data-parent="#accordion">
+                  <div class="card-body">
+                    <!-- Campo Nombre Persona -->
+                    <div class="col-md-12">
+                      <label class="col-md-12control-label" for="textinputNombrePersona">Nombres</label>
+                      <input id="textinputNombrePersona" name="textinputNombrePersona" type="text" placeholder="" class="form-control input-md">
+                    </div>
+
+                    <!-- Campo Apellidos Persona -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputApellidoPersona">Apellidos</label>
+                      <input id="textinputApellidoPersona" name="textinputApellidoPersona" type="text" placeholder="" class="form-control input-md">
+                    </div>
+
+                    <!-- Campo Direccion Persona -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputDireccionPersona">Dirección</label>
+                      <input id="textinputDireccionPersona" name="textinputDireccionPersona" type="text" placeholder="" class="form-control input-md">
+                    </div>
+
+                    <!-- Campo Telefono Persona -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputTelefonoPersona">Teléfono</label>
+                      <input id="textinputTelefonoPersona" name="textinputTelefonoPersona" type="text" placeholder="" class="form-control input-md">
+                    </div>
+
+                    <!-- Campo Correo Electrónico Persona -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputCorreoPersona">Correo Electrónico</label>
+                      <input  id="textinputCorreoPersona" name="textinputCorreoPersona" type="email" type="text" placeholder="usuario@ejemplo.com" class="form-control input-md">
+                    </div>
+
+                    <!-- Seleccion de cargo persona -->
+                    <label class="col-md-12 control-label espaciado" for="textinpuCargoPersona">Cargo</label>
+                    <div class="col-md-12">
+                      <select id="selectbasicCargoPersona" name="selectbasicCargoPersona" class="form-control">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                      </select>
+                    </div>
+
+                    <!-- Seleccion de foto para persona  -->
+                    <div class="col-md-12 espaciado">
+                      <div class="text-center">
+                        <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+                        <h6>Selecciona foto</h6>
+                        <input type="file" class="form-control">
+                      </div>
+                    </div>
+
+                    <!-- Boton Persona -->
+                    <div class="botonContenedor espaciado">
+                      <button id="buttonPersona" name="btnPersona" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Añadir Operador -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addOperador">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapseOperador" aria-expanded="true" aria-controls="collapseOperador">
+                      <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                      Añadir Operador
+                    </a>
+                  </h5>
+                </div>
+
+                <!-- Formulario Operador -->
+                <div id="collapseOperador" class="collapse" role="tabpanel" aria-labelledby="addOperador" data-parent="#accordion">
+                  <div class="card-body">
+
+                    <!-- Nombre del Operador -->
+                    <div class="col-md-12">
+                      <label class="col-md-12control-label" for="textinputOperadorNombre">Nombre Completo</label>
+                      <input id="textinputOperadorNombre" name="textinputOperadorNombre" type="text" placeholder="" class="form-control input-md">
+                    </div>
+
+                    <!-- Fecha de Inicio -->
+                    <div class="col-md-12 espaciado">
+                        <label class="control-label" for="datepicker">Fecha de Inicio</label>
+                          <input type="text" class=datepicker placeholder=" Selecciona Fecha...">
+                    </div>
+
+                    <!-- Fecha de Finalización  -->
+                    <div class="col-md-12 espaciado">
+                        <label class="control-label" for="datepicker">Fecha de Finalización</label>
+                          <input type="text" class=datepicker placeholder=" Selecciona Fecha...">
+                    </div>
+
+                    <!-- Boton Operador -->
+                    <div class="botonContenedor espaciado">
+                      <button id="buttonOperador" name="btnOperador" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Añadir Contacto -->
+              <div class="card">
+                <div class="card-header" role="tab" id="addContacto">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapseContacto" aria-expanded="true" aria-controls="collapseContacto">
+                      <i class="fa fa-plus-circle" aria-hidden="false"></i>
+                      Añadir Contacto
+                    </a>
+                  </h5>
+                </div>
+
+                <!-- Formulario Contacto -->
+                <div id="collapseContacto" class="collapse" role="tabpanel" aria-labelledby="addContacto" data-parent="#accordion">
+                  <div class="card-body">
+
+                    <!-- Campo Nombre Contacto -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputNombreContacto">Nombre Completo</label>
+                      <input id="textinputNombreContacto" name="textinputNombreContacto" type="text" placeholder="" class="form-control input-md">
+                    </div>
+
+                    <!-- Campo Cargo Contacto -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputCargoContacto">Cargo</label>
+                      <input id="textinputCargoContacto" name="textinputCargoContacto" type="text" placeholder="" class="form-control input-md">
+                    </div>
+
+                    <!-- Campo Direccion Contacto -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputDireccionContacto">Dirección</label>
+                      <input id="textinputDireccionContacto" name="textinputDireccionContacto" type="text" placeholder="" class="form-control input-md">
+                    </div>
+
+                    <!-- Campo Telefono Contacto -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputTelefonoContacto">Teléfono</label>
+                      <input id="textinputTelefonoContacto" name="textinputTelefonoContacto" type="text" placeholder="" class="form-control input-md">
+                    </div>
+
+                    <!-- Campo Correo Electrónico Contacto -->
+                    <div class="col-md-12 espaciado">
+                      <label class="col-md-12control-label" for="textinputCorreoContacto">Correo Electrónico</label>
+                      <input  id="textinputCorreoContacto" name="textinputCorreoContacto" type="email" type="text" placeholder="usuario@ejemplo.com" class="form-control input-md">
+                    </div>
+
+                    <!-- Multiple Radios (inline) Confirmación -->
+                    <div class="form-group espaciado">
+                      <label class="col-md-12 control-label" for="radiosAlgunContacto">Confirmación</label>
+                      <div class="col-md-12">
+                        <label class="radio-inline" for="radiosAlgunContacto-0">
+                              <input type="radio" name="radiosAlgunContacto" id="siContacto" value="1">
+                              Si
+                            </label>
+                        <label class="radio-inline" for="radiosAlgunContacto-1">
+                              <input type="radio" name="radiosAlgunContacto" id="noContacto" value="2" checked="checked">
+                              No
+                            </label>
+                      </div>
+                    </div>
+
+                    <!-- Seleccion seleccion limpia -->
+                    <label class="col-md-12 control-label" for="textinpuEntidadContacto">Entidad</label>
+                    <div class="col-md-12">
+                      <select id="selectbasicEntidadContacto" name="selectbasicEntidadContacto" class="form-control">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                      </select>
+                    </div>
+
+
+                    <!-- Boton Contacto -->
+                    <div class="botonContenedor espaciado">
+                      <button id="buttonContacto" name="btnContacto" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                     </div>
                   </div>
                 </div>
