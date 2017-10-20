@@ -12,7 +12,7 @@ switch ($TipoConsulta) {
 
 			  // Parse returned data, and displays them
 			  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-			       echo '<option value="'.$row['Id_Zona'].'">'.$row['Zonas'].'</option>';
+			       echo '<option value="'.$row['id_Zona'].'">'.$row['zonas'].'</option>';
 			  }
 
 			  $conn = null;        // Disconnect

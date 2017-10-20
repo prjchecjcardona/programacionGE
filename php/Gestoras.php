@@ -45,7 +45,7 @@ function traerZona()
 	 	{			
 			$Id_Identificacion = $_SESSION["Gestora"];
 			$Id_PersonasZona = $_SESSION["IdPersonasPorZona"];
-			$sql = "SELECT Zonas, Id_Zona FROM zonas z INNER JOIN personas_por_zona pz ON z.Id_Zona = pz.Zonas_Id_Zona AND pz.Personas_NumeroIdentificacion = '".$Id_Identificacion."' AND id_Personas_por_Zonacol = '".$Id_PersonasZona."'";
+			$sql = "SELECT zonas, id_zona FROM zonas z INNER JOIN personas_por_zona pz ON z.id_zona = pz.zonas_Id_zona AND pz.personas_numeroidentificacion = '".$Id_Identificacion."' AND id_personas_por_zonacol = '".$Id_PersonasZona."'";
 		
 			$result = $con->query($sql);
 			// Parse returned data, and displays them
@@ -63,12 +63,12 @@ function traerMunicipios()
 	{		
 		$id_zona=$_SESSION["Id_Zona"];		
 		if( $con ) {
-	    	$sql = "SELECT * FROM municipios where Id_Zona = '".$id_zona."'";
+	    	$sql = "SELECT * FROM municipios where id_zona = '".$id_zona."'";
 	  		$result = $con->query($sql);
 
 			  // Parse returned data, and displays them
 			  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-			       echo '<option value="'.$row['Id_Municipio'].'">'.$row['Municipio'].'</option>';
+			       echo '<option value="'.$row['id_municipio'].'">'.$row['municipio'].'</option>';
 			  }
 			  $con = null;
 		}
@@ -147,7 +147,7 @@ function guardarIntervencion()
 	}
 	$id_Personas_por_Zona =$_SESSION["IdPersonasPorZona"];
 	$ultimo_registro_intervencion=0;
-	$sql = "SELECT max(id_Intervenciones) as ultimo_reg FROM intervenciones";
+	$sql = "SELECT max(id_intervenciones) as ultimo_reg FROM intervenciones";
 	$result = $con->query($sql);
 	if($row = $result->fetch(PDO::FETCH_ASSOC)) {
 		$ultimo_registro = $row["ultimo_reg"];		
@@ -162,7 +162,7 @@ function guardarIntervencion()
 		$ultimo_registro_intervencion++;
 	}	
 	$operador = 1;// falta traer el operador del formulario
-	$sql="INSERT INTO  intervenciones (id_Intervenciones, Entidades_Id_Entidad, Operadores_id_Operadores, Personas_por_Zona_id_Personas_por_Zonacol,Tipo_intervencion_id_Tipo_intervencion,Fecha_Intervencion)
+	$sql="INSERT INTO  intervenciones (id_intervenciones, entidades_id_Entidad, oOperadores_id_Operadores, personas_por_zona_id_personas_por_zonacol,tipo_intervencion_id_tipo_intervencion,fecha_intervencion)
         values('".$ultimo_registro_intervencion."','".$id_entidad."','".$operador."','".$id_Personas_por_Zona."','".$Id_TipoIntervencion."', '".$fecha_intervencion."')";       
         //echo $sql;
  	$results = $con->query( $sql ); 	
@@ -175,7 +175,7 @@ function guardarIntervencion()
 			if(isset($_POST["Indicador".$i]))
 			{
 				$id_indi = $_POST["Indicador".$i];	
-				$sql="INSERT INTO  indicadores_chec_por_intervenciones (Indicadores_CHEC_id_Indicadores_CHEC, Intervenciones_id_Intervenciones)
+				$sql="INSERT INTO  indicadores_chec_por_intervenciones (indicadores_chec_id_indicadores_chec, intervenciones_id_intervenciones)
 	        values('".$id_indi."','".$ultimo_registro_intervencion."')";       
 	        //echo $sql;
 		 			$results = $con->query( $sql ); 		 			
@@ -224,7 +224,7 @@ function traerIntervencion()
 	$zonas_por_intervencion=array();
 
 	$id_Personas_por_Zona = $_SESSION["IdPersonasPorZona"];
-	$intervencion_por_zona= "SELECT i.id_Intervenciones, i.Fecha_Intervencion, ti.Tipo_Intervencion, m.Municipio from intervenciones i inner join entidades e on i.Entidades_Id_Entidad = e.Id_Entidad inner join tipo_intervencion ti on i.Tipo_intervencion_id_Tipo_intervencion = ti.id_Tipo_intervencion left join barrios b on e.Id_Barrio = b.Id_Barrio left join veredas v on v.id_Veredas = e.Id_Veredas left join comunas c on c.Id_Comuna = b.Id_Comuna left join municipios m on m.Id_Municipio = c.Id_Municipio or v.Id_Municipio = m.Id_Municipio where i.Personas_por_Zona_id_Personas_por_Zonacol = '".$id_Personas_por_Zona."'";
+	$intervencion_por_zona= "SELECT i.id_intervenciones, i.fecha_intervencion, ti.tipo_intervencion, m.municipio from intervenciones i inner join entidades e on i.entidades_id_entidad = e.id_entidad inner join tipo_intervencion ti on i.Tipo_intervencion_id_tipo_intervencion = ti.id_tipo_intervencion left join barrios b on e.id_barrio = b.id_barrio left join veredas v on v.id_veredas = e.id_veredas left join comunas c on c.id_comuna = b.id_comuna left join municipios m on m.id_municipio = c.id_municipio or v.id_municipio = m.id_municipio where i.personas_por_zona_id_Personas_por_Zonacol = '".$id_Personas_por_Zona."'";
 	$resultados_zona = $con->query($intervencion_por_zona);
 	$contador=0;
 	while($row = $resultados_zona->fetch(PDO::FETCH_ASSOC)) {
@@ -236,9 +236,9 @@ function traerIntervencion()
 	     $contador++;
 	  }
 	 $cantidad_intervenciones_por_zona = $contador;
-	$intervenciones_por_comportamiento = "SELECT c.Comportamientos from indicadores_chec_por_intervenciones ici inner join intervenciones i on
-	ici.Intervenciones_id_Intervenciones = i.id_Intervenciones inner join indicadores_chec ic on ici.Indicadores_CHEC_id_Indicadores_CHEC = ic.id_Indicadores_CHEC
-	inner join comportamientos c on ic.Comportamientos_Id_Comportamientos = c.Id_Comportamientos where i.Personas_por_Zona_id_Personas_por_Zonacol = '".$id_Personas_por_Zona."' group by c.Comportamientos";
+	$intervenciones_por_comportamiento = "SELECT c.comportamientos from indicadores_chec_por_intervenciones ici inner join intervenciones i on
+	ici.intervenciones_id_intervenciones = i.id_intervenciones inner join indicadores_chec ic on ici.indicadores_chec_id_indicadores_chec = ic.id_indicadores_chec
+	inner join comportamientos c on ic.comportamientos_id_comportamientos = c.id_comportamientos where i.personas_por_zona_id_personas_por_zonacol = '".$id_Personas_por_Zona."' group by c.Comportamientos";
 
 	  	$resultados_comportamiento = $con->query($intervenciones_por_comportamiento);
 	  	$contador=0;
@@ -286,53 +286,53 @@ function traerDetalleIntervencion()
 		$detalleIntervencion= "SELECT i.id_Intervenciones, i.Fecha_Intervencion, ti.Tipo_Intervencion, m.Municipio from intervenciones i inner join entidades e on i.Entidades_Id_Entidad = e.Id_Entidad inner join tipo_intervencion ti on i.Tipo_intervencion_id_Tipo_intervencion = ti.id_Tipo_intervencion left join barrios b on e.Id_Barrio = b.Id_Barrio left join veredas v on v.id_Veredas = e.Id_Veredas left join comunas c on c.Id_Comuna = b.Id_Comuna left join municipios m on m.Id_Municipio = c.Id_Municipio or v.Id_Municipio = m.Id_Municipio where i.id_Intervenciones= ".$idIntervencion." and i.Personas_por_Zona_id_Personas_por_Zonacol = '".$id_Personas_por_Zona."'";
 
 		$detalleIntervencion= "SELECT 
-			i.id_Intervenciones, 
-			e.NombreEntidad, 
-			i.Fecha_Intervencion, 
-			ti.Tipo_Intervencion, 
-			m.Municipio, 
-			comp.Comportamientos,
-			compe.Competencia
-			from intervenciones i inner join entidades e on i.Entidades_Id_Entidad = e.Id_Entidad 
+			i.id_intervenciones, 
+			e.nombreentidad, 
+			i.fecha_intervencion, 
+			ti.tipo_intervencion, 
+			m.municipio, 
+			comp.comportamientos,
+			compe.competencia
+			from intervenciones i inner join entidades e on i.entidades_id_entidad = e.id_entidad 
 			inner join tipo_intervencion ti on 
-			i.Tipo_intervencion_id_Tipo_intervencion = ti.id_Tipo_intervencion 
-			left join barrios b on e.Id_Barrio = b.Id_Barrio left join veredas v 
-			on v.id_Veredas = e.Id_Veredas left join comunas c 
-			on c.Id_Comuna = b.Id_Comuna 
+			i.tipo_intervencion_id_tipo_intervencion = ti.id_tipo_intervencion 
+			left join barrios b on e.id_barrio = b.id_barrio left join veredas v 
+			on v.id_veredas = e.id_veredas left join comunas c 
+			on c.id_comuna = b.id_comuna 
 			left join municipios m 
-			on m.Id_Municipio = c.Id_Municipio or v.Id_Municipio = m.Id_Municipio 
+			on m.id_municipio = c.id_municipio or v.id_municipio = m.id_municipio 
 
 			inner join indicadores_chec_por_intervenciones ici on
-			ici.Intervenciones_id_Intervenciones = i.id_Intervenciones
-			inner join indicadores_chec ic on ici.Indicadores_CHEC_id_Indicadores_CHEC = ic.id_Indicadores_CHEC
-			inner join comportamientos comp on ic.Comportamientos_Id_Comportamientos = comp.Id_Comportamientos
+			ici.intervenciones_id_intervenciones = i.id_intervenciones
+			inner join indicadores_chec ic on ici.indicadores_chec_id_indicadores_chec = ic.id_indicadores_chec
+			inner join comportamientos comp on ic.comportamientos_id_comportamientos = comp.id_comportamientos
 
 			inner join competencias_por_comportamiento cpc on
-			comp.Id_Comportamientos = cpc.Comportamientos_Id_Comportamientos
+			comp.id_comportamientos = cpc.comportamientos_id_comportamientos
 			inner join competencias compe on
-			cpc.Competencias_Id_Competencia = compe.Id_Competencia
+			cpc.competencias_id_competencia = compe.id_competencia
 
-			where i.id_Intervenciones= '".$idIntervencion."'
-			and i.Personas_por_Zona_id_Personas_por_Zonacol = '".$id_Personas_por_Zona."'
-			group by i.id_Intervenciones, e.NombreEntidad, i.Fecha_Intervencion, ti.Tipo_Intervencion, m.Municipio,comp.Comportamientos,compe.Competencia";
+			where i.id_intervenciones= '".$idIntervencion."'
+			and i.personas_por_zona_id_personas_por_zonacol = '".$id_Personas_por_Zona."'
+			group by i.id_intervenciones, e.nombreEntidad, i.fecha_intervencion, ti.tipo_intervencion, m.municipio,comp.comportamientos,compe.competencia";
 
 		
 		$resultados_detalle = $con->query($detalleIntervencion);
 		while($row = $resultados_detalle->fetch(PDO::FETCH_ASSOC)) {
-		  		$detalle["Municipio"] =  $row["Municipio"];
-		  		$detalle["NombreEntidad"] =  $row["NombreEntidad"];
-		  		$detalle["Tipo_Intervencion"] =  $row["Tipo_Intervencion"];
-		  		$detalle["Comportamientos"] =  $row["Comportamientos"];
-		  		$detalle["Competencia"] =  $row["Competencia"];		     
+		  		$detalle["Municipio"] =  $row["municipio"];
+		  		$detalle["NombreEntidad"] =  $row["nombreentidad"];
+		  		$detalle["Tipo_Intervencion"] =  $row["tipo_intervencion"];
+		  		$detalle["Comportamientos"] =  $row["comportamientos"];
+		  		$detalle["Competencia"] =  $row["competencia"];		     
 		  }
 
-		  $detalleIndicadores= "SELECT Indicador from indicadores_chec_por_intervenciones ici inner join intervenciones i on
-	ici.Intervenciones_id_Intervenciones = i.id_Intervenciones inner join indicadores_chec ic on ici.Indicadores_CHEC_id_Indicadores_CHEC = ic.id_Indicadores_CHEC
-	inner join comportamientos c on ic.Comportamientos_Id_Comportamientos = c.Id_Comportamientos where i.id_Intervenciones= '".$idIntervencion."' and i.Personas_por_Zona_id_Personas_por_Zonacol = '".$id_Personas_por_Zona."'";
+		  $detalleIndicadores= "SELECT indicador from indicadores_chec_por_intervenciones ici inner join intervenciones i on
+	ici.intervenciones_id_intervenciones = i.id_intervenciones inner join indicadores_chec ic on ici.indicadores_chec_id_indicadores_chec = ic.id_indicadores_chec
+	inner join comportamientos c on ic.comportamientos_id_comportamientos = c.id_comportamientos where i.id_intervenciones= '".$idIntervencion."' and i.personas_por_zona_id_personas_por_zonacol = '".$id_Personas_por_Zona."'";
 	$resultados_detalle1 = $con->query($detalleIndicadores);
 	$i=0;
 		while($row = $resultados_detalle1->fetch(PDO::FETCH_ASSOC)) {
-		  		$detalle["Indicadores".$i] =  $row["Indicador"];	     
+		  		$detalle["Indicadores".$i] =  $row["indicador"];	     
 		  		$i++;
 		  } 
 		  $detalle["cantidad"] = $i;
