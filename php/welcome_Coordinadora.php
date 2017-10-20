@@ -14,7 +14,7 @@ if(isset($_POST["accion"]))
 function traerNombreCoordinadora(){
 	include "conexion.php";
 	$data = array('error'=>0,'mensaje'=>'','html'=>''); 
-	$sql = "SELECT NumeroIdentificacion, Nombres, Apellidos FROM personas where Id_Cargo= '2'";
+	$sql = "SELECT numeroidentificacion, nombres, apellidos FROM personas where id_cargo= '2'";
 	  		// $result = $con->query($sql);
 			$array=array();
 			if ($rs = $con->query($sql)) {
@@ -24,7 +24,7 @@ function traerNombreCoordinadora(){
 					// }
 					
 					$data['html']= '<option value="0">Selecciona tu opción</option>';
-					$data['html'].= '<option value="'.$filas[0]['NumeroIdentificacion'].'_2">'.$filas[0]['Nombres'].' '.$filas[0]['Apellidos'].'</option>';
+					$data['html'].= '<option value="'.$filas[0]['numeroidentificacion'].'_2">'.$filas[0]['nombres'].' '.$filas[0]['apellidos'].'</option>';
 				}
 			}
 			else
