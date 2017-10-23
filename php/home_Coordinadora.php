@@ -1,31 +1,31 @@
 <?php
-include('conexion.php'); 
+include('conexion.php');
 
- 
+
 if(isset($_POST["accion"]))
-{		
- 	
+{
+
 	if($_POST["accion"]=="interevensionesPorZona")
 	{
 		interevensionesPorZona();
 	}
-	
+
 }
 
 function interevensionesPorZona(){
-	
+
 	include('conexion.php');
-	$data = array('error'=>0,'mensaje'=>'','html'=>''); 
-	
-	
+	$data = array('error'=>0,'mensaje'=>'','html'=>'');
+
+
 	if( $con )
  	{
  		//TRAER TODAS LAS GESTORAS POR ZONAS
-    	$sql = "SELECT p.NumeroIdentificacion,p.Nombres,z.Id_Zona,z.Zonas,Id_Personas_por_Zonacol
+    	$sql = "SELECT p.numeroidentificacion,p.nombres,z.id_zona,z.zonas,Id_Personas_por_Zonacol
 			  FROM personas as p, zonas as z, personas_por_zona as pz
-			  WHERE p.NumeroIdentificacion = pz.Personas_NumeroIdentificacion
-			  AND z.Id_Zona = pz.Zonas_Id_Zona";
-  		
+			  WHERE p.numeroidentificacion = pz.personas_numeroidentificacion
+			  AND z.id_zona = pz.zonas_id_zona";
+
 		$array=array();
 		if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
@@ -39,7 +39,7 @@ function interevensionesPorZona(){
 							$data['html'].='<h4 class="card-title">'.$datos['Zonas'].'</h4>';
 							$data['html'].='<h6 class="card-subtitle mb-2 text-muted">'.$datos['Nombres'].'</h6>';
 							$data['html'].='<div class="list-group">';
-							
+
 							// traerIntervencionGestora();
 							$llamarIntervecion=traerIntervencionGestora($datos['Id_Zona'],$datos['Id_Personas_por_Zonacol']);
 								// $data['html'].='<a href="#" id="'.$datos['NumeroIdentificacion'].'_'.$datos['Id_Zona'].'" class="list-group-item list-group-item-action"> {Municipio - 08/09/2017 - Estrategia} <span class="float-right badge badge-primary">2</span></a>';
@@ -60,10 +60,10 @@ function interevensionesPorZona(){
 						  $data['html'].='</div>';
 						$data['html'].='</div>';
 					}
-					
+
 					// $data['html']=$array;
 					// print_r($data['html']);
-					
+
 				}
 			}
 			else
@@ -82,18 +82,18 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 	$intervencion=array();
 
 	//$id_Personas_por_Zona = $_SESSION["IdPersonasPorZona"];
-	$intervencion_por_zona= "SELECT 
-		 i.id_Intervenciones, i.Fecha_Intervencion, ti.Tipo_Intervencion, m.Municipio, ppz.Zonas_Id_Zona
-		from intervenciones i inner join entidades e 
-		on i.Entidades_Id_Entidad = e.Id_Entidad 
-		inner join tipo_intervencion ti 
-		on i.Tipo_intervencion_id_Tipo_intervencion = ti.id_Tipo_intervencion 
-		left join barrios b on e.Id_Barrio = b.Id_Barrio left join veredas v 
-		on v.id_Veredas = e.Id_Veredas left join comunas c on c.Id_Comuna = b.Id_Comuna 
-		left join municipios m on m.Id_Municipio = c.Id_Municipio or v.Id_Municipio = m.Id_Municipio 
+	$intervencion_por_zona= "SELECT
+		 i.id_intervenciones, i.fecha_intervencion, ti.tipo_intervencion, m.municipio, ppz.zonas_id_zona
+		from intervenciones i inner join entidades e
+		on i.entidades_id_entidad = e.id_entidad
+		inner join tipo_intervencion ti
+		on i.tipo_intervencion_id_tipo_intervencion = ti.id_tipo_intervencion
+		left join barrios b on e.id_barrio = b.id_barrio left join veredas v
+		on v.id_veredas = e.id_veredas left join comunas c on c.id_comuna = b.id_comuna
+		left join municipios m on m.id_municipio = c.id_municipio or v.id_municipio = m.id_municipio
 		inner join personas_por_zona ppz on
-		 ppz.id_Personas_por_Zonacol = i.Personas_por_Zona_id_Personas_por_Zonacol
-		 where ppz.Zonas_Id_Zona = '".$idZona."'";
+		 ppz.id_personas_por_zonacol = i.personas_por_zona_id_personas_por_zonacol
+		 where ppz.zonas_id_zona = '".$idZona."'";
 		 // where ppz.Zonas_Id_Zona = '1'";
 	$resultados_zona = $con->query($intervencion_por_zona);
 	$contador=0;
@@ -106,21 +106,21 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 	     $contador++;
 	  }
 	 $cantidad_intervenciones_por_zona = $contador;
-	$intervenciones_por_comportamiento = "SELECT c.Comportamientos 
+	$intervenciones_por_comportamiento = "SELECT c.comportamientos
 	from indicadores_chec_por_intervenciones ici inner join intervenciones i on
-	ici.Intervenciones_id_Intervenciones = i.id_Intervenciones inner join indicadores_chec ic on ici.Indicadores_CHEC_id_Indicadores_CHEC = ic.id_Indicadores_CHEC
-	inner join comportamientos c on ic.Comportamientos_Id_Comportamientos = c.Id_Comportamientos 
-	where i.Personas_por_Zona_id_Personas_por_Zonacol = '".$idPersonasPorZona."' 
+	ici.intervenciones_id_intervenciones = i.id_intervenciones inner join indicadores_chec ic on ici.indicadores_chec_id_indicadores_chec = ic.id_indicadores_chec
+	inner join comportamientos c on ic.comportamientos_id_comportamientos = c.id_comportamientos
+	where i.personas_por_zona_id_personas_por_zonacol = '".$idPersonasPorZona."'
 	group by c.Comportamientos";
 
-		//where i.Personas_por_Zona_id_Personas_por_Zonacol = '".$idPersonasPorZona."' 
+		//where i.Personas_por_Zona_id_Personas_por_Zonacol = '".$idPersonasPorZona."'
 	  	$resultados_comportamiento = $con->query($intervenciones_por_comportamiento);
 	  	$contador=0;
 	  // Parse returned data, and displays them
 	  while($row = $resultados_comportamiento->fetch(PDO::FETCH_ASSOC)) {
 	  		$intervencion[$contador]["Comportamientos"] =  $row["Comportamientos"];
 	     $contador++;
-	     
+
 	  }
 		if($cantidad_intervenciones_por_zona == $contador)//si la cantidad de las intervenciones son las mismas, se guarda la cantidad en una variable para el ciclo
 		{
@@ -133,7 +133,7 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 
 	  		// echo "<a id=".$intervencion[$cont]["id_Intervenciones"]." href='#' class='list-group-item active'>".$intervencion[$cont]["Municipio"]." - ".$fecha_intervencion." - ".$intervencion[$cont]["Tipo_Intervencion"]." - ".$intervencion[$cont]["Comportamientos"]."</a>";
 	  	// }
-		
+
 	return $intervencion;
 }
 
