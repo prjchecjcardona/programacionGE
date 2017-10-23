@@ -36,12 +36,12 @@ function interevensionesPorZona(){
 					foreach ($array as $datos) {
 						$data['html'].='<div class="card">';
 						  $data['html'].='<div class="card-body">';
-							$data['html'].='<h4 class="card-title">'.$datos['Zonas'].'</h4>';
-							$data['html'].='<h6 class="card-subtitle mb-2 text-muted">'.$datos['Nombres'].'</h6>';
+							$data['html'].='<h4 class="card-title">'.$datos['zonas'].'</h4>';
+							$data['html'].='<h6 class="card-subtitle mb-2 text-muted">'.$datos['nombres'].'</h6>';
 							$data['html'].='<div class="list-group">';
 
 							// traerIntervencionGestora();
-							$llamarIntervecion=traerIntervencionGestora($datos['Id_Zona'],$datos['Id_Personas_por_Zonacol']);
+							$llamarIntervecion=traerIntervencionGestora($datos['id_zona'],$datos['id_personas_por_zonacol']);
 								// $data['html'].='<a href="#" id="'.$datos['NumeroIdentificacion'].'_'.$datos['Id_Zona'].'" class="list-group-item list-group-item-action"> {Municipio - 08/09/2017 - Estrategia} <span class="float-right badge badge-primary">2</span></a>';
 								if (count($llamarIntervecion >0)){
 									foreach($llamarIntervecion as $datosGestora)
@@ -83,26 +83,36 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 
 	//$id_Personas_por_Zona = $_SESSION["IdPersonasPorZona"];
 	$intervencion_por_zona= "SELECT
-		 i.id_intervenciones, i.fecha_intervencion, ti.tipo_intervencion, m.municipio, ppz.zonas_id_zona
+		 i.id_intervenciones, ti.tipo_intervencion, m.municipio, ppz.zonas_id_zona
 		from intervenciones i inner join entidades e
 		on i.entidades_id_entidad = e.id_entidad
 		inner join tipo_intervencion ti
 		on i.tipo_intervencion_id_tipo_intervencion = ti.id_tipo_intervencion
 		left join barrios b on e.id_barrio = b.id_barrio left join veredas v
-		on v.id_veredas = e.id_veredas left join comunas c on c.id_comuna = b.id_comuna
+		on v.id_veredas = e.veredas_id_veredas left join comunas c on c.id_comuna = b.id_comuna
 		left join municipios m on m.id_municipio = c.id_municipio or v.id_municipio = m.id_municipio
 		inner join personas_por_zona ppz on
 		 ppz.id_personas_por_zonacol = i.personas_por_zona_id_personas_por_zonacol
 		 where ppz.zonas_id_zona = '".$idZona."'";
 		 // where ppz.Zonas_Id_Zona = '1'";
 	$resultados_zona = $con->query($intervencion_por_zona);
+	if(!$resultados_zona)
+	{
+	  die("Execute query error, because: ". print_r($con->errorInfo(),true) );
+	}
+	//success case
+	else{
+		 //continue flow
+	}
+
+
 	$contador=0;
 	while($row = $resultados_zona->fetch(PDO::FETCH_ASSOC)) {
 
-	     $intervencion[$contador]["id_Intervenciones"] =  $row["id_Intervenciones"];
-	     $intervencion[$contador]["Fecha_Intervencion"] =  $row["Fecha_Intervencion"];
-	     $intervencion[$contador]["Tipo_Intervencion"] =  $row["Tipo_Intervencion"];
-	     $intervencion[$contador]["Municipio"] =  $row["Municipio"];
+	     $intervencion[$contador]["id_Intervenciones"] =  $row["id_intervenciones"];
+	     $intervencion[$contador]["Fecha_Intervencion"] =  $row["fecha_intervencion"];
+	     $intervencion[$contador]["Tipo_Intervencion"] =  $row["tipo_intervencion"];
+	     $intervencion[$contador]["Municipio"] =  $row["municipio"];
 	     $contador++;
 	  }
 	 $cantidad_intervenciones_por_zona = $contador;
@@ -111,14 +121,14 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 	ici.intervenciones_id_intervenciones = i.id_intervenciones inner join indicadores_chec ic on ici.indicadores_chec_id_indicadores_chec = ic.id_indicadores_chec
 	inner join comportamientos c on ic.comportamientos_id_comportamientos = c.id_comportamientos
 	where i.personas_por_zona_id_personas_por_zonacol = '".$idPersonasPorZona."'
-	group by c.Comportamientos";
+	group by c.comportamientos";
 
 		//where i.Personas_por_Zona_id_Personas_por_Zonacol = '".$idPersonasPorZona."'
 	  	$resultados_comportamiento = $con->query($intervenciones_por_comportamiento);
 	  	$contador=0;
 	  // Parse returned data, and displays them
 	  while($row = $resultados_comportamiento->fetch(PDO::FETCH_ASSOC)) {
-	  		$intervencion[$contador]["Comportamientos"] =  $row["Comportamientos"];
+	  		$intervencion[$contador]["Comportamientos"] =  $row["comportamientos"];
 	     $contador++;
 
 	  }
