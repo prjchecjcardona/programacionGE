@@ -17,9 +17,7 @@ function traerNombreCoordinadora(){
 								$('#selectbasicSeleccionCoordinadora').html(data.html)
 								
 							}
-							// else{
-								// mostrarPopUpError(data.error);
-							// }
+							
 							
 						
 				},"json");

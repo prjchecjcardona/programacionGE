@@ -1,4 +1,6 @@
 <?php
+ini_set('memory_limit', '4024M');
+set_time_limit(0);
 include('conexion.php');
 
 
@@ -42,20 +44,19 @@ function interevensionesPorZona(){
 
 							// traerIntervencionGestora();
 							$llamarIntervecion=traerIntervencionGestora($datos['id_zona'],$datos['id_personas_por_zonacol']);
-								// $data['html'].='<a href="#" id="'.$datos['NumeroIdentificacion'].'_'.$datos['Id_Zona'].'" class="list-group-item list-group-item-action"> {Municipio - 08/09/2017 - Estrategia} <span class="float-right badge badge-primary">2</span></a>';
+								
 								if (count($llamarIntervecion >0)){
 									foreach($llamarIntervecion as $datosGestora)
 									{
-											// $data['html'].='<a href="" id="intrevension_'.$datosGestora['id_Intervenciones'].'" class="list-group-item list-group-item-action">'.$datosGestora['Municipio'].'-'.$datosGestora['Fecha_Intervencion'].'-'.$datosGestora['Comportamientos'].' <span class="float-right badge badge-primary">1</span></a>';
-											$data['html'].='<button id="intrevension_'.$datosGestora['id_Intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_Intervenciones'].')">'.$datosGestora['Municipio'].'-'.$datosGestora['Fecha_Intervencion'].'-'.$datosGestora['Comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';
+											
+											$data['html'].='<button id="intrevension_'.$datosGestora['id_Intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_Intervenciones'].')">'.$datosGestora['Municipio'].'-'.$datosGestora['Comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';
 									}
 								}
-								// $data['html'].='<a href="#" class="list-group-item list-group-item-action"> {Municipio - 08/09/2017 - Estrategia} </a>';
-								// $data['html'].='<a href="#" class="list-group-item list-group-item-action"> {Municipio - 08/09/2017 - Estrategia} </a>';
+								
 							$data['html'].='</div>';
 							$data['html'].='<div class="card-actions">';
 							  $data['html'].='<a href="#" class="card-link">Ver más</a>';
-							  $data['html'].='<a href="#" class="card-link float-right"><i class="fa fa-plus-circle fa-2x"></i></a>';
+							  $data['html'].='<a id="'.$datos['id_zona'].'" class="card-link float-right" onclick="agregarIntervencion('.$datos['id_zona'].');"><i class="fa fa-plus-circle fa-2x"></i></a>';
 							$data['html'].='</div>';
 						  $data['html'].='</div>';
 						$data['html'].='</div>';
@@ -110,7 +111,7 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 	while($row = $resultados_zona->fetch(PDO::FETCH_ASSOC)) {
 
 	     $intervencion[$contador]["id_Intervenciones"] =  $row["id_intervenciones"];
-	     $intervencion[$contador]["Fecha_Intervencion"] =  $row["fecha_intervencion"];
+	     // $intervencion[$contador]["Fecha_Intervencion"] =  $row["fecha_intervencion"];
 	     $intervencion[$contador]["Tipo_Intervencion"] =  $row["tipo_intervencion"];
 	     $intervencion[$contador]["Municipio"] =  $row["municipio"];
 	     $contador++;
@@ -143,7 +144,7 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 
 	  		// echo "<a id=".$intervencion[$cont]["id_Intervenciones"]." href='#' class='list-group-item active'>".$intervencion[$cont]["Municipio"]." - ".$fecha_intervencion." - ".$intervencion[$cont]["Tipo_Intervencion"]." - ".$intervencion[$cont]["Comportamientos"]."</a>";
 	  	// }
-
+	
 	return $intervencion;
 }
 

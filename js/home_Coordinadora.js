@@ -66,3 +66,8 @@ function mostrarDetalleIntervencion(idIntervencion)
 {
 	window.location.href = "detalle_Intervencion_Coordinadora.html?id="+idIntervencion;
 }
+
+function agregarIntervencion(idZona) 
+{
+	window.location.href = "nueva_Intervencion_Coordinadora.html?idZona="+idZona;
+}
