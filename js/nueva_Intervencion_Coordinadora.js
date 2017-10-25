@@ -25,6 +25,7 @@ $(document).ready(function(){
 	cargarZonasPorId(idZona);
 	cargarPorMunicipiosPorIdZona(idZona);
 	cargarTipoIntervencion();
+	cargarComportamientos();
 	
 	
 	
@@ -201,5 +202,134 @@ function cargarTipoIntervencion(){
 				},"json");
 }
 
+function cargarComportamientos(){
+
+	$.post("php/nueva_Intervencion_Coordinadora.php",{
+         accion : 'cargarComportamientos'
+         		
+         },
+          function (data) {
+						if(data.error != 1){
+								
+								 $('#selectbasicComportamiento').html(data.html);
+								 
+							}
+							// else{
+								// mostrarPopUpError(data.error);
+							// }
+							
+						
+				},"json");
+}
+
+
+$( "#selectbasicComportamiento" ).change(function() { 
+	
+	$.post("php/nueva_Intervencion_Coordinadora.php",{
+         accion : 'cargarIndicadoresChec',
+         idIndicador : $('#selectbasicComportamiento').val()  				
+         },
+          function (data) {
+						if(data.error != 1){
+								
+								 $('#selectbasicIndicadores').html(data.html);
+								 
+							}
+							// else{
+								// mostrarPopUpError(data.error);
+							// }
+							
+						
+				},"json");
+	
+});
+
+function guardarIntervencion(){
+	
+	if (!validarInformacion()) {
+            swal(
+				  '', //titulo
+				  'Debes ingresar todos los datos!',
+				  'error'
+				);
+        }else{
+            
+			
+			//capturar los indicadores
+			 var list = new Array();
+ 
+            $.each($('#selectbasicIndicadores :selected'), function() {
+				
+				list.push($(this).val());
+			 
+			});
+ 
+            // alert(list);
+			
+			//fin capturar los indicadores
+			
+			
+			$.post("php/nueva_Intervencion_Coordinadora.php",{
+			 accion : 'guararIntervencion',
+			 idZona : idZona,  				
+			 idEntidad : $('#selectbasicEntidad').val(),
+			 idTipoIntervencion : $('#selectbasicTipoInvervencion').val(),
+			 indicadores:list,
+			 // idEntidad : $('#selectbasicEntidad').val(),
+			 nombreEntidad : $('#selectbasicEntidad :selected').text(),
+			 idBarrio : $('#selectbasicBarrio').val(), //o vereda
+			 direccion : $('#textinputDireccion').val(), 
+			 telefono : $('#textinputTelefono').val(), 
+			 idTipoEntidad : $('#selectbasicTipoEntidad').val()
+				
+			 },
+			  function (data) { alert(data.mensaje);
+							if(data.error == 1){
+									
+								swal(
+									  '', //titulo
+									  ' No se guardo la intervención, intententalo nuevamente',
+									  'error'
+									);	 
+									 
+							}
+							else{
+								swal(
+									  '', //titulo
+									  'Guardado Correctamente',
+									  'success'
+									);
+							}
+								
+								
+							
+				},"json");
+        }
+}
+
+function validarInformacion(){
+        var valido=true;
+		//select
+        $("select[id^=selectbasic]").each(function(e){
+			if ($(this).val()==0){
+				valido=false;
+			}
+        });
+		//input
+		 $("input[id^=textinput]").each(function(e){
+			if ($(this).val()==""){
+				valido=false;
+			}
+        });
+		
+        return valido;
+    }
+	
+$( "#buttonCancelar" ).click(function() { 
+	
+	alert();
+	window.location.href = "home_Coordinadora.html";
+	
+});
 
 

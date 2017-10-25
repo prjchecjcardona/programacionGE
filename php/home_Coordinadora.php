@@ -1,4 +1,6 @@
 <?php
+ini_set('memory_limit', '4024M');
+set_time_limit(0);
 include('conexion.php');
 
 
@@ -42,17 +44,15 @@ function interevensionesPorZona(){
 
 							// traerIntervencionGestora();
 							$llamarIntervecion=traerIntervencionGestora($datos['id_zona'],$datos['id_personas_por_zonacol']);
-								// $data['html'].='<a href="#" id="'.$datos['NumeroIdentificacion'].'_'.$datos['Id_Zona'].'" class="list-group-item list-group-item-action"> {Municipio - 08/09/2017 - Estrategia} <span class="float-right badge badge-primary">2</span></a>';
+								
 								if (count($llamarIntervecion >0)){
 									foreach($llamarIntervecion as $datosGestora)
 									{
-											// $data['html'].='<a href="" id="intrevension_'.$datosGestora['id_Intervenciones'].'" class="list-group-item list-group-item-action">'.$datosGestora['Municipio'].'-'.$datosGestora['Fecha_Intervencion'].'-'.$datosGestora['Comportamientos'].' <span class="float-right badge badge-primary">1</span></a>';
-											// $data['html'].='<button id="intrevension_'.$datosGestora['id_Intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_Intervenciones'].')">'.$datosGestora['Municipio'].'-'.$datosGestora['Fecha_Intervencion'].'-'.$datosGestora['Comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';
+											
 											$data['html'].='<button id="intrevension_'.$datosGestora['id_Intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_Intervenciones'].')">'.$datosGestora['Municipio'].'-'.$datosGestora['Comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';
 									}
 								}
-								// $data['html'].='<a href="#" class="list-group-item list-group-item-action"> {Municipio - 08/09/2017 - Estrategia} </a>';
-								// $data['html'].='<a href="#" class="list-group-item list-group-item-action"> {Municipio - 08/09/2017 - Estrategia} </a>';
+								
 							$data['html'].='</div>';
 							$data['html'].='<div class="card-actions">';
 							  $data['html'].='<a href="#" class="card-link">Ver más</a>';
