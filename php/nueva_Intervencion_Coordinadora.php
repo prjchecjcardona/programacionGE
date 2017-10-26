@@ -64,12 +64,9 @@ function cargarZonasPorId($idZona){
 			  
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					// foreach ($filas as $fila) {
-						// $array[] = $fila;
-					// }
+					
 					$data['html']= $filas[0]['zonas'];
-					// $data['html']= '<option value="0">Selecciona tu opción</option>';
-					// $data['html'].= '<option value="'.$filas[0]['id_zona'].'">'.$filas[0]['zonas'].'</option>';
+					
 				}
 			}
 			else
@@ -563,6 +560,8 @@ function guararIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores,
 									if ($rs = $con->query($sql)) 
 									{
 										$data['mensaje']="Guardado Exitosamente";
+										$data['idIntervencion']=$idIntervencion;
+										
 									} //
 									else
 									{

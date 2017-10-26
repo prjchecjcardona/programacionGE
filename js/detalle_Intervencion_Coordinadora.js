@@ -20,7 +20,7 @@ $(document).ready(function(){
     } 
 
 	
-	idIntervencion = $.get("id");
+	idIntervencion = $.get("idIntervencion");
 	cargarDetalleIntervencion(idIntervencion);
 	cargarPlaneacionesPorIntrevencion(idIntervencion);
 	
@@ -65,17 +65,28 @@ function cargarDetalleIntervencion(idIntervencion){
 		 idIntervencion:idIntervencion
               				
          },
-          function (data) {
-						if(data.error != 1){
+          function (data) { alert(data.html.indicador);
+						if(data.error == 0){
 								
-								 $('#lblMunicipio').html(data.html[0].TipoIntrevencion);
-								 $('#lblEntidad').html(data.html[0].TipoIntrevencion);
-								 $('#lblCoportamiento').html(data.html[0].TipoIntrevencion);
-								 $('#lblCompetencia').html(data.html[0].TipoIntrevencion);
-								 $('#lblIndicadorChec1').html(data.html[0].IndicadorChec1);
-								 $('#lblIndicadorChec2').html(data.html[0].IndicadorChec2);
-								 $('#lblIndicadorChec3').html(data.html[0].IndicadorChec3);
-								 $('#lblTipoIntervencion').html(data.html[0].TipoIntrevencion);
+								 $('#lblMunicipio').html("Municipio: "+data.html.municipio);
+								 $('#lblEntidad').html("Entidad: "+data.html.nombreentidad);
+								 $('#lblCoportamiento').html("Comportamiento: "+data.html.comportamientos);
+								 $('#lblCompetencia').html("Competencia: "+data.html.competencia);
+								 $('#lblTipoIntervencion').html("Tipo Intervención: "+data.html.tipo_intervencion);
+								 $("#indicadoresChec").html("Indicadores: ");
+								 for (i=0;i<(data.html.indicador.length);i++){
+									 	
+										//$("#indicadoresChec").html(data.html.indicador[i]);
+										$("#indicadoresChec").html(data.html.indicador[i]);
+								 
+								 }
+							}
+							else{
+								swal(
+									  '', //titulo
+									  'No se cargo la información',
+									  'error'
+									);
 							}
 							
 							
@@ -112,21 +123,21 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
             "data": data,
             columns: [
 			{ title: "Id" },
-			{ title: "Fecha" },
 			{ title: "Etapa" },
 			{ title: "Estrategia" },
 			{ title: "Táctico" },
 			{ title: "Tema" },
-			{ title: "Ejecución" },
-			{ title: "Evaluación" },
+			{ title: "Fecha" },
+			/*{ title: "Ejecución" },
+			{ title: "Evaluación" },*/ 
 			
-			{data: null, className: "center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success"><span class="fa fa-book"></span></a>'},
-			{data: null, className: "center", defaultContent: '<a href="#" id="evaluacion" class="btn btn-sm btn-success"><span class="fa fa-pencil-square-o"></span></a>'}
+			{data: null, className: "center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>'},
+			{data: null, className: "center", defaultContent: '<a href="#" id="evaluacion" class="btn btn-sm btn-success" alt="Evaluación"><span class="fa fa-pencil-square-o"></span></a>'}
 			],
-            "paging":   false,
+            "paging":   true,
             "info":     false,
             "columnDefs": [{"className": "dt-left", "targets": "_all"}, //alinear texto a la izquierda
-			{"targets": [ 1 ],"visible": false,"searchable": false},
+			{"targets": [ 0 ],"visible": false,"searchable": false},
 			{ "width": "13%", "targets": 1 }//se le da ancho al td de estudiante
 			//{ "width": "8%", "targets": 8 }, //se le da ancho al td de total horas
 			//{ "width": "8%", "targets": 9 } //se le da ancho al td de observacion
@@ -135,6 +146,7 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
             "scrollX": true,
             "scrollCollapse": true,
             "language": {
+				"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
                 "sSearch": "Filtrar:",
                 "zeroRecords": "Ningún resultado encontrado",
                 "infoEmpty": "No hay registros disponibles",

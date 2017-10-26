@@ -283,7 +283,7 @@ function guardarIntervencion(){
 			 idTipoEntidad : $('#selectbasicTipoEntidad').val()
 				
 			 },
-			  function (data) { alert(data.mensaje);
+			  function (data) { 
 							if(data.error == 1){
 									
 								swal(
@@ -299,6 +299,8 @@ function guardarIntervencion(){
 									  'Guardado Correctamente',
 									  'success'
 									);
+									
+									window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion="+data.idIntervencion;
 							}
 								
 								
