@@ -284,3 +284,35 @@ nav.fixed-top{
 
 }
 
+.padding{
+  padding-left: 80px;
+}
+
+#selectbasicEntidad{
+  width: 87.6%;
+  margin-bottom: 10px;
+}
+.btn-primary{
+  background-color: #9CC12B;
+  border-color: #9CC12B;
+}
+
+.btn-primary.botonEnLinea{
+  margin-bottom: 10px;
+
+}
+
+.btn-primary:hover{
+  background-color: rgb(145, 179, 37);
+  border-color: rgb(145, 179, 37);
+}
+
+.btn-primary:focus{
+  box-shadow: 0 0 0 3px rgba(145, 179, 37, 0.5);
+}
+
+.nuevaEntidadDiv{
+  display: none;
+  margin-bottom: 10px;
+}
+
