@@ -1,6 +1,34 @@
-$(document).ready(function(){   
-	
+$(document).ready(function(){
+	$("#Rural").show();
+	$("#Urbano").hide();
 	traerNombre();
+
+
+/*Dependiendo si seleccionan si cuenta con algun contacto
+* parametro: 
+*/
+$('#UrbanoRural input:radio').click(function()   {                           
+	
+	if ($(this).val() == '1') { 
+	  $("#Rural").show();
+	  $("#Urbano").hide();
+	}
+	else{
+		$("#Rural").hide();
+		$("#Urbano").show();
+  
+	}
+ 
+	
+});
+
+$("#btnNuevaEntidad").click(function(){
+	$(".nuevaEntidadDiv").show();
+});
+
+
+
+
 	
 /*Extrae los parametros que llegan en la url
 * parametro: 
@@ -334,4 +362,14 @@ $( "#buttonCancelar" ).click(function() {
 	
 });
 
+//Invocacion del archivo File Input para nueva intervencion coordinadora
+$(function(){
+    $('#nueva_intervencion_coord').fileinput({
+          language: 'es',
+          'theme': 'fa',
+          uploadUrl: '#',
+          allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
+          'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4']
+      });
+  })
 
