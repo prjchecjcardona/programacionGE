@@ -65,7 +65,7 @@ function cargarDetalleIntervencion(idIntervencion){
 		 idIntervencion:idIntervencion
               				
          },
-          function (data) { alert(data.html.indicador);
+          function (data) { 
 						if(data.error == 0){
 								
 								 $('#lblMunicipio').html("Municipio: "+data.html.municipio);
@@ -74,12 +74,12 @@ function cargarDetalleIntervencion(idIntervencion){
 								 $('#lblCompetencia').html("Competencia: "+data.html.competencia);
 								 $('#lblTipoIntervencion').html("Tipo Intervención: "+data.html.tipo_intervencion);
 								 $("#indicadoresChec").html("Indicadores: ");
-								 for (i=0;i<(data.html.indicador.length);i++){
+								 // for (i=0;i<(data.html.indicador.length);i++){
 									 	
 										//$("#indicadoresChec").html(data.html.indicador[i]);
-										$("#indicadoresChec").html(data.html.indicador[i]);
+										$("#indicadoresChec").html(data.html.indicador);
 								 
-								 }
+								 // }
 							}
 							else{
 								swal(

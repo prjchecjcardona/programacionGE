@@ -34,7 +34,7 @@ function cargarDetalleIntervencion($idIntervencion){
 			JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
 			WHERE inter.id_intervenciones = ".$idIntervencion.""; 
 	  		
-			$array=array();
+			$array="";
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
 					for ($i=0;$i<count($filas);$i++){
@@ -44,8 +44,10 @@ function cargarDetalleIntervencion($idIntervencion){
 						$data['html']['competencia']= $filas[0]['competencia'];
 						$data['html']['tipo_intervencion']= $filas[0]['tipo_intervencion'];
 						
-						$array[]= '<div class="row"><div class="col-md-5">
-						<li><label class="mr-sm-2" id="lblIndicadorChec1">'.$filas[$i]['indicador'].'</label></li></div></div>';
+						// $array.= '<div class="row"><div class="col-md-5">
+						// <li><label class="mr-sm-2" id="lblIndicadorChec1">'.$filas[$i]['indicador'].'</label></li></div></div>';
+						$array.= '<div class="row"><div class="col-md-5">
+						<label class="mr-sm-2" id="lblIndicadorChec1"><li>'.$filas[$i]['indicador'].'</li></label></div></div>';
 						
 					}
 					$data['html']['indicador']= $array;
