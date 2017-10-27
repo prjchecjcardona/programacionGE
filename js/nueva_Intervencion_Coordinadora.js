@@ -2,20 +2,27 @@ $(document).ready(function(){
 	$("#Rural").show();
 	$("#Urbano").hide();
 	traerNombre();
+	nuevaentidad="";
+	
 
 
 /*Dependiendo si seleccionan si cuenta con algun contacto
 * parametro: 
 */
 $('#UrbanoRural input:radio').click(function()   {                           
-	
-	if ($(this).val() == '1') { 
+	ubicacion = $(this).val();
+	//rural
+	if ($(this).val() == '1') {  
 	  $("#Rural").show();
 	  $("#Urbano").hide();
+	  
+	  //se llama a la funcion que llena el combo de veredas
+	  cargarComunas_VeredaPorIdMunicipio($(this).val());
 	}
 	else{
 		$("#Rural").hide();
 		$("#Urbano").show();
+	  cargarComunas_VeredaPorIdMunicipio($(this).val());
   
 	}
  
@@ -24,6 +31,8 @@ $('#UrbanoRural input:radio').click(function()   {
 
 $("#btnNuevaEntidad").click(function(){
 	$(".nuevaEntidadDiv").show();
+	$("#selectbasicTipoEntidad").show();
+	nuevaentidad =1;
 });
 
 
@@ -124,18 +133,47 @@ function cargarPorMunicipiosPorIdZona(idZona){
 
 $( "#selectbasicMunicipio" ).change(function() { 
 	
+	$('#UrbanoRural input:radio').trigger('click');
+	
+});
+
+function cargarComunas_VeredaPorIdMunicipio(ubicacion) { 
+	
 	$.post("php/nueva_Intervencion_Coordinadora.php",{
          accion : 'cargarComunasPorIdMunicipio',
-         idMunicipio : $('#selectbasicMunicipio').val()  				
+         idMunicipio : $('#selectbasicMunicipio').val(),
+		 ubicacion : ubicacion
          },
           function (data) {
 						if(data.error != 1){
 								
-								 $('#selectbasicComuna').html(data.html);
+								if (ubicacion == 2){ 
+									$('#selectbasicComuna').html(data.html);
+								}
+								else{
+									$('#selectbasicVereda').html(data.html);
+								}
 							}
-							// else{
-								// mostrarPopUpError(data.error);
-							// }
+							
+							
+						
+				},"json");
+	
+}
+
+$( "#selectbasicVereda" ).change(function() { 
+	
+	$.post("php/nueva_Intervencion_Coordinadora.php",{
+         accion : 'cargarEntidadPorVereda',
+         idVereda : $('#selectbasicVereda').val()  			
+         },
+          function (data) {
+						if(data.error != 1){
+								
+								 $('#selectbasicEntidad').html(data.html);
+								 $('#selectbasicTipoEntidad').html(data.tipo);
+							}
+							
 							
 						
 				},"json");
@@ -151,18 +189,14 @@ $( "#selectbasicComuna" ).change(function() {
           function (data) {
 						if(data.error != 1){
 								
-									if(data.html == ""){ 
-										cargarEntidadPorVereda();
-										$('#selectbasicBarrio').html("");
-									}
-									else{ 
+									if(data.error != 1){
+										
 										$('#selectbasicBarrio').html(data.html);
 									}
 									
+									
 							}
-							// else{
-								// mostrarPopUpError(data.error);
-							// }
+							
 							
 						
 				},"json");
@@ -181,34 +215,13 @@ $( "#selectbasicBarrio" ).change(function() {
 								 $('#selectbasicEntidad').html(data.html);
 								 $('#selectbasicTipoEntidad').html(data.tipo);
 							}
-							// else{
-								// mostrarPopUpError(data.error);
-							// }
+							
 							
 						
 				},"json");
 	
 });
 
-function cargarEntidadPorVereda(){
-
-	$.post("php/nueva_Intervencion_Coordinadora.php",{
-         accion : 'cargarEntidadPorVereda',
-         idComuna : $('#selectbasicComuna').val()  			
-         },
-          function (data) {
-						if(data.error != 1){
-								
-								 $('#selectbasicEntidad').html(data.html);
-								 $('#selectbasicTipoEntidad').html(data.tipo);
-							}
-							// else{
-								// mostrarPopUpError(data.error);
-							// }
-							
-						
-				},"json");
-}
 
 function cargarTipoIntervencion(){
 
@@ -292,9 +305,16 @@ function guardarIntervencion(){
 			 
 			});
  
-            // alert(list);
+            //fin capturar los indicadores
+			if($('#textinputDireccion').val() != "" && $('#textinputTelefono').val() != ""){
+				direccion : $('#textinputDireccion').val(), 
+				telefono : $('#textinputTelefono').val()
+			}
+			else{
+				direccion ="";
+				telefono ="";
+			}
 			
-			//fin capturar los indicadores
 			
 			
 			$.post("php/nueva_Intervencion_Coordinadora.php",{
@@ -303,12 +323,15 @@ function guardarIntervencion(){
 			 idEntidad : $('#selectbasicEntidad').val(),
 			 idTipoIntervencion : $('#selectbasicTipoInvervencion').val(),
 			 indicadores:list,
-			 // idEntidad : $('#selectbasicEntidad').val(),
+			 idEntidad : $('#selectbasicEntidad').val(),
 			 nombreEntidad : $('#selectbasicEntidad :selected').text(),
-			 idBarrio : $('#selectbasicBarrio').val(), //o vereda
-			 direccion : $('#textinputDireccion').val(), 
-			 telefono : $('#textinputTelefono').val(), 
-			 idTipoEntidad : $('#selectbasicTipoEntidad').val()
+			 idBarrio : $('#selectbasicBarrio').val(), 
+			 idVereda : $('#selectbasicVereda').val(), 
+			 idTipoEntidad : $('#selectbasicTipoEntidad').val(),
+			 nuevaentidad: nuevaentidad,
+			 direccion : direccion, 
+			 telefono : direccion
+			 
 				
 			 },
 			  function (data) { 
@@ -341,13 +364,14 @@ function validarInformacion(){
         var valido=true;
 		//select
         $("select[id^=selectbasic]").each(function(e){
-			if ($(this).val()==0){
+			if ($(this).val()==0 && $(this).is(":visible")){ //alert("sel"+$( this ).attr('id'));
 				valido=false;
 			}
         });
-		//input
-		 $("input[id^=textinput]").each(function(e){
-			if ($(this).val()==""){
+		//input 
+		 // $("input[id^=textinput]").each(function(e){  ("input[id^=textinput][id!=id_requerido]").each(fuanction(e){
+		 $("input[id^=textinput]").each(function(e){  
+			if ($(this).val()=="" && $(this).is(":visible")){ //alert("input"+$( this ).attr('id'));
 				valido=false;
 			}
         });
@@ -357,7 +381,6 @@ function validarInformacion(){
 	
 $( "#buttonCancelar" ).click(function() { 
 	
-	alert();
 	window.location.href = "home_Coordinadora.html";
 	
 });

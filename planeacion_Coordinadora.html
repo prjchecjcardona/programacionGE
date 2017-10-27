@@ -58,12 +58,6 @@
             <!-- Form Name -->
             <legend>Planeación</legend>
 
-            <!-- Button (Triple) -->
-            <div class="form-group">
-
-              <label class="col-md-12 control-label" for="textinputEtapa">Etapa</label>
-              
-            </div>
 
             <!-- Fecha de Encuentro -->
             <div class="form-group">
@@ -94,7 +88,7 @@
             </div>
 
             <!-- Multiple Radios (inline) Comunidad Especial -->
-            <div class="form-group">
+            <div class="form-group" id="comunidad">
               <label class="col-md-12 control-label" for="radiosComunidadEspecial">¿Trabajarás con una comunidad especial?</label>
               <div class="col-md-12">
                 <label class="radio-inline" for="radiosComunidadEspecial-0">
@@ -102,7 +96,7 @@
                       Si
                     </label>
                 <label class="radio-inline" for="radiosComunidadEspecial-1">
-                      <input type="radio" name="radiosComunidadEspecial" id="radiosComunidadEspecial-1" value="2">
+                      <input type="radio" name="radiosComunidadEspecial" id="radiosComunidadEspecial-1" value="0">
                       No
                     </label>
               </div>
@@ -177,11 +171,17 @@
               </div>
             </div>
 
-			<div class="btn-group">
-                <!-- <button id="btnReconocimiento" name="button1id" class="btn btn-success">Reconocimiento</button> -->
-                <button id="btnGestionR" name="button2id" class="btn btn-success">Gestión Redes</button>
-                <button id="btnGestionE" name="button1id" class="btn btn-success">Gestión Educativa</button>
-              </div>		
+			<!-- Button (Triple) -->
+            <div class="form-group">
+
+              <label class="col-md-12 control-label" for="textinputEtapa">Etapa</label>
+              
+            </div>
+			<div class="btn-group" id="etapas">
+                <!-- <button id="btnReconocimiento" name="button1id" class="btn btn-success" style="display:none">Reconocimiento</button> -->
+                <!-- <button id="btnGestionR" name="button2id" class="btn btn-success">Gestión Redes</button> -->
+                <!-- <button id="btnGestionE" name="button1id" class="btn btn-success">Gestión Educativa</button> -->
+            </div>		
 
 			<div id="planeacion2" style="display=none">
 			
@@ -317,8 +317,8 @@
             <div class="form-group">
               <label class="col-md-12 control-label" for="button1id"></label>
               <div class="col-md-8">
-                <button id="button1id" name="button1id" class="btn btn-danger">Cancelar</button>
-                <button id="button2id" name="button2id" class="btn btn-success">Continuar</button>
+                <button id="buttonCancelar" name="button1id" class="btn btn-danger">Cancelar</button>
+                <button id="buttonGuardarPlaneacion" name="button2id" class="btn btn-success">Guardar</button>
               </div>
             </div>
 

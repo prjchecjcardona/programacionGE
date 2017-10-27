@@ -14,7 +14,7 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="cargarComunasPorIdMunicipio")
 	{
-		cargarComunasPorIdMunicipio($_POST["idMunicipio"]);
+		cargarComunasPorIdMunicipio($_POST["idMunicipio"],$_POST["ubicacion"]);
 	}
 	if($_POST["accion"]=="cargarBarriosPorComuna")
 	{
@@ -26,7 +26,7 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="cargarEntidadPorVereda")
 	{
-		cargarEntidadPorVereda($_POST["idComuna"]);
+		cargarEntidadPorVereda($_POST["idVereda"]);
 	}
 	if($_POST["accion"]=="cargarTipoIntervencion")
 	{
@@ -42,7 +42,7 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="guararIntervencion")
 	{
-		guararIntervencion($_POST["idZona"],$_POST["idEntidad"],$_POST["idTipoIntervencion"],$_POST["indicadores"], $_POST["nombreEntidad"],$_POST["idBarrio"],$_POST["direccion"],$_POST["telefono"],$_POST["idTipoEntidad"]);
+		guararIntervencion($_POST["idZona"],$_POST["idEntidad"],$_POST["idTipoIntervencion"],$_POST["indicadores"], $_POST["nombreEntidad"],$_POST["idBarrio"],$_POST["idVereda"],$_POST["idTipoEntidad"],$_POST["nuevaentidad"],$_POST["direccion"],$_POST["telefono"]);
 	}
 	
 	
@@ -120,49 +120,53 @@ function cargarMunicipiosPorIdZona($idZona){
 	}
 }
 
-function cargarComunasPorIdMunicipio($idMunicipio){
+function cargarComunasPorIdMunicipio($idMunicipio,$ubicacion){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
 	
 	if( $con )
  	{
- 		//Datos de la comuna segun el municipio
-    	$sql = "SELECT id_comuna, comuna 
-				FROM comunas 
-				where id_municipio = ".$idMunicipio."
-			  ";
-			  
-			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
-					$data['html']= '<option value="0">Selecciona tu opción</option>';
-					// foreach ($filas as $fila) {
-						// $array[] = $fila; 
-						for ($i=0;$i<count($filas);$i++){
-							$data['html'].= '<option value="'.$filas[$i]['id_comuna'].'">'.$filas[$i]['comuna'].'</option>';
-					 }
-					
-					
-					
+ 		if($ubicacion ==2){
+			
+			//Datos de la comuna segun el municipio
+			$sql = "SELECT id_comuna, comuna 
+					FROM comunas 
+					where id_municipio = ".$idMunicipio."
+				  ";
+				  
+				if ($rs = $con->query($sql)) {
+					if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+						
+						$data['html']= '<option value="0">Selecciona tu opción</option>';
+						// foreach ($filas as $fila) {
+							// $array[] = $fila; 
+							for ($i=0;$i<count($filas);$i++){
+								$data['html'].= '<option value="'.$filas[$i]['id_comuna'].'">'.$filas[$i]['comuna'].'</option>';
+						 }
+						
+						
+						
+					}
 				}
-			}
-			else
-			{
-				print_r($con->errorInfo());
-				$data['mensaje']="No se realizo la consulta de comunas";
-				$data['error']=1;
-			}
+				else
+				{
+					print_r($con->errorInfo());
+					$data['mensaje']="No se realizo la consulta de comunas";
+					$data['error']=1;
+				}
+		}
+		else{
 			
 			//Datos de la vereda segun el municipio
-    	$sql = "SELECT id_veredas, vereda 
+			$sql = "SELECT id_veredas, vereda 
 				FROM veredas 
 				where id_municipio = ".$idMunicipio."
 			  ";
 			  
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
+						$data['html']= '<option value="0">Selecciona tu opción</option>';
 					
 						for ($i=0;$i<count($filas);$i++){
 							$data['html'].= '<option value="'.$filas[$i]['id_veredas'].'">'.$filas[$i]['vereda'].'</option>';
@@ -176,13 +180,14 @@ function cargarComunasPorIdMunicipio($idMunicipio){
 				$data['mensaje']="No se realizo la consulta de veredas";
 				$data['error']=1;
 			}
-			
+		}
+	}//con
 			
 			
 			
 		  echo json_encode($data);
-	}
 }
+
 
 function cargarBarriosPorComuna($idComuna){
 
@@ -265,7 +270,7 @@ function cargarEntidadesPorBarrio($idBarrio){
 	}
 }
 
-function cargarEntidadPorVereda($idComuna){
+function cargarEntidadPorVereda($idVereda){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'', 'tipo'=>'');
@@ -275,7 +280,7 @@ function cargarEntidadPorVereda($idComuna){
  		//Datos de la zona que se selecciono 
     	$sql = "SELECT e.id_entidad,e.nombreentidad,t.id_tipoentidad,t.tipoentidad
 				FROM entidades as e,tipoentidad as t
-				WHERE veredas_id_veredas= '".$idComuna."'
+				WHERE veredas_id_veredas= '".$idVereda."'
 				AND e.id_tipoentidad = t.id_tipoentidad
 			  ";
 			  
@@ -422,7 +427,7 @@ function cargarIndicadoresChec($idIndicador){
 	}
 }
 
-function guararIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores,$nombreEntidad,$idBarrio,$direccion,$telefono,$idTipoEntidad){
+function guararIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores,$nombreEntidad,$idBarrio,$idVereda,$direccion,$telefono,$idTipoEntidad,$nuevaentidad){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
@@ -469,9 +474,8 @@ function guararIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores,
 				$data['error']=1;
 			}
 			
-			$idVereda=0;
-			$idBarrio=0;
-			//consulta para saber si es barrio o vereda FALTA
+			
+			//consulta para saber si es barrio
 			$sql = "SELECT id_barrio
 				from barrios
 				WHERE id_barrio ='".$idBarrio."'	
@@ -481,29 +485,9 @@ function guararIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores,
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
 					
 					$idBarrio=$filas[0]['id_barrio'];
-					
-					
-					if($idBarrio == ""){ //se consulta si es vereda
-						$sql = "SELECT id_veredas
-								from veredas 
-								WHERE id_veredas ='".$idBarrio."'
-								";
-							  
-							if ($rs = $con->query($sql)) {
-								if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-									
-									$idVereda=$filas[0]['id_veredas'];
-									
-								}
-							}
-							else
-							{
-								print_r($con->errorInfo());
-								$data['mensaje']="No se realizo la consulta de veredas";
-								$data['error']=1;
-							}
-					}
-					
+				}
+				else{
+					$idBarrio=0;
 				}
 			}
 			else
@@ -513,23 +497,46 @@ function guararIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores,
 				$data['error']=1;
 			}
 			
-			
-			//insertar en entidad 
-			/*$sql = "INSERT INTO entidades(
-					id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
-					VALUES ('".$idEntidad."', '".$nombreEntidad."', '".$idBarrio."', '".$idVereda."', '".$direccion."', '".$telefono."', '".$idTipoEntidad."', '');
+			//consulta para saber si es vereda 
+			$sql = "SELECT id_veredas
+				from veredas 
+				WHERE id_veredas ='".$idVereda."'
 				";
 			  
 			if ($rs = $con->query($sql)) {
-				
+				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+					
+					$idVereda=$filas[0]['id_veredas'];
+					
+				}
+				else{
+					$idVereda=0;
+				}
 			}
 			else
 			{
 				print_r($con->errorInfo());
-				$data['mensaje']="No se realizo el insert de entidades";
+				$data['mensaje']="No se realizo la consulta de veredas";
 				$data['error']=1;
 			}
-			*/
+			
+			if($nuevaentidad ==1){
+				//insertar en entidad 
+				$sql = "INSERT INTO entidades(
+						id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
+						VALUES ('".$idEntidad."', '".$nombreEntidad."', '".$idBarrio."', '".$idVereda."', '".$direccion."', '".$telefono."', '".$idTipoEntidad."', '');
+					";
+				  
+				if ($rs = $con->query($sql)) {
+					
+				}
+				else
+				{
+					print_r($con->errorInfo());
+					$data['mensaje']="No se realizo el insert de entidades";
+					$data['error']=1;
+				}
+			}
 			
 		
 		//Insertar la intervencion

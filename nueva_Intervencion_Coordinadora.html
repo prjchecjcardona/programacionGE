@@ -88,10 +88,10 @@
             <label class="col-md-12 control-label" for="radiosMunicipio">Ubicación Municipio</label>
             <div class="col-md-12" id="UrbanoRural">
               <label class="radio-inline" for="radiosMunicipio-0">
-                <input onChange="validarRadio(this.value)" type="radio" name="radiosMunicipio" id="radiosMunicipio-0" value="1" checked="checked"> Rural
+                <input onChange="" type="radio" name="radiosMunicipio" id="radiosMunicipio-0" value="1" checked="checked"> Rural
               </label>
               <label class="radio-inline" for="radiosMunicipio-1">
-                <input onChange="validarRadio(this.value)" type="radio" name="radiosMunicipio" id="radiosMunicipio-1" value="2"> Urbano
+                <input onChange="" type="radio" name="radiosMunicipio" id="radiosMunicipio-1" value="2"> Urbano
               </label>
             </div>
           </div>
@@ -101,7 +101,7 @@
             <label class="col-md-12 control-label" for="selectbasicVereda">Vereda</label>
             <div class="col-md-12" class="padding">
               <select id="selectbasicVereda" name="selectbasicVereda" class="form-control">
-                <option value="0">Seleccione...</option>
+               
               </select>
             </div>
           </div>
@@ -111,13 +111,13 @@
             <label class="col-md-12 control-label" for="selectbasicComuna">Comuna</label>
             <div class="col-md-12">
               <select id="selectbasicComuna" name="selectbasicComuna" class="form-control">
-                <option value="0">Seleccione...</option>
+                
               </select>
             </div>
             <label class="col-md-12 control-label espaciado" for="selectbasicBarrio">Barrio</label>
             <div class="col-md-12">
               <select id="selectbasicBarrio" name="selectbasicBarrio" class="form-control">
-                <option value="0">Seleccione...</option>
+                
               </select>
             </div>
           </div>
@@ -132,7 +132,15 @@
               <button id="btnNuevaEntidad" type="submit" class="btn btn-primary botonEnLinea">+</button>
             </div>
           </div>
-
+		  
+		  <!-- Seleccion Tipo de Entidad -->
+            <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">Tipo de Entidad</label>
+            <div class="col-md-12">
+              <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
+                
+              </select>
+            </div>
+			
           <div class="nuevaEntidadDiv">
             <!-- Campo Nombre Entidad -->
             <div class="col-md-12">
@@ -154,15 +162,14 @@
             <!-- Seleccion Tipo de Entidad -->
             <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">Tipo de Entidad</label>
             <div class="col-md-12">
-              <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
-                <option value="1">Opción 1</option>
-                <option value="2">Opción 2</option>
+              <select id="selectbasicTipoEntidadNueva" name="selectbasicTipoEntidad" class="form-control">
+                
               </select>
             </div>
             <!-- Campo Nodo Entidad -->
             <div class="col-md-12 espaciado">
               <label class="col-md-12control-label" for="textinputNodoEntidad">Nodo</label>
-              <input id="textinputNodoEntidad" name="textinputNodoEntidad" type="text" placeholder="Ingrese el Nodo de la Entidad" class="form-control input-md">
+              <input id="text_inputNodoEntidad" name="textinputNodoEntidad" type="text" placeholder="Ingrese el Nodo de la Entidad" class="form-control input-md">
             </div>
 
           </div>
