@@ -1,28 +1,34 @@
 $(document).ready(function(){
- $('#framework').multiselect({
-  nonSelectedText: 'Select Framework',
-  enableFiltering: true,
-  enableCaseInsensitiveFiltering: true,
-  buttonWidth:'400px'
- });
+    $('#multiple-mes').multiselect();
+    $('#multiple-anio').multiselect();
+    $('#multiple-comportamiento').multiselect();
+    $('#multiple-estrategia').multiselect();
+    $('#multiple-tactico').multiselect();
  
- $('#framework_form').on('submit', function(event){
-  event.preventDefault();
-  var form_data = $(this).serialize();
-  $.ajax({
-   url:"insert.php",
-   method:"POST",
-   data:form_data,
-   success:function(data)
-   {
-    $('#framework option:selected').each(function(){
-     $(this).prop('selected', false);
+});
+
+$(function () { 
+    var myChart = Highcharts.chart('container', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Fruit Consumption'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            }
+        },
+        series: [{
+            name: 'Jane',
+            data: [1, 0, 4]
+        }, {
+            name: 'John',
+            data: [5, 7, 3]
+        }]
     });
-    $('#framework').multiselect('refresh');
-    alert(data);
-   }
-  });
- });
- 
- 
 });
