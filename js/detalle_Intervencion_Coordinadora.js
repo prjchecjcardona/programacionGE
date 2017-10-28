@@ -21,6 +21,11 @@ $(document).ready(function(){
 
 	
 	idIntervencion = $.get("idIntervencion");
+	comportamientos="";
+	competencia="";
+	idComportamientos="";
+	idCompetencia="";
+	idEntidad="";
 	cargarDetalleIntervencion(idIntervencion);
 	cargarPlaneacionesPorIntrevencion(idIntervencion);
 	
@@ -72,6 +77,11 @@ function cargarDetalleIntervencion(idIntervencion){
 								 $('#lblEntidad').html("Entidad: "+data.html.nombreentidad);
 								 $('#lblCoportamiento').html("Comportamiento: "+data.html.comportamientos);
 								 $('#lblCompetencia').html("Competencia: "+data.html.competencia);
+								 comportamientos=data.html.comportamientos;
+								 competencia=data.html.competencia;
+								 idComportamientos=data.html.id_comportamientos
+								 idCompetencia=data.html.id_competencia
+								 idEntidad=data.html.id_entidad
 								 $('#lblTipoIntervencion').html("Tipo Intervención: "+data.html.tipo_intervencion);
 								 $("#indicadoresChec").html("Indicadores: ");
 								 // for (i=0;i<(data.html.indicador.length);i++){
@@ -179,9 +189,11 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			}
 	});
 	
-$("#btnNuevaPlaneacion").click(function(){                                 
+$("#btnNuevaPlaneacion").click(function(){                                
 		
-		window.location.href = "planeacion_Coordinadora.html?idIntervencion="+idIntervencion;
+		// window.location.href = "planeacion_Coordinadora.html?idIntervencion="+idIntervencion; 
+		
+		window.location.href = "planeacion_Coordinadora.html?idIntervencion="+idIntervencion+"&comportamientos="+comportamientos+"&competencia="+competencia+"&idComportamientos="+idComportamientos+"&idCompetencia="+idCompetencia+"&idEntidad="+idEntidad;
 		
 	});
 	

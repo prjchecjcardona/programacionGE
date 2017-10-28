@@ -19,7 +19,7 @@ function cargarDetalleIntervencion($idIntervencion){
 	include "conexion.php";
 	$data = array('error'=>0,'mensaje'=>'','html'=>''); 
 	//$idIntrevencion = $_POST['idIntervencion']; //para la consulta
-	$sql = "SELECT mun.municipio, ent.nombreentidad, compor.comportamientos, compe.competencia, ind.indicador, tipo.tipo_intervencion
+	$sql = "SELECT mun.municipio, ent.nombreentidad, compor.comportamientos, compe.competencia, ind.indicador, tipo.tipo_intervencion,compor.id_comportamientos,compe.id_competencia,ent.id_entidad
 			FROM intervenciones inter
 			JOIN tipo_intervencion tipo ON tipo.id_tipo_intervencion = inter.tipo_intervencion_id_tipo_intervencion
 			JOIN indicadores_chec_por_intervenciones indxinter ON indxinter.intervenciones_id_intervenciones = inter.id_intervenciones
@@ -42,6 +42,9 @@ function cargarDetalleIntervencion($idIntervencion){
 						$data['html']['nombreentidad']= $filas[0]['nombreentidad'];
 						$data['html']['comportamientos']= $filas[0]['comportamientos'];
 						$data['html']['competencia']= $filas[0]['competencia'];
+						$data['html']['id_comportamientos']= $filas[0]['id_comportamientos'];
+						$data['html']['id_competencia']= $filas[0]['id_competencia'];
+						$data['html']['id_entidad']= $filas[0]['id_entidad'];
 						$data['html']['tipo_intervencion']= $filas[0]['tipo_intervencion'];
 						
 						// $array.= '<div class="row"><div class="col-md-5">

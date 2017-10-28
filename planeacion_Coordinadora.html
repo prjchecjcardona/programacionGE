@@ -183,11 +183,12 @@
                 <!-- <button id="btnGestionE" name="button1id" class="btn btn-success">Gestión Educativa</button> -->
             </div>		
 
+			<!-- GESTION DE REDES -->
 			<div id="planeacion2" style="display=none">
 			
 				<div class="col-md-12">
-				  <h4>Comportamiento: <span class="label label-success">Campo</span></h4>
-				  <h4>Competencia: <span class="label label-success">Campo</span></h4>
+				  <h4>Comportamiento: <div id="spanComportamiento" class="label label-success"></div></h4>
+				  <h4>Competencia: <div id="spanCompetencia" class="label label-success"></div></h4>
 				</div>
 			  <!-- Estrategia -->
 			  <!-- <div class="form-group"> -->
@@ -214,9 +215,9 @@
 			  <div class="form-group">
 				<label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
 				<div class="col-md-12">
-				  <select id="selectbasicTema" name="selectbasicTema" class="form-control">
-						<option value="1">Opción 1</option>
-						<option value="2">Opción 2</option>
+				  <select id="selectbasicTemare" name="selectbasicTema" class="form-control">
+						<!-- <option value="1">Opción 1</option> -->
+						<!-- <option value="2">Opción 2</option> -->
 					  </select>
 				</div>
 			  </div>
@@ -233,25 +234,26 @@
 			  <!-- </div> -->
 			  <!-- Indicadores -->
 			  <legend>Indicadores</legend>
+				<div id="indicadoresre">
+				  <!-- <div class="checkbox"> -->
+					<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+				  <!-- </div> -->
+				  <!-- <div class="checkbox"> -->
+					<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+				  <!-- </div> -->
+				  <!-- <div class="checkbox"> -->
+					<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+				  <!-- </div> -->
 
-			  <div class="checkbox">
-				<label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
-			  </div>
-			  <div class="checkbox">
-				<label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
-			  </div>
-			  <div class="checkbox">
-				<label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
-			  </div>
-
-
+				</div>
 			</div>
 
+			<!-- GESTION DE EDUCATIVA -->
 			<div id="planeacion3" style="display=none">
 			
 				<div class="col-md-12">
-				  <h4>Comportamientos: <span class="label label-success">Campo</span></h4>
-				  <h4>Competencia: <span class="label label-success">Campo</span></h4>
+				  <h4>Comportamiento: <div id="spanComportamientog" class="label label-success"></div></h4>
+				  <h4>Competencia: <div id="spanCompetenciag" class="label label-success"></div></h4>
 				</div>
 			  <!-- Estrategia -->
 			  <div class="form-group">
@@ -280,8 +282,8 @@
 				<label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
 				<div class="col-md-12">
 				  <select id="selectbasicTema" name="selectbasicTema" class="form-control">
-						<option value="1">Opción 1</option>
-						<option value="2">Opción 2</option>
+						<!-- <option value="1">Opción 1</option> -->
+						<!-- <option value="2">Opción 2</option> -->
 					  </select>
 				</div>
 			  </div>
@@ -298,18 +300,18 @@
 			  <!-- </div> -->
 			  <!-- Indicadores -->
 			  <legend>Indicadores</legend>
+				  <div id="indicadoresge">
+					  <!-- <div class="checkbox"> -->
+						<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+					  <!-- </div> -->
+					  <!-- <div class="checkbox"> -->
+						<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+					  <!-- </div> -->
+					  <!-- <div class="checkbox"> -->
+						<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+					  <!-- </div> -->
 
-			  <div class="checkbox">
-				<label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
-			  </div>
-			  <div class="checkbox">
-				<label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
-			  </div>
-			  <div class="checkbox">
-				<label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
-			  </div>
-
-
+				</div>
 			</div>
 
 
@@ -335,6 +337,7 @@
   <script src="js/includes/bootstrap.min.js"></script>
   <script src="js/planeacion_Coordinadora.js"></script>
   <script src="js/includes/configuracionDatePicker.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- <script type="text/javascript" src="js/funciones.js"></script>  -->
 </body>
 
