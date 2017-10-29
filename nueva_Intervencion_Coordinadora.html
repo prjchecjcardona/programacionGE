@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Nueva Intervención Coordinadora</title>
@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="css/fileinput.min.css">
   <link rel="stylesheet" href="css/fileinput-rtl.min.css">
 
-
   <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="php/SubirArchivo/dropzone.css"></script>
 </head>
 
 <body>
@@ -204,13 +204,16 @@
           <div class="form-group">
             <hr>
             <h4>Adjuntar Imagenes</h4>
-            <form enctype="multipart/form-data">
-              <input id="nueva_intervencion_coord" name="file-es[]" type="file" multiple>
-            </form>
+            <!-- <form enctype="multipart/form-data" > -->
+              <!-- <input id="nueva_intervencion_coord" name="archivo[]" type="file" multiple> -->
+            <!-- </form> -->
+			<iframe id="Example2" name="Example2" width="100%" height="300" frameborder="0" src="/GestionEducativa/programacionGE/php/SubirArchivo/index.php"></iframe>
+			
             <hr>
             <br>
           </div>
-
+			
+		
 
           <!-- Button (Double) -->
           <div class="form-group">
@@ -245,6 +248,11 @@
   <script type="text/javascript" src="js/includes/jquery-3.2.1.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" src="js/ValidarSesion.js"></script>
+  
+  
+  
+  <script type="text/javascript" src="php/SubirArchivo/dropzone.js"></script>
+<script type="text/javascript" src="php/SubirArchivo/dropzone-config.js"></script>
 
   <script src="js/includes/fileInput/fileinput.js"></script>
   <script src="js/includes/fileInput/sortable.min.js"></script>

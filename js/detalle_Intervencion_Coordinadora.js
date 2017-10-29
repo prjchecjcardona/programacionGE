@@ -129,13 +129,13 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 * parametro: data
 */
  function cargarInformacionEnTabla(data){ //alert(data);
-        var table = $('#coordinadora_tabla').DataTable({
+        table = $('#coordinadora_tabla').DataTable({
             "data": data,
             columns: [
 			{ title: "Id" },
 			{ title: "Etapa" },
-			{ title: "Estrategia" },
-			{ title: "Táctico" },
+			// { title: "Estrategia" },
+			// { title: "Táctico" },
 			{ title: "Tema" },
 			{ title: "Fecha" },
 			/*{ title: "Ejecución" },
@@ -170,12 +170,13 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
     }
 	
 //Evento para ver detalle ejecucion//
-	$(document).on('click', '#ejecucion', function() {
+	$(document).on('click', '#ejecucion', function() {  
 			var data = table.row($(this).parents('tr')).data();
-			idPlaneacion= data[0];
+			idPlaneacion= data[0]; 
 			if(data[0]!=""){
 				
-						
+				window.location.href = "ejecucion_Coordinadora.html?idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
+				
 			}
 	});
 	

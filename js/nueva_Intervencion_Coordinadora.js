@@ -307,8 +307,8 @@ function guardarIntervencion(){
  
             //fin capturar los indicadores
 			if($('#textinputDireccion').val() != "" && $('#textinputTelefono').val() != ""){
-				direccion : $('#textinputDireccion').val(), 
-				telefono : $('#textinputTelefono').val()
+				direccion = $('#textinputDireccion').val(); 
+				telefono = $('#textinputTelefono').val();
 			}
 			else{
 				direccion ="";
@@ -386,13 +386,13 @@ $( "#buttonCancelar" ).click(function() {
 });
 
 //Invocacion del archivo File Input para nueva intervencion coordinadora
-$(function(){
-    $('#nueva_intervencion_coord').fileinput({
-          language: 'es',
-          'theme': 'fa',
-          uploadUrl: '#',
-          allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-          'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4']
-      });
-  })
+// $(function(){
+    // $('#nueva_intervencion_coord').fileinput({
+          // language: 'es',
+          // 'theme': 'fa',
+          // uploadUrl: '#',
+          // allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
+          // 'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4']
+      // });
+  // })
 

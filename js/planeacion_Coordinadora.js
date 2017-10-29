@@ -9,6 +9,7 @@ $(document).ready(function(){
 	$("#planeacion3").hide();
 	idEtapa ="";
 	idPlaneacion="";
+	contacto="";
 	
 	/*Extrae los parametros que llegan en la url
 * parametro: 
@@ -199,7 +200,7 @@ $('#buttonGuardarPlaneacion').click(function()   {
 	if (!validarInformacion()) {
             swal(
 				  '', //titulo
-				  'Debes ingresar todos los datos!',
+				  'Debes ingresar todos los datos, incluyendo la etapa!',
 				  'error'
 				);
         }else{
@@ -235,7 +236,8 @@ $('#buttonGuardarPlaneacion').click(function()   {
 			 observaciones:$('textarea[id="textareaObservaciones"]').val(),
 			 idIntervencion:idIntervencion,
 			 idEtapa:idEtapa,
-			 idEntidad:idEntidad
+			 idEntidad:idEntidad,
+			 contacto:contacto
 				
 			 },
 			  function (data) { 
@@ -261,7 +263,7 @@ $('#buttonGuardarPlaneacion').click(function()   {
 										guardarGestionRedes();
 										
 									}//gestion educativa
-									else if(idEtapa ==3){
+									else if(idEtapa ==3){ alert(1);
 										guardarGestionEducativa();
 									}
 									// window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion="+data.idIntervencion;
@@ -289,6 +291,9 @@ function validarInformacion(){
 			}
         });
 		
+		if (idEtapa == ""){ 
+			valido=false;
+		}		
         return valido;
     }
 	
@@ -298,9 +303,9 @@ $( "#buttonCancelar" ).click(function() {
 	
 });
 
-function seleccionarEtapa(idEtapa){
+function seleccionarEtapa(idEtapadb){
 	
-	idEtapa=idEtapa;
+	idEtapa=idEtapadb; alert(idEtapa);
 	
 	consultarTemas();
 	consultarIndicadoresGE();
@@ -376,7 +381,16 @@ function guardarGestionRedes(){
 /*Guarda gestion educativa
 * parametro: 
 */
-function guardarGestionEducativa(){ 
+function guardarGestionEducativa(){ alert();
+	
+	
+	//capturar indicadores
+	var list = new Array();
+	$("#indicadoresge input:checkbox:checked").each(function() {
+        // alert("El checkbox con valor " + $(this).val() + " está seleccionado");
+		list.push($(this).val());
+		}
+	);
 	
 	$.post("php/planeacion_Coordinadora.php",{
            accion:'guardarGestionEducativa',
@@ -448,6 +462,24 @@ function consultarIndicadoresGE(){
 $( "#buttonCancelar" ).click(function() { 
 	
 	window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion="+idIntervencion;
+	
+});
+
+/*Dependiendo si seleccionan si cuenta con algun contacto
+* parametro: 
+*/
+$('#radiosAlgunContacto input:radio').click(function()   {                           
+	
+	//si contacto 
+	if ($(this).val() == 'siContacto') {  
+	  
+	  contacto = $(this).val();
+	}
+	else{
+	  contacto = $(this).val();
+  
+	}
+ 
 	
 });
 

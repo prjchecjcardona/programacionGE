@@ -74,18 +74,31 @@ function cargarPlaneacionesPorIntrevencion($idIntrevencion){
     $registro = array();
 	$data = array('error'=>0,'mensaje'=>'','html'=>''); 
 	//$idIntrevencion = $_POST['idIntervencion']; //para la consulta
-	$sql = "SELECT pl.id_planeacion, ep.etapaproceso, est.nombreestrategia, tact.nombretactico, tem.temas, pl.fecha
+	// $sql = "SELECT pl.id_planeacion, ep.etapaproceso, est.nombreestrategia, tact.nombretactico, tem.temas, pl.fecha
+			// FROM planeacion pl
+			// JOIN etapaproceso ep ON pl.etapaproceso_id_etapaproceso = ep.id_etapaproceso
+			// JOIN tactico_por_planeacion tactxpl ON pl.id_planeacion = tactxpl.planeacion_id_planeacion
+			// JOIN tactico tact ON tact.id_tactico = tactxpl.tactico_id_tactico
+			// JOIN estrategias est ON tact.id_estrategia = est.id_estrategia
+			// JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
+			// JOIN subtemas sub ON subxpl.subtemas_id_subtema = sub.id_subtema
+			// JOIN temas tem ON sub.id_temas = tem.id_temas
+			// JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
+			// WHERE plxint.intervenciones_id_intervenciones = ".$idIntrevencion."
+			// GROUP BY pl.id_planeacion, etapaproceso, nombreestrategia, nombretactico, temas, fecha"; //consulta
+			
+		$sql = "SELECT pl.id_planeacion, ep.etapaproceso,  tem.temas, pl.fecha
 			FROM planeacion pl
 			JOIN etapaproceso ep ON pl.etapaproceso_id_etapaproceso = ep.id_etapaproceso
-			JOIN tactico_por_planeacion tactxpl ON pl.id_planeacion = tactxpl.planeacion_id_planeacion
-			JOIN tactico tact ON tact.id_tactico = tactxpl.tactico_id_tactico
-			JOIN estrategias est ON tact.id_estrategia = est.id_estrategia
+			
+			
+			
 			JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
 			JOIN subtemas sub ON subxpl.subtemas_id_subtema = sub.id_subtema
 			JOIN temas tem ON sub.id_temas = tem.id_temas
 			JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
-			WHERE plxint.intervenciones_id_intervenciones = ".$idIntrevencion."
-			GROUP BY pl.id_planeacion, etapaproceso, nombreestrategia, nombretactico, temas, fecha"; //consulta
+			WHERE plxint.intervenciones_id_intervenciones = 1
+			GROUP BY pl.id_planeacion, etapaproceso, temas, fecha";	
 	  		
 			$array=array();
 			if ($rs = $con->query($sql)) {
