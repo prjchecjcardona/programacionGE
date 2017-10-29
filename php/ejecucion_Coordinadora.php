@@ -93,8 +93,7 @@ function guardarEjecucion($fecha,$hora,$asistentes,$detalleCumplimiento,$nCumpli
  		
 			//Insertar en ejecucion
 			$sql = "INSERT INTO ejecucion (id_ejecucion, nivelcumplimiento,fecha,horafinalizacion,numeroasistentes,observaciones)
-			VALUES (nextval('sec_ejecucion'),'".$nCumplimiento."', '".$fecha."', '".$hora."', '".$asistentes."',""); 
-			  ";
+			VALUES (nextval('sec_ejecucion'),'".$nCumplimiento."', '".$fecha."', '".$hora."', '".$asistentes."','');";
 			  
 				if ($rs = $con->query($sql)) {
 					
@@ -111,7 +110,7 @@ function guardarEjecucion($fecha,$hora,$asistentes,$detalleCumplimiento,$nCumpli
 								
 								// SE INSERTA EN ejecuciones por planeacion								
 								
-									$sql = "INSERT INTO ejecuciones_por_planeacion (id_planeaciones_por_intervencion, ejecucion_id_ejecucion,id_planeaciones_por_intervencion)
+									$sql = "INSERT INTO ejecuciones_por_planeacion (id_ejecuciones_por_planeacion, ejecucion_id_ejecucion,id_planeaciones_por_intervencion)
 									VALUES (nextval('sec_planeaciones_por_intervencion'),'".$id_ejecucion."', '".$idPlaneacion."'); 
 									  ";
 									  
@@ -136,8 +135,8 @@ function guardarEjecucion($fecha,$hora,$asistentes,$detalleCumplimiento,$nCumpli
 											if($detalleCumplimiento[$i] == 3){$nivelCumplimiento="No se cumplio";}
 
 											//Insertar la detallenivelcumplimiento_por_ejecucion  FALTA CREA LA SECENCIA
-											$sql = "INSERT INTO detallenivelcumplimiento_por_ejecucion (id_detallenivelcumplimiento_por_ejecucion, id_detalle_nivelcumplimiento, ejecucion_id_ejecucion,nivel_cumplimiento)
-												VALUES (nextval('sec_detallenivelcumplimiento_por_ejecucion'),'".$detalleCumplimiento[$i]."', '".$idEjecucion."','".$nivelCumplimiento."'); 
+											$sql = "INSERT INTO detallenivelcumplimiento_por_ejecucion (id_detallenivelcumplimiento_por_ejecucioncl, id_detalle_nivelcumplimiento, ejecucion_id_ejecucion,nivel_cumplimiento)
+												VALUES (nextval('sec_detallenivelcumplimiento_por_ejecucion'),'".$detalleCumplimiento[$i]."', '".$id_ejecucion."','".$nivelCumplimiento."'); 
 												  ";
 												  
 													if ($rs = $con->query($sql)) {

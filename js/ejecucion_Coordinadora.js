@@ -22,7 +22,7 @@ $(function(){
 	
 	idPlaneacion = $.get("idPlaneacion");
 	idIntervencion = $.get("idIntervencion");
-	nCumplimiento
+	nCumplimiento="";
 	cargarDatosPlaneacion();
   });
  
@@ -87,7 +87,7 @@ function cargarDatosPlaneacion(){
 }
 
 
-function guardarEjecucion(){
+function guardarEjecucion(){ 
 	
 	if (!validarInformacion()) {
             swal(
@@ -95,38 +95,27 @@ function guardarEjecucion(){
 				  'Debes ingresar todos los datos!',
 				  'error'
 				);
-        }else{
+        }else{ alert("entro");
             
 			//detalleNivelCumplimiento
 			var list = new Array();
  
-			$.each($('#detalleNivelCumplimiento :selected'), function() {
+			$.each($('#detalleNivelCumplimiento :checked'), function() {
 				
 				list.push($(this).val());
 			 
 			});
 			
-			
-			//capturar los indicadores
-			 var list1 = new Array();
- 
-            $.each($('#nCumplimiento :selected'), function() {
-				
-				list1.push($(this).val());
-			 
-			});
- 
             //fin capturar los indicadores
 				
 			
-			$.post("php/nueva_Intervencion_Coordinadora.php",{
+			$.post("php/ejecucion_Coordinadora.php",{
 			 accion : 'guardarEjecucion',
-			 			
 			 fecha : $('#textFecha').val(),
 			 hora : $('#selectbasicHoraEje').val()+":"+$('#selectbasicMinEje').val(),
 			 asistentes : $('#textinputAsisNum').val(),
 			 detalleCumplimiento : list, 
-			 nCumplimiento : list1,
+			 nCumplimiento : $('input:radio[name=nCumplimiento]:checked').val(),
 			 idPlaneacion:idPlaneacion
 			 
 				
@@ -148,7 +137,7 @@ function guardarEjecucion(){
 									  'success'
 									);
 									
-									window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion="+data.idIntervencion;
+									window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion="+idIntervencion;
 							}
 								
 								
@@ -157,17 +146,27 @@ function guardarEjecucion(){
         }
 }
 
-function validarInformacion(){
+function validarInformacion(){ 
         var valido=true;
-		//select
-        $("#detalleNivelCumplimiento radio[name^=detalle]").each(function(e){
-			if ($(this).val()==0 && $(this).is(":visible")){ //alert("sel"+$( this ).attr('id'));
-				valido=false;
-			}
+		//radio
+		cont=0;
+        $("#detalleNivelCumplimiento input:radio[name^=detalle_]:checked").each(function(e){
+			 // alert("radio"+$( this ).attr('id'));
+				
+			cont++;
         });
+		if (cont == 4 )
+		{
+			
+		}
+		else
+		{
+			valido=false;
+		}
+		
 		//input 
 		 // $("input[id^=textinput]").each(function(e){  ("input[id^=textinput][id!=id_requerido]").each(fuanction(e){
-		 $("input[id^=txtFecha]").each(function(e){  
+		 $("input[id^=text]").each(function(e){  
 			if ($(this).val()=="" && $(this).is(":visible")){ //alert("input"+$( this ).attr('id'));
 				valido=false;
 			}

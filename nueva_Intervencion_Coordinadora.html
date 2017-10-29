@@ -53,6 +53,7 @@
 
   <!-- Inicio Formulario Nueva Intervencion Coordinadora  -->
   <div class="container">
+  
     <div class="row">
       <div class="col-md-4 col-md-offset-2">
         <!--<form class="form-horizontal" action="php/GuardarRegistros.php" method="POST">-->
@@ -145,7 +146,7 @@
             <!-- Campo Nombre Entidad -->
             <div class="col-md-12">
               <label class="col-md-12control-label" for="textinputEntidad">Nombre de la Entidad</label>
-              <input id="textinputEntidad" name="textinputEntidad" type="text" placeholder="Ingrese el Nombre de la Entidad" class="form-control input-md">
+              <input id="textinputEntidadNueva" name="textinputEntidadN" type="text" placeholder="Ingrese el Nombre de la Entidad" class="form-control input-md">
             </div>
             <!-- Campo Direccion Entidad -->
             <div class="col-md-12 espaciado">
@@ -163,6 +164,10 @@
             <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">Tipo de Entidad</label>
             <div class="col-md-12">
               <select id="selectbasicTipoEntidadNueva" name="selectbasicTipoEntidad" class="form-control">
+			   <option value="0">Selecciona tu opción</option>
+			   <option value="1">Público</option>
+			   <option value="2">Privado</option>
+			   <option value="3">Organización de base comunitaria</option>
                 
               </select>
             </div>
@@ -207,7 +212,7 @@
             <!-- <form enctype="multipart/form-data" > -->
               <!-- <input id="nueva_intervencion_coord" name="archivo[]" type="file" multiple> -->
             <!-- </form> -->
-			<iframe id="Example2" name="Example2" width="100%" height="300" frameborder="0" src="/GestionEducativa/programacionGE/php/SubirArchivo/index.php"></iframe>
+			<iframe id="Example2" name="Example2" width="100%" height="300" frameborder="0" src="php/SubirArchivo/index.php"></iframe>
 			
             <hr>
             <br>
@@ -231,10 +236,21 @@
       </div>
       <div class="col-md-8 estatica">
         <img src="img/CoordinadoraNuevaIntervencion.png">
+		  <div class="boton-dashboard btn-verde" id="btnBancoHerramientas" style="height:70px">
+              <!-- <i class="fa fa-book fa-4x"></i> -->
+              <h6>Banco de Herramientas</h6>
+            </div>
       </div>
-    </div>
+	  
+    </div> <!--ROW  -->
+	
   </div>
+  
 
+ <!--banco de herramientas-->
+		<!-- <iframe id="Example2" name="Example2" width="100%" height="750" frameborder="0" src="Banco de Herramientas V2/index.html"></iframe> -->
+	  <!-- <div> -->
+	  <!-- </div> -->
 
   <script src="js/includes/jquery-3.2.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>

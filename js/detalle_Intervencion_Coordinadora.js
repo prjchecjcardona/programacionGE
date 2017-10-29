@@ -134,8 +134,8 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
             columns: [
 			{ title: "Id" },
 			{ title: "Etapa" },
-			// { title: "Estrategia" },
-			// { title: "Táctico" },
+			{ title: "Estrategia" },
+			{ title: "Táctico" },
 			{ title: "Tema" },
 			{ title: "Fecha" },
 			/*{ title: "Ejecución" },

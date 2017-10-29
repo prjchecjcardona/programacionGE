@@ -30,7 +30,7 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="guardarGestionRedes")
 	{
-		guardarGestionRedes($_POST['idPlaneacion'],$_POST['idTema'],$_POST['indicadores']);
+		guardarGestionRedes($_POST['idPlaneacion'],$_POST['idTema'],$_POST['indicadores'],$_POST['tactico']);
 	}
 	if($_POST["accion"]=="guardarGestionEducativa")
 	{
@@ -199,9 +199,9 @@ function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$corr
 	
 	if( $con )
  	{
- 		if ($contacto == "siContacto"){
+ 		if ($contacto == 1){
 		//guardarContacto traer el id entidad de la intervencion
-						$sql = "INSERT INTO contactos (id_contacto, nombrecontacto, cargo,telefono,corero,confirmado,entidades_id_entidad)
+						$sql = "INSERT INTO contactos (id_contacto, nombrecontacto, cargo,telefono,correo,confirmado,entidades_id_entidad)
 							VALUES (nextval('sec_contactos'),'".$nombreContacto."', '".$cargoContacto."', '".$telefonoContacto."', '".$correoContacto."', '0','".$idEntidad."'); 
 							  ";
 							  
@@ -282,7 +282,7 @@ function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$corr
 }
 
 
-function guardarGestionRedes($idPlaneacion,$idTema,$indicadores){
+function guardarGestionRedes($idPlaneacion,$idTema,$indicadores,$tactico){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
@@ -351,6 +351,23 @@ function guardarGestionRedes($idPlaneacion,$idTema,$indicadores){
 								}
 	
 						}
+						
+					//Insertar la tactico_por_planeacion
+				$sql = "INSERT INTO tactico_por_planeacion (tactico_id_tactico, planeacion_id_planeacion)
+					VALUES ('".$tactico."', '".$idPlaneacion."'); 
+					  ";
+					  
+					if ($rs = $con->query($sql)) {
+							
+							 
+						}
+						else
+						{
+							print_r($con->errorInfo());
+							$data['mensaje']="No se realizo el insert tactico_por_planeacion";
+							$data['error']=1;
+						}
+					
 
 			
 		  echo json_encode($data);
