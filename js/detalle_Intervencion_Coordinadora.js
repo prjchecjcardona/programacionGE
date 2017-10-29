@@ -142,7 +142,7 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			{ title: "Evaluación" },*/ 
 			
 			{data: null, className: "center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>'},
-			{data: null, className: "center", defaultContent: '<a href="#" id="evaluacion" class="btn btn-sm btn-success" alt="Evaluación"><span class="fa fa-pencil-square-o"></span></a>'}
+			// {data: null, className: "center", defaultContent: '<a href="#" id="evaluacion" class="btn btn-sm btn-success" alt="Evaluación"><span class="fa fa-pencil-square-o"></span></a>'}
 			],
             "paging":   true,
             "info":     false,
