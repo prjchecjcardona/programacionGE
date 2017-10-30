@@ -341,7 +341,7 @@ function initElements(){
     
     });
     
-    var MomentoV = Highcharts.chart('lines2_coordinadora', {
+   /*  var MomentoV = Highcharts.chart('lines2_coordinadora', {
     
         title: {
             text: 'Solar Employment Growth by Sector, 2010-2016'
@@ -403,7 +403,7 @@ function initElements(){
             }]
         }
     
-    });
+    }); */
     
     var table = $('#gestionRedes').DataTable({
         "language": {
@@ -434,7 +434,7 @@ function initElements(){
     
     });
     
-    var table = $('#coberturaGeneral').DataTable({
+    var table1 = $('#coberturaGeneral').DataTable({
         "language": {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
@@ -463,7 +463,7 @@ function initElements(){
     
     });
     
-    var table = $('#competenciaCiudadanaComportamientoDeseable').DataTable({
+    var table2 = $('#competenciaCiudadanaComportamientoDeseable').DataTable({
         "language": {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
