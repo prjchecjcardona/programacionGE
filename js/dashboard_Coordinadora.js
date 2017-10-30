@@ -17,12 +17,20 @@ $(function () {
                 'Dimanche', 'Lundi', 'Mardi', 'Mercredi',
                 'Jeudi', 'Vendredi', 'Samedi'
             ],
+
+            shortMonths: [
+                'Ene', 'Feb', 'Mar', 'Abr',
+                'May', 'Jun', 'Jul', 'Ago',
+                'Sep', 'Oct', 'Nov', 'Dic'
+            ],
+
             downloadPNG:"Descargar en Formato PNG",
             downloadPDF:"Descargar en Formato PDF",
             downloadSVG:"Descargar en Formato SVG",
             downloadJPEG:"Descargar en formato JPEG",
             printChart:"Imprimir Tablero",
             
+           
 
         }
     });
