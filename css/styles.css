@@ -348,3 +348,6 @@ nav.fixed-top{
 .detalle-intervencion-coord b{
   color: rgb(80, 80, 80);
 }
+.nav-tabs .nav-link.active{
+  color: #1e7e34 !important;
+}

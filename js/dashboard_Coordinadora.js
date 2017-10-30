@@ -1,4 +1,34 @@
 $(function () {
+    initElements();
+});
+
+
+function traerNombre(){ 
+    
+        $.post("php/CapturaVariableSession.php",{
+               accion:'traerNombre'
+               
+                                  
+             },
+             function (data) {
+                if (data !=	""){		
+                    $('#Nombre').html(data);
+                }
+                else{
+                    swal(
+                      '', //titulo
+                      'Debes iniciar sesion!',
+                      'error'
+                    );
+                    window.location.href = "welcome_Coordinadora.html";
+                }
+            }
+              ,"json");
+    
+    }
+function initElements(){
+    traerNombre();
+
     $('#multiple-mes').multiselect({
         enableFiltering: true,
         filterPlaceholder: 'Buscar',
@@ -8,7 +38,7 @@ $(function () {
             return 'Seleccione Opción'; 
         }
     });
-
+    
     $('#multiple-anio').multiselect({
         enableFiltering: true,
         filterPlaceholder: 'Buscar',
@@ -18,7 +48,7 @@ $(function () {
             return 'Seleccione Opción';
         }
     });
-
+    
     $('#multiple-municipio').multiselect({
         enableFiltering: true,
         filterPlaceholder: 'Buscar',
@@ -73,8 +103,8 @@ $(function () {
             return 'Seleccione Opción';
         }
     });
-
-
+    
+    
     Highcharts.setOptions({
         lang: {
             months: [
@@ -86,24 +116,24 @@ $(function () {
                 'Dimanche', 'Lundi', 'Mardi', 'Mercredi',
                 'Jeudi', 'Vendredi', 'Samedi'
             ],
-
+    
             shortMonths: [
                 'Ene', 'Feb', 'Mar', 'Abr',
                 'May', 'Jun', 'Jul', 'Ago',
                 'Sep', 'Oct', 'Nov', 'Dic'
             ],
-
+    
             downloadPNG: "Descargar en Formato PNG",
             downloadPDF: "Descargar en Formato PDF",
             downloadSVG: "Descargar en Formato SVG",
             downloadJPEG: "Descargar en formato JPEG",
             printChart: "Imprimir Tablero",
-
-
-
+    
+    
+    
         }
     });
-
+    
     var MomentoI = Highcharts.chart('container', {
         chart: {
             type: 'bar'
@@ -127,7 +157,7 @@ $(function () {
             data: [5, 7, 3]
         }]
     });
-
+    
     var MomentoII = Highcharts.chart('bar_coordinadora', {
         chart: {
             type: 'column'
@@ -178,22 +208,22 @@ $(function () {
         series: [{
             name: 'Tokyo',
             data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
+    
         }, {
             name: 'New York',
             data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
+    
         }, {
             name: 'London',
             data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
+    
         }, {
             name: 'Berlin',
             data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
-
+    
         }]
     });
-
+    
     var MomentoIII = Highcharts.chart('pie_coordinadora', {
         chart: {
             plotBackgroundColor: null,
@@ -246,17 +276,17 @@ $(function () {
             }]
         }]
     });
-
+    
     var MomentoIV = Highcharts.chart('lines_coordinadora', {
-
+    
         title: {
             text: 'Solar Employment Growth by Sector, 2010-2016'
         },
-
+    
         subtitle: {
             text: 'Source: thesolarfoundation.com'
         },
-
+    
         yAxis: {
             title: {
                 text: 'Number of Employees'
@@ -267,7 +297,7 @@ $(function () {
             align: 'right',
             verticalAlign: 'middle'
         },
-
+    
         plotOptions: {
             series: {
                 label: {
@@ -276,7 +306,7 @@ $(function () {
                 pointStart: 2010
             }
         },
-
+    
         series: [{
             name: 'Installation',
             data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
@@ -293,7 +323,7 @@ $(function () {
             name: 'Other',
             data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
         }],
-
+    
         responsive: {
             rules: [{
                 condition: {
@@ -308,19 +338,19 @@ $(function () {
                 }
             }]
         }
-
+    
     });
-
+    
     var MomentoV = Highcharts.chart('lines2_coordinadora', {
-
+    
         title: {
             text: 'Solar Employment Growth by Sector, 2010-2016'
         },
-
+    
         subtitle: {
             text: 'Source: thesolarfoundation.com'
         },
-
+    
         yAxis: {
             title: {
                 text: 'Number of Employees'
@@ -331,7 +361,7 @@ $(function () {
             align: 'right',
             verticalAlign: 'middle'
         },
-
+    
         plotOptions: {
             series: {
                 label: {
@@ -340,7 +370,7 @@ $(function () {
                 pointStart: 2010
             }
         },
-
+    
         series: [{
             name: 'Installation',
             data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
@@ -357,7 +387,7 @@ $(function () {
             name: 'Other',
             data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
         }],
-
+    
         responsive: {
             rules: [{
                 condition: {
@@ -372,14 +402,9 @@ $(function () {
                 }
             }]
         }
-
+    
     });
-
-
-});
-
-$(function () {
-
+    
     var table = $('#gestionRedes').DataTable({
         "language": {
             "sProcessing": "Procesando...",
@@ -404,14 +429,11 @@ $(function () {
                 "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
-
+    
         },
-
+    
     });
-});
-
-$(function () {
-
+    
     var table = $('#coberturaGeneral').DataTable({
         "language": {
             "sProcessing": "Procesando...",
@@ -436,40 +458,41 @@ $(function () {
                 "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
-
+    
         },
-
+    
     });
-});
-
-$(function () {
     
-        var table = $('#competenciaCiudadanaComportamientoDeseable').DataTable({
-            "language": {
-                "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "Siguiente",
-                    "sPrevious": "Anterior"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                }
-    
+    var table = $('#competenciaCiudadanaComportamientoDeseable').DataTable({
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
             },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
     
-        });
+        },
+    
     });
+
+}
+
+
+
