@@ -1,12 +1,78 @@
 $(function () {
-    $('#multiple-mes').multiselect();
-    $('#multiple-anio').multiselect();
-    $('#multiple-municipio').multiselect();
-    $('#multiple-zona').multiselect();
-    $('#multiple-entidad').multiselect();
-    $('#multiple-comportamiento').multiselect();
-    $('#multiple-estrategia').multiselect();
-    $('#multiple-tactico').multiselect();
+    $('#multiple-mes').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Buscar',
+        includeSelectAllOption: true,
+        selectAllText: 'Seleccionar Todos',
+        buttonText: function(options, select) {
+            return 'Seleccione Opción'; 
+        }
+    });
+
+    $('#multiple-anio').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Buscar',
+        includeSelectAllOption: true,
+        selectAllText: 'Seleccionar Todos',
+        buttonText: function(options, select) {
+            return 'Seleccione Opción';
+        }
+    });
+
+    $('#multiple-municipio').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Buscar',
+        includeSelectAllOption: true,
+        selectAllText: 'Seleccionar Todos',
+        buttonText: function(options, select) {
+            return 'Seleccione Opción';
+        }
+    });
+    $('#multiple-zona').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Buscar',
+        includeSelectAllOption: true,
+        selectAllText: 'Seleccionar Todos',
+        buttonText: function(options, select) {
+            return 'Seleccione Opción';
+        }
+    });
+    $('#multiple-entidad').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Buscar',
+        includeSelectAllOption: true,
+        selectAllText: 'Seleccionar Todos',
+        buttonText: function(options, select) {
+            return 'Seleccione Opción';
+        }
+    });
+    $('#multiple-comportamiento').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Buscar',
+        includeSelectAllOption: true,
+        selectAllText: 'Seleccionar Todos',
+        buttonText: function(options, select) {
+            return 'Seleccione Opción';
+        }
+    });
+    $('#multiple-estrategia').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Buscar',
+        includeSelectAllOption: true,
+        selectAllText: 'Seleccionar Todos',
+        buttonText: function(options, select) {
+            return 'Seleccione Opción';
+        }
+    });
+    $('#multiple-tactico').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Buscar',
+        includeSelectAllOption: true,
+        selectAllText: 'Seleccionar Todos',
+        buttonText: function(options, select) {
+            return 'Seleccione Opción';
+        }
+    });
 
 
     Highcharts.setOptions({
