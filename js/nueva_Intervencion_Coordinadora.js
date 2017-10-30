@@ -4,7 +4,13 @@ $(document).ready(function(){
 	traerNombre();
 	nuevaentidad="";
 	
-
+	$( "#btnBancoHerramientas" ).click(function() {
+	
+		// window.location.href = "Banco de Herramientas V2/index.html";
+		window.open ("Banco de Herramientas V2/index.html", '_blank');
+	
+	});
+	
 
 /*Dependiendo si seleccionan si cuenta con algun contacto
 * parametro: 
@@ -30,13 +36,21 @@ $('#UrbanoRural input:radio').click(function()   {
 });
 
 $("#btnNuevaEntidad").click(function(){
-	$(".nuevaEntidadDiv").show();
-	$("#selectbasicTipoEntidad").show();
-	nuevaentidad =1;
+	
+	if($(".nuevaEntidadDiv").is(":visible")){
+		$(".nuevaEntidadDiv").hide();
+		$("#selectbasicTipoEntidad").show();
+		nuevaentidad =0;
+	}
+	else{
+		$(".nuevaEntidadDiv").show();
+		$("#selectbasicTipoEntidad").show();
+		$("#selectbasicTipoEntidad").hide();
+		nuevaentidad =1;
+	}
+	
+	
 });
-
-
-
 
 	
 /*Extrae los parametros que llegan en la url
@@ -306,13 +320,21 @@ function guardarIntervencion(){
 			});
  
             //fin capturar los indicadores
-			if($('#textinputDireccion').val() != "" && $('#textinputTelefono').val() != ""){
-				direccion : $('#textinputDireccion').val(), 
-				telefono : $('#textinputTelefono').val()
+			
+			//se va a guardar la nueva entidad
+			if(nuevaentidad ==1){
+				direccion = $('#textinputDireccion').val(); 
+				telefono = $('#textinputTelefono').val();
+				nombreEntidad = $('#textinputEntidadNueva').val();
+				idTipoEntidad = $('#selectbasicTipoEntidadNueva').val();
+				
 			}
 			else{
+				
 				direccion ="";
 				telefono ="";
+				nombreEntidad = $('#selectbasicEntidad :selected').text(),
+				idTipoEntidad =$('#selectbasicTipoEntidad').val();
 			}
 			
 			
@@ -323,7 +345,6 @@ function guardarIntervencion(){
 			 idEntidad : $('#selectbasicEntidad').val(),
 			 idTipoIntervencion : $('#selectbasicTipoInvervencion').val(),
 			 indicadores:list,
-			 idEntidad : $('#selectbasicEntidad').val(),
 			 nombreEntidad : $('#selectbasicEntidad :selected').text(),
 			 idBarrio : $('#selectbasicBarrio').val(), 
 			 idVereda : $('#selectbasicVereda').val(), 
@@ -386,13 +407,13 @@ $( "#buttonCancelar" ).click(function() {
 });
 
 //Invocacion del archivo File Input para nueva intervencion coordinadora
-$(function(){
-    $('#nueva_intervencion_coord').fileinput({
-          language: 'es',
-          'theme': 'fa',
-          uploadUrl: '#',
-          allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-          'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4']
-      });
-  })
+// $(function(){
+    // $('#nueva_intervencion_coord').fileinput({
+          // language: 'es',
+          // 'theme': 'fa',
+          // uploadUrl: '#',
+          // allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
+          // 'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4']
+      // });
+  // })
 

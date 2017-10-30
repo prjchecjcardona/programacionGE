@@ -22,7 +22,7 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="guararPlaneacion")
 	{
-		guararPlaneacion($_POST['nombreContacto'],$_POST['cargoContacto'],$_POST['telefonoContacto'],$_POST['correoContacto'],$_POST['fecha'],$_POST['lugar'],$_POST['jornada'],$_POST['comunidad'],$_POST['poblacion'],$_POST['observaciones'],$_POST['idIntervencion'],$_POST['idEtapa'],$_POST['idEntidad']);
+		guararPlaneacion($_POST['nombreContacto'],$_POST['cargoContacto'],$_POST['telefonoContacto'],$_POST['correoContacto'],$_POST['fecha'],$_POST['lugar'],$_POST['jornada'],$_POST['comunidad'],$_POST['poblacion'],$_POST['observaciones'],$_POST['idIntervencion'],$_POST['idEtapa'],$_POST['idEntidad'],$_POST['contacto']);
 	}
 	if($_POST["accion"]=="cargarEtapas")
 	{
@@ -30,7 +30,7 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="guardarGestionRedes")
 	{
-		guardarGestionRedes($_POST['idPlaneacion'],$_POST['idTema'],$_POST['indicadores']);
+		guardarGestionRedes($_POST['idPlaneacion'],$_POST['idTema'],$_POST['indicadores'],$_POST['tactico']);
 	}
 	if($_POST["accion"]=="guardarGestionEducativa")
 	{
@@ -192,16 +192,16 @@ function cargarEtapas(){
 		  echo json_encode($data);
 }
 
-function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$correoContacto,$fecha,$lugar,$jornada,$comunidad,$poblacion,$observaciones,$idIntervencion,$idEtapa,$idEntidad){
+function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$correoContacto,$fecha,$lugar,$jornada,$comunidad,$poblacion,$observaciones,$idIntervencion,$idEtapa,$idEntidad,$contacto){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
 	
 	if( $con )
  	{
- 		
+ 		if ($contacto == 1){
 		//guardarContacto traer el id entidad de la intervencion
-						$sql = "INSERT INTO contactos (id_contacto, nombre_contacto, cargo,telefono,corero,confirmado,entidades_id_entidad)
+						$sql = "INSERT INTO contactos (id_contacto, nombrecontacto, cargo,telefono,correo,confirmado,entidades_id_entidad)
 							VALUES (nextval('sec_contactos'),'".$nombreContacto."', '".$cargoContacto."', '".$telefonoContacto."', '".$correoContacto."', '0','".$idEntidad."'); 
 							  ";
 							  
@@ -216,9 +216,10 @@ function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$corr
 									$data['error']=1;
 								}
 		
+		}
 		
 		//Insertar la planeacion
-    	$sql = "INSERT INTO planeacion (id_planeacion, etapa_proceso_id_etapaproceso, fecha, lugarencuentro, jornada, comunidadespecial,id_tipopoblacion,observaciones)
+    	$sql = "INSERT INTO planeacion (id_planeacion, etapaproceso_id_etapaproceso, fecha, lugarencuentro, id_jornada, comunidadespecial,id_tipopoblacion,observaciones)
 			VALUES (nextval('sec_planeacion'),'".$idEtapa."', '".$fecha."', '".$lugar."', '".$jornada."', '".$comunidad."', '".$poblacion."', '".$observaciones."'); 
 			  ";
 			  
@@ -237,9 +238,8 @@ function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$corr
 								if($idPlaneacion!=""){
 								
 								// SE INSERTA EN planeaciones_por_intervencion								
-								foreach($indicadores as $idIndicador)
-								{
-									$sql = "INSERT INTO planeaciones_por_intervencion (indicadores_chec_id_indicadores_chec, intervenciones_id_intervenciones)
+								
+									$sql = "INSERT INTO planeaciones_por_intervencion (id_planeaciones_por_intervencion, planeacion_id_planeacion,intervenciones_id_intervenciones)
 									VALUES (nextval('sec_planeaciones_por_intervencion'),'".$idPlaneacion."', '".$idIntervencion."'); 
 									  ";
 									  
@@ -257,8 +257,8 @@ function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$corr
 										$data['error']=1;
 									}
 			
+								
 								}
-							}
 						}
 						else
 						{
@@ -282,7 +282,7 @@ function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$corr
 }
 
 
-function guardarGestionRedes($idPlaneacion,$idTema,$indicadores){
+function guardarGestionRedes($idPlaneacion,$idTema,$indicadores,$tactico){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
@@ -304,7 +304,7 @@ function guardarGestionRedes($idPlaneacion,$idTema,$indicadores){
 						// $array[] = $fila;  
 
 						//Insertar la subtemas_por_planeacion
-						$sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtemas, planeacionIdplaneacion)
+						$sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtema, planeacion_id_planeacion)
 							VALUES (nextval('sec_subtemas_por_planeacion'),'".$filas[$i]['id_subtema']."', '".$idPlaneacion."'); 
 							  ";
 							  
@@ -351,6 +351,23 @@ function guardarGestionRedes($idPlaneacion,$idTema,$indicadores){
 								}
 	
 						}
+						
+					//Insertar la tactico_por_planeacion
+				$sql = "INSERT INTO tactico_por_planeacion (tactico_id_tactico, planeacion_id_planeacion)
+					VALUES ('".$tactico."', '".$idPlaneacion."'); 
+					  ";
+					  
+					if ($rs = $con->query($sql)) {
+							
+							 
+						}
+						else
+						{
+							print_r($con->errorInfo());
+							$data['mensaje']="No se realizo el insert tactico_por_planeacion";
+							$data['error']=1;
+						}
+					
 
 			
 		  echo json_encode($data);
@@ -379,7 +396,7 @@ function guardarGestionEducativa($idPlaneacion,$idTema,$indicadores,$tactico){
 						// $array[] = $fila;  
 
 						//Insertar la subtemas_por_planeacion
-						$sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtemas, planeacionIdplaneacion)
+						$sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtema, planeacion_id_planeacion)
 							VALUES (nextval('sec_subtemas_por_planeacion'),'".$filas[$i]['id_subtema']."', '".$idPlaneacion."'); 
 							  ";
 							  
@@ -426,6 +443,7 @@ function guardarGestionEducativa($idPlaneacion,$idTema,$indicadores,$tactico){
 								}
 	
 						}
+
 
 		
 		

@@ -86,6 +86,19 @@ function cargarPlaneacionesPorIntrevencion($idIntrevencion){
 			JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
 			WHERE plxint.intervenciones_id_intervenciones = ".$idIntrevencion."
 			GROUP BY pl.id_planeacion, etapaproceso, nombreestrategia, nombretactico, temas, fecha"; //consulta
+			
+		// $sql = "SELECT pl.id_planeacion, ep.etapaproceso,  tem.temas, pl.fecha
+			// FROM planeacion pl
+			// JOIN etapaproceso ep ON pl.etapaproceso_id_etapaproceso = ep.id_etapaproceso
+			
+			
+			
+			// JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
+			// JOIN subtemas sub ON subxpl.subtemas_id_subtema = sub.id_subtema
+			// JOIN temas tem ON sub.id_temas = tem.id_temas
+			// JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
+			// WHERE plxint.intervenciones_id_intervenciones = 1
+			// GROUP BY pl.id_planeacion, etapaproceso, temas, fecha";	
 	  		
 			$array=array();
 			if ($rs = $con->query($sql)) {

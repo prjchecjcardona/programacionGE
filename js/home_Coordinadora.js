@@ -2,6 +2,12 @@ $(document).ready(function(){
 	
 	traerNombre();	
 	interevensionesPorZona();
+	
+	$( "#btnInformes" ).click(function() {
+	
+	window.location.href = "dashboard_Coordinadora.html";
+	
+});
 	 
 });
 

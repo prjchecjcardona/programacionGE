@@ -129,7 +129,7 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 * parametro: data
 */
  function cargarInformacionEnTabla(data){ //alert(data);
-        var table = $('#coordinadora_tabla').DataTable({
+        table = $('#coordinadora_tabla').DataTable({
             "data": data,
             columns: [
 			{ title: "Id" },
@@ -142,7 +142,7 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			{ title: "Evaluación" },*/ 
 			
 			{data: null, className: "center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>'},
-			{data: null, className: "center", defaultContent: '<a href="#" id="evaluacion" class="btn btn-sm btn-success" alt="Evaluación"><span class="fa fa-pencil-square-o"></span></a>'}
+			// {data: null, className: "center", defaultContent: '<a href="#" id="evaluacion" class="btn btn-sm btn-success" alt="Evaluación"><span class="fa fa-pencil-square-o"></span></a>'}
 			],
             "paging":   true,
             "info":     false,
@@ -170,12 +170,13 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
     }
 	
 //Evento para ver detalle ejecucion//
-	$(document).on('click', '#ejecucion', function() {
+	$(document).on('click', '#ejecucion', function() {  
 			var data = table.row($(this).parents('tr')).data();
-			idPlaneacion= data[0];
+			idPlaneacion= data[0]; 
 			if(data[0]!=""){
 				
-						
+				window.location.href = "ejecucion_Coordinadora.html?idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
+				
 			}
 	});
 	
