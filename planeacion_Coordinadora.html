@@ -59,12 +59,15 @@
             <!-- Form Name -->
             <legend>Planeación</legend>
 
+<<<<<<< HEAD
+=======
             <!-- Button (Triple) -->
             <div class="form-group">
 
               <label class="col-md-12 control-label" for="textinputEtapa">Etapa</label>
 
             </div>
+>>>>>>> 1c6e2efc9fae3db2c39074514faeb0e5f286ad12
 
             <!-- Fecha de Encuentro -->
             <div class="form-group">
@@ -97,15 +100,21 @@
             </div>
 
             <!-- Multiple Radios (inline) Comunidad Especial -->
-            <div class="form-group">
+            <div class="form-group" id="comunidad">
               <label class="col-md-12 control-label" for="radiosComunidadEspecial">¿Trabajarás con una comunidad especial?</label>
               <div class="col-md-12">
                 <label class="radio-inline" for="radiosComunidadEspecial-0">
                   <input type="radio" name="radiosComunidadEspecial" id="radiosComunidadEspecial-0" value="1" checked="checked"> Si
                 </label>
                 <label class="radio-inline" for="radiosComunidadEspecial-1">
+<<<<<<< HEAD
+                      <input type="radio" name="radiosComunidadEspecial" id="radiosComunidadEspecial-1" value="0">
+                      No
+                    </label>
+=======
                   <input type="radio" name="radiosComunidadEspecial" id="radiosComunidadEspecial-1" value="2"> No
                 </label>
+>>>>>>> 1c6e2efc9fae3db2c39074514faeb0e5f286ad12
               </div>
             </div>
 
@@ -133,11 +142,21 @@
               <label class="col-md-12 control-label" for="radiosAlgunContacto">¿Cuentas con algún contacto?</label>
               <div class="col-md-12" id="radiosContacto">
                 <label class="radio-inline" for="radiosAlgunContacto-0" id="radioContacto">
+<<<<<<< HEAD
+                      <input type="radio" name="radiosAlgunContacto" id="SiContacto" value="1">
+                      Si
+                    </label>
+                <label class="radio-inline" for="radiosAlgunContacto-1">
+                      <input type="radio" name="radiosAlgunContacto" id="NoContacto" value="0" checked="checked">
+                      No
+                    </label>
+=======
                   <input type="radio" name="radiosAlgunContacto" id="siContacto" value="1"> Si
                 </label>
                 <label class="radio-inline" for="radiosAlgunContacto-1">
                   <input type="radio" name="radiosAlgunContacto" id="noContacto" value="2" checked="checked"> No
                 </label>
+>>>>>>> 1c6e2efc9fae3db2c39074514faeb0e5f286ad12
               </div>
             </div>
 
@@ -176,6 +195,151 @@
               </div>
             </div>
 
+<<<<<<< HEAD
+			<!-- Button (Triple) -->
+            <div class="form-group">
+
+              <label class="col-md-12 control-label" for="textinputEtapa">Etapa</label>
+              
+            </div>
+			<div class="btn-group" id="etapas">
+                <!-- <button id="btnReconocimiento" name="button1id" class="btn btn-success" style="display:none">Reconocimiento</button> -->
+                <!-- <button id="btnGestionR" name="button2id" class="btn btn-success">Gestión Redes</button> -->
+                <!-- <button id="btnGestionE" name="button1id" class="btn btn-success">Gestión Educativa</button> -->
+            </div>		
+
+			<!-- GESTION DE REDES -->
+			<div id="planeacion2" style="display=none">
+			
+				<div class="col-md-12">
+				  <h4>Comportamiento: <div id="spanComportamiento" class="label label-success"></div></h4>
+				  <h4>Competencia: <div id="spanCompetencia" class="label label-success"></div></h4>
+				</div>
+			  <!-- Estrategia -->
+			  <div class="form-group">
+				<label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>
+				<div class="col-md-12">
+				  <select id="selectbasicEstrategiare" name="selectbasicEstrategia" class="form-control">
+						<!-- <option value="1">Opción 1</option> -->
+						<!-- <option value="2">Opción 2</option> -->
+				  </select>
+				</div>
+			  </div>
+
+			  <!-- Táctico Planeación -->
+			  <div class="form-group">
+				<label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
+				<div class="col-md-12">
+				  <select id="selectbasicTacticore" name="selectbasicTactico" class="form-control">
+					  <option value="0">Selecciona una opción</option>
+					  
+				</select>
+				</div>
+			  </div>
+
+			  <!-- Tema Planeación -->
+			  <div class="form-group">
+				<label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
+				<div class="col-md-12">
+				  <select id="selectbasicTemare" name="selectbasicTema" class="form-control">
+						<!-- <option value="1">Opción 1</option> -->
+						<!-- <option value="2">Opción 2</option> -->
+					  </select>
+				</div>
+			  </div>
+
+			  <!-- <legend>Subtema</legend> -->
+			  <!-- <div class="checkbox"> -->
+				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+			  <!-- </div> -->
+			  <!-- <div class="checkbox"> -->
+				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+			  <!-- </div> -->
+			  <!-- <div class="checkbox"> -->
+				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+			  <!-- </div> -->
+			  <!-- Indicadores -->
+			  <legend>Indicadores</legend>
+				<div id="indicadoresre">
+				  <!-- <div class="checkbox"> -->
+					<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+				  <!-- </div> -->
+				  <!-- <div class="checkbox"> -->
+					<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+				  <!-- </div> -->
+				  <!-- <div class="checkbox"> -->
+					<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+				  <!-- </div> -->
+
+				</div>
+			</div>
+
+			<!-- GESTION DE EDUCATIVA -->
+			<div id="planeacion3" style="display=none">
+			
+				<div class="col-md-12">
+				  <h4>Comportamiento: <div id="spanComportamientog" class="label label-success"></div></h4>
+				  <h4>Competencia: <div id="spanCompetenciag" class="label label-success"></div></h4>
+				</div>
+			  <!-- Estrategia -->
+			  <div class="form-group">
+				<label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>
+				<div class="col-md-12">
+				  <select id="selectbasicEstrategia" name="selectbasicEstrategia" class="form-control">
+						<!-- <option value="1">Opción 1</option> -->
+						<!-- <option value="2">Opción 2</option> -->
+				  </select>
+				</div>
+			  </div>
+
+			  <!-- Táctico Planeación -->
+			  <div class="form-group">
+				<label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
+				<div class="col-md-12">
+				  <select id="selectbasicTactico" name="selectbasicTactico" class="form-control">
+					  <option value="0">Selecciona una opción</option>
+					  
+				</select>
+				</div>
+			  </div>
+
+			  <!-- Tema Planeación -->
+			  <div class="form-group">
+				<label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
+				<div class="col-md-12">
+				  <select id="selectbasicTema" name="selectbasicTema" class="form-control">
+						<!-- <option value="1">Opción 1</option> -->
+						<!-- <option value="2">Opción 2</option> -->
+					  </select>
+				</div>
+			  </div>
+
+			  <!-- <legend>Subtema</legend> -->
+			  <!-- <div class="checkbox"> -->
+				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+			  <!-- </div> -->
+			  <!-- <div class="checkbox"> -->
+				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+			  <!-- </div> -->
+			  <!-- <div class="checkbox"> -->
+				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+			  <!-- </div> -->
+			  <!-- Indicadores -->
+			  <legend>Indicadores</legend>
+				  <div id="indicadoresge">
+					  <!-- <div class="checkbox"> -->
+						<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+					  <!-- </div> -->
+					  <!-- <div class="checkbox"> -->
+						<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+					  <!-- </div> -->
+					  <!-- <div class="checkbox"> -->
+						<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+					  <!-- </div> -->
+
+				</div>
+			</div>
+=======
             <div class="btn-group">
               <!-- <button id="btnReconocimiento" name="button1id" class="btn btn-success">Reconocimiento</button> -->
               <button id="btnGestionR" name="button2id" class="btn btn-success">Gestión Redes</button>
@@ -330,14 +494,15 @@
 
 
             </div>
+>>>>>>> 1c6e2efc9fae3db2c39074514faeb0e5f286ad12
 
 
             <!-- Button (Double) -->
             <div class="form-group">
               <label class="col-md-12 control-label" for="button1id"></label>
               <div class="col-md-8">
-                <button id="button1id" name="button1id" class="btn btn-danger">Cancelar</button>
-                <button id="button2id" name="button2id" class="btn btn-success">Continuar</button>
+                <button id="buttonCancelar" name="button1id" class="btn btn-danger">Cancelar</button>
+                <button id="buttonGuardarPlaneacion" name="button2id" class="btn btn-success">Guardar</button>
               </div>
             </div>
 
@@ -355,6 +520,7 @@
   <script src="js/includes/bootstrap.min.js"></script>
   <script src="js/planeacion_Coordinadora.js"></script>
   <script src="js/includes/configuracionDatePicker.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- <script type="text/javascript" src="js/funciones.js"></script>  -->
 </body>
 

@@ -49,7 +49,7 @@ function interevensionesPorZona(){
 									foreach($llamarIntervecion as $datosGestora)
 									{
 											
-											$data['html'].='<button id="intrevension_'.$datosGestora['id_Intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_Intervenciones'].')">'.$datosGestora['Municipio'].'-'.$datosGestora['Comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';
+											$data['html'].='<button id="intrevension_'.$datosGestora['id_intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_intervenciones'].')">'.$datosGestora['municipio'].'-'.$datosGestora['comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';
 									}
 								}
 								
@@ -83,18 +83,19 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 	$intervencion=array();
 
 	//$id_Personas_por_Zona = $_SESSION["IdPersonasPorZona"];
-	$intervencion_por_zona= "SELECT
-		 i.id_intervenciones, ti.tipo_intervencion, m.municipio, ppz.zonas_id_zona
-		from intervenciones i inner join entidades e
-		on i.entidades_id_entidad = e.id_entidad
-		inner join tipo_intervencion ti
-		on i.tipo_intervencion_id_tipo_intervencion = ti.id_tipo_intervencion
-		left join barrios b on e.id_barrio = b.id_barrio left join veredas v
-		on v.id_veredas = e.veredas_id_veredas left join comunas c on c.id_comuna = b.id_comuna
-		left join municipios m on m.id_municipio = c.id_municipio or v.id_municipio = m.id_municipio
-		inner join personas_por_zona ppz on
-		 ppz.id_personas_por_zonacol = i.personas_por_zona_id_personas_por_zonacol
-		 where ppz.zonas_id_zona = '".$idZona."'";
+	$intervencion_por_zona= "SELECT inter.id_intervenciones, mun.municipio, compor.comportamientos
+			FROM intervenciones inter
+			JOIN personas_por_zona pxz ON pxz.id_personas_por_zonacol = inter.personas_por_zona_id_personas_por_zonacol
+			JOIN indicadores_chec_por_intervenciones indxinter ON indxinter.intervenciones_id_intervenciones = inter.id_intervenciones
+			JOIN indicadores_chec ind ON ind.id_indicadores_chec = indxinter.indicadores_chec_id_indicadores_chec
+			JOIN comportamientos compor ON compor.id_comportamientos = ind.comportamientos_id_comportamientos
+			JOIN entidades ent ON ent.id_entidad = inter.entidades_id_entidad
+			LEFT OUTER JOIN barrios bar ON bar.id_barrio = ent.id_barrio
+			LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
+			LEFT OUTER JOIN veredas ver ON ver.id_veredas = ent.veredas_id_veredas
+			JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
+			WHERE pxz.zonas_id_zona = ".$idZona."
+			GROUP BY id_intervenciones, municipio, comportamientos";
 		 // where ppz.Zonas_Id_Zona = '1'";
 	$resultados_zona = $con->query($intervencion_por_zona);
 	if(!$resultados_zona)
@@ -110,33 +111,33 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 	$contador=0;
 	while($row = $resultados_zona->fetch(PDO::FETCH_ASSOC)) {
 
-	     $intervencion[$contador]["id_Intervenciones"] =  $row["id_intervenciones"];
+	     $intervencion[$contador]["id_intervenciones"] =  $row["id_intervenciones"];
 	     // $intervencion[$contador]["Fecha_Intervencion"] =  $row["fecha_intervencion"];
-	     $intervencion[$contador]["Tipo_Intervencion"] =  $row["tipo_intervencion"];
-	     $intervencion[$contador]["Municipio"] =  $row["municipio"];
+	     $intervencion[$contador]["comportamientos"] =  $row["comportamientos"];
+	     $intervencion[$contador]["municipio"] =  $row["municipio"];
 	     $contador++;
 	  }
-	 $cantidad_intervenciones_por_zona = $contador;
-	$intervenciones_por_comportamiento = "SELECT c.comportamientos
-	from indicadores_chec_por_intervenciones ici inner join intervenciones i on
-	ici.intervenciones_id_intervenciones = i.id_intervenciones inner join indicadores_chec ic on ici.indicadores_chec_id_indicadores_chec = ic.id_indicadores_chec
-	inner join comportamientos c on ic.comportamientos_id_comportamientos = c.id_comportamientos
-	where i.personas_por_zona_id_personas_por_zonacol = '".$idPersonasPorZona."'
-	group by c.comportamientos";
+	 // $cantidad_intervenciones_por_zona = $contador;
+	// $intervenciones_por_comportamiento = "SELECT c.comportamientos
+	// from indicadores_chec_por_intervenciones ici inner join intervenciones i on
+	// ici.intervenciones_id_intervenciones = i.id_intervenciones inner join indicadores_chec ic on ici.indicadores_chec_id_indicadores_chec = ic.id_indicadores_chec
+	// inner join comportamientos c on ic.comportamientos_id_comportamientos = c.id_comportamientos
+	// where i.personas_por_zona_id_personas_por_zonacol = '".$idPersonasPorZona."'
+	// group by c.comportamientos";
 
-		//where i.Personas_por_Zona_id_Personas_por_Zonacol = '".$idPersonasPorZona."'
-	  	$resultados_comportamiento = $con->query($intervenciones_por_comportamiento);
-	  	$contador=0;
-	  // Parse returned data, and displays them
-	  while($row = $resultados_comportamiento->fetch(PDO::FETCH_ASSOC)) {
-	  		$intervencion[$contador]["Comportamientos"] =  $row["comportamientos"];
-	     $contador++;
+		// //where i.Personas_por_Zona_id_Personas_por_Zonacol = '".$idPersonasPorZona."'
+	  	// $resultados_comportamiento = $con->query($intervenciones_por_comportamiento);
+	  	// $contador=0;
+	  // // Parse returned data, and displays them
+	  // while($row = $resultados_comportamiento->fetch(PDO::FETCH_ASSOC)) {
+	  		// $intervencion[$contador]["Comportamientos"] =  $row["comportamientos"];
+	     // $contador++;
 
-	  }
-		if($cantidad_intervenciones_por_zona == $contador)//si la cantidad de las intervenciones son las mismas, se guarda la cantidad en una variable para el ciclo
-		{
-			$cantidad_intervenciones = $cantidad_intervenciones_por_zona;
-		}
+	  // }
+		// if($cantidad_intervenciones_por_zona == $contador)//si la cantidad de las intervenciones son las mismas, se guarda la cantidad en una variable para el ciclo
+		// {
+			// $cantidad_intervenciones = $cantidad_intervenciones_por_zona;
+		// }
 	  //PENDIENTE HACER UN FOR
 		// for($cont=0;$cont<$cantidad_intervenciones;$cont++)
 		// {

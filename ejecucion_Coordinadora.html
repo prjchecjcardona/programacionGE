@@ -29,7 +29,7 @@
     <div class="collapse navbar-collapse" id="menuSaludo">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <span class="h5">Hola, {Juan}</span>
+          <span class="h5">Hola, &nbsp;</span><span class="h5" id="Nombre">
           <!-- Inserción dinamica del nombre del usuario logueado -->
         </li>
 
@@ -61,7 +61,7 @@
               <label class="mr-sm-2">Fecha: </label>
             </div>
             <div class="col-md-7">
-              <span class="grisTexto" id="fechaInd">Fecha Indicada</span>
+              <div class="grisTexto" id="fechaInd">Fecha Indicada</div>
             </div>
           </div>
 
@@ -71,7 +71,7 @@
               <label class="mr-sm-2">Lugar: </label>
             </div>
             <div class="col-md-7">
-              <span class="grisTexto" id="lugarInd">Lugar Indicado</span>
+              <div class="grisTexto" id="lugarInd">Lugar Indicado</div>
             </div>
           </div>
 
@@ -81,7 +81,7 @@
               <label class="mr-sm-2">Municipio: </label>
             </div>
             <div class="col-md-7">
-              <span class="grisTexto" id="municipioInd">Municipio Indicado</span>
+              <div class="grisTexto" id="municipioInd">Municipio Indicado</div>
             </div>
           </div>
 
@@ -91,7 +91,7 @@
               <label class="mr-sm-2">Comportamiento: </label>
             </div>
             <div class="col-md-7">
-              <span class="grisTexto" id="comportamientoInd">Comportamiento Indicado</span>
+              <div class="grisTexto" id="comportamientoInd">Comportamiento Indicado</div>
             </div>
           </div>
 
@@ -101,7 +101,7 @@
               <label class="mr-sm-2">Competencia: </label>
             </div>
             <div class="col-md-7">
-              <span class="grisTexto" id="competenciaInd">Competencia Indicada</span>
+              <div class="grisTexto" id="competenciaInd">Competencia Indicada</div>
             </div>
           </div>
 
@@ -111,7 +111,7 @@
               <label class="mr-sm-2">Estrategia: </label>
             </div>
             <div class="col-md-7">
-              <span class="grisTexto" id="estrategiaInd">Estrategia Indicada</span>
+              <div class="grisTexto" id="estrategiaInd">Estrategia Indicada</div>
             </div>
           </div>
 
@@ -121,19 +121,16 @@
               <label class="mr-sm-2">Táctico: </label>
             </div>
             <div class="col-md-7">
-              <span class="grisTexto" id="tacticoInd">Táctico Indicado</span>
+              <div class="grisTexto" id="tacticoInd">Táctico Indicado</div>
             </div>
           </div>
 
           <!-- Label Indicadores -->
-          <span>Indicadores
-            <span>
-              <ul class="grisTexto">
-                <li>Lorem</li>
-                <li>Ipsum</li>
-                <li>Dolor</li>
-              </ul>
-
+		  <div id="indicadores">
+          <span>Indicadores<span>
+          <ul class="grisTexto">
+          </ul>
+		</div>
         </form>
       </div>
 
@@ -145,7 +142,7 @@
           <div class="form-inline fecha-ejec-form">
             <label class="col-md-4 control-label" for="datepicker">Fecha de Ejecución: </label>
             <div class="col-md-6">
-              <input type="text" class=datepicker placeholder=" Selecciona Fecha...">
+              <input type="text" class=datepicker placeholder=" Selecciona Fecha..." id="textFecha">
             </div>
           </div>
         </div>
@@ -167,8 +164,8 @@
           </div>
           <div class="col-md-3">
             <select id="selectbasicMinEje" name="selectbasicMinEje" class="form-control">
-              <option value="1">15 Minutos</option>
-              <option value="2">30 Minutos</option>
+              <option value="15">15 Minutos</option>
+              <option value="30">30 Minutos</option>
             </select>
           </div>
         </div>
@@ -186,24 +183,28 @@
 
         <hr>
 
-        <span>Nivel de Competencia</span>
-        <div class="form-check">
-          <label class="form-check-label grisTexto">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked> Completamente
-          </label>
-        </div>
-        <div class="form-check">
-          <label class="form-check-label grisTexto">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked> Parcialmente
-          </label>
-        </div>
-        <div class="form-check">
-          <label class="form-check-label grisTexto">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked> No se cumplió
-          </label>
-        </div>
-
-        <hr>
+		<div id="nCumplimiento">	
+			<span>Nivel de Cumplimiento</span>
+				  <div class="form-check">
+					<label class="form-check-label grisTexto">
+					<input class="form-check-input" type="radio" name="nCumplimiento" id="exampleRadios1" value="1" checked>
+					Completamente
+				  </label>
+				  </div>
+				  <div class="form-check">
+					<label class="form-check-label grisTexto">
+					<input class="form-check-input" type="radio" name="nCumplimiento" id="exampleRadios1" value="2" checked>
+					Parcialmente
+				  </label>
+				  </div>
+				  <div class="form-check">
+					<label class="form-check-label grisTexto">
+					<input class="form-check-input" type="radio" name="nCumplimiento" id="exampleRadios1" value="3" checked>
+					No se cumplió
+				  </label>
+				  </div>
+		</div>
+          <hr>
 
         <!-- Nivel de Competencia -->
         <div class="row filaTitulos">
@@ -221,104 +222,83 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <span class="grisTexto">Participación - Se observa una participación activa de los asistentes</span>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio1">
-            </label>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio1">
-            </label>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio1">
-            </label>
-          </div>
-        </div>
+		  <div id="detalleNivelCumplimiento">
+				  <div class="row">
+					<div class="col-md-6">
+					  <span class="grisTexto">Participación - Se observa una participación activa de los asistentes</span>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_1" id="1" value="1"></label>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_1" id="2" value="2"></label>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_1" id="3" value="3"></label>
+					</div>
+				  </div>
 
-        <hr>
+				  <hr>
 
-        <div class="row">
-          <div class="col-md-6">
-            <span class="grisTexto">Logística - Las instalaciones y equipos previamente acordados facilitaron el desarrollo de la actividad</span>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio2">
-            </label>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio2">
-            </label>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio2">
-            </label>
-          </div>
-        </div>
+				  <div class="row">
+					<div class="col-md-6">
+					  <span class="grisTexto">Logística - Las instalaciones y equipos previamente acordados facilitaron el desarrollo de la actividad</span>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_2" id="1" value="1"></label>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_2" id="2" value="2"></label>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_2" id="3" value="3"></label>
+					</div>
+				  </div>
 
-        <hr>
+				  <hr>
 
-        <div class="row">
-          <div class="col-md-6">
-            <span class="grisTexto">Cobertura - Se contó con el número de asistentes esperado para la actividad</span>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio3">
-            </label>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio3">
-            </label>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio3">
-            </label>
-          </div>
-        </div>
+				  <div class="row">
+					<div class="col-md-6">
+					  <span class="grisTexto">Cobertura - Se contó con el número de asistentes esperado para la actividad</span>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_3" id="1" value="1"></label>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_3" id="2" value="2"></label>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_3" id="3" value="3"></label>
+					</div>
+				  </div>
 
-        <hr>
+				  <hr>
 
-        <div class="row">
-          <div class="col-md-6">
-            <span class="grisTexto">Factores Externos - Ausencia de eventos externos que afectan el desarrollo de la actividad</span>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio4">
-            </label>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio4">
-            </label>
-          </div>
-          <div class="col-md-2 filaRadio">
-            <label class="radio-inline">
-              <input type="radio" name="optradio4">
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
+				  <div class="row">
+					<div class="col-md-6">
+					  <span class="grisTexto">Factores Externos - Ausencia de eventos externos que afectan el desarrollo de la actividad</span>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_4" id="1" value="1"></label>                
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_4" id="2" value="2"></label>
+					</div>
+					<div class="col-md-2 filaRadio">
+					  <label class="radio-inline"><input type="radio" name="detalle_4" id="3" value="3"></label>
+					</div>
+				  </div>
+			  </div>
+			</div>
+		</div>
 
     <div class="form-group">
       <hr>
       <h4>Adjuntar Evidencias</h4>
-      <form enctype="multipart/form-data">
-        <input id="upload_coordinadora" name="file-es[]" type="file" multiple>
-      </form>
+      <!-- <form enctype="multipart/form-data"> -->
+        <!-- <input id="file-es" name="file-es[]" type="file" multiple> -->
+      <!-- </form> -->
+	  <iframe id="Example2" name="Example2" width="100%" height="300" frameborder="0" src="php/SubirArchivo/index.php"></iframe>
       <hr>
       <br>
     </div>
@@ -328,7 +308,7 @@
       <label class="col-md-1 control-label" for="button1id"></label>
       <div class="col-md-8">
         <button id="button1id" name="button1id" class="btn btn-danger">Cancelar</button>
-        <button id="button2id" name="button2id" class="btn btn-success">Enviar</button>
+        <button id="button2id" name="button2id" class="btn btn-success" onclick="guardarEjecucion();">Guardar</button>
       </div>
     </div>
   </div>
@@ -344,6 +324,7 @@
   <script src="js/includes/fileInput/theme.min.js"></script>
   <script src="js/includes/fileInput/locales/es.js"></script>
   <script src="js/ejecucion_Coordinadora.js"></script>
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 
 </html>

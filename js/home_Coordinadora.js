@@ -2,6 +2,12 @@ $(document).ready(function(){
 	
 	traerNombre();	
 	interevensionesPorZona();
+	
+	$( "#btnInformes" ).click(function() {
+	
+	window.location.href = "dashboard_Coordinadora.html";
+	
+});
 	 
 });
 
@@ -64,7 +70,7 @@ function interevensionesPorZona()
 
 function mostrarDetalleIntervencion(idIntervencion)
 {
-	window.location.href = "detalle_Intervencion_Coordinadora.html?id="+idIntervencion;
+	window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion="+idIntervencion;
 }
 
 function agregarIntervencion(idZona) 
