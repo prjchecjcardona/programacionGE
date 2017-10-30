@@ -344,3 +344,7 @@ nav.fixed-top{
   padding: 1.8em;
   
 }
+
+.detalle-intervencion-coord b{
+  color: rgb(80, 80, 80);
+}

@@ -14,6 +14,13 @@ $(document).ready(function(){
 	cargoContacto ="";
 	telefonoContacto ="";
 	correoContacto ="";
+
+	$( "#btnBancoHerramientas" ).click(function() {
+		
+			// window.location.href = "Banco de Herramientas V2/index.html";
+			window.open ("Banco de Herramientas V2/index.html", '_blank');
+		
+		});
 	
 	/*Extrae los parametros que llegan en la url
 * parametro: 

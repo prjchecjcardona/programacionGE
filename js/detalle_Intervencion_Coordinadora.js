@@ -60,7 +60,7 @@ function traerNombre(){
 
 }
 
-/*Consulta el detalle de la intervención
+/*Consulta el detalle de la intervención  
 * parametro: idIntervencion
 */
 function cargarDetalleIntervencion(idIntervencion){
@@ -72,24 +72,20 @@ function cargarDetalleIntervencion(idIntervencion){
          },
           function (data) { 
 						if(data.error == 0){
+							comportamientos=data.html.comportamientos;
+							competencia=data.html.competencia;
+							idComportamientos=data.html.id_comportamientos
+							idCompetencia=data.html.id_competencia
+							idEntidad=data.html.id_entidad
 								
-								 $('#lblMunicipio').html("Municipio: "+data.html.municipio);
-								 $('#lblEntidad').html("Entidad: "+data.html.nombreentidad);
-								 $('#lblCoportamiento').html("Comportamiento: "+data.html.comportamientos);
-								 $('#lblCompetencia').html("Competencia: "+data.html.competencia);
-								 comportamientos=data.html.comportamientos;
-								 competencia=data.html.competencia;
-								 idComportamientos=data.html.id_comportamientos
-								 idCompetencia=data.html.id_competencia
-								 idEntidad=data.html.id_entidad
-								 $('#lblTipoIntervencion').html("Tipo Intervención: "+data.html.tipo_intervencion);
-								 $("#indicadoresChec").html("Indicadores: ");
-								 // for (i=0;i<(data.html.indicador.length);i++){
-									 	
-										//$("#indicadoresChec").html(data.html.indicador[i]);
-										$("#indicadoresChec").html(data.html.indicador);
-								 
-								 // }
+								 $('#lblMunicipio').html("<b>Municipio</b>: "+data.html.municipio);
+								 $('#lblEntidad').html("<b>Entidad</b>: "+data.html.nombreentidad);
+								 $('#lblCoportamiento').html("<b>Comportamiento</b>: "+data.html.comportamientos);
+								 $('#lblCompetencia').html("<b>Competencia</b>: "+data.html.competencia);
+								 $('#lblTipoIntervencion').html("<b>Tipo Intervención</b>: "+data.html.tipo_intervencion);
+								 $("#indicadoresChec").html("<b>Indicadores</b>: ");
+								$("#indicadoresChec").append(data.html.indicador);
+
 							}
 							else{
 								swal(
