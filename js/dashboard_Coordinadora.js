@@ -1,5 +1,7 @@
 $(function () {
+    $('#exampleRadio2').prop('checked', true)
     initElements();
+    getInitialData();
 });
 
 
@@ -36,6 +38,9 @@ function initElements(){
         selectAllText: 'Seleccionar Todos',
         buttonText: function(options, select) {
             return 'Seleccione Opción'; 
+        },
+        onChange: function(option, checked, select) {
+            filterByMonth($(option).val());
         }
     });
     
@@ -134,96 +139,9 @@ function initElements(){
         }
     });
     
-    var MomentoI = Highcharts.chart('container', {
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: 'Fruit Consumption'
-        },
-        xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
-        },
-        yAxis: {
-            title: {
-                text: 'Fruit eaten'
-            }
-        },
-        series: [{
-            name: 'Jane',
-            data: [1, 0, 4]
-        }, {
-            name: 'John',
-            data: [5, 7, 3]
-        }]
-    });
+   
     
-    var MomentoII = Highcharts.chart('bar_coordinadora', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Monthly Average Rainfall'
-        },
-        subtitle: {
-            text: 'Source: WorldClimate.com'
-        },
-        xAxis: {
-            categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec'
-            ],
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Rainfall (mm)'
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        series: [{
-            name: 'Tokyo',
-            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-    
-        }, {
-            name: 'New York',
-            data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-    
-        }, {
-            name: 'London',
-            data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-    
-        }, {
-            name: 'Berlin',
-            data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
-    
-        }]
-    });
-    
+ 
     var MomentoIII = Highcharts.chart('pie_coordinadora', {
         chart: {
             plotBackgroundColor: null,
@@ -232,7 +150,7 @@ function initElements(){
             type: 'pie'
         },
         title: {
-            text: 'Browser market shares January, 2015 to May, 2015'
+            text: 'Porcentaje de cobertura según Estrategia, Septiembre 2017'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -251,28 +169,20 @@ function initElements(){
             }
         },
         series: [{
-            name: 'Brands',
+            name: 'Porcentaje',
             colorByPoint: true,
             data: [{
-                name: 'Microsoft Internet Explorer',
-                y: 56.33
+                name: 'PRESERVACIÓN',
+                y: 44
             }, {
-                name: 'Chrome',
-                y: 24.03,
-                sliced: true,
-                selected: true
+                name: 'RESPETO',
+                y: 21
             }, {
-                name: 'Firefox',
-                y: 10.38
+                name: 'CUIDADO',
+                y: 18
             }, {
-                name: 'Safari',
-                y: 4.77
-            }, {
-                name: 'Opera',
-                y: 0.91
-            }, {
-                name: 'Proprietary or Undetectable',
-                y: 0.2
+                name: 'CONFIANZA',
+                y: 16
             }]
         }]
     });
@@ -405,7 +315,7 @@ function initElements(){
     
     }); */
     
-    var table = $('#gestionRedes').DataTable({
+    /* var table = $('#gestionRedes').DataTable({
         "language": {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
@@ -490,9 +400,91 @@ function initElements(){
     
         },
     
-    });
+    }); */
 
 }
 
+function getInitialData(){
+    categories = [];
+    cobertura = [];
+    $.post('php/dashboard_coordinadora.php',{
+        type: 'general gestion redes'
+    }, function(response){
+        data= JSON.parse(response);
+        data.response.forEach(function(element) {
+           categories.push(element.mes); 
+           cobertura.push(parseInt(element.sum));
+        }, this);
+        
+        createLineGraph(categories, cobertura, 'bar_coordinadora', 'bar', 'Actores Sociales Clave', 'Número de actores sociales clave', 'número')
+    })
+}
 
+function createLineGraph(categories, cobertura, selector, type, title, name, yAxis){
+    var MomentoI = Highcharts.chart(selector, {
+        title: {
+            text: title
+        },  
+        xAxis: {
+            categories: categories
+        },
+        yAxis: {
+            title: {
+                text: yAxis
+            }
+        },
+        series: [{
+            name: name,
+            data: cobertura
+        }]
+    });
+}
+
+function filterByMonth(month){
+    $('input[type=radio]:checked').prop('checked', false)
+    categories = [];
+    cobertura = [];
+    tipo_entidad = [];
+    $.post('php/dashboard_coordinadora.php',{
+        type: 'mes gestion redes',
+        mes: month,
+        anio: '2017'
+    }, function(response){
+        data= JSON.parse(response);
+        data.response.forEach(function(element) {
+           categories.push(element.municipio); 
+           cobertura.push(parseInt(element.sum));
+           tipo_entidad.push(element.tipo_entidad);
+        }, this);
+        tipo_entidad_ref = ['Pública', 'Privada', 'Organización de base comunitaria'] 
+        datos =[];
+        bar_graph = [];
+        tipo_entidad_ref.forEach(function(ent, i) {
+            datos = [];
+            categories.forEach(function(element, index) {
+                
+                if (tipo_entidad[index] == ent) {
+                   datos[index]=cobertura[index]; 
+                }else{
+                    datos[index]=0; 
+                }
+            }, this);
+            bar_graph[i] = {name: ent, data: datos};
+        }, this);
+        
+        
+        var MomentoI = Highcharts.chart('bar_coordinadora', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Actores Sociales en el mes '+month
+            },
+            xAxis: {
+                categories: categories
+            },
+            series: bar_graph
+        });
+    })
+}
 
