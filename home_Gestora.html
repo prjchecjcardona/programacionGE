@@ -20,7 +20,7 @@
 
 <body>
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <a class="navbar-brand" href="#">
       <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec"> Gestión Educativa
     </a>
@@ -64,88 +64,96 @@
             </a>
           </div>
         </div>
-		
-		
-							
-			<div class="card">
-			<div class="card-body">
-			<h4 class="card-title">Oriente</h4>
-			<h6 class="card-subtitle mb-2 text-muted">Lady Johanna</h6>
-			<div class="list-group">
-			<button id="intrevension_8" class="list-group-item list-group-item-action" >La Dorada-Uso de canales vanguardistas <span class="float-right badge badge-primary">1</span></button>
-			<button id="intrevension_12" class="list-group-item list-group-item-action" >Victoria-Cultura de pago <span class="float-right badge badge-primary">1</span></button>
-			<div class="card-actions">
-			<a href="#" class="card-link">Ver más</a>
-			<a id="5" class="card-link float-right">
-			<i class="fa fa-plus-circle fa-2x"></i></a>
-			</div>
-			</div>
-			</div>
-		
-        <button type="button" class="btn btn-success" id="Nueva_Intervencion">
-                    <i class="fa fa-plus"></i>
-                    Nueva intervención
-                </button>
-      </div>
-
-      <div class="col-md-8">
-        <div id='calendar'></div>
-      </div>
 
 
-    </div>
-  </div>
 
-  <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Oriente</h4>
+            <h6 class="card-subtitle mb-2 text-muted">Lady Johanna</h6>
+            <div class="list-group">
+              <button id="intrevension_8" class="list-group-item list-group-item-action">La Dorada-Uso de canales vanguardistas
+                <span class="float-right badge badge-primary">1</span>
+              </button>
+              <button id="intrevension_12" class="list-group-item list-group-item-action">Victoria-Cultura de pago
+                <span class="float-right badge badge-primary">1</span>
+              </button>
+              <div class="card-actions">
+                <a href="#" class="card-link">Ver más</a>
+                <a id="5" class="card-link float-right">
+                  <i class="fa fa-plus-circle fa-2x"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-success" id="Nueva_Intervencion">
+            <i class="fa fa-plus"></i>
+            Nueva intervención
           </button>
-          <h4 class="modal-title">Evento</h4>
         </div>
-        <div class="modal-body">
-          <ul>
-            <li>
-              <b>Fecha:</b>
-              <span id="eventFecha"></span>
-            </li>
-            <li>
-              <b>Lugar:</b>
-              <span id="eventLugar"></span>
-            </li>
-            <li>
-              <span id="eventDescripcion"></span>
-            </li>
-          </ul>
+
+        <div class="col-md-8">
+          <div id='calendar'></div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+
+
       </div>
-      <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Evento</h4>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>
+                <b>Fecha:</b>
+                <span id="eventFecha"></span>
+              </li>
+              <li>
+                <b>Lugar:</b>
+                <span id="eventLugar"></span>
+              </li>
+              <li>
+                <span id="eventDescripcion"></span>
+              </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 
 
 
+    <footer id="footer">
+      <h6 class="text">Gestión Educativa</h6>
+      <h6 class="text3">CHEC &copy; Todos los derechos reservados 2017</h6>
+    </footer>
 
 
-
-  <script src="js/includes/jquery-3.2.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-    crossorigin="anonymous"></script>
-  <script src='js/moment.min.js'></script>
-  <script src='js/fullcalendar/fullcalendar.min.js'></script>
-  <script src='js/fullcalendar/es.js'></script>
-  <script src="js/includes/bootstrap.min.js"></script>
-  <script src="js/home_gestor.js"></script>
-  <script type="text/javascript" src="js/home_Gestira.js"></script>
-  <script type="text/javascript" src="js/ValidarSesion.js"></script>
-  <!-- <script type="text/javascript" src="js/gestoras.js"></script>  -->
+    <script src="js/includes/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+      crossorigin="anonymous"></script>
+    <script src='js/moment.min.js'></script>
+    <script src='js/fullcalendar/fullcalendar.min.js'></script>
+    <script src='js/fullcalendar/es.js'></script>
+    <script src="js/includes/bootstrap.min.js"></script>
+    <script src="js/home_gestor.js"></script>
+    <script type="text/javascript" src="js/home_Gestira.js"></script>
+    <script type="text/javascript" src="js/ValidarSesion.js"></script>
+    <!-- <script type="text/javascript" src="js/gestoras.js"></script>  -->
 </body>
 
 </html>

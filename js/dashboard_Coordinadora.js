@@ -139,23 +139,33 @@ function initElements(){
             type: 'bar'
         },
         title: {
-            text: 'Fruit Consumption'
+            text: 'Cobertura Por Estrategia de los 3 últimos meses'
         },
         xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
+            categories: ['Septiembre', 'Agosto', 'Julio']
         },
         yAxis: {
             title: {
-                text: 'Fruit eaten'
+                text: 'Cobertura'
             }
         },
         series: [{
-            name: 'Jane',
-            data: [1, 0, 4]
-        }, {
-            name: 'John',
-            data: [5, 7, 3]
-        }]
+            name: 'Aprediendo con energía en el Cole',
+            data: [6142, 5206, 2161]
+        },{
+            name: 'Aprendiendo con energía en Comunidad',
+            data: [2847, 2688, 450]
+        },{
+            name: 'Aprendiendo con energía en Familia',
+            data: [1003, 580, 360]
+        },{
+            name: 'Aprendiendo con energía en mi Empresa',
+            data: [118, 159, 59]
+        },{
+            name: 'Aprendiendo con energía Gobierno',
+            data: [162, 86, 48]
+        }
+    ]
     });
     
     var MomentoII = Highcharts.chart('bar_coordinadora', {

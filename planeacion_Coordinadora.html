@@ -18,7 +18,7 @@
 <body>
 
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <a class="navbar-brand" href="#">
       <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec"> Gestión Educativa
     </a>
@@ -98,9 +98,8 @@
                   <input type="radio" name="radiosComunidadEspecial" id="radiosComunidadEspecial-0" value="1" checked="checked"> Si
                 </label>
                 <label class="radio-inline" for="radiosComunidadEspecial-1">
-                      <input type="radio" name="radiosComunidadEspecial" id="radiosComunidadEspecial-1" value="0">
-                      No
-                    </label>
+                  <input type="radio" name="radiosComunidadEspecial" id="radiosComunidadEspecial-1" value="0"> No
+                </label>
               </div>
             </div>
 
@@ -115,14 +114,14 @@
               </div>
             </div>
 
-             <!-- Fichero -->
-             <div class="form-group">
-                <label class="col-md-12 control-label" for="textinputFichero">Fichero</label>
-                <div class="col-md-12">
-                  <input id="textinputFichero" name="textinputFichero" type="text" placeholder="" class="form-control input-md">
-  
-                </div>
+            <!-- Fichero -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="textinputFichero">Fichero</label>
+              <div class="col-md-12">
+                <input id="textinputFichero" name="textinputFichero" type="text" placeholder="" class="form-control input-md">
+
               </div>
+            </div>
 
             <!-- Observaciones -->
             <div class="form-group">
@@ -137,13 +136,11 @@
               <label class="col-md-12 control-label" for="radiosAlgunContacto">¿Cuentas con algún contacto?</label>
               <div class="col-md-12" id="radiosContacto">
                 <label class="radio-inline" for="radiosAlgunContacto-0" id="radioContacto">
-                      <input type="radio" name="radiosAlgunContacto" id="SiContacto" value="1">
-                      Si
-                    </label>
+                  <input type="radio" name="radiosAlgunContacto" id="SiContacto" value="1"> Si
+                </label>
                 <label class="radio-inline" for="radiosAlgunContacto-1">
-                      <input type="radio" name="radiosAlgunContacto" id="NoContacto" value="0" checked="checked">
-                      No
-                    </label>
+                  <input type="radio" name="radiosAlgunContacto" id="NoContacto" value="0" checked="checked"> No
+                </label>
               </div>
             </div>
 
@@ -182,157 +179,165 @@
               </div>
             </div>
 
-			<!-- Button (Triple) -->
+            <!-- Button (Triple) -->
             <div class="form-group">
 
               <label class="col-md-12 control-label" for="textinputEtapa">Etapa</label>
-              
+
             </div>
-			<div class="btn-group" id="etapas">
-                <!-- <button id="btnReconocimiento" name="button1id" class="btn btn-success" style="display:none">Reconocimiento</button> -->
-                <!-- <button id="btnGestionR" name="button2id" class="btn btn-success">Gestión Redes</button> -->
-                <!-- <button id="btnGestionE" name="button1id" class="btn btn-success">Gestión Educativa</button> -->
-            </div>		
-
-			<!-- GESTION DE REDES -->
-			<div id="planeacion2" style="display=none">
-			
-				<div class="col-md-12">
-				  <h4>Comportamiento: <div id="spanComportamiento" class="label label-success"></div></h4>
-				  <h4>Competencia: <div id="spanCompetencia" class="label label-success"></div></h4>
-				</div>
-			  <!-- Estrategia -->
-			  <div class="form-group">
-				<label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>
-				<div class="col-md-12">
-				  <select id="selectbasicEstrategiare" name="selectbasicEstrategia" class="form-control">
-						<!-- <option value="1">Opción 1</option> -->
-						<!-- <option value="2">Opción 2</option> -->
-				  </select>
-				</div>
-			  </div>
-
-			  <!-- Táctico Planeación -->
-			  <div class="form-group">
-				<label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
-				<div class="col-md-12">
-				  <select id="selectbasicTacticore" name="selectbasicTactico" class="form-control">
-					  <option value="0">Selecciona una opción</option>
-					  
-				</select>
-				</div>
-			  </div>
-
-			  <!-- Tema Planeación -->
-			  <div class="form-group">
-				<label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
-				<div class="col-md-12">
-				  <select id="selectbasicTemare" name="selectbasicTema" class="form-control">
-						<!-- <option value="1">Opción 1</option> -->
-						<!-- <option value="2">Opción 2</option> -->
-					  </select>
-				</div>
-			  </div>
-
-			  <!-- <legend>Subtema</legend> -->
-			  <!-- <div class="checkbox"> -->
-				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-			  <!-- </div> -->
-			  <!-- <div class="checkbox"> -->
-				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-			  <!-- </div> -->
-			  <!-- <div class="checkbox"> -->
-				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-			  <!-- </div> -->
-			  <!-- Indicadores -->
-			  <legend>Indicadores</legend>
-				<div id="indicadoresre">
-				  <!-- <div class="checkbox"> -->
-					<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-				  <!-- </div> -->
-				  <!-- <div class="checkbox"> -->
-					<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-				  <!-- </div> -->
-				  <!-- <div class="checkbox"> -->
-					<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-				  <!-- </div> -->
-
-				</div>
-			</div>
-
-			<!-- GESTION DE EDUCATIVA -->
-			<div id="planeacion3" style="display=none">
-			
-				<div class="col-md-12">
-				  <h4>Comportamiento: <div id="spanComportamientog" class="label label-success"></div></h4>
-				  <h4>Competencia: <div id="spanCompetenciag" class="label label-success"></div></h4>
-				</div>
-			  <!-- Estrategia -->
-			  <div class="form-group">
-				<label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>
-				<div class="col-md-12">
-				  <select id="selectbasicEstrategia" name="selectbasicEstrategia" class="form-control">
-						<!-- <option value="1">Opción 1</option> -->
-						<!-- <option value="2">Opción 2</option> -->
-				  </select>
-				</div>
-			  </div>
-
-			  <!-- Táctico Planeación -->
-			  <div class="form-group">
-				<label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
-				<div class="col-md-12">
-				  <select id="selectbasicTactico" name="selectbasicTactico" class="form-control">
-					  <option value="0">Selecciona una opción</option>
-					  
-				</select>
-				</div>
-			  </div>
-
-			  <!-- Tema Planeación -->
-			  <div class="form-group">
-				<label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
-				<div class="col-md-12">
-				  <select id="selectbasicTema" name="selectbasicTema" class="form-control">
-						<!-- <option value="1">Opción 1</option> -->
-						<!-- <option value="2">Opción 2</option> -->
-					  </select>
-				</div>
-			  </div>
-
-			  <!-- <legend>Subtema</legend> -->
-			  <!-- <div class="checkbox"> -->
-				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-			  <!-- </div> -->
-			  <!-- <div class="checkbox"> -->
-				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-			  <!-- </div> -->
-			  <!-- <div class="checkbox"> -->
-				<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-			  <!-- </div> -->
-			  <!-- Indicadores -->
-			  <legend>Indicadores</legend>
-				  <div id="indicadoresge">
-					  <!-- <div class="checkbox"> -->
-						<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-					  <!-- </div> -->
-					  <!-- <div class="checkbox"> -->
-						<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-					  <!-- </div> -->
-					  <!-- <div class="checkbox"> -->
-						<!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-					  <!-- </div> -->
-
-				</div>
-      </div>
-      
-      <div class="col-md-8 estatica">
-        <img src="img/CoordinadoraNuevaIntervencion.png">
-		  <div class="boton-dashboard btn-verde" id="btnBancoHerramientas" style="height:70px">
-              <!-- <i class="fa fa-book fa-4x"></i> -->
-              <h6>Banco de Herramientas</h6>
+            <div class="btn-group" id="etapas">
+              <!-- <button id="btnReconocimiento" name="button1id" class="btn btn-success" style="display:none">Reconocimiento</button> -->
+              <!-- <button id="btnGestionR" name="button2id" class="btn btn-success">Gestión Redes</button> -->
+              <!-- <button id="btnGestionE" name="button1id" class="btn btn-success">Gestión Educativa</button> -->
             </div>
-      </div>
+
+            <!-- GESTION DE REDES -->
+            <div id="planeacion2" style="display=none">
+
+              <div class="col-md-12">
+                <h4>Comportamiento:
+                  <div id="spanComportamiento" class="label label-success"></div>
+                </h4>
+                <h4>Competencia:
+                  <div id="spanCompetencia" class="label label-success"></div>
+                </h4>
+              </div>
+              <!-- Estrategia -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>
+                <div class="col-md-12">
+                  <select id="selectbasicEstrategiare" name="selectbasicEstrategia" class="form-control">
+                    <!-- <option value="1">Opción 1</option> -->
+                    <!-- <option value="2">Opción 2</option> -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- Táctico Planeación -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
+                <div class="col-md-12">
+                  <select id="selectbasicTacticore" name="selectbasicTactico" class="form-control">
+                    <option value="0">Selecciona una opción</option>
+
+                  </select>
+                </div>
+              </div>
+
+              <!-- Tema Planeación -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
+                <div class="col-md-12">
+                  <select id="selectbasicTemare" name="selectbasicTema" class="form-control">
+                    <!-- <option value="1">Opción 1</option> -->
+                    <!-- <option value="2">Opción 2</option> -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- <legend>Subtema</legend> -->
+              <!-- <div class="checkbox"> -->
+              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+              <!-- </div> -->
+              <!-- <div class="checkbox"> -->
+              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+              <!-- </div> -->
+              <!-- <div class="checkbox"> -->
+              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+              <!-- </div> -->
+              <!-- Indicadores -->
+              <legend>Indicadores</legend>
+              <div id="indicadoresre">
+                <!-- <div class="checkbox"> -->
+                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+                <!-- </div> -->
+                <!-- <div class="checkbox"> -->
+                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+                <!-- </div> -->
+                <!-- <div class="checkbox"> -->
+                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+                <!-- </div> -->
+
+              </div>
+            </div>
+
+            <!-- GESTION DE EDUCATIVA -->
+            <div id="planeacion3" style="display=none">
+
+              <div class="col-md-12">
+                <h4>Comportamiento:
+                  <div id="spanComportamientog" class="label label-success"></div>
+                </h4>
+                <h4>Competencia:
+                  <div id="spanCompetenciag" class="label label-success"></div>
+                </h4>
+              </div>
+              <!-- Estrategia -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>
+                <div class="col-md-12">
+                  <select id="selectbasicEstrategia" name="selectbasicEstrategia" class="form-control">
+                    <!-- <option value="1">Opción 1</option> -->
+                    <!-- <option value="2">Opción 2</option> -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- Táctico Planeación -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
+                <div class="col-md-12">
+                  <select id="selectbasicTactico" name="selectbasicTactico" class="form-control">
+                    <option value="0">Selecciona una opción</option>
+
+                  </select>
+                </div>
+              </div>
+
+              <!-- Tema Planeación -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
+                <div class="col-md-12">
+                  <select id="selectbasicTema" name="selectbasicTema" class="form-control">
+                    <!-- <option value="1">Opción 1</option> -->
+                    <!-- <option value="2">Opción 2</option> -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- <legend>Subtema</legend> -->
+              <!-- <div class="checkbox"> -->
+              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+              <!-- </div> -->
+              <!-- <div class="checkbox"> -->
+              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+              <!-- </div> -->
+              <!-- <div class="checkbox"> -->
+              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+              <!-- </div> -->
+              <!-- Indicadores -->
+              <legend>Indicadores</legend>
+              <div id="indicadoresge">
+                <!-- <div class="checkbox"> -->
+                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+                <!-- </div> -->
+                <!-- <div class="checkbox"> -->
+                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+                <!-- </div> -->
+                <!-- <div class="checkbox"> -->
+                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
+                <!-- </div> -->
+
+              </div>
+            </div>
+
+            <div class="col-md-8 estatica">
+              <img src="img/CoordinadoraNuevaIntervencion.png">
+              <div class="boton-dashboard btn-verde" id="btnBancoHerramientas" style="height:70px">
+                <!-- <i class="fa fa-book fa-4x"></i> -->
+                <h6>Banco de Herramientas</h6>
+              </div>
+            </div>
 
 
             <!-- Button (Double) -->
@@ -350,6 +355,11 @@
       </div>
     </div>
   </div>
+
+  <footer id="footer">
+    <h6 class="text">Gestión Educativa</h6>
+    <h6 class="text3">CHEC &copy; Todos los derechos reservados 2017</h6>
+  </footer>
 
   <script src="js/includes/jquery-3.2.1.min.js"></script>
   <script src="js/includes/jquery-ui.min.js"></script>
