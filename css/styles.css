@@ -329,3 +329,18 @@ nav.fixed-top{
 .selectDerecha{
   align-content: left;
 }
+
+
+#footer{
+  border-width: 90px;
+  background-color: rgb(156, 193, 43); 
+  margin-top: 50px;
+  height:100%;
+  width:100%; 
+  height:100px;
+  text-align: center;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+  padding: 1.8em;
+  
+}

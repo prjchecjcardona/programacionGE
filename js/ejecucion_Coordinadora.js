@@ -1,6 +1,6 @@
 //Invocacion del archivo File Input Ejecucion Coordinadora
 $(function(){
-    $('#file-es').fileinput({
+    $('#upload_coordinadora').fileinput({
           language: 'es',
           'theme': 'fa',
           uploadUrl: '#',
