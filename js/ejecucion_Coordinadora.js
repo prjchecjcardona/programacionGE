@@ -65,13 +65,13 @@ function cargarDatosPlaneacion(){
 		 function (data) {
 			if (data.error == 0){		
 		
-				 // $('#fechaInd').html(data.html.fecha);
-				 // $('#lugarInd').html(data.html.lugar);
-				 // $('#municipioInd').html(data.html.municipio);
-				 // $('#comportamientoInd').html(data.html.comportamiento);
-				 // $('#competenciaInd').html(data.html.competencia);
-				 // $('#estrategiaInd').html(data.html.estrategia);
-				 // $('#tacticoInd').html(data.html.tactico);
+				 $('#fechaInd').html(data.html.fecha);
+				 $('#lugarInd').html(data.html.lugar);
+				 $('#municipioInd').html(data.html.municipio);
+				 $('#comportamientoInd').html(data.html.comportamiento);
+				 $('#competenciaInd').html(data.html.competencia);
+				 $('#estrategiaInd').html(data.html.estrategia);
+				 $('#tacticoInd').html(data.html.tactico);
 			}
 			else{
 				swal(

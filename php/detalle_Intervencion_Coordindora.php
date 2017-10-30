@@ -17,8 +17,8 @@ if(isset($_POST["accion"]))
 
 function cargarDetalleIntervencion($idIntervencion){
 	include "conexion.php";
-	$data = array('error'=>0,'mensaje'=>'','html'=>''); 
-	//$idIntrevencion = $_POST['idIntervencion']; //para la consulta
+	$data = array('error'=>0,'mensaje'=>'','html'=>array()); 
+	$idIntrevencion = $_POST['idIntervencion']; //para la consulta
 	$sql = "SELECT mun.municipio, ent.nombreentidad, compor.comportamientos, compe.competencia, ind.indicador, tipo.tipo_intervencion,compor.id_comportamientos,compe.id_competencia,ent.id_entidad
 			FROM intervenciones inter
 			JOIN tipo_intervencion tipo ON tipo.id_tipo_intervencion = inter.tipo_intervencion_id_tipo_intervencion
@@ -32,13 +32,14 @@ function cargarDetalleIntervencion($idIntervencion){
 			LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
 			LEFT OUTER JOIN veredas ver ON ver.id_veredas = ent.veredas_id_veredas
 			JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
-			WHERE inter.id_intervenciones = ".$idIntervencion.""; 
-	  		
+			WHERE inter.id_intervenciones = ".$idIntervencion; 
+			  
+			 
 			$array="";
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
 					for ($i=0;$i<count($filas);$i++){
-						$data['html']['municipio']= $filas[0]['municipio'];
+						$data['html']['municipio']= $filas[0]["municipio"];
 						$data['html']['nombreentidad']= $filas[0]['nombreentidad'];
 						$data['html']['comportamientos']= $filas[0]['comportamientos'];
 						$data['html']['competencia']= $filas[0]['competencia'];

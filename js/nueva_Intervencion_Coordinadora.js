@@ -4,12 +4,7 @@ $(document).ready(function(){
 	traerNombre();
 	nuevaentidad="";
 	
-	$( "#btnBancoHerramientas" ).click(function() {
-	
-		// window.location.href = "Banco de Herramientas V2/index.html";
-		window.open ("Banco de Herramientas V2/index.html", '_blank');
-	
-	});
+
 	
 
 /*Dependiendo si seleccionan si cuenta con algun contacto
