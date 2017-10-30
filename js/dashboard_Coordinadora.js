@@ -1,6 +1,9 @@
 $(function () {
     $('#multiple-mes').multiselect();
     $('#multiple-anio').multiselect();
+    $('#multiple-municipio').multiselect();
+    $('#multiple-zona').multiselect();
+    $('#multiple-entidad').multiselect();
     $('#multiple-comportamiento').multiselect();
     $('#multiple-estrategia').multiselect();
     $('#multiple-tactico').multiselect();
