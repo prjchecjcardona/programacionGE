@@ -51,12 +51,12 @@
   <!-- Inicio Formulario Nueva Intervencion Gestora -->
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
+        <legend>Nueva Intervención Gestora</legend>
+      <div class="col-md-4 card-body customBack">
         <form class="form-horizontal" id="formularioGestora" name="formularioGestora" method="post" action="php/Gestoras.php">
           <fieldset>
             <!-- Form Name -->
 
-            <legend>Nueva Intervención Gestora</legend>
 
             <!-- Zona -->
             <div class="form-group">
@@ -92,9 +92,9 @@
 
             <!-- Seleccion Comuna -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="selectbasicComuna">Comuna</label>
+              <label class="col-md-12 control-label" for="selectbasicComunaGestora">Comuna</label>
               <div class="col-md-12">
-                <select onChange="recargarBarrios(this.value)" id="selectbasicComuna" name="selectbasicComuna" class="form-control">
+                <select onChange="recargarBarrios(this.value)" id="selectbasicComunaGestora" name="selectbasicComunaGestora" class="form-control">
 
                 </select>
               </div>
@@ -102,19 +102,19 @@
 
             <!-- Seleccion Barrio -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="selectbasicBarrio">Barrio</label>
+              <label class="col-md-12 control-label" for="selectbasicBarrioGestora">Barrio</label>
               <div class="col-md-12">
-                <select id="selectbasicBarrio" name="selectbasicBarrio" class="form-control" disabled="true">
+                <select id="selectbasicBarrioGestora" name="selectbasicBarrioGestora" class="form-control" disabled="true">
                   <option value="0">Seleccione...</option>
                 </select>
               </div>
             </div>
 
-            <!-- Vereda -->
+            <!-- Seleccion Vereda -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="selectbasicVereda">Vereda</label>
+              <label class="col-md-12 control-label" for="selectbasicVeredaGestora">Vereda</label>
               <div class="col-md-12">
-                <select id="selectbasicVereda" name="selectbasicVereda" class="form-control">
+                <select id="selectbasicVeredaGestora" name="selectbasicVeredaGestora" class="form-control">
                   <option value="0">Seleccione...</option>
                 </select>
 
@@ -204,22 +204,22 @@
             </div>
 
 
-            <!-- Button (Double) -->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="button1id"></label>
-              <div class="col-md-8">
-                <button id="button1id" name="button1id" class="btn btn-danger">Cancelar</button>
-                <button id="button2id" name="button2id" class="btn btn-success">Enviar</button>
-              </div>
-            </div>
-
+            
           </fieldset>
         </form>
-
+        
       </div>
-
-      <div class="col-md-8 estatica">
+      
+      <div class="col-md-8 imagenGestora">
         <img src="img/MunequitaNuevaIntervencion.png">
+      </div>
+    </div>
+    <!-- Button (Double) -->
+    <div class="form-group">
+      <label class="col-md-12 control-label" for="button1id"></label>
+      <div class="col-md-8">
+        <button id="button1id" name="button1id" class="btn btn-danger">Cancelar</button>
+        <button id="button2id" name="button2id" class="btn btn-success">Enviar</button>
       </div>
     </div>
   </div>

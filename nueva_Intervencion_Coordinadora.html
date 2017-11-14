@@ -8,13 +8,15 @@
   <title>Nueva Intervención Coordinadora</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-
   <link rel="stylesheet" href="css/jquery-ui.min.css">
   <link rel="stylesheet" href="css/fileinput.min.css">
   <link rel="stylesheet" href="css/fileinput-rtl.min.css">
-
+  <link rel="stylesheet" href="php/SubirArchivo/dropzone.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
   <link rel="stylesheet" href="css/styles.css">
-  <script type="text/javascript" src="php/SubirArchivo/dropzone.css"></script>
+
+  <!--   <script type="text/javascript" src="php/SubirArchivo/dropzone.css"></script>
+ -->
 </head>
 
 <body>
@@ -37,7 +39,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" id="nav_home" href="home_coordinadora.html">
+          <a class="nav-link" id="nav_home" href="home_Coordinadora.html">
             <i class="fa fa-home fa-2x"></i>
           </a>
           <a class="nav-link" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank">
@@ -55,12 +57,13 @@
   <div class="container">
 
     <div class="row">
-      <div class="col-md-4 col-md-offset-2">
+      <legend>Nueva Intervención Coordinadora</legend>
+      <div class="col-md-5 card-body customBack">
         <!--<form class="form-horizontal" action="php/GuardarRegistros.php" method="POST">-->
         <!-- <form class="form-horizontal" action="" > -->
         <fieldset>
           <!-- Form Name -->
-          <legend>Nueva Intervención Coordinadora</legend>
+
 
           <!-- Zona -->
           <div class="form-group">
@@ -97,31 +100,165 @@
             </div>
           </div>
 
-          <!-- Vereda -->
-          <div class="form-group " id="Rural">
+
+          <!-- Seleccion Vereda -->
+          <div id="Rural">
             <label class="col-md-12 control-label" for="selectbasicVereda">Vereda</label>
-            <div class="col-md-12" class="padding">
-              <select id="selectbasicVereda" name="selectbasicVereda" class="form-control">
+            <div class="form-inline">
+              <div class="col-sm-12">
+                <select id="selectbasicVereda" name="selectbasicVereda" class="form-control">
+                  <!-- <option value="0">Seleccione...</option> -->
+                </select>
+                <button id="btnNuevaVereda" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
+              </div>
+            </div>
+            <!-- Modal creacion Vereda -->
+            <div id="ex2" class="modal">
 
-              </select>
+              <head>
+                <h2>Añadir nueva Vereda</h2>
+              </head>
+              <hr>
+              <!-- Seleccion Municipio -->
+              <label class="col-md-12 control-label" for="textinputMunicipio">Municipio</label>
+              <div class="col-md-12">
+                <select id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
+                  <option value="1">Opción 1</option>
+                  <option value="2">Opción 2</option>
+                </select>
+              </div>
+
+              <!-- Campo Vereda -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputVereda">Nombre de la Vereda</label>
+                <input id="textinputVereda" name="textinputVereda" type="text" placeholder="" class="form-control input-md">
+              </div>
+
+              <!-- Campo Latitud Vereda -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputVeredaLan">Latitud</label>
+                <input id="textinputVeredaLan" name="textinputVeredaLan" type="text" placeholder="" class="form-control input-md">
+              </div>
+              <!-- Campo Longitud Vereda -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputVeredaLon">Longitud</label>
+                <input id="textinputVeredaLon" name="textinputVeredaLon" type="text" placeholder="" class="form-control input-md">
+              </div>
+              <!-- Button (Double) -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                  <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
+                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarIntervencion();">Guardar</button>
+                  <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- Seleccion Comuna y Barrio -->
-          <div class="form-group" id="Urbano" style="display=none">
+
+          <div id="Urbano">
+            <label class="col-md-12 control-label" for="selectbasicBarrio">Barrio</label>
+            <div class="form-inline">
+              <div class="col-sm-12">
+                <select id="selectbasicBarrio" name="selectbasicBarrio" class="form-control">
+                  <!-- <option value="0">Seleccione...</option> -->
+                </select>
+                <button id="btnNuevoBarrio" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
+              </div>
+            </div>
+            <!-- Modal creacion Barrio -->
+            <div id="ex3" class="modal">
+
+              <head>
+                <h2>Añadir nuevo Barrio</h2>
+              </head>
+              <hr>
+              <!-- Seleccion Comuna -->
+              <label class="col-md-12 control-label" for="textinputComuna">Comuna</label>
+              <div class="col-md-12">
+                <select id="selectbasicComuna" name="selectbasicComuna" class="form-control">
+                  <option value="1">Opción 1</option>
+                  <option value="2">Opción 2</option>
+                </select>
+              </div>
+
+              <!-- Campo Barrio -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputBarrio">Nombre del Barrio</label>
+                <input id="textinputBarrio" name="textinputBarrio" type="text" placeholder="" class="form-control input-md">
+              </div>
+
+              <!-- Campo Latitud Barrio -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputBarrioLan">Latitud</label>
+                <input id="textinputBarrioLan" name="textinputBarrioLan" type="text" placeholder="" class="form-control input-md">
+              </div>
+              <!-- Campo Longitud Barrio -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputBarrioLon">Longitud</label>
+                <input id="textinputBarrioLon" name="textinputBarrioLon" type="text" placeholder="" class="form-control input-md">
+              </div>
+
+              <!-- Button (Double) -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                  <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
+                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarIntervencion();">Guardar</button>
+                  <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+                </div>
+              </div>
+
+            </div>
+
             <label class="col-md-12 control-label" for="selectbasicComuna">Comuna</label>
-            <div class="col-md-12">
-              <select id="selectbasicComuna" name="selectbasicComuna" class="form-control">
-
-              </select>
+            <div class="form-inline">
+              <div class="col-sm-12">
+                <select id="selectbasicComuna" name="selectbasicComuna" class="form-control">
+                  <!-- <option value="0">Seleccione...</option> -->
+                </select>
+                <button id="btnNuevaComuna" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
+              </div>
             </div>
-            <label class="col-md-12 control-label espaciado" for="selectbasicBarrio">Barrio</label>
-            <div class="col-md-12">
-              <select id="selectbasicBarrio" name="selectbasicBarrio" class="form-control">
+            <!-- Modal creacion Comuna -->
+            <div id="ex4" class="modal">
 
-              </select>
+              <head>
+                <h2>Añadir nueva Comuna</h2>
+              </head>
+              <hr>
+              <!-- Seleccion Municipio -->
+              <label class="col-md-12 control-label" for="textinputMunicipio">Municipio</label>
+              <div class="col-md-12">
+                <select id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
+                  <option value="1">Opción 1</option>
+                  <option value="2">Opción 2</option>
+                </select>
+              </div>
+
+              <!-- Campo Comuna -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputComuna">Nombre de la Comuna</label>
+                <input id="textinputComuna" name="textinputComuna" type="text" placeholder="" class="form-control input-md">
+              </div>
+
+
+              <!-- Button (Double) -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                  <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
+                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarIntervencion();">Guardar</button>
+                  <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+                </div>
+              </div>
+
             </div>
+
           </div>
+
 
           <!-- Seleccion Entidades -->
           <label class="col-md-12 control-label" for="selectbasicEntidad">Entidad</label>
@@ -130,35 +267,30 @@
               <select id="selectbasicEntidad" name="selectbasicEntidad" class="form-control">
                 <!-- <option value="0">Seleccione...</option> -->
               </select>
-              <button id="btnNuevaEntidad" type="submit" class="btn btn-primary botonEnLinea">+</button>
+              <button id="btnNuevaEntidad" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
             </div>
           </div>
-
-          <!-- Seleccion Tipo de Entidad -->
-          <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">Tipo de Entidad</label>
-          <div class="col-md-12">
-            <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
-
-            </select>
-          </div>
-
-          <div class="nuevaEntidadDiv">
+          <!-- Modal Creacion Entidad -->
+          <div id="ex1" class="modal">
             <!-- Campo Nombre Entidad -->
+
+            <head>
+              <h2>Añadir nueva Entidad</h2>
+            </head>
+            <hr>
             <div class="col-md-12">
               <label class="col-md-12control-label" for="textinputEntidad">Nombre de la Entidad</label>
-              <input id="textinputEntidadNueva" name="textinputEntidadN" type="text" placeholder="Ingrese el Nombre de la Entidad" class="form-control input-md">
+              <input id="textinputEntidadNueva" name="textinputEntidadN" type="text" placeholder="" class="form-control input-md">
             </div>
             <!-- Campo Direccion Entidad -->
             <div class="col-md-12 espaciado">
               <label class="col-md-12control-label" for="textinputDireccionEntidad">Dirección</label>
-              <input id="textinputDireccionEntidad" name="textinputDireccionEntidad" type="text" placeholder="Ingrese la Dirección de la Entidad"
-                class="form-control input-md">
+              <input id="textinputDireccionEntidad" name="textinputDireccionEntidad" type="text" placeholder="" class="form-control input-md">
             </div>
             <!-- Campo Telefono Entidad -->
             <div class="col-md-12 espaciado">
               <label class="col-md-12control-label" for="textinputTelefonoEntidad">Teléfono</label>
-              <input id="textinputTelefonoEntidad" name="textinputTelefonoEntidad" type="text" placeholder="Ingrese el Teléfono de la Entidad"
-                class="form-control input-md">
+              <input id="textinputTelefonoEntidad" name="textinputTelefonoEntidad" type="text" placeholder="" class="form-control input-md">
             </div>
             <!-- Seleccion Tipo de Entidad -->
             <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">Tipo de Entidad</label>
@@ -174,10 +306,33 @@
             <!-- Campo Nodo Entidad -->
             <div class="col-md-12 espaciado">
               <label class="col-md-12control-label" for="textinputNodoEntidad">Nodo</label>
-              <input id="text_inputNodoEntidad" name="textinputNodoEntidad" type="text" placeholder="Ingrese el Nodo de la Entidad" class="form-control input-md">
+              <input id="text_inputNodoEntidad" name="textinputNodoEntidad" type="text" placeholder="" class="form-control input-md">
+            </div>
+
+            <!-- Button (Double) -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="button1id"></label>
+              <div class="col-md-8">
+                <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
+                <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarIntervencion();">Guardar</button>
+                <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+              </div>
             </div>
 
           </div>
+
+          <!-- Fin creacion entidad -->
+
+
+
+          <!-- Seleccion Tipo de Entidad -->
+          <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">Tipo de Entidad</label>
+          <div class="col-md-12">
+            <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
+
+            </select>
+          </div>
+
 
           <!-- Seleccion Tipo de Intervención -->
           <div class="form-group">
@@ -235,7 +390,7 @@
 
       </div>
       <div class="col-md-8 estatica">
-        <img src="img/CoordinadoraNuevaIntervencion.png">
+        <img src="img/Coordinadora207-01.png">
 
       </div>
 
@@ -262,21 +417,18 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="//netsh.pp.ua/upwork-demo/1/js/typeahead.js"></script>
-  <script type="text/javascript" src="js/includes/jquery-3.2.1.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" src="js/ValidarSesion.js"></script>
-
-
-
   <script type="text/javascript" src="php/SubirArchivo/dropzone.js"></script>
   <script type="text/javascript" src="php/SubirArchivo/dropzone-config.js"></script>
-
   <script src="js/includes/fileInput/fileinput.js"></script>
   <script src="js/includes/fileInput/sortable.min.js"></script>
   <script src="js/includes/fileInput/theme.min.js"></script>
   <script src="js/includes/fileInput/locales/es.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
+
 
   <script type="text/javascript" src="js/nueva_Intervencion_Coordinadora.js"></script>
 

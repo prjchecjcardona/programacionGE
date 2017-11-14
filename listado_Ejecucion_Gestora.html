@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Detalle Intervención Coordinadora</title>
+  <title>Detalle Intervención Gestora</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
@@ -14,8 +14,8 @@
   <link rel="stylesheet" href="css/datatables.min.css">
   <link rel="stylesheet" href="css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="css/labels.css">
   <link rel="stylesheet" href="css/styles.css">
-
 </head>
 
 <body>
@@ -33,18 +33,18 @@
       <ul class="navbar-nav">
         <li class="nav-item active">
           <span class="h5">Hola, &nbsp;</span>
-          <span class="h5" id="Nombre">
-            <!-- Inserción dinamica del nombre del usuario logueado -->
+          <span class="h5" id="Nombre"></span>
+          <!-- Inserción dinamica del nombre del usuario logueado -->
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" id="nav_home" href="home_Coordinadora.html">
+          <a class="nav-link" id="nav_home" href="home_Gestora.html">
             <i class="fa fa-home fa-2x"></i>
           </a>
-          <a class="nav-link" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank">
+          <a class="nav-link" id="nav_banco" href="#">
             <i class="fa fa-wrench fa-2x"></i>
           </a>
-          <a class="nav-link" id="nav_out" href="http://drive.google.com">
+          <a class="nav-link" id="nav_out" href="php/LogoutGestora.php">
             <i class="fa fa-sign-out fa-2x"></i>
           </a>
         </li>
@@ -53,16 +53,16 @@
   </nav>
 
   <!-- Columna Izquierda -->
-  <div class="container detalle-intervencion-coord">
+  <div class="container">
     <div class="row">
       <div class="col-md-4 card-body customBack">
-        <legend>Detalle de Intervención</legend>
+          <legend>Detalle de Intervención Gestora</legend>
         <form>
 
           <!-- Label Municipio -->
           <div class="row">
-            <div class="col-md-5">
-              <label class="mr-sm-2" id="lblMunicipio"></label>
+            <div class="col-md-5" id="mostrarMunicipio">
+              <label class="mr-sm-2"></label>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="fechaInd">Fecha Indicada</span>
@@ -71,8 +71,8 @@
 
           <!-- Label Entidad -->
           <div class="row">
-            <div class="col-md-5">
-              <label class="mr-sm-2" id="lblEntidad"></label>
+            <div class="col-md-5" id="mostrarEntidad">
+              <label class="mr-sm-2"></label>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="lugarInd">Lugar Indicado</span>
@@ -81,8 +81,8 @@
 
           <!-- Label Comportamiento -->
           <div class="row">
-            <div class="col-md-5">
-              <label class="mr-sm-2" id="lblCoportamiento"></label>
+            <div class="col-md-5" id="mostrarComportamiento">
+              <label class="mr-sm-2"></label>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="municipioInd">Municipio Indicado</span>
@@ -91,35 +91,40 @@
 
           <!-- Label Competencia -->
           <div class="row">
-            <div class="col-md-5">
-              <label class="mr-sm-2" id="lblCompetencia"></label>
+            <div class="col-md-5" id="mostrarCompetencia">
+              <label class="mr-sm-2"></label>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="comportamientoInd">Comportamiento Indicado</span>
             </div> -->
           </div>
 
-          <!-- Label Indicador CHEC -->
-          <div id="indicadoresChec">
-            <!--<div class="row">
-				<div class="col-md-5">
-				  <li><label class="mr-sm-2" id="lblIndicadorChec1">{Indicador CHEC}</label></li>
-				</div>
-				
-			  </div>-->
-          </div>
-
-
-
           <!-- Label Tipo de Intervención -->
           <div class="row">
-            <div class="col-md-5">
-              <label class="mr-sm-2" id="lblTipoIntervencion"></label>
+            <div class="col-md-5" id="mostrarTipoIntervencion">
+              <label class="mr-sm-2"></label>
             </div>
             <!-- <div class="col-md-7">
               <span class="grisTexto" id="tacticoInd">Táctico Indicad</span>
             </div> -->
           </div>
+
+
+
+          <!-- Label Indicador CHEC -->
+          <div class="row">
+            <div class="col-md-5" id="mostrarIndicadores">
+
+            </div>
+            <!-- <div class="col-md-7">
+              <span class="grisTexto" id="competenciaInd">Competencia Indicada</span>
+            </div> -->
+          </div>
+
+          <!-- Label Indicador CHEC -->
+
+
+
 
         </form>
       </div>
@@ -127,47 +132,62 @@
       <!-- Columna derecha -->
       <div class="col-md-8">
         <!-- Tabla de eventos planeados -->
-        <legend>Eventos Planeados</legend>
-        <table id="coordinadora_tabla" class="display">
-          <!-- <thead> -->
-          <!-- <tr> -->
-          <!-- <th>Fecha</th> -->
-          <!-- <th>Etapa</th> -->
-          <!-- <th>Estrategia</th> -->
-          <!-- <th>Táctico</th> -->
-          <!-- <th>Tema</th> -->
-          <!-- <th>Ejecución</th> -->
-          <!-- <th>Evaluación</th> -->
-          <!-- </tr> -->
-          <!-- </thead> -->
-          <!-- <tbody> -->
-          <!-- <tr> -->
-          <!-- <td>{fecha1}</td> -->
-          <!-- <td>{Etapa1}</td> -->
-          <!-- <td>{Estrategia1}</td> -->
-          <!-- <td>{Táctico1}</td> -->
-          <!-- <td>{Tema1}</td> -->
-          <!-- <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-book"></span></a></td> -->
-          <!-- <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-pencil-square-o"></span></a></td> -->
-          <!-- </tr> -->
-          <!-- <tr> -->
-          <!-- <td>{fecha2}</td> -->
-          <!-- <td>{Etapa2}</td> -->
-          <!-- <td>{Estrategia2}</td> -->
-          <!-- <td>{Táctico2}</td> -->
-          <!-- <td>{Tema2}</td> -->
-          <!-- <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-book"></span></a></td> -->
-          <!-- <td><a href="#" class="btn btn-sm btn-success"><span class="fa fa-pencil-square-o"></span></a></td> -->
-          <!-- </tr> -->
-          <!-- </tbody> -->
+        <legend>Lista de ejecuciones</legend>
+        <table id="listado_Gestora_Tabla" class="display">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Etapa</th>
+              <th>Estrategia</th>
+              <th>Táctico</th>
+              <th>Tema</th>
+              <th>Ejecución</th>
+              <th>Evaluación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{fecha1}</td>
+              <td>{Etapa1}</td>
+              <td>{Estrategia1}</td>
+              <td>{Táctico1}</td>
+              <td>{Tema1}</td>
+              <td>
+                <a href="#" class="btn btn-sm btn-success">
+                  <span class="fa fa-book"></span>
+                </a>
+              </td>
+              <td>
+                <a href="#" class="btn btn-sm btn-success">
+                  <span class="fa fa-pencil-square-o"></span>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>{fecha2}</td>
+              <td>{Etapa2}</td>
+              <td>{Estrategia2}</td>
+              <td>{Táctico2}</td>
+              <td>{Tema2}</td>
+              <td>
+                <a href="#" class="btn btn-sm btn-success">
+                  <span class="fa fa-book"></span>
+                </a>
+              </td>
+              <td>
+                <a href="#" class="btn btn-sm btn-success">
+                  <span class="fa fa-pencil-square-o"></span>
+                </a>
+              </td>
+            </tr>
+          </tbody>
         </table>
 
         <!-- Boton añadir -->
         <p></p>
         <div>
-          <!-- <a href="#" class="btn btn-sm btn-success"><span class="fa fa-plus"></span> Añadir</a> -->
-          <button id="btnNuevaPlaneacion" class="btn btn-sm btn-success">
-            <span class="fa fa-plus"></span> Añadir</button>
+          <a href="ejecucion_Gestora.html" class="btn btn-sm btn-success">
+            <span class="fa fa-plus"></span> Añadir</a>
         </div>
 
       </div>
@@ -193,8 +213,10 @@
   <script src="js/includes/dataTable/datatables.min.js"></script>
   <script src="js/includes/dataTable/jquery.dataTables.min.js"></script>
   <script src="js/includes/dataTable/dataTables.bootstrap4.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script src="js/detalle_Intervencion_Coordinadora.js"></script>
+  <script src="js/listado_Ejecucion_Gestora.js"></script>
+  <script type="text/javascript" src="js/funciones.js"></script>
+  <script type="text/javascript" src="js/ValidarSesion.js"></script>
+  <script type="text/javascript" src="js/gestoras.js"></script>
 </body>
 
 </html>

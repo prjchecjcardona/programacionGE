@@ -9,13 +9,12 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/fullcalendar.min.css">
-  <link rel="stylesheet" href="css/styles.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Inicio - Coordinador</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/styles.css">
 
 </head>
 
@@ -39,7 +38,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" id="nav_home" href="home_coordinadora.html">
+          <a class="nav-link" id="nav_home" href="home_Coordinadora.html">
             <i class="fa fa-home fa-2x"></i>
           </a>
           <a class="nav-link" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank">
@@ -149,13 +148,26 @@
               <i class="fa fa-book fa-4x"></i>
               <h6>Informes</h6>
             </div>
-            <div class="boton-dashboard btn-gris">
+            <!-- <div class="boton-dashboard btn-gris">
               <i class="fa fa-cog fa-4x"></i>
               <h6>Configuración</h6>
+            </div> -->
+            <div class="dropdown">
+              <button class="boton-dashboard btn-gris btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-cog fa-4x"></i>
+                <h6>Configuración</h6>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="usuarios_Coordinadora.html">Configuración de Usuarios</a>
+                <a class="dropdown-item" href="geografico_Coordinadora.html">Configuración Geografica</a>
+                <a class="dropdown-item" href="sistema_Coordinadora.html">Configuración de Sistema</a>
+              </div>
             </div>
           </div>
         </div>
-        <div id="map"></div>
+        <div id="map">
+        </div>
       </div>
 
     </div>

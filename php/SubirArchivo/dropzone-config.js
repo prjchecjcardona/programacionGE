@@ -4,14 +4,14 @@ Dropzone.options.subirImagen = {
     withCredentials: false,
     parallelUploads: 2, //Cuanto archivos subir al mismo tiempo
     uploadMultiple: false,
-    maxFilesize: 10, //Maximo Tamaño del archivo expresado en mg
+    maxFilesize: 10, //Maximo Tamaï¿½o del archivo expresado en mg
     paramName: "file",//Nombre con el que se envia el archivo a nivel de parametro
     createImageThumbnails: true,
     maxThumbnailFilesize: 10, //Limite para generar imagenes (Previsualizacion)
     thumbnailWidth: 154, //Medida de largo de la Previsualizacion
     thumbnailHeight: 154,//Medida alto Previsualizacion
     filesizeBase: 1000,
-    maxFiles: ,//si no es nulo, define cuántos archivos se cargaRAN. Si se excede, se llamará el EVENTO maxfilesexceeded.
+    maxFiles: null,//si no es nulo, define cuï¿½ntos archivos se cargaRAN. Si se excede, se llamarï¿½ el EVENTO maxfilesexceeded.
     params: {}, //Parametros adicionales al formulario de envio ejemplo {tipo:"imagen"}
     clickable: true,
     ignoreHiddenFiles: true,
@@ -20,17 +20,17 @@ Dropzone.options.subirImagen = {
     acceptedMimeTypes: null,//Ya no se utiliza paso a ser AceptedFiles
     autoProcessQueue: true,//True sube las imagenes automaticamente, si es false se tiene que llamar a myDropzone.processQueue(); para subirlas
     autoQueue: false,
-    addRemoveLinks: true,//Habilita la posibilidad de eliminar/cancelar un archivo. Las opciones dictCancelUpload, dictCancelUploadConfirmation y dictRemoveFile se utilizan para la redacción.
-    previewsContainer: null,//define dónde mostrar las previsualizaciones de archivos. Puede ser un HTMLElement liso o un selector de CSS. El elemento debe tener la estructura correcta para que las vistas previas se muestran correctamente.
+    addRemoveLinks: true,//Habilita la posibilidad de eliminar/cancelar un archivo. Las opciones dictCancelUpload, dictCancelUploadConfirmation y dictRemoveFile se utilizan para la redacciï¿½n.
+    previewsContainer: null,//define dï¿½nde mostrar las previsualizaciones de archivos. Puede ser un HTMLElement liso o un selector de CSS. El elemento debe tener la estructura correcta para que las vistas previas se muestran correctamente.
     capture: null,
     dictDefaultMessage: "Arrastra los archivos aqui para subirlos",
     dictFallbackMessage: "Su navegador no soporta arrastrar y soltar para subir archivos.",
     dictFallbackText: "Por favor utilize el formuario de reserva de abajo como en los viejos timepos.",
-    dictFileTooBig: "La imagen revasa el tamaño permitido ({{filesize}}MiB). Tam. Max : {{maxFilesize}}MiB.",
+    dictFileTooBig: "La imagen revasa el tamaï¿½o permitido ({{filesize}}MiB). Tam. Max : {{maxFilesize}}MiB.",
     dictInvalidFileType: "No se puede subir este tipo de archivos.",
     dictResponseError: "Server responded with {{statusCode}} code.",
     dictCancelUpload: "Cancel subida",
-    dictCancelUploadConfirmation: "¿Seguro que desea cancelar esta subida?",
+    dictCancelUploadConfirmation: "ï¿½Seguro que desea cancelar esta subida?",
     dictRemoveFile: "Eliminar archivo",
     dictRemoveFileConfirmation: null,
     dictMaxFilesExceeded: "Se ha excedido el numero de archivos permitidos.",

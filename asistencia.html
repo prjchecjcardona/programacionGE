@@ -37,6 +37,9 @@
           <a class="nav-link" id="nav_home" href="#">
             <i class="fa fa-home fa-2x"></i>
           </a>
+          <a class="nav-link" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank">
+            <i class="fa fa-wrench fa-2x"></i>
+          </a>
           <a class="nav-link" id="nav_out" href="#">
             <i class="fa fa-sign-out fa-2x"></i>
           </a>
@@ -47,12 +50,13 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-4 col-md-offset-2">
+      <!-- Form Name -->
+      <legend>Asistencia</legend>
+
+      <div class="col-md-4 col-md-offset-2 card-body customBack">
         <form class="form-horizontal" action="php/GuardarRegistros.php" method="post">
           <fieldset>
 
-            <!-- Form Name -->
-            <legend>Asistencia</legend>
 
             <!-- Tipo de Documento -->
             <div class="form-group">
@@ -191,21 +195,27 @@
               </div>
             </div>
 
-            <!-- Button (Double) -->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="button1id"></label>
-              <div class="col-md-8">
-                <button id="button1id" name="button1id" class="btn btn-danger" value="Cancelar">Cancelar</button>
-                <button id="button2id" name="button2id" class="btn btn-success" value="Enviar">Enviar</button>
-                <input type="hidden" name="TipoFormulario" value="Asistencia">
-              </div>
-            </div>
+
 
           </fieldset>
         </form>
 
       </div>
+
+      <div class="col-md-8">
+        <img class="estatica2" src="img/Asistencia72pxV1.png">
+      </div>
     </div>
+    <!-- Button (Double) -->
+    <div class="form-group">
+      <label class="col-md-12 control-label" for="button1id"></label>
+      <div class="col-md-8">
+        <button id="button1id" name="button1id" class="btn btn-danger" value="Cancelar">Cancelar</button>
+        <button id="button2id" name="button2id" class="btn btn-success" value="Enviar">Enviar</button>
+        <input type="hidden" name="TipoFormulario" value="Asistencia">
+      </div>
+    </div>
+
   </div>
 
   <footer id="footer">

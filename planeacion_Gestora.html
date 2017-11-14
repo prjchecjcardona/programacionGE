@@ -52,18 +52,19 @@
   <!-- Inicio Nueva Planeacion -->
   <div class="container">
     <div class="row">
-      <div class="col-md-4 col-md-offset-2">
+      <!-- Form Name -->
+      <legend>Planeación</legend>
+      <div class="col-md-5 col card-body customBack">
         <form class="form-horizontal">
           <fieldset>
 
-            <!-- Form Name -->
-            <legend>Planeación</legend>
+
 
             <!-- Button (Triple) -->
             <div class="form-group">
 
               <label class="col-md-12 control-label" for="textinputEtapa">Etapa</label>
-              <div class="btn-group">
+              <div class="btn-group posicionGrupoBotones">
                 <button id="button1id" name="button1id" class="btn btn-success">Reconocimiento</button>
                 <button id="button2id" name="button2id" class="btn btn-success">Gestión Redes</button>
                 <button id="button1id" name="button1id" class="btn btn-success">Gestión Educativa</button>
@@ -255,24 +256,27 @@
                   dolore magna aliqua.</label>
               </div>
 
-
-            </div>
-
-
-
-
-            <!-- Button (Double) -->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="button1id"></label>
-              <div class="col-md-8">
-                <button id="button1id" name="button1id" class="btn btn-danger">Cancelar</button>
-                <button id="button2id" name="button2id" class="btn btn-success">Continuar</button>
-              </div>
             </div>
 
           </fieldset>
         </form>
 
+      </div>
+      <div class="col-md-7">
+        <img class="planeacionImg" src="img/SeñoritaEscritorio385pxV1.png">
+        <div class="boton-dashboard btn-verde posicionBtnBancoHerramientas" id="btnBancoHerramientas" style="height:70px">
+          <!-- <i class="fa fa-book fa-4x"></i> -->
+          <h6>Banco de Herramientas</h6>
+        </div>
+
+      </div>
+    </div>
+    <!-- Button (Double) -->
+    <div class="form-group">
+      <label class="col-md-12 control-label" for="button1id"></label>
+      <div class="col-md-8">
+        <button id="button1id" name="button1id" class="btn btn-danger">Cancelar</button>
+        <button id="button2id" name="button2id" class="btn btn-success">Continuar</button>
       </div>
     </div>
   </div>

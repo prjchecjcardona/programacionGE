@@ -35,7 +35,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" id="nav_home" href="home_coordinadora.html">
+          <a class="nav-link" id="nav_home" href="home_Coordinadora.html">
             <i class="fa fa-home fa-2x"></i>
           </a>
           <a class="nav-link" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank">
@@ -52,13 +52,11 @@
   <!-- Inicio Nueva Planeacion -->
   <div class="container">
     <div class="row">
-      <div class="col-md-4 col-md-offset-2">
+      <!-- Form Name -->
+      <legend>Planeación</legend>
+      <div class="col-md-4 col-md-offset-2 card-body customBack">
         <div class="form-horizontal" id="formulario">
           <fieldset>
-
-            <!-- Form Name -->
-            <legend>Planeación</legend>
-
 
             <!-- Fecha de Encuentro -->
             <div class="form-group">
@@ -147,6 +145,8 @@
             <!--container PreguntaContacto-->
             <div class="container" id="preguntaContacto" style="display=none">
               <!-- Nombre Contacto -->
+              <span>Añadir Contacto</span>
+              <hr>
               <div class="form-group">
                 <label class="col-md-12 control-label" for="textinputNombreContacto">Nombre</label>
                 <div class="col-md-12">
@@ -330,31 +330,32 @@
 
               </div>
             </div>
-
-            <div class="col-md-8 estatica">
-              <img src="img/CoordinadoraNuevaIntervencion.png">
-              <div class="boton-dashboard btn-verde" id="btnBancoHerramientas" style="height:70px">
-                <!-- <i class="fa fa-book fa-4x"></i> -->
-                <h6>Banco de Herramientas</h6>
-              </div>
-            </div>
-
-
-            <!-- Button (Double) -->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="button1id"></label>
-              <div class="col-md-8">
-                <button id="buttonCancelar" name="button1id" class="btn btn-danger">Cancelar</button>
-                <button id="buttonGuardarPlaneacion" name="button2id" class="btn btn-success">Guardar</button>
-              </div>
-            </div>
-
           </fieldset>
         </div>
 
       </div>
+      <div class="col-md-8">
+        <img class="planeacionImg" src="img/SeñoritaEscritorio385pxV1.png">
+
+        <div class="boton-dashboard btn-verde posicionBtnBancoHerramientas" id="btnBancoHerramientas" style="height:70px">
+          <!-- <i class="fa fa-book fa-4x"></i> -->
+          <h6>Banco de Herramientas</h6>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Button (Double) -->
+    <div class="form-group">
+      <label class="col-md-12 control-label" for="button1id"></label>
+      <div class="col-md-8">
+        <button id="buttonCancelar" name="button1id" class="btn btn-danger">Cancelar</button>
+        <button id="buttonGuardarPlaneacion" name="button2id" class="btn btn-success">Guardar</button>
+      </div>
     </div>
   </div>
+
 
   <footer id="footer">
     <h6 class="text">Gestión Educativa</h6>
