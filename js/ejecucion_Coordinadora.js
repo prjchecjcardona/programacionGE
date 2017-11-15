@@ -96,7 +96,11 @@ function guardarEjecucion(){
 				  'Debes ingresar todos los datos!',
 				  'error'
 				);
+<<<<<<< HEAD
         }else{ 
+=======
+        }else{ alert("entro");
+>>>>>>> bad924883dfb9fe1b5e1bc3a937fa1902f80aead
             
 			//detalleNivelCumplimiento
 			var list = new Array();
@@ -117,7 +121,13 @@ function guardarEjecucion(){
 			 asistentes : $('#textinputAsisNum').val(),
 			 detalleCumplimiento : list, 
 			 nCumplimiento : $('input:radio[name=nCumplimiento]:checked').val(),
+<<<<<<< HEAD
 			 idPlaneacion: idPlaneacion
+=======
+			 idPlaneacion:idPlaneacion
+			 
+				
+>>>>>>> bad924883dfb9fe1b5e1bc3a937fa1902f80aead
 			 },
 			  function (data) { 
 							if(data.error == 1){

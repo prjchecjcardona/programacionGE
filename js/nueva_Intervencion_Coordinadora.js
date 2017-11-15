@@ -407,6 +407,7 @@ $("#buttonCancelar").click(function () {
 
 //Invocacion del archivo File Input para nueva intervencion coordinadora
 // $(function(){
+<<<<<<< HEAD
 // $('#nueva_intervencion_coord').fileinput({
 // language: 'es',
 // 'theme': 'fa',
@@ -415,3 +416,14 @@ $("#buttonCancelar").click(function () {
 // 'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4']
 // });
 // })
+=======
+    // $('#nueva_intervencion_coord').fileinput({
+          // language: 'es',
+          // 'theme': 'fa',
+          // uploadUrl: '#',
+          // allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
+          // 'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4']
+      // });
+  // })
+
+>>>>>>> bad924883dfb9fe1b5e1bc3a937fa1902f80aead
