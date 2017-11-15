@@ -44,9 +44,13 @@ if(isset($_POST["accion"]))
 	{
 		guararIntervencion($_POST["idZona"],$_POST["idEntidad"],$_POST["idTipoIntervencion"],$_POST["indicadores"], $_POST["nombreEntidad"],$_POST["idBarrio"],$_POST["idVereda"],$_POST["idTipoEntidad"],$_POST["nuevaentidad"],$_POST["direccion"],$_POST["telefono"]);
 	}
+	if($_POST["accion"]=="guardarNuevaComuna")
+	{
+		guardarNuevaComuna($_POST["municipio"],$_POST["comuna"]);
+	}
 	
 	
-
+	
 }
 
 function cargarZonasPorId($idZona){
@@ -601,5 +605,24 @@ function guararIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores,
 	}
 }
 
-
+function guardarNuevaComuna($municipio, $comuna){
+	include('conexion.php');
+	$sql = "INSERT INTO public.comunas(
+		id_comuna, comuna, id_municipio)
+		VALUES (
+			(SELECT MAX(id_comuna)+1 FROM comunas), 
+			'".$comuna."', 
+			(SELECT id_municipio FROM municipios WHERE municipio = '".$municipio."'));";
+  
+	if ($rs = $con->query($sql)) {
+		$data['mensaje']="Guardado Exitosamente";
+	}
+	else
+	{
+		print_r($con->errorInfo());
+		$data['mensaje']="No se pudo insertar la comuna";
+		$data['error']=1;
+	}
+	echo json_encode($data);
+}
 
