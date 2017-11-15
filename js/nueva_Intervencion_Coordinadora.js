@@ -59,24 +59,6 @@ $(document).ready(function () {
 
 
 
-	/* $("#btnNuevaEntidad").click(function(){
-		
-		if($(".nuevaEntidadDiv").is(":visible")){
-			$(".nuevaEntidadDiv").hide();
-			$("#selectbasicTipoEntidad").show();
-			nuevaentidad =0;
-		}
-		else{
-			$(".nuevaEntidadDiv").show();
-			$("#selectbasicTipoEntidad").show();
-			$("#selectbasicTipoEntidad").hide();
-			nuevaentidad =1;
-		}
-		
-		
-	}); */
-
-
 	/*Extrae los parametros que llegan en la url
 	 * parametro: 
 	 */
@@ -111,8 +93,6 @@ function traerNombre() {
 
 	$.post("php/CapturaVariableSession.php", {
 			accion: 'traerNombre'
-
-
 		},
 		function (data) {
 			if (data != "") {
