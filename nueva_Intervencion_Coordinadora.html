@@ -119,15 +119,6 @@
                 <h2>Añadir nueva Vereda</h2>
               </head>
               <hr>
-              <!-- Seleccion Municipio -->
-              <label class="col-md-12 control-label" for="textinputMunicipio">Municipio</label>
-              <div class="col-md-12">
-                <select id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
-                  <option value="1">Opción 1</option>
-                  <option value="2">Opción 2</option>
-                </select>
-              </div>
-
               <!-- Campo Vereda -->
               <div class="col-md-12 espaciado">
                 <label class="col-md-12control-label" for="textinputVereda">Nombre de la Vereda</label>
@@ -159,6 +150,42 @@
 
 
           <div id="Urbano">
+            <!-- Seleccion Comuna -->
+            <label class="col-md-12 control-label" for="selectbasicComuna">Comuna</label>
+            <div class="form-inline">
+              <div class="col-sm-12">
+                <select id="selectbasicComuna" name="selectbasicComuna" class="form-control">
+                  <!-- <option value="0">Seleccione...</option> -->
+                </select>
+                <button id="btnNuevaComuna" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
+              </div>
+            </div>
+            <!-- Modal creacion Comuna -->
+            <div id="ex4" class="modal">
+
+              <head>
+                <h2>Añadir nueva Comuna</h2>
+              </head>
+              <hr>
+              <!-- Campo Comuna -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputComuna">Nombre de la Comuna</label>
+                <input id="textinputComuna" name="textinputComuna" type="text" placeholder="" class="form-control input-md">
+              </div>
+
+
+              <!-- Button (Double) -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                  <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
+                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarIntervencion();">Guardar</button>
+                  <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+                </div>
+              </div>
+
+            </div>
+            
             <label class="col-md-12 control-label" for="selectbasicBarrio">Barrio</label>
             <div class="form-inline">
               <div class="col-sm-12">
@@ -175,15 +202,6 @@
                 <h2>Añadir nuevo Barrio</h2>
               </head>
               <hr>
-              <!-- Seleccion Comuna -->
-              <label class="col-md-12 control-label" for="textinputComuna">Comuna</label>
-              <div class="col-md-12">
-                <select id="selectbasicComuna" name="selectbasicComuna" class="form-control">
-                  <option value="1">Opción 1</option>
-                  <option value="2">Opción 2</option>
-                </select>
-              </div>
-
               <!-- Campo Barrio -->
               <div class="col-md-12 espaciado">
                 <label class="col-md-12control-label" for="textinputBarrio">Nombre del Barrio</label>
@@ -213,49 +231,7 @@
 
             </div>
 
-            <label class="col-md-12 control-label" for="selectbasicComuna">Comuna</label>
-            <div class="form-inline">
-              <div class="col-sm-12">
-                <select id="selectbasicComuna" name="selectbasicComuna" class="form-control">
-                  <!-- <option value="0">Seleccione...</option> -->
-                </select>
-                <button id="btnNuevaComuna" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
-              </div>
-            </div>
-            <!-- Modal creacion Comuna -->
-            <div id="ex4" class="modal">
 
-              <head>
-                <h2>Añadir nueva Comuna</h2>
-              </head>
-              <hr>
-              <!-- Seleccion Municipio -->
-              <label class="col-md-12 control-label" for="textinputMunicipio">Municipio</label>
-              <div class="col-md-12">
-                <select id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
-                  <option value="1">Opción 1</option>
-                  <option value="2">Opción 2</option>
-                </select>
-              </div>
-
-              <!-- Campo Comuna -->
-              <div class="col-md-12 espaciado">
-                <label class="col-md-12control-label" for="textinputComuna">Nombre de la Comuna</label>
-                <input id="textinputComuna" name="textinputComuna" type="text" placeholder="" class="form-control input-md">
-              </div>
-
-
-              <!-- Button (Double) -->
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="button1id"></label>
-                <div class="col-md-8">
-                  <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
-                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarIntervencion();">Guardar</button>
-                  <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
-                </div>
-              </div>
-
-            </div>
 
           </div>
 
@@ -320,19 +296,7 @@
             </div>
 
           </div>
-
           <!-- Fin creacion entidad -->
-
-
-
-          <!-- Seleccion Tipo de Entidad -->
-          <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">Tipo de Entidad</label>
-          <div class="col-md-12">
-            <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
-
-            </select>
-          </div>
-
 
           <!-- Seleccion Tipo de Intervención -->
           <div class="form-group">
