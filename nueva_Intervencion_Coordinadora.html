@@ -139,8 +139,7 @@
                 <label class="col-md-12 control-label" for="button1id"></label>
                 <div class="col-md-8">
                   <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
-                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarIntervencion();">Guardar</button>
-                  <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaVereda();">Guardar</button>
                 </div>
               </div>
 
@@ -222,11 +221,9 @@
                 <label class="col-md-12 control-label" for="button1id"></label>
                 <div class="col-md-8">
                   <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
-                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarIntervencion();">Guardar</button>
-                  <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevoBarrio();">Guardar</button>
                 </div>
               </div>
-
             </div>
 
 
@@ -269,12 +266,7 @@
             <!-- Seleccion Tipo de Entidad -->
             <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">Tipo de Entidad</label>
             <div class="col-md-12">
-              <select id="selectbasicTipoEntidadNueva" name="selectbasicTipoEntidad" class="form-control">
-                <option value="0">Selecciona tu opción</option>
-                <option value="1">Público</option>
-                <option value="2">Privado</option>
-                <option value="3">Organización de base comunitaria</option>
-
+              <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
               </select>
             </div>
             <!-- Campo Nodo Entidad -->
@@ -288,7 +280,7 @@
               <label class="col-md-12 control-label" for="button1id"></label>
               <div class="col-md-8">
                 <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
-                <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarIntervencion();">Guardar</button>
+                <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaEntidad();">Guardar</button>
                 <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
               </div>
             </div>

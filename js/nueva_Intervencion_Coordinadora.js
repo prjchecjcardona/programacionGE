@@ -82,6 +82,7 @@ $(document).ready(function () {
 	cargarZonasPorId(idZona);
 	cargarPorMunicipiosPorIdZona(idZona);
 	cargarTipoIntervencion();
+	cargarTipoEntidad();
 	cargarComportamientos();
 
 
@@ -169,9 +170,6 @@ function cargarComunas_VeredaPorIdMunicipio(ubicacion) {
 					$('#selectbasicVereda').html(data.html);
 				}
 			}
-
-
-
 		}, "json");
 
 }
@@ -257,6 +255,22 @@ function cargarTipoIntervencion() {
 
 		}, "json");
 }
+
+function cargarTipoEntidad() {
+	
+		$.post("php/nueva_Intervencion_Coordinadora.php", {
+				accion: 'cargarTipoEntidad'
+	
+			},
+			function (data) {
+				if (data.error != 1) {
+	
+					$('#selectbasicTipoEntidad').html(data.html);
+	
+				}			
+	
+			}, "json");
+	}
 
 function cargarComportamientos() {
 
@@ -418,7 +432,7 @@ $("#buttonCancelar").click(function () {
 
 function guardarNuevaComuna(){
 	let nombreComuna = $('#textinputComuna').val();
-	let municipio = $('#selectbasicMunicipio option:selected').text();
+	let municipio = $('#selectbasicMunicipio').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
 	if(nombreComuna!==""){
 		$.post(url, {
@@ -445,5 +459,134 @@ function guardarNuevaComuna(){
 				});
 			}
 		}, "json");
+	}
+}
+
+
+function guardarNuevoBarrio(){
+	let nombreBarrio = $('#textinputBarrio').val();
+	let latitud = $('#textinputBarrioLan').val();
+	let longitud = $('#textinputBarrioLon').val();
+	let comuna = $('#selectbasicComuna').val();
+	let url = "php/nueva_Intervencion_Coordinadora.php";
+	if(nombreBarrio!="" && latitud!="" && longitud!=""){
+		$.post(url, {
+			accion: 'guardarNuevoBarrio',
+			barrio: nombreBarrio,
+			comuna: comuna,
+			latitud: latitud,
+			longitud: longitud
+		},
+		function (data) {
+			if (data.error == 1) {
+				swal(
+					'', //titulo
+					' No se guardo la comuna, intententalo nuevamente',
+					'error'
+				);
+			} else {
+				swal(
+					'', //titulo
+					'Guardado Correctamente',
+					'success'
+				).then(function(){
+					$.modal.close();
+					$("#selectbasicComuna").trigger("change");
+				});
+			}
+		}, "json");
+	}else{
+		swal(
+			'Error',
+			'Debes diligenciar todos los campos',
+			'error'
+		)
+	}
+}
+
+function guardarNuevaVereda(){
+	let nombreVereda = $('#textinputVereda').val();
+	let latitud = $('#textinputVeredaLan').val();
+	let longitud = $('#textinputVeredaLon').val();
+	let municipio = $('#selectbasicMunicipio').val();
+	let url = "php/nueva_Intervencion_Coordinadora.php";
+	if(nombreVereda!="" && latitud!="" && longitud!=""){
+		$.post(url, {
+			accion: 'guardarNuevaVereda',
+			municipio: municipio,
+			vereda: nombreVereda,
+			latitud: latitud,
+			longitud: longitud
+		},
+		function (data) {
+			if (data.error == 1) {
+				swal(
+					'', //titulo
+					' No se guardo la comuna, intententalo nuevamente',
+					'error'
+				);
+			} else {
+				swal(
+					'', //titulo
+					'Guardado Correctamente',
+					'success'
+				).then(function(){
+					$.modal.close();
+					let ubicacion = $('#UrbanoRural input:radio:checked').val();
+					cargarComunas_VeredaPorIdMunicipio(ubicacion);
+				});
+			}
+		}, "json");
+	}else{
+		swal(
+			'Error',
+			'Debes diligenciar todos los campos',
+			'error'
+		)
+	}
+}
+
+//TODO implementar guardar nueva entidad
+function guardarNuevaEntidad(){
+	let nombreEntidad = $('#textinputEntidadNueva').val();
+	let direccion = $('#textinputDireccionEntidad').val();
+	let telefono = $('#textinputTelefonoEntidad').val();
+	let tipo_entidad = $('#selectbasicTipoEntidad').val();
+	let nodo = $('#text_inputNodoEntidad').val();
+	let ubicacion = $('#UrbanoRural input:radio:checked').val();
+	let url = "php/nueva_Intervencion_Coordinadora.php";
+	if(nombreVereda!="" && latitud!="" && longitud!=""){
+		$.post(url, {
+			accion: 'guardarNuevaVereda',
+			municipio: municipio,
+			vereda: nombreVereda,
+			latitud: latitud,
+			longitud: longitud
+		},
+		function (data) {
+			if (data.error == 1) {
+				swal(
+					'', //titulo
+					' No se guardo la comuna, intententalo nuevamente',
+					'error'
+				);
+			} else {
+				swal(
+					'', //titulo
+					'Guardado Correctamente',
+					'success'
+				).then(function(){
+					$.modal.close();
+					let ubicacion = $('#UrbanoRural input:radio:checked').val();
+					cargarComunas_VeredaPorIdMunicipio(ubicacion);
+				});
+			}
+		}, "json");
+	}else{
+		swal(
+			'Error',
+			'Debes diligenciar todos los campos',
+			'error'
+		)
 	}
 }

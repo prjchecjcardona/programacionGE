@@ -32,6 +32,10 @@ if(isset($_POST["accion"]))
 	{
 		cargarTipoIntervencion();
 	}
+	if($_POST["accion"]=="cargarTipoEntidad")
+	{
+		cargarTipoEntidad();
+	}
 	if($_POST["accion"]=="cargarComportamientos")
 	{
 		cargarComportamientos();
@@ -47,6 +51,14 @@ if(isset($_POST["accion"]))
 	if($_POST["accion"]=="guardarNuevaComuna")
 	{
 		guardarNuevaComuna($_POST["municipio"],$_POST["comuna"]);
+	}
+	if($_POST["accion"]=="guardarNuevoBarrio")
+	{
+		guardarNuevoBarrio($_POST["comuna"], $_POST["barrio"], $_POST["latitud"], $_POST["longitud"]);
+	}
+	if($_POST["accion"]=="guardarNuevaVereda")
+	{
+		guardarNuevaVereda($_POST["municipio"], $_POST["vereda"], $_POST["latitud"], $_POST["longitud"]);
 	}
 	
 	
@@ -266,6 +278,36 @@ function cargarEntidadesPorBarrio($idBarrio){
 			{
 				print_r($con->errorInfo());
 				$data['mensaje']="No se realizo la consulta de entidades";
+				$data['error']=1;
+			}
+			
+			
+		  echo json_encode($data);
+	}
+}
+
+function cargarTipoEntidad(){
+	include('conexion.php');
+	$data = array('error'=>0,'mensaje'=>'','html'=>'', 'tipo'=>'');
+	
+	if( $con )
+ 	{
+ 		//Datos de la zona que se selecciono 
+    	$sql = "SELECT * FROM public.tipoentidad";
+			  
+			if ($rs = $con->query($sql)) {
+				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {					
+					$data['html']= '<option value="0">Selecciona tu opción</option>';
+					
+						for ($i=0;$i<count($filas);$i++){
+							$data['html'].= '<option value="'.$filas[$i]['id_tipoentidad'].'">'.$filas[$i]['tipoentidad'].'</option>';
+					 }
+				}
+			}
+			else
+			{
+				print_r($con->errorInfo());
+				$data['mensaje']="No se realizo la consulta de tipo entidades";
 				$data['error']=1;
 			}
 			
@@ -612,7 +654,7 @@ function guardarNuevaComuna($municipio, $comuna){
 		VALUES (
 			(SELECT MAX(id_comuna)+1 FROM comunas), 
 			'".$comuna."', 
-			(SELECT id_municipio FROM municipios WHERE municipio = '".$municipio."'));";
+			".$municipio.");";
   
 	if ($rs = $con->query($sql)) {
 		$data['mensaje']="Guardado Exitosamente";
@@ -626,3 +668,48 @@ function guardarNuevaComuna($municipio, $comuna){
 	echo json_encode($data);
 }
 
+function guardarNuevoBarrio($comuna, $barrio, $latitud, $longitud){
+	include('conexion.php');
+	$sql = "INSERT INTO public.barrios(
+		id_barrio, barrio, id_comuna, lat, long)
+		VALUES (
+			(SELECT MAX(id_barrio)+1 FROM barrios), 
+			'".$barrio."', 
+			".$comuna.",
+			'".$latitud."',
+			'".$longitud."');";
+  
+	if ($rs = $con->query($sql)) {
+		$data['mensaje']="Guardado Exitosamente";
+	}
+	else
+	{
+		print_r($con->errorInfo());
+		$data['mensaje']="No se pudo insertar el barrio";
+		$data['error']=1;
+	}
+	echo json_encode($data);
+}
+
+function guardarNuevaVereda($municipio, $vereda, $latitud, $longitud){
+	include('conexion.php');
+	$sql = "INSERT INTO public.veredas(
+		id_veredas, vereda, id_municipio, lat, long)
+		VALUES (
+			(SELECT MAX(id_veredas)+1 FROM veredas), 
+			'".$vereda."', 
+			".$municipio."),
+			'".$latitud."',
+			'".$longitud."');";
+  
+	if ($rs = $con->query($sql)) {
+		$data['mensaje']="Guardado Exitosamente";
+	}
+	else
+	{
+		print_r($con->errorInfo());
+		$data['mensaje']="No se pudo insertar la vereda";
+		$data['error']=1;
+	}
+	echo json_encode($data);
+}
