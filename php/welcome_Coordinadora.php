@@ -24,7 +24,9 @@ function traerNombreCoordinadora(){
 					// }
 					
 					$data['html']= '<option value="0">Selecciona tu opción</option>';
-					$data['html'].= '<option value="'.$filas[0]['numeroidentificacion'].'_2">'.$filas[0]['nombres'].' '.$filas[0]['apellidos'].'</option>';
+					foreach ($filas as $key => $value) {
+						$data['html'].= '<option value="'.$value['numeroidentificacion'].'_2">'.$value['nombres'].' '.$value['apellidos'].'</option>';
+					}
 				}
 			}
 			else

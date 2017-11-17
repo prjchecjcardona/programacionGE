@@ -8,12 +8,14 @@ traerNombreCoordinadora();
 function traerNombreCoordinadora(){
 				
 		$.post("php/welcome_Coordinadora.php",{
-              accion : 'traerNombreCoordinadora'
-              				
+              accion : 'traerNombreCoordinadora' 				
          },
           function (data) {
 						if(data.error != 1){
+								$('#contenedor-select').html(`
+								<select id="selectbasicSeleccionCoordinadora" name="selectbasicSeleccionCoordinadora" class="form-control">
 								
+								</select>`);
 								$('#selectbasicSeleccionCoordinadora').html(data.html)
 								
 							}
