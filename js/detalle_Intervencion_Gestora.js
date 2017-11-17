@@ -97,7 +97,10 @@ $(function() {
 	
 		},
 	
-		searching: false,
-		paging: false
+		searching: true,
+		paging: true,
+		ordering: true,
+		select: true,
+		scrollY: 300,
 	  });
 	});

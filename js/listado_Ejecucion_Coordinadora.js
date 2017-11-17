@@ -28,6 +28,7 @@ $(function() {
 		},
 	
 		searching: true,
-		paging: true
+		paging: true,
+		scrollY: 300
 	  });
 	});

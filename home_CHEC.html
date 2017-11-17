@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/fullcalendar.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <a class="navbar-brand" href="#">
+            <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec"> Gestión Educativa
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuSaludo">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <span class="h5">Hola, &nbsp;</span>
+                    <span class="h5" id="Nombre"> </span>
+                    <!-- Inserción dinamica del nombre del usuario logueado -->
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="nav_home" href="home_Coordinadora.html">
+                        <i class="fa fa-home fa-2x"></i>
+                    </a>
+                    <a class="nav-link" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank">
+                        <i class="fa fa-wrench fa-2x"></i>
+                    </a>
+                    <a class="nav-link" id="nav_out" href="http://drive.google.com">
+                        <i class="fa fa-sign-out fa-2x"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <div class="container-fluid">
+        <div class="row coord-main">
+            <!-- Columna intervenciones -->
+            <div class="col-md-4 col-interv-coord">
+                <h3>Herramientas</h3>
+
+                <div class="botones-container">
+
+                    <div class="sub-cont-botones">
+                        <div class="boton-dashboard btn-verde" id="btnInformes">
+                            <i class="fa fa-bar-chart fa-4x"></i>
+                            <href="http://">
+                                </a>
+                                <h6>Informes</h6>
+                        </div>
+                        <br>
+                        <div class="boton-dashboard btn-verde"id="btnIntervenciones">
+                                
+                            <i class="fa fa-book fa-4x"></i>
+                            <h6>Intervenciones</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <img class="home_CHEC_Img" src="img/invertida_Gestora.png">
+                </div>
+
+            </div>
+
+            <div class="col-md-8">
+                <h4>Ubicación actual de los gestores:</h4>
+                <div id="map">
+                </div>
+            </div>
+        </div>    
+    </div>
+    <footer id="footer">
+        <h6 class="text">Gestión Educativa</h6>
+        <h6 class="text3">CHEC &copy; Todos los derechos reservados 2017</h6>
+    </footer>
+
+    <script src="js/includes/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+    <script src='js/includes/moment.min.js'></script>
+    <script src='js/includes/fullcalendar/fullcalendar.min.js'></script>
+    <script src='js/includes/fullcalendar/es.js'></script>
+    <script src="js/includes/bootstrap.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO9dhMcvk1MDYRaEi-TMUz_G0cI5m8Cl0&callback=initMap">
+    </script>
+    <script src="js/home_CHEC.js"></script>
+    <!-- <script type="text/javascript" src="js/funciones.js"></script>  -->
+    <!-- <script type="text/javascript" src="js/ValidarSesion.js"></script>  -->
+    <!-- <script type="text/javascript" src="js/coordinadora.js"></script> -->
+</body>
+
+</html>
