@@ -134,11 +134,8 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			{ title: "Táctico" },
 			{ title: "Tema" },
 			{ title: "Fecha" },
-			/*{ title: "Ejecución" },
-			{ title: "Evaluación" },*/ 
-			
-			{data: null, className: "center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>'},
-			// {data: null, className: "center", defaultContent: '<a href="#" id="evaluacion" class="btn btn-sm btn-success" alt="Evaluación"><span class="fa fa-pencil-square-o"></span></a>'}
+			{ title: "Registrar Ejecución", data: null, className: "center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' },
+			{ title: "Registrar Asistencia", data: null, className: "center", defaultContent: '<a href="#" id="asistencia" class="btn btn-sm btn-success" alt="Evaluación"><span class="fa fa-user-o"></span></a>' }
 			],
             "paging":   true,
             "info":     false,
