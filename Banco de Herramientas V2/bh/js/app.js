@@ -351,14 +351,12 @@ function recursoSelected(selection, unSelected) {
   $('#generalidades img').attr('src', 'bh/img/GeneralidadesGris-01.png');
   $('#herramientas img').attr('src', 'bh/img/HerramientasDidácticasGris-01.png');
   $('#glosario img').attr('src', 'bh/img/GlosarioGris-01.png');
-  $('#inicio img').attr('src', 'bh/img/InicioGris-01.png'); 
-  //$('#openFile').click(function(){
-   $('.ficheros-area')
-      .empty()
-      .html(`
-        <embed src="bh/ficheros/ReferenciasBibliograficas.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
-        `)   
-    
+  $('#inicio img').attr('src', 'bh/img/InicioGris-01.png');
+  //$('#openFile').click(function(){ 
+  $('#myList a').on('click', function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
 }
 
 

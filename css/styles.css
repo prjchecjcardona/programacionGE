@@ -421,3 +421,9 @@ buttonbtn.btn-sm.btn-success {
     max-height: 400px;
     overflow: auto;
 }
+
+.home_CHEC_Img{
+    margin-left: 100px;
+    margin-top: 50px;
+    width: 60%
+}

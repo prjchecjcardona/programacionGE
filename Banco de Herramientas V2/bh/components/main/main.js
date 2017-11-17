@@ -1,5 +1,4 @@
-
-function getMain(pag){
+function getMain(pag) {
   switch (pag) {
     case "criterios":
       return getCriterios();
@@ -13,7 +12,7 @@ function getMain(pag){
     case "glosario":
       return getGlosario();
       break;
-      case "recurso":
+    case "recurso":
       return getRecurso();
       break;
     default:
@@ -225,46 +224,46 @@ function getHerramientas() {
   `;
 
 }
- 
+
 
 function getCriterios() {
- /* return `
-  <header class="header">
-    <nav class="top_menu">
-        <ul>
-            <li><a href="bh/ficheros/CompetenciaCiudadana.pdf" target="_blank"">Competencia Ciudadana</a></li>
-            <li><a href="bh/ficheros/AprendizajeExperiencial.pdf" target="_blank">Aprendizaje Experiencial</a></li>
-        </ul>
-    </nav>
-  </header>
+  /* return `
+   <header class="header">
+     <nav class="top_menu">
+         <ul>
+             <li><a href="bh/ficheros/CompetenciaCiudadana.pdf" target="_blank"">Competencia Ciudadana</a></li>
+             <li><a href="bh/ficheros/AprendizajeExperiencial.pdf" target="_blank">Aprendizaje Experiencial</a></li>
+         </ul>
+     </nav>
+   </header>
 
-  <div id="presentacion" class="gen-block">
-    <div class="text-title-container">
-    <h2>Grupos de Interés</h2>
-      <div class="floating-text">
-        <h4>Nuestros grupos de interés</h4>
-        <p>CHEC reconoce como partes interesadas o grupos de interés a las personas o grupos de personas que generan impactos en la organización
-        o se ven impactados por las diferentes decisiones, actividades, productos o servicios que brinda como empresa prestadora del servicio
-         público de energía.<a href="bh/ficheros/GruposDeInteresChec.pdf" target="_blank">(Ver PDF)</a></p>
-      </div>
-    <h2>Cultura Ciudadana</h2>
-      <div class="floating-text">
-          <p>La cultura ciudadana la construimos entre todos a través de las prácticas cotidianas que favorecen el bienestar común. 
-          La ciudadanía otorga características especiales a los sujetos como actores activos, con derechos y deberes con ellos mismos, 
-          con los demás y con el entorno.  En este sentido, desde la Gestión Educativa, se busca aportar al fortalecimiento de competencias 
-          ciudadanas con las cuales las personas lleven a la práctica conocimientos que posibiliten el bienestar de todos los ciudadanos, clientes del 
-          servicio de energía eléctrica <a href="bh/ficheros/CulturaCiudadana.pdf" target="_blank">(Ver PDF)</a></p>
-      </div>
-    <h2>Comportamientos Deseables</h2>
-      <div class="floating-text">
-          <p>Los comportamientos deseables son las actitudes adecuadas para vivir en sociedad, fomentando el sentido de pertenencia de los ciudadanos 
-          por los bienes públicos al hacer un uso responsable de la energía, fortaleciendo la cultura de pago, disfrutando del servicio de energía 
-          y reconociendo su aporte a la calidad de vida de los clientes y haciendo uso de los canales vanguardistas para interactuar con la empresa 
-          CHEC <a href="bh/ficheros/CulturaCiudadana.pdf" target="_blank">(Ver PDF)</a></p>
+   <div id="presentacion" class="gen-block">
+     <div class="text-title-container">
+     <h2>Grupos de Interés</h2>
+       <div class="floating-text">
+         <h4>Nuestros grupos de interés</h4>
+         <p>CHEC reconoce como partes interesadas o grupos de interés a las personas o grupos de personas que generan impactos en la organización
+         o se ven impactados por las diferentes decisiones, actividades, productos o servicios que brinda como empresa prestadora del servicio
+          público de energía.<a href="bh/ficheros/GruposDeInteresChec.pdf" target="_blank">(Ver PDF)</a></p>
+       </div>
+     <h2>Cultura Ciudadana</h2>
+       <div class="floating-text">
+           <p>La cultura ciudadana la construimos entre todos a través de las prácticas cotidianas que favorecen el bienestar común. 
+           La ciudadanía otorga características especiales a los sujetos como actores activos, con derechos y deberes con ellos mismos, 
+           con los demás y con el entorno.  En este sentido, desde la Gestión Educativa, se busca aportar al fortalecimiento de competencias 
+           ciudadanas con las cuales las personas lleven a la práctica conocimientos que posibiliten el bienestar de todos los ciudadanos, clientes del 
+           servicio de energía eléctrica <a href="bh/ficheros/CulturaCiudadana.pdf" target="_blank">(Ver PDF)</a></p>
+       </div>
+     <h2>Comportamientos Deseables</h2>
+       <div class="floating-text">
+           <p>Los comportamientos deseables son las actitudes adecuadas para vivir en sociedad, fomentando el sentido de pertenencia de los ciudadanos 
+           por los bienes públicos al hacer un uso responsable de la energía, fortaleciendo la cultura de pago, disfrutando del servicio de energía 
+           y reconociendo su aporte a la calidad de vida de los clientes y haciendo uso de los canales vanguardistas para interactuar con la empresa 
+           CHEC <a href="bh/ficheros/CulturaCiudadana.pdf" target="_blank">(Ver PDF)</a></p>
 
-    </div>
-  </div>`;*/
-return `
+     </div>
+   </div>`;*/
+  return `
  <div id="presentacion" class="gen-block">
     <div class="text-title-container">
       <div id="accordion" role="tablist">
@@ -358,9 +357,25 @@ function getGlosario() {
 }
 
 function getRecurso() {
-  return `
-  <div class="ficheros-area" id="ficheros-area">
-     <div class="fich-found">
-      </div>
-  </div>`;
+  return `<!-- List group -->
+  <div>
+  <!-- List group -->
+  <div class="list-group" id="myList" role="tablist">
+    <a class="list-group-item list-group-item-action" data-toggle="list" href="#home" role="tab">Home</a>
+    <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile" role="tab">Profile</a>
+    <a class="list-group-item list-group-item-action" data-toggle="list" href="#messages" role="tab">Messages</a>
+    <a class="list-group-item list-group-item-action" data-toggle="list" href="#settings" role="tab">Settings</a>
+  </div>
+  
+  <!-- Tab panes -->
+  <div class="tab-content">
+  <div class="tab-pane fade" id="home" role="tabpanel">...</div>
+  <div class="tab-pane fade" id="profile" role="tabpanel">hghdfdjgfhgfdhfdhgfd</div>
+  <div class="tab-pane fade" id="messages" role="tabpanel">...</div>
+  <div class="tab-pane fade" id="settings" role="tabpanel">qweqwqewqewqewqewqewq</div>
+</div>
+  </div>
+  
+  
+  `;
 }
