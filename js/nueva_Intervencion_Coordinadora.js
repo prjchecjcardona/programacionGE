@@ -78,7 +78,7 @@ $(document).ready(function () {
 
 
 	idZona = $.get("idZona");
-
+	initFileInput();
 	cargarZonasPorId(idZona);
 	cargarPorMunicipiosPorIdZona(idZona);
 	cargarTipoIntervencion();
@@ -184,7 +184,6 @@ $("#selectbasicVereda").change(function () {
 			if (data.error != 1) {
 
 				$('#selectbasicEntidad').html(data.html);
-				$('#selectbasicTipoEntidad').html(data.tipo);
 			}
 
 
@@ -226,7 +225,6 @@ $("#selectbasicBarrio").change(function () {
 			if (data.error != 1) {
 
 				$('#selectbasicEntidad').html(data.html);
-				$('#selectbasicTipoEntidad').html(data.tipo);
 			}
 
 
@@ -336,38 +334,14 @@ function guardarIntervencion() {
 
 		//fin capturar los indicadores
 
-		//se va a guardar la nueva entidad
-		if (nuevaentidad == 1) {
-			direccion = $('#textinputDireccion').val();
-			telefono = $('#textinputTelefono').val();
-			nombreEntidad = $('#textinputEntidadNueva').val();
-			idTipoEntidad = $('#selectbasicTipoEntidadNueva').val();
-
-		} else {
-
-			direccion = "";
-			telefono = "";
-			nombreEntidad = $('#selectbasicEntidad :selected').text(),
-				idTipoEntidad = $('#selectbasicTipoEntidad').val();
-		}
-
 
 
 		$.post("php/nueva_Intervencion_Coordinadora.php", {
-				accion: 'guararIntervencion',
+				accion: 'guardarIntervencion',
 				idZona: idZona,
 				idEntidad: $('#selectbasicEntidad').val(),
 				idTipoIntervencion: $('#selectbasicTipoInvervencion').val(),
-				indicadores: list,
-				nombreEntidad: $('#selectbasicEntidad :selected').text(),
-				idBarrio: $('#selectbasicBarrio').val(),
-				idVereda: $('#selectbasicVereda').val(),
-				idTipoEntidad: $('#selectbasicTipoEntidad').val(),
-				nuevaentidad: nuevaentidad,
-				direccion: direccion,
-				telefono: direccion
-
-
+				indicadores: list
 			},
 			function (data) {
 				if (data.error == 1) {
@@ -383,13 +357,10 @@ function guardarIntervencion() {
 						'', //titulo
 						'Guardado Correctamente',
 						'success'
-					);
-
-					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + data.idIntervencion;
+					).then(function() {
+						window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + data.idIntervencion;
+					});
 				}
-
-
-
 			}, "json");
 	}
 }
@@ -420,15 +391,15 @@ $("#buttonCancelar").click(function () {
 });
 
 //Invocacion del archivo File Input para nueva intervencion coordinadora
-// $(function(){
-// $('#nueva_intervencion_coord').fileinput({
-// language: 'es',
-// 'theme': 'fa',
-// uploadUrl: '#',
-// allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-// 'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4']
-// });
-// })
+function initFileInput(){
+	$('#upload_files_input').fileinput({
+		language: 'es',
+		'theme': 'fa',
+		uploadUrl: '#',
+		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
+		'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4']
+	});
+}
 
 function guardarNuevaComuna(){
 	let nombreComuna = $('#textinputComuna').val();
@@ -552,22 +523,28 @@ function guardarNuevaEntidad(){
 	let direccion = $('#textinputDireccionEntidad').val();
 	let telefono = $('#textinputTelefonoEntidad').val();
 	let tipo_entidad = $('#selectbasicTipoEntidad').val();
+	let barrio = $('#selectbasicBarrio').val();
+	let vereda = $('#selectbasicVereda').val();
 	let nodo = $('#text_inputNodoEntidad').val();
 	let ubicacion = $('#UrbanoRural input:radio:checked').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
-	if(nombreVereda!="" && latitud!="" && longitud!=""){
+	if(nombreEntidad!="" && direccion!="" && telefono!="" && tipo_entidad!="" && nodo!=""){
 		$.post(url, {
-			accion: 'guardarNuevaVereda',
-			municipio: municipio,
-			vereda: nombreVereda,
-			latitud: latitud,
-			longitud: longitud
+			accion: 'guardarNuevaEntidad',
+			nombreEntidad: nombreEntidad,
+			direccion: direccion,
+			telefono: telefono,
+			tipo_entidad: tipo_entidad,
+			barrio: barrio,
+			vereda: vereda,
+			nodo: nodo,
+			ubicacion: ubicacion
 		},
 		function (data) {
 			if (data.error == 1) {
 				swal(
 					'', //titulo
-					' No se guardo la comuna, intententalo nuevamente',
+					' No se guardo la entidad, intententalo nuevamente',
 					'error'
 				);
 			} else {
@@ -578,7 +555,11 @@ function guardarNuevaEntidad(){
 				).then(function(){
 					$.modal.close();
 					let ubicacion = $('#UrbanoRural input:radio:checked').val();
-					cargarComunas_VeredaPorIdMunicipio(ubicacion);
+					if(ubicacion==1){
+						$('#selectbasicVereda').trigger('change');
+					}else{
+						$('#selectbasicBarrio').trigger('change');
+					}
 				});
 			}
 		}, "json");

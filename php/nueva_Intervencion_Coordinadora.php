@@ -44,9 +44,9 @@ if(isset($_POST["accion"]))
 	{
 		cargarIndicadoresChec($_POST["idIndicador"]);
 	}
-	if($_POST["accion"]=="guararIntervencion")
+	if($_POST["accion"]=="guardarIntervencion")
 	{
-		guararIntervencion($_POST["idZona"],$_POST["idEntidad"],$_POST["idTipoIntervencion"],$_POST["indicadores"], $_POST["nombreEntidad"],$_POST["idBarrio"],$_POST["idVereda"],$_POST["idTipoEntidad"],$_POST["nuevaentidad"],$_POST["direccion"],$_POST["telefono"]);
+		guardarIntervencion($_POST["idZona"],$_POST["idEntidad"],$_POST["idTipoIntervencion"],$_POST["indicadores"]);
 	}
 	if($_POST["accion"]=="guardarNuevaComuna")
 	{
@@ -60,6 +60,11 @@ if(isset($_POST["accion"]))
 	{
 		guardarNuevaVereda($_POST["municipio"], $_POST["vereda"], $_POST["latitud"], $_POST["longitud"]);
 	}
+	if($_POST["accion"]=="guardarNuevaEntidad")
+	{
+		guardarNuevaEntidad($_POST["nombreEntidad"], $_POST["direccion"], $_POST["telefono"], $_POST["tipo_entidad"], $_POST["barrio"], $_POST["vereda"], $_POST["nodo"], $_POST["ubicacion"]);
+	}
+	
 	
 	
 	
@@ -473,7 +478,7 @@ function cargarIndicadoresChec($idIndicador){
 	}
 }
 
-function guararIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores,$nombreEntidad,$idBarrio,$idVereda,$direccion,$telefono,$idTipoEntidad,$nuevaentidad){
+function guardarIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
@@ -521,68 +526,6 @@ function guararIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores,
 			}
 			
 			
-			//consulta para saber si es barrio
-			$sql = "SELECT id_barrio
-				from barrios
-				WHERE id_barrio ='".$idBarrio."'	
-				";
-			  
-			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
-					$idBarrio=$filas[0]['id_barrio'];
-				}
-				else{
-					$idBarrio=0;
-				}
-			}
-			else
-			{
-				print_r($con->errorInfo());
-				$data['mensaje']="No se realizo la consulta de barrios";
-				$data['error']=1;
-			}
-			
-			//consulta para saber si es vereda 
-			$sql = "SELECT id_veredas
-				from veredas 
-				WHERE id_veredas ='".$idVereda."'
-				";
-			  
-			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
-					$idVereda=$filas[0]['id_veredas'];
-					
-				}
-				else{
-					$idVereda=0;
-				}
-			}
-			else
-			{
-				print_r($con->errorInfo());
-				$data['mensaje']="No se realizo la consulta de veredas";
-				$data['error']=1;
-			}
-			
-			if($nuevaentidad ==1){
-				//insertar en entidad 
-				$sql = "INSERT INTO entidades(
-						id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
-						VALUES ('".$idEntidad."', '".$nombreEntidad."', '".$idBarrio."', '".$idVereda."', '".$direccion."', '".$telefono."', '".$idTipoEntidad."', '');
-					";
-				  
-				if ($rs = $con->query($sql)) {
-					
-				}
-				else
-				{
-					print_r($con->errorInfo());
-					$data['mensaje']="No se realizo el insert de entidades";
-					$data['error']=1;
-				}
-			}
 			
 		
 		//Insertar la intervencion
@@ -709,6 +652,43 @@ function guardarNuevaVereda($municipio, $vereda, $latitud, $longitud){
 	{
 		print_r($con->errorInfo());
 		$data['mensaje']="No se pudo insertar la vereda";
+		$data['error']=1;
+	}
+	echo json_encode($data);
+}
+
+function guardarNuevaEntidad($nombreEntidad, $direccion, $telefono, $tipo_entidad, $barrio, $vereda, $nodo, $ubicacion){
+	include('conexion.php');
+	if ($ubicacion==1) { //Entidad rural
+		$sql="INSERT INTO public.entidades(
+			id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
+			VALUES ((SELECT MAX(id_entidad)+1 FROM entidades),
+					'".$nombreEntidad."',
+					null,
+					".$vereda.",
+					'".$direccion."',
+					'".$telefono."',
+					".$tipo_entidad.",
+					'".$nodo."');";
+	}else{ //Entidad urbana
+		$sql="INSERT INTO public.entidades(
+			id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
+			VALUES ((SELECT MAX(id_entidad)+1 FROM entidades),
+					'".$nombreEntidad."',
+					".$barrio.",
+					null,
+					'".$direccion."',
+					'".$telefono."',
+					".$tipo_entidad.",
+					'".$nodo."');";
+	}
+	if ($rs = $con->query($sql)) {
+		$data['mensaje']="Guardado Exitosamente";
+	}
+	else
+	{
+		print_r($con->errorInfo());
+		$data['mensaje']="No se pudo insertar la entidad";
 		$data['error']=1;
 	}
 	echo json_encode($data);
