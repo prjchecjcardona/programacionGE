@@ -134,8 +134,7 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			{ title: "Táctico" },
 			{ title: "Tema" },
 			{ title: "Fecha" },
-			{ title: "Registrar Ejecución", data: null, className: "center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' },
-			{ title: "Registrar Asistencia", data: null, className: "center", defaultContent: '<a href="#" id="asistencia" class="btn btn-sm btn-success" alt="Asistencia"><span class="fa fa-user-o"></span></a>' }
+			{ title: "Registrar Ejecución", data: null, className: "center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' }
 			],
             "paging":   true,
             "info":     false,
@@ -173,26 +172,19 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			}
 	});
 
-	//Evento para ver detalle ejecucion//
-	$(document).on('click', '#ejecucion', function() {  
+	//Evento para ver detalle asistencia//
+	$(document).on('click', '#asistencia', function() {  
 		var data = table.row($(this).parents('tr')).data();
 		idPlaneacion= data[0]; 
 		if(data[0]!=""){
 			
-			window.location.href = "ejecucion_Coordinadora.html?idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
+			window.location.href = "asistencia_Coordinadora.html?idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
 			
 		}
 });
 	
-//Evento para ver detalle evalucion//
-	$(document).on('click', '#evaluacion', function() {
-			var data = table.row($(this).parents('tr')).data();
-			idPlaneacion= data[0];
-			if(data[0]!=""){
-				
-						
-			}
-	});
+
+
 	
 $("#btnNuevaPlaneacion").click(function(){                                
 		
