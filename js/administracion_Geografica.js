@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 
   var table = $('#administracion_geografica').DataTable({
     "language": {
@@ -26,6 +26,12 @@ $(function() {
       }
 
     },
+
+    searching: true,
+    paging: true,
+    ordering: true,
+    select: true,
+    scrollY: 300
 
   });
 });
