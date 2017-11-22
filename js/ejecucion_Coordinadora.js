@@ -213,3 +213,6 @@ $('#detalleNivelCumplimiento input:radio').click(function()   {
 
 });
 
+
+
+
