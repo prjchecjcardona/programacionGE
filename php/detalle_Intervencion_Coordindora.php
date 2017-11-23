@@ -51,7 +51,7 @@ function cargarDetalleIntervencion($idIntervencion){
 						// $array.= '<div class="row"><div class="col-md-5">
 						// <li><label class="mr-sm-2" id="lblIndicadorChec1">'.$filas[$i]['indicador'].'</label></li></div></div>';
 						$array.= '<div class="row"><div class="col-md-5">
-						<label class="mr-sm-2" id="lblIndicadorChec1"><li>'.$filas[$i]['indicador'].'</li></label></div></div>';
+						<label class="mr-sm-2" id="lblIndicadorChec1"> <li>'.$filas[$i]['indicador'].'</li></label></div></div>';
 						
 					}
 					$data['html']['indicador']= $array;
