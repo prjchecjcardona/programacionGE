@@ -554,7 +554,7 @@ nav.fixed-top {
     align-content: left;
 }
 
-ul.pagination.li{
+ul.paginate_button.page-item.active{
     z-index: -100;
 }
 
@@ -597,6 +597,11 @@ buttonbtn.btn-sm.btn-success {
 
 
 #boton_añadir_asistencia{
+    display: flex;
+    justify-content: end;
+}
+
+#posicionAddPlaneacion{
     display: flex;
     justify-content: end;
 }
