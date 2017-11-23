@@ -34,6 +34,8 @@ $(document).ready(function () {
 			fadeDuration: 500,
 			fadeDelay: 0.50,
 		});
+		$('.imagenCoordinadora').removeClass('imagenCoordinadora')
+
 	})
 
 	$('#btnNuevaVereda').click(function () {
@@ -41,6 +43,8 @@ $(document).ready(function () {
 			fadeDuration: 500,
 			fadeDelay: 0.50,
 		});
+		$('.imagenCoordinadora').removeClass('imagenCoordinadora')
+
 	})
 
 	$('#btnNuevoBarrio').click(function () {
@@ -48,6 +52,8 @@ $(document).ready(function () {
 			fadeDuration: 500,
 			fadeDelay: 0.50,
 		});
+		$('.imagenCoordinadora').removeClass('imagenCoordinadora')
+
 	})
 
 	$('#btnNuevaComuna').click(function () {
@@ -55,6 +61,12 @@ $(document).ready(function () {
 			fadeDuration: 500,
 			fadeDelay: 0.50,
 		});
+		$('.imagenCoordinadora').removeClass('imagenCoordinadora')
+
+	})
+
+	$('.regresarImgCoordinadora').click(function () {
+		$('.regresoImgCoordinadora').addClass('imagenCoordinadora')
 	})
 
 
@@ -255,20 +267,20 @@ function cargarTipoIntervencion() {
 }
 
 function cargarTipoEntidad() {
-	
-		$.post("php/nueva_Intervencion_Coordinadora.php", {
-				accion: 'cargarTipoEntidad'
-	
-			},
-			function (data) {
-				if (data.error != 1) {
-	
-					$('#selectbasicTipoEntidad').html(data.html);
-	
-				}			
-	
-			}, "json");
-	}
+
+	$.post("php/nueva_Intervencion_Coordinadora.php", {
+			accion: 'cargarTipoEntidad'
+
+		},
+		function (data) {
+			if (data.error != 1) {
+
+				$('#selectbasicTipoEntidad').html(data.html);
+
+			}
+
+		}, "json");
+}
 
 function cargarComportamientos() {
 
@@ -357,7 +369,7 @@ function guardarIntervencion() {
 						'', //titulo
 						'Guardado Correctamente',
 						'success'
-					).then(function() {
+					).then(function () {
 						window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + data.idIntervencion;
 					});
 				}
@@ -391,82 +403,83 @@ $("#buttonCancelar").click(function () {
 });
 
 //Invocacion del archivo File Input para nueva intervencion coordinadora
-function initFileInput(){
+function initFileInput() {
 	$('#upload_files_input').fileinput({
 		language: 'es',
 		'theme': 'fa',
 		uploadUrl: '#',
 		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-		'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4']
+			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
+		]
 	});
 }
 
-function guardarNuevaComuna(){
+function guardarNuevaComuna() {
 	let nombreComuna = $('#textinputComuna').val();
 	let municipio = $('#selectbasicMunicipio').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
-	if(nombreComuna!==""){
+	if (nombreComuna !== "") {
 		$.post(url, {
-			accion: 'guardarNuevaComuna',
-			municipio: municipio,
-			comuna: nombreComuna
-		},
-		function (data) {
-			if (data.error == 1) {
-				swal(
-					'', //titulo
-					' No se guardo la comuna, intententalo nuevamente',
-					'error'
-				);
-			} else {
-				swal(
-					'', //titulo
-					'Guardado Correctamente',
-					'success'
-				).then(function(){
-					$.modal.close();
-					let ubicacion = $('#UrbanoRural input:radio:checked').val();
-					cargarComunas_VeredaPorIdMunicipio(ubicacion);
-				});
-			}
-		}, "json");
+				accion: 'guardarNuevaComuna',
+				municipio: municipio,
+				comuna: nombreComuna
+			},
+			function (data) {
+				if (data.error == 1) {
+					swal(
+						'', //titulo
+						' No se guardo la comuna, intententalo nuevamente',
+						'error'
+					);
+				} else {
+					swal(
+						'', //titulo
+						'Guardado Correctamente',
+						'success'
+					).then(function () {
+						$.modal.close();
+						let ubicacion = $('#UrbanoRural input:radio:checked').val();
+						cargarComunas_VeredaPorIdMunicipio(ubicacion);
+					});
+				}
+			}, "json");
 	}
 }
 
 
-function guardarNuevoBarrio(){
+function guardarNuevoBarrio() {
 	let nombreBarrio = $('#textinputBarrio').val();
 	let latitud = $('#textinputBarrioLan').val();
 	let longitud = $('#textinputBarrioLon').val();
 	let comuna = $('#selectbasicComuna').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
-	if(nombreBarrio!="" && latitud!="" && longitud!=""){
+	if (nombreBarrio != "" && latitud != "" && longitud != "") {
 		$.post(url, {
-			accion: 'guardarNuevoBarrio',
-			barrio: nombreBarrio,
-			comuna: comuna,
-			latitud: latitud,
-			longitud: longitud
-		},
-		function (data) {
-			if (data.error == 1) {
-				swal(
-					'', //titulo
-					' No se guardo la comuna, intententalo nuevamente',
-					'error'
-				);
-			} else {
-				swal(
-					'', //titulo
-					'Guardado Correctamente',
-					'success'
-				).then(function(){
-					$.modal.close();
-					$("#selectbasicComuna").trigger("change");
-				});
-			}
-		}, "json");
-	}else{
+				accion: 'guardarNuevoBarrio',
+				barrio: nombreBarrio,
+				comuna: comuna,
+				latitud: latitud,
+				longitud: longitud
+			},
+			function (data) {
+				if (data.error == 1) {
+					swal(
+						'', //titulo
+						' No se guardo la comuna, intententalo nuevamente',
+						'error'
+					);
+				} else {
+					swal(
+						'', //titulo
+						'Guardado Correctamente',
+						'success'
+					).then(function () {
+						$.modal.close();
+						$("#selectbasicComuna").trigger("change");
+					});
+				}
+			}, "json");
+	} else {
 		swal(
 			'Error',
 			'Debes diligenciar todos los campos',
@@ -475,40 +488,40 @@ function guardarNuevoBarrio(){
 	}
 }
 
-function guardarNuevaVereda(){
+function guardarNuevaVereda() {
 	let nombreVereda = $('#textinputVereda').val();
 	let latitud = $('#textinputVeredaLan').val();
 	let longitud = $('#textinputVeredaLon').val();
 	let municipio = $('#selectbasicMunicipio').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
-	if(nombreVereda!="" && latitud!="" && longitud!=""){
+	if (nombreVereda != "" && latitud != "" && longitud != "") {
 		$.post(url, {
-			accion: 'guardarNuevaVereda',
-			municipio: municipio,
-			vereda: nombreVereda,
-			latitud: latitud,
-			longitud: longitud
-		},
-		function (data) {
-			if (data.error == 1) {
-				swal(
-					'', //titulo
-					' No se guardo la comuna, intententalo nuevamente',
-					'error'
-				);
-			} else {
-				swal(
-					'', //titulo
-					'Guardado Correctamente',
-					'success'
-				).then(function(){
-					$.modal.close();
-					let ubicacion = $('#UrbanoRural input:radio:checked').val();
-					cargarComunas_VeredaPorIdMunicipio(ubicacion);
-				});
-			}
-		}, "json");
-	}else{
+				accion: 'guardarNuevaVereda',
+				municipio: municipio,
+				vereda: nombreVereda,
+				latitud: latitud,
+				longitud: longitud
+			},
+			function (data) {
+				if (data.error == 1) {
+					swal(
+						'', //titulo
+						' No se guardo la comuna, intententalo nuevamente',
+						'error'
+					);
+				} else {
+					swal(
+						'', //titulo
+						'Guardado Correctamente',
+						'success'
+					).then(function () {
+						$.modal.close();
+						let ubicacion = $('#UrbanoRural input:radio:checked').val();
+						cargarComunas_VeredaPorIdMunicipio(ubicacion);
+					});
+				}
+			}, "json");
+	} else {
 		swal(
 			'Error',
 			'Debes diligenciar todos los campos',
@@ -518,7 +531,7 @@ function guardarNuevaVereda(){
 }
 
 //TODO implementar guardar nueva entidad
-function guardarNuevaEntidad(){
+function guardarNuevaEntidad() {
 	let nombreEntidad = $('#textinputEntidadNueva').val();
 	let direccion = $('#textinputDireccionEntidad').val();
 	let telefono = $('#textinputTelefonoEntidad').val();
@@ -528,42 +541,42 @@ function guardarNuevaEntidad(){
 	let nodo = $('#text_inputNodoEntidad').val();
 	let ubicacion = $('#UrbanoRural input:radio:checked').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
-	if(nombreEntidad!="" && direccion!="" && telefono!="" && tipo_entidad!="" && nodo!=""){
+	if (nombreEntidad != "" && direccion != "" && telefono != "" && tipo_entidad != "" && nodo != "") {
 		$.post(url, {
-			accion: 'guardarNuevaEntidad',
-			nombreEntidad: nombreEntidad,
-			direccion: direccion,
-			telefono: telefono,
-			tipo_entidad: tipo_entidad,
-			barrio: barrio,
-			vereda: vereda,
-			nodo: nodo,
-			ubicacion: ubicacion
-		},
-		function (data) {
-			if (data.error == 1) {
-				swal(
-					'', //titulo
-					' No se guardo la entidad, intententalo nuevamente',
-					'error'
-				);
-			} else {
-				swal(
-					'', //titulo
-					'Guardado Correctamente',
-					'success'
-				).then(function(){
-					$.modal.close();
-					let ubicacion = $('#UrbanoRural input:radio:checked').val();
-					if(ubicacion==1){
-						$('#selectbasicVereda').trigger('change');
-					}else{
-						$('#selectbasicBarrio').trigger('change');
-					}
-				});
-			}
-		}, "json");
-	}else{
+				accion: 'guardarNuevaEntidad',
+				nombreEntidad: nombreEntidad,
+				direccion: direccion,
+				telefono: telefono,
+				tipo_entidad: tipo_entidad,
+				barrio: barrio,
+				vereda: vereda,
+				nodo: nodo,
+				ubicacion: ubicacion
+			},
+			function (data) {
+				if (data.error == 1) {
+					swal(
+						'', //titulo
+						' No se guardo la entidad, intententalo nuevamente',
+						'error'
+					);
+				} else {
+					swal(
+						'', //titulo
+						'Guardado Correctamente',
+						'success'
+					).then(function () {
+						$.modal.close();
+						let ubicacion = $('#UrbanoRural input:radio:checked').val();
+						if (ubicacion == 1) {
+							$('#selectbasicVereda').trigger('change');
+						} else {
+							$('#selectbasicBarrio').trigger('change');
+						}
+					});
+				}
+			}, "json");
+	} else {
 		swal(
 			'Error',
 			'Debes diligenciar todos los campos',

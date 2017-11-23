@@ -438,6 +438,13 @@ div.card-actions {
     z-index: 10 !important;
 }
 
+.imagenCoordinadora {
+    position: fixed !important;
+    right: -350px;
+    top: 80px;
+    z-index: 10 !important;
+}
+
 #imagen_asistencia {
     width: 100%;
 }

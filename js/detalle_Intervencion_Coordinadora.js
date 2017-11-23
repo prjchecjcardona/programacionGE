@@ -205,7 +205,6 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 	});
 
 
-}
 
 //Evento para ver detalle ejecucion//
 $(document).on('click', '#ejecucion', function () {

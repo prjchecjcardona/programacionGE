@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-<meta charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Nueva Intervención Coordinadora</title>
@@ -15,8 +15,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
   <link rel="stylesheet" href="css/styles.css">
 
-  <!--   <script type="text/javascript" src="php/SubirArchivo/dropzone.css"></script>
- -->
 </head>
 
 <body>
@@ -58,8 +56,6 @@
     <div class="row">
       <legend>Nueva Intervención Coordinadora</legend>
       <div class="col-md-5 card-body customBack">
-        <!--<form class="form-horizontal" action="php/GuardarRegistros.php" method="POST">-->
-        <!-- <form class="form-horizontal" action="" > -->
         <fieldset>
           <!-- Form Name -->
 
@@ -69,11 +65,6 @@
             <label class="col-md-12 control-label" for="selectbasicZonas">Zona:&nbsp;
               <span id="nombreZona" class="card-subtitle mb-2 text-muted" for="selectbasicZonas"></span>
             </label>
-            <!-- <div class="col-md-12"> -->
-
-            <!-- <select onChange="recargarMunicipios(this.value)" id="selectbasicZona" name="selectbasicZona" class="form-control">                   -->
-            <!-- </select> -->
-            <!-- </div> -->
           </div>
 
           <!-- Seleccion Municipio -->
@@ -106,7 +97,6 @@
             <div class="form-inline">
               <div class="col-sm-12">
                 <select id="selectbasicVereda" name="selectbasicVereda" class="form-control">
-                  <!-- <option value="0">Seleccione...</option> -->
                 </select>
                 <button id="btnNuevaVereda" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
               </div>
@@ -138,7 +128,7 @@
               <div class="form-group">
                 <label class="col-md-12 control-label" for="button1id"></label>
                 <div class="col-md-8">
-                  <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
+                  <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
                   <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaVereda();">Guardar</button>
                 </div>
               </div>
@@ -176,7 +166,7 @@
               <div class="form-group">
                 <label class="col-md-12 control-label" for="button1id"></label>
                 <div class="col-md-8">
-                  <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
+                  <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
                   <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaComuna();">Guardar</button>
                 </div>
               </div>
@@ -187,7 +177,6 @@
             <div class="form-inline">
               <div class="col-sm-12">
                 <select id="selectbasicBarrio" name="selectbasicBarrio" class="form-control">
-                  <!-- <option value="0">Seleccione...</option> -->
                 </select>
                 <button id="btnNuevoBarrio" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
               </div>
@@ -220,7 +209,7 @@
               <div class="form-group">
                 <label class="col-md-12 control-label" for="button1id"></label>
                 <div class="col-md-8">
-                  <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
+                  <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
                   <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevoBarrio();">Guardar</button>
                 </div>
               </div>
@@ -233,7 +222,6 @@
           <div class="form-inline">
             <div class="col-sm-12">
               <select id="selectbasicEntidad" name="selectbasicEntidad" class="form-control">
-                <!-- <option value="0">Seleccione...</option> -->
               </select>
               <button id="btnNuevaEntidad" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
             </div>
@@ -277,7 +265,7 @@
             <div class="form-group">
               <label class="col-md-12 control-label" for="button1id"></label>
               <div class="col-md-8">
-                <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
+                <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
                 <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaEntidad();">Guardar</button>
                 <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
               </div>
@@ -316,13 +304,13 @@
           <div class="form-group">
             <hr>
             <h4>Adjuntar Imagenes</h4>
-            <form enctype="multipart/form-data" >
+            <form enctype="multipart/form-data">
               <input id="upload_files_input" name="archivo[]" type="file" multiple>
             </form>
             <hr>
           </div>
-			
-		
+
+
 
 
           <!-- Button (Double) -->
@@ -342,7 +330,7 @@
 
 
 
-      <div class="col-md-8 estatica">
+      <div class="col-md-8 imagenCoordinadora regresoImgCoordinadora">
         <img src="img/Coordinadora207-01.png">
       </div>
 
@@ -350,7 +338,7 @@
     <!--ROW  -->
 
   </div>
-  
+
 
   <footer id="footer">
     <h6 class="text">Gestión Educativa</h6>
@@ -358,27 +346,26 @@
     <h6 class="text3">Versión 1.0.1</h6>
   </footer>
 
-<!--   <script src="js/includes/jquery-3.2.1.min.js"></script>
- -->  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-  <script src="http://www.google.com/jsapi"></script>
-<!--   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
- -->  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="js/includes/jquery-3.2.1.min.js"></script>
   <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+  <script src="http://www.google.com/jsapi"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//netsh.pp.ua/upwork-demo/1/js/typeahead.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script type="text/javascript" src="js/ValidarSesion.js"></script>
+  <script src="js/ValidarSesion.js"></script>
   <script src="js/includes/fileInput/fileinput.js"></script>
   <script src="js/includes/fileInput/sortable.min.js"></script>
   <script src="js/includes/fileInput/theme.min.js"></script>
   <script src="js/includes/fileInput/locales/es.js"></script>
-  <script src="js/includes/configuracionDatePicker.js"></script>  
+  <script src="js/includes/configuracionDatePicker.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-
-
-
-  <script type="text/javascript" src="js/nueva_Intervencion_Coordinadora.js"></script>
+  <script src="js/nueva_Intervencion_Coordinadora.js"></script>
 
 </body>
 
 </html>
+
+
+
