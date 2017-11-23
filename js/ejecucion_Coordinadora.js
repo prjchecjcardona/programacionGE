@@ -22,13 +22,22 @@ $(function () {
 
 	idPlaneacion = $.get("idPlaneacion");
 	idIntervencion = $.get("idIntervencion");
+	isEjecutada = $.get("isEjecutada");
 	nCumplimiento = "";
 	cargarDatosPlaneacion();
 });
 
 //Invocacion del archivo File Input para nueva intervencion coordinadora
 function initFileInput() {
-	$('.upload_files_input').fileinput({
+	$('#file_fotograficas').fileinput({
+		language: 'es',
+		'theme': 'fa',
+		uploadUrl: '#',
+		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
+			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
+		]
+	});
+	$('#file_asistencias').fileinput({
 		language: 'es',
 		'theme': 'fa',
 		uploadUrl: '#',
@@ -66,6 +75,12 @@ function traerNombre() {
 
 
 function cargarDatosPlaneacion() {
+	//TODO PENDIENTE LLAMADO A BACKEND DE YA EJECUTADAS
+	/* if(isEjecutada==1){
+
+	}else{
+
+	} */
 
 	$.post("php/ejecucion_Coordinadora.php", {
 			accion: 'cargarDatosPlaneacion',

@@ -12,6 +12,11 @@ if(isset($_POST["accion"]))
 	{
 		cargarPlaneacionesPorIntrevencion($_POST['idIntervencion']);
 	}
+	if($_POST["accion"]=="checkPlaneacionesEjecutadas")
+	{
+		checkPlaneacionesEjecutadas();
+	}
+	
 	
 }
 
@@ -73,8 +78,6 @@ function cargarPlaneacionesPorIntrevencion($idIntrevencion){
 	include "conexion.php";
 	$resultado = array();
     $registro = array();
-	$data = array('error'=>0,'mensaje'=>'','html'=>''); 
-	//$idIntrevencion = $_POST['idIntervencion']; //para la consulta
 	$sql = "SELECT pl.id_planeacion, ep.etapaproceso, est.nombreestrategia, tact.nombretactico, tem.temas, pl.fecha
 			FROM planeacion pl
 			JOIN etapaproceso ep ON pl.etapaproceso_id_etapaproceso = ep.id_etapaproceso
@@ -88,18 +91,7 @@ function cargarPlaneacionesPorIntrevencion($idIntrevencion){
 			WHERE plxint.intervenciones_id_intervenciones = ".$idIntrevencion."
 			GROUP BY pl.id_planeacion, etapaproceso, nombreestrategia, nombretactico, temas, fecha"; //consulta
 			
-		// $sql = "SELECT pl.id_planeacion, ep.etapaproceso,  tem.temas, pl.fecha
-			// FROM planeacion pl
-			// JOIN etapaproceso ep ON pl.etapaproceso_id_etapaproceso = ep.id_etapaproceso
-			
-			
-			
-			// JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
-			// JOIN subtemas sub ON subxpl.subtemas_id_subtema = sub.id_subtema
-			// JOIN temas tem ON sub.id_temas = tem.id_temas
-			// JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
-			// WHERE plxint.intervenciones_id_intervenciones = 1
-			// GROUP BY pl.id_planeacion, etapaproceso, temas, fecha";	
+
 	  		
 			$array=array();
 			if ($rs = $con->query($sql)) {
@@ -122,4 +114,28 @@ function cargarPlaneacionesPorIntrevencion($idIntrevencion){
 			
 		  echo json_encode($resultado);
 }
+
+function checkPlaneacionesEjecutadas(){
+	include "conexion.php";
+	$resultado = array();
+	$sql = "SELECT pi.planeacion_id_planeacion FROM planeaciones_por_intervencion pi
+			JOIN ejecuciones_por_planeacion ep ON ep.id_planeaciones_por_intervencion = pi.id_planeaciones_por_intervencion
+			GROUP BY pi.planeacion_id_planeacion"; //consulta
+			
+			$array=array();
+			if ($rs = $con->query($sql)) {
+				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+					foreach ($filas as $fila) {
+						array_push($resultado, $fila["planeacion_id_planeacion"]);
+					}
+				}
+			}
+			else
+			{
+				$resultado =-1;
+			}
+			
+		  echo json_encode($resultado);
+}
+
 ?>

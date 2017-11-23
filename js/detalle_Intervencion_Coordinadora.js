@@ -112,12 +112,18 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
          },
           function (data) {
 						if(data.error != 1){
+								$.post("php/detalle_Intervencion_Coordindora.php",{
+									accion: 'checkPlaneacionesEjecutadas'
+								},
+								function (ejecutadas){
+									cargarInformacionEnTabla(data);
+									setTimeout(() => {
+										identificarEjecutadas(data, JSON.parse(ejecutadas));
+									}, 1000);
+									
+								})
 								
-								 cargarInformacionEnTabla(data);
-							}
-							
-							
-						
+							}		
 				},"json");
 }
 
@@ -128,18 +134,19 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
         table = $('#coordinadora_tabla').DataTable({
             "data": data,
             columns: [
-			{ title: "Id" },
+			{ title: "Id", className: "idColEjec" },
 			{ title: "Etapa" },
 			{ title: "Estrategia" },
 			{ title: "Táctico" },
 			{ title: "Tema" },
 			{ title: "Fecha" },
-			{ title: "Registrar Ejecución", data: null, className: "center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' }
+			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' }
 			],
             "paging":   true,
             "info":     false,
-            "columnDefs": [{"className": "dt-left", "targets": "_all"}, //alinear texto a la izquierda
-			{"targets": [ 0 ],"visible": false,"searchable": false},
+            "columnDefs": [
+			{"className": "dt-left", "targets": "_all"}, //alinear texto a la izquierda
+			{"className": "idColEjec", "targets":  0},
 			{ "width": "13%", "targets": 1 }//se le da ancho al td de estudiante
 			//{ "width": "8%", "targets": 8 }, //se le da ancho al td de total horas
 			//{ "width": "8%", "targets": 9 } //se le da ancho al td de observacion
@@ -154,20 +161,37 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
                 "infoEmpty": "No hay registros disponibles",
                 "Search:": "Filtrar"
             }
-        });
-		
-		
-		
-		
-    }
+		});	
+	}
+	
+	function identificarEjecutadas(data, ejecutadas){
+		var isEjecutada;
+		data.forEach(function(element, index) {
+			isEjecutada = false;
+			ejecutadas.forEach(ej =>{
+				if(element[0]==ej){
+					isEjecutada = true;
+				}
+			})
+			if(isEjecutada){
+				$($('#coordinadora_tabla tbody').children()[index]).addClass('rowEjecutada');
+				$($('#coordinadora_tabla tbody').children()[index]).find('span').removeClass('fa-book');
+				$($('#coordinadora_tabla tbody').children()[index]).find('span').addClass('fa-eye');
+			}
+		});
+	}
 	
 //Evento para ver detalle ejecucion//
 	$(document).on('click', '#ejecucion', function() {  
 			var data = table.row($(this).parents('tr')).data();
-			idPlaneacion= data[0]; 
+			var iconEjec = $(this).find('span').attr('class')
+			idPlaneacion= data[0];
 			if(data[0]!=""){
-				
-				window.location.href = "ejecucion_Coordinadora.html?idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
+				if(iconEjec != "fa fa-eye"){
+					window.location.href = "ejecucion_Coordinadora.html?idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
+				}else{
+					window.location.href = "ejecucion_Coordinadora.html?idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion+"&isEjecutada=1";
+				}
 				
 			}
 	});

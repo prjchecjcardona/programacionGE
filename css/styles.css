@@ -622,6 +622,15 @@ buttonbtn.btn-sm.btn-success {
     margin: 0;
 }
 
+tr.rowEjecutada{
+    background-color: rgb(200, 219, 136) !important;
+}
+.idColEjec{
+    display: none;
+}
+
+
+
 @media (max-width:600px) {
     .posicioningreso {
         justify-content: center;
