@@ -229,19 +229,6 @@ button.navbar-toggler:hover {
     background-color: #e8e8e8;
 }
 
-img.logo-min {
-    width: 9%;
-    margin-right: 0.4em;
-}
-
-img.umanizales {
-    width: 14%
-}
-
-img.imagen_checum {
-    width: 16%;
-}
-
 
 div.container {
     margin-top: 4em;
@@ -656,6 +643,19 @@ tr.rowEjecutada {
 
 .idColEjec {
     display: none;
+}
+
+img.logo-min {
+    width: 9%;
+    margin-right: 0.4em;
+}
+
+img.umanizales {
+    width: 14%
+}
+
+img.imagen_checum {
+    width: 16%;
 }
 
 @media (max-width:600px) {
