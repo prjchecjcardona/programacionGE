@@ -47,7 +47,7 @@ function crearSesion() {
 	var res = valor.split("_");
 	var numeroIdentificacion = res[0];
 	var id_zona = $($("#selectbasicSeleccionGestora :selected")[0]).attr('id_zona');
-	var cargo = res[1];
+	var cargo = 4;
 
 
 	$.post("php/Session.php", {
