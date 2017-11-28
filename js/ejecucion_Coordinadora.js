@@ -2,6 +2,7 @@
 $(function () {
 	traerNombre();
 	initFileInput();
+	cargarTipoCedula();
 
 	/*Extrae los parametros que llegan en la url
 	 * parametro: 
@@ -25,9 +26,106 @@ $(function () {
 	isEjecutada = $.get("isEjecutada");
 	nCumplimiento = "";
 	cargarDatosPlaneacion();
+
+	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
+		data: arrayAsistentes,
+		columns: [{
+				data: "numero_documento",
+				title: "Documento"
+			},
+			{
+				data: "nombres",
+				title: "Nombre"
+			},
+			{
+				data: "apellidos",
+				title: "Apellidos"
+			},
+			{
+				data: "movil",
+				title: "Móvil"
+			}
+		],
+		"language": {
+			"sProcessing": "Procesando...",
+			"sLengthMenu": "Mostrar _MENU_ registros",
+			"sZeroRecords": "No se encontraron resultados",
+			"sEmptyTable": "Ningún dato disponible en esta tabla",
+			"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+			"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix": "",
+			"sSearch": "Buscar:",
+			"sUrl": "",
+			"sInfoThousands": ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+				"sFirst": "Primero",
+				"sLast": "Último",
+				"sNext": "Siguiente",
+				"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+
+		},
+
+		searching: true,
+		paging: true,
+		ordering: true,
+		select: true,
+		scrollY: 200,
+	});
+
+	bindEvents();
 });
 
-//Invocacion del archivo File Input para nueva intervencion coordinadora
+
+function bindEvents() {
+	/*Dependiendo si seleccionan si cuenta con algun contacto
+	 * parametro: 
+	 */
+	$('#radiosAlgunContacto input:radio').click(function () {
+
+		//si contacto 
+		if ($(this).val() == 'siContacto') {
+
+			contacto = $(this).val();
+		} else {
+			contacto = $(this).val();
+
+		}
+
+
+	});
+
+	/*el detalle cumplimiento
+	 * parametro: 
+	 */
+	$('#detalleNivelCumplimiento input:radio').click(function () {
+
+		
+	});
+
+
+	$('#btnnueva_asistencia_coordinadora').click(function () {
+		$("#ex5").modal({
+			fadeDuration: 500,
+			fadeDelay: 0.50,
+			escapeClose: true,
+			clickClose: true,
+			showClose: true
+		});
+	})
+
+	$('#buttonEnviar').click(function () {
+		guardarAsistencia();
+	})
+}
+
+//Invocacion del archivo File Input para ejecucion Coordinadora
 function initFileInput() {
 	$('#file_fotograficas').fileinput({
 		language: 'es',
@@ -46,7 +144,6 @@ function initFileInput() {
 		]
 	});
 }
-
 
 
 /*Consulta el nombre de la persona que inicio sesión
@@ -133,7 +230,6 @@ function cargarDatosPlaneacion() {
 
 }
 
-
 function guardarEjecucion() {
 
 	if (!validarInformacion()) {
@@ -163,7 +259,8 @@ function guardarEjecucion() {
 				asistentes: $('#textinputAsisNum').val(),
 				detalleCumplimiento: list,
 				nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
-				idPlaneacion: idPlaneacion
+				idPlaneacion: idPlaneacion,
+				arrayAsistentes: arrayAsistentes
 			},
 			function (data) {
 				if (data.error == 1) {
@@ -184,8 +281,6 @@ function guardarEjecucion() {
 					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
 				}
 
-
-
 			}, "json");
 	}
 }
@@ -195,7 +290,6 @@ function validarInformacion() {
 	//radio
 	cont = 0;
 	$("#detalleNivelCumplimiento input:radio[name^=detalle_]:checked").each(function (e) {
-		// alert("radio"+$( this ).attr('id'));
 
 		cont++;
 	});
@@ -205,8 +299,6 @@ function validarInformacion() {
 		valido = false;
 	}
 
-	//input 
-	// $("input[id^=textinput]").each(function(e){  ("input[id^=textinput][id!=id_requerido]").each(fuanction(e){
 	$("input[id^=text]").each(function (e) {
 		if ($(this).val() == "" && $(this).is(":visible")) { //alert("input"+$( this ).attr('id'));
 			valido = false;
@@ -217,73 +309,78 @@ function validarInformacion() {
 }
 
 
-/*Dependiendo si seleccionan si cuenta con algun contacto
- * parametro: 
- */
-$('#radiosAlgunContacto input:radio').click(function () {
+function cargarTipoCedula() {
+	var url = "php/ejecucion_Coordinadora.php";
+	$.post(url, {
+		accion: 'cargarTipoCedula'
+	}, function (data) {
+		var arrayData = JSON.parse(data);
+		arrayData.response.forEach(element => {
+			$('#selectbasicTipoDocumento').append('<option value="' + element.id_tipo_documento + '">' + element.tipo_documento + '</option>');
+		});
+	});
+}
 
-	//si contacto 
-	if ($(this).val() == 'siContacto') {
+var arrayAsistentes = [];
 
-		contacto = $(this).val();
+function guardarAsistencia() {
+
+	if ($('#selectbasicTipoDocumento').val() == "" || $('#textinputDocumento').val() == "" ||
+		$('#textinputNombres').val() == "" || $('#textinputApellidos').val() == "" ||
+		$('#textinputRolAsis').val() == "" ||
+		$('#FechainputNacimientoAsis').val() == "") {
+		swal(
+			'Error', //titulo
+			'Debes diligenciar todos los campos',
+			'error'
+		);
 	} else {
-		contacto = $(this).val();
+		var datos_formulario = {
+			tipo_documento: $('#selectbasicTipoDocumento').val(),
+			numero_documento: $('#textinputDocumento').val(),
+			nombres: $('#textinputNombres').val(),
+			apellidos: $('#textinputApellidos').val(),
+			genero: $('input[name="radiosSexo"]:checked').val(),
+			cuenta_CHEC: $('#textinputCuentaCHEC').val(),
+			telefono: $('#textinputTelefonoAsis').val(),
+			movil: $('#textinputMovilAsis').val(),
+			direccion: $('#textinputDireccionAsis').val(),
+			correo_electronico: $('#textinputCorreoAsis').val(),
+			rol: $('#textinputRolAsis').val(),
+			fecha_asistencia: $('#FechainputNacimientoAsis').val(),
+			manejo_datos: $('input[name="radiosManejoDatos"]:checked').val(),
+			sesiones: $('input[name="radiosSesionesForma"]:checked').val()
+		};
+
+		arrayAsistentes.push(datos_formulario);
+
+		var table = $('#ejecucion_coordinadora_asistencia');
+		table.dataTable().fnClearTable();
+		table.dataTable().fnAddData(arrayAsistentes);
+
+		swal({
+			position: 'top-right',
+			type: 'success',
+			title: 'Información guardada',
+			showConfirmButton: false,
+			timer: 1500
+		})
+
+
+		$.modal.close();
+		$('#selectbasicTipoDocumento').val("1");
+		$('#textinputDocumento').val("");
+		$('#textinputNombres').val("");
+		$('#textinputApellidos').val("");
+		$('#textinputCuentaCHEC').val("");
+		$('#textinputTelefonoAsis').val("");
+		$('#textinputMovilAsis').val("");
+		$('#textinputDireccionAsis').val("");
+		$('#textinputCorreoAsis').val("");
+		$('#textinputRolAsis').val("");
+		$('#FechainputNacimientoAsis').val("");
+
 
 	}
 
-
-});
-
-/*el detalle cumplimiento
- * parametro: 
- */
-$('#detalleNivelCumplimiento input:radio').click(function () {
-
-
-
-});
-
-
-$(function () {
-
-	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
-		"language": {
-			"sProcessing": "Procesando...",
-			"sLengthMenu": "Mostrar _MENU_ registros",
-			"sZeroRecords": "No se encontraron resultados",
-			"sEmptyTable": "Ningún dato disponible en esta tabla",
-			"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-			"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-			"sInfoPostFix": "",
-			"sSearch": "Buscar:",
-			"sUrl": "",
-			"sInfoThousands": ",",
-			"sLoadingRecords": "Cargando...",
-			"oPaginate": {
-				"sFirst": "Primero",
-				"sLast": "Último",
-				"sNext": "Siguiente",
-				"sPrevious": "Anterior"
-			},
-			"oAria": {
-				"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			}
-
-		},
-
-		searching: true,
-		paging: true,
-		ordering: true,
-		select: true,
-		scrollY: 200,
-	});
-});
-
-$('#btnnueva_asistencia_coordinadora').click(function () {
-	$("#ex5").modal({
-		fadeDuration: 500,
-		fadeDelay: 0.50,
-	});
-})
+}

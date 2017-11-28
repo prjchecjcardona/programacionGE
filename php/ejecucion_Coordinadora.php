@@ -1,52 +1,47 @@
 <?php
- include('conexion.php');
+include 'conexion.php';
 
-if(isset($_POST["accion"]))
-{
+if (isset($_POST["accion"])) {
 
-	if($_POST["accion"]=="cargarCompetencia")
-	{
-		cargarCompetencia();
-	}
-	if($_POST["accion"]=="cargarDatosPlaneacion")
-	{
-		cargarDatosPlaneacion($_POST["idPlaneacion"], $_POST["isEjecutada"]);
-	}
-	if($_POST["accion"]=="guardarEjecucion")
-	{
-		guardarEjecucion($_POST["fecha"],$_POST["hora"],$_POST["asistentes"],$_POST["detalleCumplimiento"],$_POST["nCumplimiento"],$_POST["idPlaneacion"]);
-	}
+    if ($_POST["accion"] == "cargarCompetencia") {
+        cargarCompetencia();
+    }
+    if ($_POST["accion"] == "cargarDatosPlaneacion") {
+        cargarDatosPlaneacion($_POST["idPlaneacion"]);
+    }
+    if ($_POST["accion"] == "guardarEjecucion") {
+        guardarEjecucion($_POST["fecha"], $_POST["hora"], $_POST["asistentes"], $_POST["detalleCumplimiento"], $_POST["nCumplimiento"], $_POST["idPlaneacion"], $_POST["arrayAsistentes"]);
+    }
+    if ($_POST["accion"] == "cargarTipoCedula") {
+        cargarTipoCedula();
+    }
 
 }
 
+function cargarCompetencia()
+{
+    include "conexion.php";
+    $data = array('error' => 0, 'mensaje' => '', 'html' => '');
+    $sql = "SELECT id_nivelcumplimiento, nivel_cumplimiento FROM nivelcumplimiento";
 
-function cargarCompetencia(){
-	include "conexion.php";
-	$data = array('error'=>0,'mensaje'=>'','html'=>'');
-	$sql = "SELECT id_nivelcumplimiento, nivel_cumplimiento FROM nivelcumplimiento";
+    $array = array();
+    if ($rs = $con->query($sql)) {
+        if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+            $data['html'] = '<option value="0">Selecciona una opción</option>';
+            for ($i = 0; $i < count($filas); $i++) {
 
-			$array=array();
-			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					$data['html']= '<option value="0">Selecciona una opción</option>';
-					for ($i=0;$i<count($filas);$i++){
+                $data['html'] .= '<div class="form-check"><label class="form-check-label grisTexto"><input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="' . $filas[$i]['id_nivelcumplimiento'] . '" > ' . $filas[$i]['nivel_cumplimiento'] . '</label></div>';
 
-					
-					
-					$data['html'].= '<div class="form-check"><label class="form-check-label grisTexto"><input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="'.$filas[$i]['id_nivelcumplimiento'].'" > '.$filas[$i]['nivel_cumplimiento'].'</label></div>';
-					
-						// $data['html'].= '<option value="'.$filas[$i]['id_jornada'].'">'.$filas[$i]['jornada'].'</option>';
-					}
-				}
-			}
-			else
-			{
-				print_r($conexion->errorInfo());
-				$data['mensaje']="No se realizo la consulta";
-				$data['error']=1;
-			}
-			
-		  echo json_encode($data);
+                // $data['html'].= '<option value="'.$filas[$i]['id_jornada'].'">'.$filas[$i]['jornada'].'</option>';
+            }
+        }
+    } else {
+        print_r($conexion->errorInfo());
+        $data['mensaje'] = "No se realizo la consulta";
+        $data['error'] = 1;
+    }
+
+    echo json_encode($data);
 }
 
 function cargarDatosPlaneacion($idPlaneacion, $isEjecucion){
@@ -74,7 +69,7 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecucion){
 	JOIN indicadores_por_planeacion indxpl ON indxpl.planeacion_id_planeacion = pl.id_planeacion
 	JOIN indicadores_ge ind ON ind.id_indicador = indxpl.indicadores_id_indicador
 	WHERE pl.id_planeacion = $idPlaneacion
-	GROUP BY fecha, lugarencuentro, municipio, comportamientos, competencia, nombreestrategia, nombretactico, nombreindicador
+	GROUP BY pl.fecha, lugarencuentro, municipio, comportamientos, competencia, nombreestrategia, nombretactico, nombreindicador
 	";
 	
 			$array="";
@@ -109,108 +104,133 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecucion){
 		  echo json_encode($data);
 }
 
-function guardarEjecucion($fecha,$hora,$asistentes,$detalleCumplimiento,$nCumplimiento,$idPlaneacion){
+function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $arrayAsistentes)
+{
 
-	include('conexion.php');
-	$data = array('error'=>0,'mensaje'=>'','html'=>'');
-	
-	if( $con )
- 	{
- 		
-			//Insertar en ejecucion
-			$sql = "INSERT INTO ejecucion (id_ejecucion, nivelcumplimiento,fecha,horafinalizacion,numeroasistentes,observaciones)
-			VALUES (nextval('sec_ejecucion'),'".$nCumplimiento."', '".$fecha."', '".$hora."', '".$asistentes."','');";
-			  
-				if ($rs = $con->query($sql)) {
-					
-					 //obtener el ultimo id insertado
-					$sql = "SELECT MAX(id_ejecucion) as id_ejecucion FROM ejecucion 
+    include 'conexion.php';
+    $data = array('error' => 0, 'mensaje' => '', 'html' => '');
+
+    if ($con) {
+
+        //Insertar en ejecucion
+        $sql = "INSERT INTO ejecucion (id_ejecucion, nivelcumplimiento,fecha,horafinalizacion,numeroasistentes,observaciones)
+			VALUES (nextval('sec_ejecucion'),'" . $nCumplimiento . "', '" . $fecha . "', '" . $hora . "', '" . $asistentes . "','');";
+
+        if ($rs = $con->query($sql)) {
+
+            //obtener el ultimo id insertado
+            $sql = "SELECT MAX(id_ejecucion) as id_ejecucion FROM ejecucion
 						";
-					  
-					if ($rs = $con->query($sql)) {
-							if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-								
-								$id_ejecucion=$filas[0]['id_ejecucion'];
-								if($id_ejecucion!=""){
 
-									//Se obtiene el id_planeaciones_por_intervencion
-									$sql = "SELECT id_planeaciones_por_intervencion FROM planeaciones_por_intervencion WHERE planeacion_id_planeacion = $idPlaneacion";
-									if($rs = $con->query($sql)){
-										if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
-											$id_planeaciones_por_intervencion = $filas[0]['id_planeaciones_por_intervencion'];
-											// SE INSERTA EN ejecuciones por planeacion								
-											
-												$sql = "INSERT INTO ejecuciones_por_planeacion (id_ejecuciones_por_planeacion, ejecucion_id_ejecucion,id_planeaciones_por_intervencion)
-												VALUES (nextval('sec_planeaciones_por_intervencion'),'".$id_ejecucion."', '".$id_planeaciones_por_intervencion."'); 
+            if ($rs = $con->query($sql)) {
+                if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+
+                    $id_ejecucion = $filas[0]['id_ejecucion'];
+                    if ($id_ejecucion != "") {
+
+                        //Añadir asistentes por ejecucion
+                        foreach ($arrayAsistentes as $i => $value) {
+                            $sql = "INSERT INTO public.asistentes(id_asistente, tipo_documento_id_tipo_documento, numerodocumento, nombres, apellidos, genero, cuentachec, telefonofijo, celular, direccion, correoelectronico, rol, fecha_nacimiento, manejodatos, sesionesformacion) VALUES (nextval('sec_asistentes'), " . $value['tipo_documento'] . ", '" . $value['numero_documento'] . "', '" . $value['nombres'] . "', '" . $value['apellidos'] . "', '" . $value['genero'] . "', '" . $value['cuenta_CHEC'] . "', '" . $value['telefono'] . "', '" . $value['movil'] . "', '" . $value['direccion'] . "', '" . $value['correo_electronico'] . "', '" . $value['rol'] . "', '" . $value['fecha_asistencia'] . "', " . $value['manejo_datos'] . ", " . $value['sesiones'] . ");";
+                            if ($rs = $con->query($sql)) {
+                                $sql = "SELECT MAX(id_asistente) as id_asistente FROM asistentes";
+                                if ($rs = $con->query($sql)) {
+                                    if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+                                        $id_asistente = $filas[0]['id_asistente'];
+                                        $sql = "INSERT INTO public.ejecucion_asistentes(
+														id_ejecucion_asistentes, id_ejecucion, id_asistente)
+														VALUES ((SELECT MAX(id_ejecucion_asistentes)+1 FROM ejecucion_asistentes), " . $id_ejecucion . ", " . $id_asistente . ");";
+                                        if ($rs = $con->query($sql)) {
+                                            $data['mensajeAsist'] = "Guardado Exitosamente";
+                                        } else {
+                                            print_r($con->errorInfo());
+                                            $data['mensaje'] = "No se inserto la ejecuciones por planeacion";
+                                            $data['error'] = 1;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        //Se obtiene el id_planeaciones_por_intervencion
+                        $sql = "SELECT id_planeaciones_por_intervencion FROM planeaciones_por_intervencion WHERE planeacion_id_planeacion = $idPlaneacion";
+                        if ($rs = $con->query($sql)) {
+                            if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+                                $id_planeaciones_por_intervencion = $filas[0]['id_planeaciones_por_intervencion'];
+                                // SE INSERTA EN ejecuciones por planeacion
+
+                                $sql = "INSERT INTO ejecuciones_por_planeacion (id_ejecuciones_por_planeacion, ejecucion_id_ejecucion,id_planeaciones_por_intervencion)
+												VALUES ((SELECT MAX(id_ejecuciones_por_planeacion)+1 FROM ejecuciones_por_planeacion)," . $id_ejecucion . ", " . $id_planeaciones_por_intervencion . ");
 												  ";
-												  
-												if ($rs = $con->query($sql)) 
-												{
-													$data['mensaje']="Guardado Exitosamente";
-													$data['idEjecucion']=$id_ejecucion;
-													$data['idPlaneacion']=$idPlaneacion;
-													
-												} //
-												else
-												{
-													print_r($con->errorInfo());
-													$data['mensaje']="No se inserto la ejecuciones por planeacion";
-													$data['error']=1;
-												}
-												
-												//se inserta en detalle nivel cumplimiento por ejecucion
-												for ($i=0;$i<count($detalleCumplimiento);$i++){
-														if($detalleCumplimiento[$i] == 1){$nivelCumplimiento="Completa";}
-														if($detalleCumplimiento[$i] == 2){$nivelCumplimiento="Parcial";}
-														if($detalleCumplimiento[$i] == 3){$nivelCumplimiento="No se cumplio";}
-			
-														//Insertar la detallenivelcumplimiento_por_ejecucion  FALTA CREA LA SECENCIA
-														$sql = "INSERT INTO detallenivelcumplimiento_por_ejecucion (id_detallenivelcumplimiento_por_ejecucioncl, id_detalle_nivelcumplimiento, ejecucion_id_ejecucion,nivel_cumplimiento)
-															VALUES (nextval('sec_detallenivelcumplimiento_por_ejecucion'),'".$detalleCumplimiento[$i]."', '".$id_ejecucion."','".$nivelCumplimiento."'); 
-															  ";
-															  
-																if ($rs = $con->query($sql)) {
-																	$data['mensaje']="exito";
-																	$data['error']=0;
-																	 
-																}
-																else
-																{
-																	print_r($con->errorInfo());
-																	$data['mensaje']="No se realizo el insert detallenivelcumplimiento_por_ejecucion";
-																	$data['error']=1;
-																}
-														
-													}
-										}
-									}
-			
-								
-								}
-						}
-						else
-						{
-							print_r($con->errorInfo());
-							$data['mensaje']="No se realizo la consulta de id intervencion";
-							$data['error']=1;
-						}
-					
-					} 
-					
-					//FALTA INSERTAR EN ADJUNTOS, EJECUCION ADJUNTOS
-				}
-				else
-				{
-					print_r($con->errorInfo());
-					$data['mensaje']="No se realizo el insert ejecucion";
-					$data['error']=1;
-				}
-	
-						
 
-			
-		  echo json_encode($data);
-	}
+                                if ($rs = $con->query($sql)) {
+                                    $data['mensaje'] = "Guardado Exitosamente";
+                                    $data['idEjecucion'] = $id_ejecucion;
+                                    $data['idPlaneacion'] = $idPlaneacion;
+
+                                } //
+                                else {
+                                    print_r($con->errorInfo());
+                                    $data['mensaje'] = "No se inserto la ejecuciones por planeacion";
+                                    $data['error'] = 1;
+                                }
+
+                                //se inserta en detalle nivel cumplimiento por ejecucion
+                                for ($i = 0; $i < count($detalleCumplimiento); $i++) {
+                                    if ($detalleCumplimiento[$i] == 1) {$nivelCumplimiento = "Completa";}
+                                    if ($detalleCumplimiento[$i] == 2) {$nivelCumplimiento = "Parcial";}
+                                    if ($detalleCumplimiento[$i] == 3) {$nivelCumplimiento = "No se cumplio";}
+
+                                    //Insertar la detallenivelcumplimiento_por_ejecucion  FALTA CREA LA SECENCIA
+                                    $sql = "INSERT INTO detallenivelcumplimiento_por_ejecucion (id_detallenivelcumplimiento_por_ejecucioncl, id_detalle_nivelcumplimiento, ejecucion_id_ejecucion,nivel_cumplimiento)
+															VALUES (nextval('sec_detallenivelcumplimiento_por_ejecucion'),'" . $detalleCumplimiento[$i] . "', '" . $id_ejecucion . "','" . $nivelCumplimiento . "');
+															  ";
+
+                                    if ($rs = $con->query($sql)) {
+                                        $data['mensaje'] = "exito";
+                                        $data['error'] = 0;
+
+                                    } else {
+                                        print_r($con->errorInfo());
+                                        $data['mensaje'] = "No se realizo el insert detallenivelcumplimiento_por_ejecucion";
+                                        $data['error'] = 1;
+                                    }
+
+                                }
+                            }
+                        }
+
+                    }
+                } else {
+                    print_r($con->errorInfo());
+                    $data['mensaje'] = "No se realizo la consulta de id intervencion";
+                    $data['error'] = 1;
+                }
+
+            }
+
+        } else {
+            print_r($con->errorInfo());
+            $data['mensaje'] = "No se realizo el insert ejecucion";
+            $data['error'] = 1;
+        }
+
+        echo json_encode($data);
+    }
 }
 
-?>
+function cargarTipoCedula()
+{
+    include 'conexion.php';
+    $sql = "SELECT id_tipo_documento, tipo_documento FROM public.tipo_documento;";
+    if ($rs = $con->query($sql)) {
+        if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+            $data['response'] = $filas;
+        }
+    } else {
+        print_r($con->errorInfo());
+        $data['mensaje'] = "No se realizo la consulta de los tipos de documento";
+        $data['error'] = 1;
+    }
+
+    echo json_encode($data);
+}

@@ -24,7 +24,8 @@
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <a class="navbar-brand" href="#">
-      <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec"> Gestión Educativa
+      <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
+      <img src="img/Universidad-de-manizales.png" class="img-fluid umanizales" alt="um"> Gestión Educativa
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -161,19 +162,22 @@
           <div class="col-md-4 centrado-vertical">
             <label class="mr-sm-2">Duración: </label>
           </div>
-          <div class="col-md-3">
-            <select id="selectbasicHoraEje" name="selectbasicHoraEje" class="form-control">
-              <option value="1">1 Hora</option>
-              <option value="2">2 Horas</option>
+          <div class="col-md-4">
+            <select id="selectbasicHoraEje" name="selectbasicHoraEje" class="form-control alargadoTiempoEjecucion">
+              <option value="0">0 Horas</option>
+              <option value="2">1 Hora</option>
+              <option value="1">2 Horas</option>
+              <option value="3">3 Horas</option>
+              <option value="3">4 Horas</option>
             </select>
           </div>
-          <div class="col-md-0">
-            <label class="mr-sm-2">:</label>
-          </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
             <select id="selectbasicMinEje" name="selectbasicMinEje" class="form-control">
-              <option value="15">15 Minutos</option>
-              <option value="30">30 Minutos</option>
+              <option value="0">00 Minutos</option>
+              <option value="1">15 Minutos</option>
+              <option value="2">30 Minutos</option>
+              <option value="3">45 Minutos</option>
+
             </select>
           </div>
         </div>
@@ -184,7 +188,7 @@
           <div class="col-md-4 centrado-vertical">
             <label>Total de Asistentes: </label>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
             <input id="textinputAsisNum" name="textinputAsisNum" type="number" placeholder="" class="form-control input-md">
           </div>
         </div>
@@ -326,29 +330,7 @@
       <div class="form-group col-md-9">
         <legend>Registrar Asistencia</legend>
         <table id="ejecucion_coordinadora_asistencia" class="display">
-          <thead>
-            <tr>
-              <th>Cédula</th>
-              <th>Nombre</th>
-              <th>Teléfono</th>
-              <th>Correo Electrónico</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{########}</td>
-              <td>{Nombre1}</td>
-              <td>{Teléfono1}</td>
-              <td>{Correo Electrónico1}</td>
-            </tr>
-            <tr>
-              <td>{########}</td>
-              <td>{Nombre2}</td>
-              <td>{Teléfono2}</td>
-              <td>{Correo Electrónico2}</td>
-            </tr>
-          </tbody>
+         
         </table>
 
         <!-- Boton añadir -->
@@ -511,7 +493,7 @@
           <label class="col-md-12 control-label" for="button1id"></label>
           <div class="col-md-8">
             <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
-            <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaEntidad();">Guardar</button>
+            <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Envia">Guardar</button>
             <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
           </div>
         </div>
