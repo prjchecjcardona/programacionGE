@@ -7,8 +7,7 @@ include('conexion.php');
 
 
 if(!isset($_SESSION["coordinadora"]) || !isset($_SESSION["gestora"]))
-{	
-	
+{		
 	$_SESSION = array();
 	
 	if(isset($_POST["cargo"]) and $_POST["cargo"] == 2)
@@ -28,6 +27,7 @@ if(!isset($_SESSION["coordinadora"]) || !isset($_SESSION["gestora"]))
 		$_SESSION["numeroIdentificacion"] = $_POST["numeroIdentificacion"];
 		$_SESSION["nombreSesion"] = $_POST["nombreSesion"];
 		$_SESSION["cargo"] = $_POST["cargo"];
+		$_SESSION["id_zona"] = $_POST["id_zona"];
 		$_SESSION["gestora"]=1;
 		       
 	}

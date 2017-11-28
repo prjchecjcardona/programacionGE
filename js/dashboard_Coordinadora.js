@@ -1,7 +1,7 @@
 $(function () {
     $('#exampleRadio2').prop('checked', true)
-    initElements();
     getInitialData();
+    cargarCombos();
 });
 
 
@@ -31,10 +31,7 @@ function initElements() {
     traerNombre();
 
     $('#multiple-mes').multiselect({
-        enableFiltering: true,
         filterPlaceholder: 'Buscar',
-        includeSelectAllOption: true,
-        selectAllText: 'Seleccionar Todos',
         allSelectedText: 'No hay más opciones',
         buttonText: function (options, select) {
             if (options.length === 0) {
@@ -61,8 +58,6 @@ function initElements() {
     });
 
     $('#multiple-anio').multiselect({
-        enableFiltering: true,
-        filterPlaceholder: 'Buscar',
         includeSelectAllOption: true,
         selectAllText: 'Seleccionar Todos',
         allSelectedText: 'No hay más opciones',
@@ -82,11 +77,12 @@ function initElements() {
                 });
                 return labels.join(', ') + '';
             }
-        },
+        }
     });
 
     $('#multiple-municipio').multiselect({
         enableFiltering: true,
+        maxHeight: 300,
         filterPlaceholder: 'Buscar',
         includeSelectAllOption: true,
         selectAllText: 'Seleccionar Todos',
@@ -133,6 +129,7 @@ function initElements() {
     });
     $('#multiple-entidad').multiselect({
         enableFiltering: true,
+        maxHeight: 300,
         filterPlaceholder: 'Buscar',
         includeSelectAllOption: true,
         selectAllText: 'Seleccionar Todos',
@@ -204,6 +201,7 @@ function initElements() {
 
     $('#multiple-tactico').multiselect({
         enableFiltering: true,
+        maxHeight: 300,
         filterPlaceholder: 'Buscar',
         includeSelectAllOption: true,
         selectAllText: 'Seleccionar Todos',
@@ -704,4 +702,32 @@ function filterByMonth(month) {
             series: bar_graph
         });
     })
+}
+
+function cargarCombos(){
+    let url = "php/dashboard_coordinadora.php";
+    $.post(url, {
+        type: 'getDataCombos'
+    }, function(data) {
+        data.zonas.forEach(element => {
+            $('#multiple-zona').append('<option value="'+element.id_zona+'">'+element.zonas+'</option>');
+        });
+        data.municipios.forEach(element => {
+            $('#multiple-municipio').append('<option zona="'+element.id_zona+'" value="'+element.id_municipio+'">'+element.municipio+'</option>');
+        });
+        data.entidades.forEach(element => {
+            $('#multiple-entidad').append('<option value="'+element.id_entidad+'">'+element.nombreentidad+'</option>');
+        });
+        data.comportamientos.forEach(element => {
+            $('#multiple-comportamiento').append('<option value="'+element.id_id_comportamientos+'">'+element.comportamientos+'</option>');
+        });
+        data.estrategias.forEach(element => {
+            $('#multiple-estrategia').append('<option value="'+element.id_estrategia+'">'+element.nombreestrategia+'</option>');
+        });
+        data.tacticos.forEach(element => {
+            $('#multiple-tactico').append('<option zona="'+element.id_estrategia+'" value="'+element.id_tactico+'">'+element.nombretactico+'</option>');
+        });
+        initElements();
+        
+    }, "json")
 }

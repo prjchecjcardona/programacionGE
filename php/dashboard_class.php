@@ -80,11 +80,70 @@ class Dashboard
         $array = array();
         $sql = "select municipio, sum(numero_actores), tipo_entidad from informes_actoressociales where mes = '$mes' AND anio = '$anio' group by municipio, tipo_entidad";
         if($rs = $this->con->query($sql)){
-            if($filas = $filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+            if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
                 $json['response'] = $filas;
             }else $json['err'] = 1;
         }else $json['err'] = 1;
         return $json;
+    }
+
+    function getDataCombos(){
+        $response = array();
+        $sql = "SELECT id_zona, zonas FROM public.zonas;";
+        if($rs = $this->con->query($sql)){
+            if($filas = $filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+                $response['zonas'] = $filas;
+            }
+        }else {
+            $response['err'] = 1;
+        }
+
+        $sql = "SELECT id_municipio, municipio, id_zona FROM public.municipios;";
+        if($rs = $this->con->query($sql)){
+            if($filas = $filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+                $response['municipios'] = $filas;
+            }
+        }else {
+            $response['err'] = 1;
+        }
+
+        $sql = "SELECT id_entidad, nombreentidad FROM public.entidades;";
+        if($rs = $this->con->query($sql)){
+            if($filas = $filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+                $response['entidades'] = $filas;
+            }
+        }else {
+            $response['err'] = 1;
+        }
+
+        $sql = "SELECT id_comportamientos, comportamientos FROM public.comportamientos;";
+        if($rs = $this->con->query($sql)){
+            if($filas = $filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+                $response['comportamientos'] = $filas;
+            }
+        }else {
+            $response['err'] = 1;
+        }
+        
+        $sql = "SELECT id_estrategia, nombreestrategia FROM public.estrategias;";
+        if($rs = $this->con->query($sql)){
+            if($filas = $filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+                $response['estrategias'] = $filas;
+            }
+        }else {
+            $response['err'] = 1;
+        }
+
+        $sql = "SELECT id_tactico, nombretactico, id_estrategia FROM public.tactico;";
+        if($rs = $this->con->query($sql)){
+            if($filas = $filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+                $response['tacticos'] = $filas;
+            }
+        }else {
+            $response['err'] = 1;
+        }
+
+        return $response;
     }
     
 }

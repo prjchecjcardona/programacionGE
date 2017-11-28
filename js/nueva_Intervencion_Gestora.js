@@ -399,7 +399,7 @@ function validarInformacion() {
 
 $("#buttonCancelar").click(function () {
 
-	window.location.href = "home_Coordinadora.html";
+	window.location.href = "home_Gestora.html";
 
 });
 
