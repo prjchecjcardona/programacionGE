@@ -1,5 +1,4 @@
 <?php 
-session_destroy();
 session_start();
 define("INCLUDE_CHECK",true);
 
