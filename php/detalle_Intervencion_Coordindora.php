@@ -119,8 +119,7 @@ function checkPlaneacionesEjecutadas(){
 	include "conexion.php";
 	$resultado = array();
 	$sql = "SELECT pi.planeacion_id_planeacion FROM planeaciones_por_intervencion pi
-			JOIN ejecuciones_por_planeacion ep ON ep.id_planeaciones_por_intervencion = pi.id_planeaciones_por_intervencion
-			GROUP BY pi.planeacion_id_planeacion"; //consulta
+			JOIN ejecuciones_por_planeacion ep ON ep.id_planeaciones_por_intervencion = pi.id_planeaciones_por_intervencion"; //consulta
 			
 			$array=array();
 			if ($rs = $con->query($sql)) {

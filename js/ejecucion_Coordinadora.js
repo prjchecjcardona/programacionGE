@@ -56,7 +56,6 @@ function traerNombre() {
 
 	$.post("php/CapturaVariableSession.php", {
 			accion: 'traerNombre'
-
 		},
 		function (data) {
 			if (data != "") {
@@ -76,16 +75,11 @@ function traerNombre() {
 
 function cargarDatosPlaneacion() {
 	//TODO PENDIENTE LLAMADO A BACKEND DE YA EJECUTADAS
-	/* if(isEjecutada==1){
-
-	}else{
-
-	} */
-
-	$.post("php/ejecucion_Coordinadora.php", {
+	if(isEjecutada==1){
+		$.post("php/ejecucion_Coordinadora.php", {
 			accion: 'cargarDatosPlaneacion',
 			idPlaneacion: idPlaneacion,
-
+			isEjecutada: true
 		},
 		function (data) {
 			if (data.error == 0) {
@@ -107,6 +101,35 @@ function cargarDatosPlaneacion() {
 
 			}
 		}, "json");
+
+	}else{
+		$.post("php/ejecucion_Coordinadora.php", {
+			accion: 'cargarDatosPlaneacion',
+			idPlaneacion: idPlaneacion,
+			isEjecutada: false
+		},
+		function (data) {
+			if (data.error == 0) {
+
+				$('#fechaInd').html(data.html.fecha);
+				$('#lugarInd').html(data.html.lugar);
+				$('#municipioInd').html(data.html.municipio);
+				$('#comportamientoInd').html(data.html.comportamiento);
+				$('#competenciaInd').html(data.html.competencia);
+				$('#estrategiaInd').html(data.html.estrategia);
+				$('#tacticoInd').html(data.html.tactico);
+				$('#indicadoresInd').html(data.html.indicador);
+			} else {
+				swal(
+					'', //titulo
+					'Debes iniciar sesion!',
+					'error'
+				);
+
+			}
+		}, "json");
+	}
+
 
 }
 

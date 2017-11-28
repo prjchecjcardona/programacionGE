@@ -10,7 +10,7 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="cargarDatosPlaneacion")
 	{
-		cargarDatosPlaneacion($_POST["idPlaneacion"]);
+		cargarDatosPlaneacion($_POST["idPlaneacion"], $_POST["isEjecutada"]);
 	}
 	if($_POST["accion"]=="guardarEjecucion")
 	{
@@ -49,7 +49,7 @@ function cargarCompetencia(){
 		  echo json_encode($data);
 }
 
-function cargarDatosPlaneacion($idPlaneacion){
+function cargarDatosPlaneacion($idPlaneacion, $isEjecucion){
 	include "conexion.php";
 	$data = array('error'=>0,'mensaje'=>'','html'=>array());
 	$sql = "
@@ -100,6 +100,10 @@ function cargarDatosPlaneacion($idPlaneacion){
 				print_r($conexion->errorInfo());
 				$data['mensaje']="No se realizo la consulta";
 				$data['error']=1;
+			}
+
+			if($isEjecucion){
+				
 			}
 			
 		  echo json_encode($data);

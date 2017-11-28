@@ -1,0 +1,13 @@
+{
+    "name": "prjchec.jcardona/gestioneducativa",
+    "description": "Plataforma de gestion educativa",
+    "authors": [
+        {
+            "name": "Juan Camilo Cardona",
+            "email": "prjchec.jcardona@umanizales.edu.co"
+        }
+    ],
+    "require": {
+        "google/apiclient": "2.0"
+    }
+}

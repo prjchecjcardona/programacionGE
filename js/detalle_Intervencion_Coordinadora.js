@@ -184,7 +184,7 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			if(isEjecutada){
 				$($('#coordinadora_tabla tbody').children()[index]).addClass('rowEjecutada');
 				$($('#coordinadora_tabla tbody').children()[index]).find('span').removeClass('fa-book');
-				$($('#coordinadora_tabla tbody').children()[index]).find('span').addClass('fa-eye');
+				$($('#coordinadora_tabla tbody').children()[index]).find('span').addClass('fa-check');
 			}
 		});
 	}
@@ -195,39 +195,16 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			var iconEjec = $(this).find('span').attr('class')
 			idPlaneacion= data[0];
 			if(data[0]!=""){
-				if(iconEjec != "fa fa-eye"){
+				if(iconEjec !== "fa fa-check"){
 					window.location.href = "ejecucion_Coordinadora.html?idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
-				}else{
-					window.location.href = "ejecucion_Coordinadora.html?idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion+"&isEjecutada=1";
-				}
+				}/* else{
+					window.location.href = "ejecucion_Coordinadora.html?isEjecutada=1&idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
+				} */
 				
 			}
 	});
 
 
-}
-
-//Evento para ver detalle ejecucion//
-$(document).on('click', '#ejecucion', function () {
-	var data = table.row($(this).parents('tr')).data();
-	idPlaneacion = data[0];
-	if (data[0] != "") {
-
-		window.location.href = "ejecucion_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
-
-	}
-});
-
-//Evento para ver detalle asistencia//
-$(document).on('click', '#asistencia', function () {
-	var data = table.row($(this).parents('tr')).data();
-	idPlaneacion = data[0];
-	if (data[0] != "") {
-
-		window.location.href = "asistencia_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
-
-	}
-});
 
 
 
