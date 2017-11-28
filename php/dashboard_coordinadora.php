@@ -15,6 +15,9 @@ switch ($type) {
     case 'mes gestion redes':
     $json = $dashboard->getMesGestionRedes($_POST['mes'], $_POST['anio']);
     break;
+    case 'getDataCombos':
+    $json = $dashboard->getDataCombos();
+    break;
     
     default:
     $json['err'] = 1;

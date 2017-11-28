@@ -683,6 +683,10 @@ li.paginate_button.page-item a{
     z-index: 0 !important;
 }
 
+.card-body .btn-group, .card-body .btn-group .multiselect{
+    width: 100%;
+}
+
 @media (max-width:600px) {
     .posicioningreso {
         justify-content: center;
