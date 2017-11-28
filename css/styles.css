@@ -506,6 +506,10 @@ nav.fixed-top {
     padding-left: 80px;
 }
 
+#posicion_titulo_Herramientas{
+    margin-left: 46px;
+}
+
 #selectbasicEntidad {
     width: 87.6%;
     margin-bottom: 10px;
@@ -539,6 +543,14 @@ nav.fixed-top {
 .btn-primary:hover {
     background-color: rgb(145, 179, 37);
     border-color: rgb(145, 179, 37);
+}
+
+
+#informes_CHEC:hover{
+    background-color: rgb(145, 179, 37);
+    border-color: rgb(145, 179, 37);
+
+
 }
 
 .btn-primary:focus {
@@ -660,6 +672,10 @@ img.imagen_checum {
 }
 
 #planeacion2{
+    margin-top: 15px;
+}
+
+#planeacion3{
     margin-top: 15px;
 }
 
