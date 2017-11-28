@@ -2,6 +2,8 @@
 <html lang="es">
 
 <head>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -34,11 +36,11 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" id="nav_home" href="home_Coordinadora.html">
+                    <a class="nav-link" id="nav_home" href="home_CHEC.html">
                         <i class="fa fa-home fa-2x"></i>
                     </a>
                     <a class="nav-link" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank">
-                        <i class="fa fa-wrench fa-2x"></i>
+                        <i class="fa fa-cube fa-2x"></i>
                     </a>
                     <a class="nav-link" id="nav_out" href="http://drive.google.com">
                         <i class="fa fa-sign-out fa-2x"></i>
@@ -49,24 +51,25 @@
     </nav>
 
     <!-- CONTAINER PRINCIPAL -->
-    <div class="container-fluid">
+    <div class="container-fluid coord-main">
         <div class="row coord-main">
             <!-- Columna intervenciones -->
-            <div class="col-md-4 col-interv-coord">
-                <h3>Herramientas</h3>
+            <div class="col-md-4">
+                <h3 id="posicion_titulo_Herramientas">Herramientas</h3>
 
                 <div class="botones-container">
 
                     <div class="sub-cont-botones">
-                        <a href="dashboard_CHEC.html" class="boton-dashboard btn-verde" id="btnInformes">
+
+                        <button class="boton-dashboard btn-verde" type="button" onclick="window.location.href='dashboard_CHEC.html'">
                             <i class="fa fa-bar-chart fa-4x"></i>
                             <h6>Informes</h6>
-                        </a>
+                        </button>
                         <br>
-                        <a href="intervenciones_CHEC.html" class="boton-dashboard btn-verde" id="btnIntervenciones">
+                        <button class="boton-dashboard btn-verde" type="button" onclick="window.location.href='intervenciones_CHEC.html'">
                             <i class="fa fa-book fa-4x"></i>
                             <h6>Intervenciones</h6>
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -85,7 +88,7 @@
     </div>
     <footer id="footer">
         <h6 class="text">Gestión Educativa</h6>
-        <h6 class="text3">CHEC &copy; Todos los derechos reservados 2017</h6>
+        <h6 class="text3">CHEC - UM &copy; Todos los derechos reservados 2017</h6>
         <h6 class="text3">Versión 1.0.1</h6>
 
     </footer>
