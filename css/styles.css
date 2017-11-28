@@ -482,8 +482,8 @@ nav.fixed-top {
 }
 
 .imgwelcome {
-    margin-left: 270px;
-    margin-top: 60px;
+    margin-left: 260px;
+    margin-top: 70px;
     width: 70%;
 }
 
@@ -618,7 +618,8 @@ buttonbtn.btn-sm.btn-success {
 }
 
 .modal {
-    max-height: 400px;
+    max-height: 450px;
+    max-width: 600px;
     overflow: auto;
 }
 
@@ -656,6 +657,14 @@ img.umanizales {
 
 img.imagen_checum {
     width: 16%;
+}
+
+#planeacion2{
+    margin-top: 15px;
+}
+
+li.paginate_button.page-item a{
+    z-index: 0 !important;
 }
 
 @media (max-width:600px) {

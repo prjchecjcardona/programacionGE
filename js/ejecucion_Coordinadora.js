@@ -2,6 +2,7 @@
 $(function () {
 	traerNombre();
 	initFileInput();
+	cargarTipoCedula();
 
 	/*Extrae los parametros que llegan en la url
 	 * parametro: 
@@ -25,205 +26,26 @@ $(function () {
 	isEjecutada = $.get("isEjecutada");
 	nCumplimiento = "";
 	cargarDatosPlaneacion();
-});
-
-//Invocacion del archivo File Input para nueva intervencion coordinadora
-function initFileInput() {
-	$('#file_fotograficas').fileinput({
-		language: 'es',
-		'theme': 'fa',
-		uploadUrl: '#',
-		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
-		]
-	});
-	$('#file_asistencias').fileinput({
-		language: 'es',
-		'theme': 'fa',
-		uploadUrl: '#',
-		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
-		]
-	});
-}
-
-
-
-/*Consulta el nombre de la persona que inicio sesión
- * parametro: 
- */
-function traerNombre() {
-
-	$.post("php/CapturaVariableSession.php", {
-			accion: 'traerNombre'
-
-		},
-		function (data) {
-			if (data != "") {
-				$('#Nombre').html(data);
-			} else {
-				swal(
-					'', //titulo
-					'Debes iniciar sesion!',
-					'error'
-				);
-
-			}
-		}, "json");
-
-}
-
-
-function cargarDatosPlaneacion() {
-	//TODO PENDIENTE LLAMADO A BACKEND DE YA EJECUTADAS
-	/* if(isEjecutada==1){
-
-	}else{
-
-	} */
-
-	$.post("php/ejecucion_Coordinadora.php", {
-			accion: 'cargarDatosPlaneacion',
-			idPlaneacion: idPlaneacion,
-
-		},
-		function (data) {
-			if (data.error == 0) {
-
-				$('#fechaInd').html(data.html.fecha);
-				$('#lugarInd').html(data.html.lugar);
-				$('#municipioInd').html(data.html.municipio);
-				$('#comportamientoInd').html(data.html.comportamiento);
-				$('#competenciaInd').html(data.html.competencia);
-				$('#estrategiaInd').html(data.html.estrategia);
-				$('#tacticoInd').html(data.html.tactico);
-				$('#indicadoresInd').html(data.html.indicador);
-			} else {
-				swal(
-					'', //titulo
-					'Debes iniciar sesion!',
-					'error'
-				);
-
-			}
-		}, "json");
-
-}
-
-
-function guardarEjecucion() {
-
-	if (!validarInformacion()) {
-		swal(
-			'', //titulo
-			'Debes ingresar todos los datos!',
-			'error'
-		);
-	} else {
-
-		//detalleNivelCumplimiento
-		var list = new Array();
-
-		$.each($('#detalleNivelCumplimiento :checked'), function () {
-
-			list.push($(this).val());
-
-		});
-
-		//fin capturar los indicadores
-
-
-		$.post("php/ejecucion_Coordinadora.php", {
-				accion: 'guardarEjecucion',
-				fecha: $('#textFecha').val(),
-				hora: $('#selectbasicHoraEje').val() + ":" + $('#selectbasicMinEje').val(),
-				asistentes: $('#textinputAsisNum').val(),
-				detalleCumplimiento: list,
-				nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
-				idPlaneacion: idPlaneacion
-			},
-			function (data) {
-				if (data.error == 1) {
-
-					swal(
-						'', //titulo
-						' No se guardo la ejecución, intententalo nuevamente',
-						'error'
-					);
-
-				} else {
-					swal(
-						'', //titulo
-						'Guardado Correctamente',
-						'success'
-					);
-
-					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
-				}
-
-
-
-			}, "json");
-	}
-}
-
-function validarInformacion() {
-	var valido = true;
-	//radio
-	cont = 0;
-	$("#detalleNivelCumplimiento input:radio[name^=detalle_]:checked").each(function (e) {
-		// alert("radio"+$( this ).attr('id'));
-
-		cont++;
-	});
-	if (cont == 4) {
-
-	} else {
-		valido = false;
-	}
-
-	//input 
-	// $("input[id^=textinput]").each(function(e){  ("input[id^=textinput][id!=id_requerido]").each(fuanction(e){
-	$("input[id^=text]").each(function (e) {
-		if ($(this).val() == "" && $(this).is(":visible")) { //alert("input"+$( this ).attr('id'));
-			valido = false;
-		}
-	});
-
-	return valido;
-}
-
-
-/*Dependiendo si seleccionan si cuenta con algun contacto
- * parametro: 
- */
-$('#radiosAlgunContacto input:radio').click(function () {
-
-	//si contacto 
-	if ($(this).val() == 'siContacto') {
-
-		contacto = $(this).val();
-	} else {
-		contacto = $(this).val();
-
-	}
-
-
-});
-
-/*el detalle cumplimiento
- * parametro: 
- */
-$('#detalleNivelCumplimiento input:radio').click(function () {
-
-
-
-});
-
-
-$(function () {
 
 	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
+		data: arrayAsistentes,
+		columns: [{
+				data: "numero_documento",
+				title: "Documento"
+			},
+			{
+				data: "nombres",
+				title: "Nombre"
+			},
+			{
+				data: "apellidos",
+				title: "Apellidos"
+			},
+			{
+				data: "movil",
+				title: "Móvil"
+			}
+		],
 		"language": {
 			"sProcessing": "Procesando...",
 			"sLengthMenu": "Mostrar _MENU_ registros",
@@ -256,11 +78,281 @@ $(function () {
 		select: true,
 		scrollY: 200,
 	});
+
+	bindEvents();
 });
 
-$('#btnnueva_asistencia_coordinadora').click(function () {
-	$("#ex5").modal({
-		fadeDuration: 500,
-		fadeDelay: 0.50,
+
+function bindEvents() {
+	/*Dependiendo si seleccionan si cuenta con algun contacto
+	 * parametro: 
+	 */
+	$('#radiosAlgunContacto input:radio').click(function () {
+
+		//si contacto 
+		if ($(this).val() == 'siContacto') {
+
+			contacto = $(this).val();
+		} else {
+			contacto = $(this).val();
+
+		}
+
+
 	});
-})
+
+	/*el detalle cumplimiento
+	 * parametro: 
+	 */
+	$('#detalleNivelCumplimiento input:radio').click(function () {
+
+		
+	});
+
+
+	$('#btnnueva_asistencia_coordinadora').click(function () {
+		$("#ex5").modal({
+			fadeDuration: 500,
+			fadeDelay: 0.50,
+			escapeClose: true,
+			clickClose: true,
+			showClose: true
+		});
+	})
+
+	$('#buttonEnviar').click(function () {
+		guardarAsistencia();
+	})
+}
+
+//Invocacion del archivo File Input para ejecucion Coordinadora
+function initFileInput() {
+	$('#file_fotograficas').fileinput({
+		language: 'es',
+		'theme': 'fa',
+		uploadUrl: '#',
+		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
+			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
+		]
+	});
+	$('#file_asistencias').fileinput({
+		language: 'es',
+		'theme': 'fa',
+		uploadUrl: '#',
+		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
+			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
+		]
+	});
+}
+
+
+/*Consulta el nombre de la persona que inicio sesión
+ * parametro: 
+ */
+function traerNombre() {
+
+	$.post("php/CapturaVariableSession.php", {
+			accion: 'traerNombre'
+
+		},
+		function (data) {
+			if (data != "") {
+				$('#Nombre').html(data);
+			} else {
+				swal(
+					'', //titulo
+					'Debes iniciar sesion!',
+					'error'
+				);
+
+			}
+		}, "json");
+
+}
+
+
+function cargarDatosPlaneacion() {
+	//TODO PENDIENTE LLAMADO A BACKEND DE YA EJECUTADAS
+
+	$.post("php/ejecucion_Coordinadora.php", {
+			accion: 'cargarDatosPlaneacion',
+			idPlaneacion: idPlaneacion,
+
+		},
+		function (data) {
+			if (data.error == 0) {
+
+				$('#fechaInd').html(data.html.fecha);
+				$('#lugarInd').html(data.html.lugar);
+				$('#municipioInd').html(data.html.municipio);
+				$('#comportamientoInd').html(data.html.comportamiento);
+				$('#competenciaInd').html(data.html.competencia);
+				$('#estrategiaInd').html(data.html.estrategia);
+				$('#tacticoInd').html(data.html.tactico);
+				$('#indicadoresInd').html(data.html.indicador);
+			} else {
+				swal(
+					'', //titulo
+					'Debes iniciar sesion!',
+					'error'
+				);
+
+			}
+		}, "json");
+
+}
+
+function guardarEjecucion() {
+
+	if (!validarInformacion()) {
+		swal(
+			'', //titulo
+			'Debes ingresar todos los datos!',
+			'error'
+		);
+	} else {
+
+		//detalleNivelCumplimiento
+		var list = new Array();
+
+		$.each($('#detalleNivelCumplimiento :checked'), function () {
+
+			list.push($(this).val());
+
+		});
+
+		//fin capturar los indicadores
+
+
+		$.post("php/ejecucion_Coordinadora.php", {
+				accion: 'guardarEjecucion',
+				fecha: $('#textFecha').val(),
+				hora: $('#selectbasicHoraEje').val() + ":" + $('#selectbasicMinEje').val(),
+				asistentes: $('#textinputAsisNum').val(),
+				detalleCumplimiento: list,
+				nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
+				idPlaneacion: idPlaneacion,
+				arrayAsistentes: arrayAsistentes
+			},
+			function (data) {
+				if (data.error == 1) {
+
+					swal(
+						'', //titulo
+						' No se guardo la ejecución, intententalo nuevamente',
+						'error'
+					);
+
+				} else {
+					swal(
+						'', //titulo
+						'Guardado Correctamente',
+						'success'
+					);
+
+					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+				}
+
+			}, "json");
+	}
+}
+
+function validarInformacion() {
+	var valido = true;
+	//radio
+	cont = 0;
+	$("#detalleNivelCumplimiento input:radio[name^=detalle_]:checked").each(function (e) {
+
+		cont++;
+	});
+	if (cont == 4) {
+
+	} else {
+		valido = false;
+	}
+
+	$("input[id^=text]").each(function (e) {
+		if ($(this).val() == "" && $(this).is(":visible")) { //alert("input"+$( this ).attr('id'));
+			valido = false;
+		}
+	});
+
+	return valido;
+}
+
+
+function cargarTipoCedula() {
+	var url = "php/ejecucion_Coordinadora.php";
+	$.post(url, {
+		accion: 'cargarTipoCedula'
+	}, function (data) {
+		var arrayData = JSON.parse(data);
+		arrayData.response.forEach(element => {
+			$('#selectbasicTipoDocumento').append('<option value="' + element.id_tipo_documento + '">' + element.tipo_documento + '</option>');
+		});
+	});
+}
+
+var arrayAsistentes = [];
+
+function guardarAsistencia() {
+
+	if ($('#selectbasicTipoDocumento').val() == "" || $('#textinputDocumento').val() == "" ||
+		$('#textinputNombres').val() == "" || $('#textinputApellidos').val() == "" ||
+		$('#textinputRolAsis').val() == "" ||
+		$('#FechainputNacimientoAsis').val() == "") {
+		swal(
+			'Error', //titulo
+			'Debes diligenciar todos los campos',
+			'error'
+		);
+	} else {
+		var datos_formulario = {
+			tipo_documento: $('#selectbasicTipoDocumento').val(),
+			numero_documento: $('#textinputDocumento').val(),
+			nombres: $('#textinputNombres').val(),
+			apellidos: $('#textinputApellidos').val(),
+			genero: $('input[name="radiosSexo"]:checked').val(),
+			cuenta_CHEC: $('#textinputCuentaCHEC').val(),
+			telefono: $('#textinputTelefonoAsis').val(),
+			movil: $('#textinputMovilAsis').val(),
+			direccion: $('#textinputDireccionAsis').val(),
+			correo_electronico: $('#textinputCorreoAsis').val(),
+			rol: $('#textinputRolAsis').val(),
+			fecha_asistencia: $('#FechainputNacimientoAsis').val(),
+			manejo_datos: $('input[name="radiosManejoDatos"]:checked').val(),
+			sesiones: $('input[name="radiosSesionesForma"]:checked').val()
+		};
+
+		arrayAsistentes.push(datos_formulario);
+
+		var table = $('#ejecucion_coordinadora_asistencia');
+		table.dataTable().fnClearTable();
+		table.dataTable().fnAddData(arrayAsistentes);
+
+		swal({
+			position: 'top-right',
+			type: 'success',
+			title: 'Información guardada',
+			showConfirmButton: false,
+			timer: 1500
+		})
+
+
+		$.modal.close();
+		$('#selectbasicTipoDocumento').val("1");
+		$('#textinputDocumento').val("");
+		$('#textinputNombres').val("");
+		$('#textinputApellidos').val("");
+		$('#textinputCuentaCHEC').val("");
+		$('#textinputTelefonoAsis').val("");
+		$('#textinputMovilAsis').val("");
+		$('#textinputDireccionAsis').val("");
+		$('#textinputCorreoAsis').val("");
+		$('#textinputRolAsis').val("");
+		$('#FechainputNacimientoAsis').val("");
+
+
+	}
+
+}
