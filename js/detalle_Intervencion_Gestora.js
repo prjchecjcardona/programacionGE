@@ -43,7 +43,7 @@ function traerNombre(){
 				  'Debes iniciar sesion!',
 				  'error'
 				);
-				window.location.href = "welcome_Coordinadora.html";
+				window.location.href = "welcome_Gestora.html";
 			}
 		}
           ,"json");

@@ -371,7 +371,7 @@ function guardarIntervencion() {
 						'Guardado Correctamente',
 						'success'
 					).then(function () {
-						window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + data.idIntervencion;
+						window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + data.idIntervencion;
 					});
 				}
 			}, "json");
@@ -399,7 +399,7 @@ function validarInformacion() {
 
 $("#buttonCancelar").click(function () {
 
-	window.location.href = "home_Gestora.html";
+	window.location.href = "home_Gestora.html?id_zona="+idZona;
 
 });
 
