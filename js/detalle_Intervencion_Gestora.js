@@ -205,10 +205,6 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 	});
 
 
-
-
-
-
 $("#btnNuevaPlaneacion").click(function () {
 
 	// window.location.href = "planeacion_Coordinadora.html?idIntervencion="+idIntervencion; 
@@ -216,3 +212,4 @@ $("#btnNuevaPlaneacion").click(function () {
 	window.location.href = "planeacion_Coordinadora.html?idIntervencion=" + idIntervencion + "&comportamientos=" + comportamientos + "&competencia=" + competencia + "&idComportamientos=" + idComportamientos + "&idCompetencia=" + idCompetencia + "&idEntidad=" + idEntidad;
 
 });
+
