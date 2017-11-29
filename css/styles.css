@@ -205,7 +205,7 @@ li.nav-item {
 }
 
 nav.navbar {
-    background-color: rgb(156, 193, 43);
+    background-color: #9cc12b;
 }
 
 span.h5 {
@@ -229,6 +229,28 @@ button.navbar-toggler:hover {
     background-color: #e8e8e8;
 }
 
+.link-1 {
+    transition: 0.3s ease-in;
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    border-top: 2px solid #9cc12b;
+    ;
+    border-bottom: 2px solid #9cc12b;
+    ;
+    /*     padding: 10px 0;
+    margin: 0 20px; */
+}
+
+.link-1:hover {
+    border-top: 3px solid #ffffff;
+    border-bottom: 3px solid #ffffff;
+    padding: 0px 0;
+}
+
+.posicionCol8{
+    margin-top: -5px;
+}
 
 div.container {
     margin-top: 4em;
@@ -377,6 +399,7 @@ div.card-actions {
     width: 100%;
     padding: 1em;
     padding-right: 0;
+    margin-top: -10px;
 }
 
 .boton-dashboard.btn-verde {
@@ -506,7 +529,7 @@ nav.fixed-top {
     padding-left: 80px;
 }
 
-#posicion_titulo_Herramientas{
+#posicion_titulo_Herramientas {
     margin-left: 46px;
 }
 
@@ -545,12 +568,9 @@ nav.fixed-top {
     border-color: rgb(145, 179, 37);
 }
 
-
-#informes_CHEC:hover{
+#informes_CHEC:hover {
     background-color: rgb(145, 179, 37);
     border-color: rgb(145, 179, 37);
-
-
 }
 
 .btn-primary:focus {
@@ -671,19 +691,20 @@ img.imagen_checum {
     width: 16%;
 }
 
-#planeacion2{
+#planeacion2 {
     margin-top: 15px;
 }
 
-#planeacion3{
+#planeacion3 {
     margin-top: 15px;
 }
 
-li.paginate_button.page-item a{
+li.paginate_button.page-item a {
     z-index: 0 !important;
 }
 
-.card-body .btn-group, .card-body .btn-group .multiselect{
+.card-body .btn-group,
+.card-body .btn-group .multiselect {
     width: 100%;
 }
 

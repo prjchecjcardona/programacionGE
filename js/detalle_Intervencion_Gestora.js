@@ -205,10 +205,6 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 	});
 
 
-
-
-
-
 $("#btnNuevaPlaneacion").click(function () {
 
 	// window.location.href = "planeacion_Coordinadora.html?idIntervencion="+idIntervencion; 
