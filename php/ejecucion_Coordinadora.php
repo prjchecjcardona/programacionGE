@@ -44,7 +44,7 @@ function cargarCompetencia()
     echo json_encode($data);
 }
 
-function cargarDatosPlaneacion($idPlaneacion, $isEjecucion){
+function cargarDatosPlaneacion($idPlaneacion){
 	include "conexion.php";
 	$data = array('error'=>0,'mensaje'=>'','html'=>array());
 	$sql = "
@@ -95,10 +95,6 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecucion){
 				print_r($conexion->errorInfo());
 				$data['mensaje']="No se realizo la consulta";
 				$data['error']=1;
-			}
-
-			if($isEjecucion){
-				
 			}
 			
 		  echo json_encode($data);
