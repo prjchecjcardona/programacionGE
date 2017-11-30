@@ -385,13 +385,7 @@ function validarInformacion() {
 			valido = false;
 		}
 	});
-	//input 
-	// $("input[id^=textinput]").each(function(e){  ("input[id^=textinput][id!=id_requerido]").each(fuanction(e){
-	$("input[id^=textinput]").each(function (e) {
-		if ($(this).val() == "" && $(this).is(":visible")) { //alert("input"+$( this ).attr('id'));
-			valido = false;
-		}
-	});
+	
 
 	return valido;
 }
@@ -453,7 +447,7 @@ function guardarNuevoBarrio() {
 	let longitud = $('#textinputBarrioLon').val();
 	let comuna = $('#selectbasicComuna').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
-	if (nombreBarrio != "" && latitud != "" && longitud != "") {
+	if (nombreBarrio != "") {
 		$.post(url, {
 				accion: 'guardarNuevoBarrio',
 				barrio: nombreBarrio,
@@ -494,7 +488,7 @@ function guardarNuevaVereda() {
 	let longitud = $('#textinputVeredaLon').val();
 	let municipio = $('#selectbasicMunicipio').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
-	if (nombreVereda != "" && latitud != "" && longitud != "") {
+	if (nombreVereda != "") {
 		$.post(url, {
 				accion: 'guardarNuevaVereda',
 				municipio: municipio,
@@ -541,7 +535,7 @@ function guardarNuevaEntidad() {
 	let nodo = $('#text_inputNodoEntidad').val();
 	let ubicacion = $('#UrbanoRural input:radio:checked').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
-	if (nombreEntidad != "" && direccion != "" && telefono != "" && tipo_entidad != "" && nodo != "") {
+	if (nombreEntidad != "" && direccion != "" && tipo_entidad != "" ) {
 		$.post(url, {
 				accion: 'guardarNuevaEntidad',
 				nombreEntidad: nombreEntidad,
