@@ -33,6 +33,9 @@ $(document).ready(function () {
 		$("#ex1").modal({
 			fadeDuration: 500,
 			fadeDelay: 0.50,
+			escapeClose: false,
+			clickClose: false,
+			showClose: false
 		});
 		$('.imagenGestora').removeClass('imagenGestora')
 	})
@@ -43,6 +46,9 @@ $(document).ready(function () {
 		$("#ex2").modal({
 			fadeDuration: 500,
 			fadeDelay: 0.50,
+			escapeClose: false,
+			clickClose: false,
+			showClose: false
 		});
 		$('.imagenGestora').removeClass('imagenGestora')
 
@@ -52,6 +58,9 @@ $(document).ready(function () {
 		$("#ex3").modal({
 			fadeDuration: 500,
 			fadeDelay: 0.50,
+			escapeClose: false,
+			clickClose: false,
+			showClose: false
 		});
 		$('.imagenGestora').removeClass('imagenGestora')
 	})
@@ -60,6 +69,9 @@ $(document).ready(function () {
 		$("#ex4").modal({
 			fadeDuration: 500,
 			fadeDelay: 0.50,
+			escapeClose: false,
+			clickClose: false,
+			showClose: false
 		});
 		$('.imagenGestora').removeClass('imagenGestora')
 	})

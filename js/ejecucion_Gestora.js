@@ -113,9 +113,9 @@ function bindEvents() {
 		$("#ex5").modal({
 			fadeDuration: 500,
 			fadeDelay: 0.50,
-			escapeClose: true,
-			clickClose: true,
-			showClose: true
+			escapeClose: false,
+			clickClose: false,
+			showClose: false
 		});
 	})
 
@@ -302,58 +302,71 @@ function guardarAsistencia() {
 	if ($('#selectbasicTipoDocumento').val() == "" || $('#textinputDocumento').val() == "" ||
 		$('#textinputNombres').val() == "" || $('#textinputApellidos').val() == "" ||
 		$('#textinputRolAsis').val() == "" ||
-		$('#FechainputNacimientoAsis').val() == "")
-		{
-			swal(
-				'Error', //titulo
-				'Debes diligenciar todos los campos',
-				'error'
-			);
-		} else {
-			var datos_formulario = {
-				tipo_documento: $('#selectbasicTipoDocumento').val(),
-				numero_documento: $('#textinputDocumento').val(),
-				nombres: $('#textinputNombres').val(),
-				apellidos: $('#textinputApellidos').val(),
-				genero: $('input[name="radiosSexo"]:checked').val(),
-				cuenta_CHEC: $('#textinputCuentaCHEC').val(),
-				telefono: $('#textinputTelefonoAsis').val(),
-				movil: $('#textinputMovilAsis').val(),
-				direccion: $('#textinputDireccionAsis').val(),
-				correo_electronico: $('#textinputCorreoAsis').val(),
-				rol: $('#textinputRolAsis').val(),
-				fecha_asistencia: $('#FechainputNacimientoAsis').val(),
-				manejo_datos: $('input[name="radiosManejoDatos"]:checked').val(),
-				sesiones: $('input[name="radiosSesionesForma"]:checked').val()
-			};
+		$('#FechainputNacimientoAsis').val() == "") {
+		swal(
+			'Error', //titulo
+			'Debes diligenciar todos los campos',
+			'error'
+		);
+	} else {
+		var datos_formulario = {
+			tipo_documento: $('#selectbasicTipoDocumento').val(),
+			numero_documento: $('#textinputDocumento').val(),
+			nombres: $('#textinputNombres').val(),
+			apellidos: $('#textinputApellidos').val(),
+			genero: $('input[name="radiosSexo"]:checked').val(),
+			cuenta_CHEC: $('#textinputCuentaCHEC').val(),
+			telefono: $('#textinputTelefonoAsis').val(),
+			movil: $('#textinputMovilAsis').val(),
+			direccion: $('#textinputDireccionAsis').val(),
+			correo_electronico: $('#textinputCorreoAsis').val(),
+			rol: $('#textinputRolAsis').val(),
+			fecha_asistencia: $('#FechainputNacimientoAsis').val(),
+			manejo_datos: $('input[name="radiosManejoDatos"]:checked').val(),
+			sesiones: $('input[name="radiosSesionesForma"]:checked').val()
+		};
 
-			arrayAsistentes.push(datos_formulario);
+		arrayAsistentes.push(datos_formulario);
 
-			var table = $('#ejecucion_coordinadora_asistencia');
-			table.dataTable().fnClearTable();
-			table.dataTable().fnAddData(arrayAsistentes);
+		var table = $('#ejecucion_coordinadora_asistencia');
+		table.dataTable().fnClearTable();
+		table.dataTable().fnAddData(arrayAsistentes);
 
-			swal({
-				position: 'top-right',
-				type: 'success',
-				title: 'Información guardada',
-				showConfirmButton: false,
-				timer: 1500
-			  })
-			
-			$.modal.close();
-			$('#selectbasicTipoDocumento').val("1");
-			$('#textinputDocumento').val("");
-			$('#textinputNombres').val("");
-			$('#textinputApellidos').val("");
-			$('#textinputCuentaCHEC').val("");
-			$('#textinputTelefonoAsis').val("");
-			$('#textinputMovilAsis').val("");
-			$('#textinputDireccionAsis').val("");
-			$('#textinputCorreoAsis').val("");
-			$('#textinputRolAsis').val("");
-			$('#FechainputNacimientoAsis').val("");
+		swal({
+			position: 'top-right',
+			type: 'success',
+			title: 'Información guardada',
+			showConfirmButton: false,
+			timer: 1500
+		})
 
-		}
+		$.modal.close();
+		$('#selectbasicTipoDocumento').val("1");
+		$('#textinputDocumento').val("");
+		$('#textinputNombres').val("");
+		$('#textinputApellidos').val("");
+		$('#textinputCuentaCHEC').val("");
+		$('#textinputTelefonoAsis').val("");
+		$('#textinputMovilAsis').val("");
+		$('#textinputDireccionAsis').val("");
+		$('#textinputCorreoAsis').val("");
+		$('#textinputRolAsis').val("");
+		$('#FechainputNacimientoAsis').val("");
 
 	}
+
+}
+
+/*Dependiendo si seleccionan si cuenta con algun contacto
+ * parametro: 
+ */
+$('#radiosContacto input:radio').click(function () {
+
+	if ($(this).val() === '1') {
+		$("#preguntaContacto").show();
+	} else {
+		$("#preguntaContacto").hide();
+	}
+
+
+});

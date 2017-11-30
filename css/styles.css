@@ -248,7 +248,7 @@ button.navbar-toggler:hover {
     padding: 0px 0;
 }
 
-.posicionCol8{
+.posicionCol8 {
     margin-top: -5px;
 }
 
@@ -706,6 +706,74 @@ li.paginate_button.page-item a {
 .card-body .btn-group,
 .card-body .btn-group .multiselect {
     width: 100%;
+}
+
+
+/* Para la aparicion de elementos */
+
+.animated {
+    background-repeat: no-repeat;
+    -webkit-animation-duration: 4s;
+    animation-duration: 4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+
+
+/* para la aparicion de paginas */
+
+.animated2 {
+    background-repeat: no-repeat;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeIn2 {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn2 {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fadeIn2 {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
 }
 
 @media (max-width:600px) {
