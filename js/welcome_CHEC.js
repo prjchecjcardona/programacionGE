@@ -1,5 +1,7 @@
-$(document).ready(function(){   
-	
-		
-	 
-});
+$( function() {
+    
+    $( '#cd-dropdown' ).dropdown( {
+      gutter : 5
+    } );
+
+  });
