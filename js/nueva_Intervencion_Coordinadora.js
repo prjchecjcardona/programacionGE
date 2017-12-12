@@ -401,7 +401,7 @@ function initFileInput() {
 	$('#upload_files_input').fileinput({
 		language: 'es',
 		'theme': 'fa',
-		uploadUrl: '#',
+		uploadUrl: 'php/uploadImgNuevaInterv.php',
 		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
 			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
 		]
