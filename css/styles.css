@@ -687,6 +687,14 @@ img.umanizales {
     width: 14%
 }
 
+
+.tamanoTablero{
+    width: 100%
+}
+.colorLetraTablero{
+    color: black
+}
+
 img.imagen_checum {
     width: 16%;
 }
