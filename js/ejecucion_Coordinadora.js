@@ -106,7 +106,7 @@ function bindEvents() {
 	 */
 	$('#detalleNivelCumplimiento input:radio').click(function () {
 
-		
+
 	});
 
 
@@ -114,9 +114,9 @@ function bindEvents() {
 		$("#ex5").modal({
 			fadeDuration: 500,
 			fadeDelay: 0.50,
-			escapeClose: true,
-			clickClose: true,
-			showClose: true
+			escapeClose: false,
+			clickClose: false,
+			showClose: false
 		});
 	})
 
@@ -172,59 +172,59 @@ function traerNombre() {
 
 function cargarDatosPlaneacion() {
 	//TODO PENDIENTE LLAMADO A BACKEND DE YA EJECUTADAS
-	if(isEjecutada==1){
+	if (isEjecutada == 1) {
 		$.post("php/ejecucion_Coordinadora.php", {
-			accion: 'cargarDatosPlaneacion',
-			idPlaneacion: idPlaneacion,
-			isEjecutada: true
-		},
-		function (data) {
-			if (data.error == 0) {
+				accion: 'cargarDatosPlaneacion',
+				idPlaneacion: idPlaneacion,
+				isEjecutada: true
+			},
+			function (data) {
+				if (data.error == 0) {
 
-				$('#fechaInd').html(data.html.fecha);
-				$('#lugarInd').html(data.html.lugar);
-				$('#municipioInd').html(data.html.municipio);
-				$('#comportamientoInd').html(data.html.comportamiento);
-				$('#competenciaInd').html(data.html.competencia);
-				$('#estrategiaInd').html(data.html.estrategia);
-				$('#tacticoInd').html(data.html.tactico);
-				$('#indicadoresInd').html(data.html.indicador);
-			} else {
-				swal(
-					'', //titulo
-					'Debes iniciar sesion!',
-					'error'
-				);
+					$('#fechaInd').html(data.html.fecha);
+					$('#lugarInd').html(data.html.lugar);
+					$('#municipioInd').html(data.html.municipio);
+					$('#comportamientoInd').html(data.html.comportamiento);
+					$('#competenciaInd').html(data.html.competencia);
+					$('#estrategiaInd').html(data.html.estrategia);
+					$('#tacticoInd').html(data.html.tactico);
+					$('#indicadoresInd').html(data.html.indicador);
+				} else {
+					swal(
+						'', //titulo
+						'Debes iniciar sesion!',
+						'error'
+					);
 
-			}
-		}, "json");
+				}
+			}, "json");
 
-	}else{
+	} else {
 		$.post("php/ejecucion_Coordinadora.php", {
-			accion: 'cargarDatosPlaneacion',
-			idPlaneacion: idPlaneacion,
-			isEjecutada: false
-		},
-		function (data) {
-			if (data.error == 0) {
+				accion: 'cargarDatosPlaneacion',
+				idPlaneacion: idPlaneacion,
+				isEjecutada: false
+			},
+			function (data) {
+				if (data.error == 0) {
 
-				$('#fechaInd').html(data.html.fecha);
-				$('#lugarInd').html(data.html.lugar);
-				$('#municipioInd').html(data.html.municipio);
-				$('#comportamientoInd').html(data.html.comportamiento);
-				$('#competenciaInd').html(data.html.competencia);
-				$('#estrategiaInd').html(data.html.estrategia);
-				$('#tacticoInd').html(data.html.tactico);
-				$('#indicadoresInd').html(data.html.indicador);
-			} else {
-				swal(
-					'', //titulo
-					'Debes iniciar sesion!',
-					'error'
-				);
+					$('#fechaInd').html(data.html.fecha);
+					$('#lugarInd').html(data.html.lugar);
+					$('#municipioInd').html(data.html.municipio);
+					$('#comportamientoInd').html(data.html.comportamiento);
+					$('#competenciaInd').html(data.html.competencia);
+					$('#estrategiaInd').html(data.html.estrategia);
+					$('#tacticoInd').html(data.html.tactico);
+					$('#indicadoresInd').html(data.html.indicador);
+				} else {
+					swal(
+						'', //titulo
+						'Debes iniciar sesion!',
+						'error'
+					);
 
-			}
-		}, "json");
+				}
+			}, "json");
 	}
 
 
@@ -384,3 +384,17 @@ function guardarAsistencia() {
 	}
 
 }
+
+/*Dependiendo si seleccionan si cuenta con algun contacto
+ * parametro: 
+ */
+$('#radiosContacto input:radio').click(function () {
+
+	if ($(this).val() === '1') {
+		$("#preguntaContacto").show();
+	} else {
+		$("#preguntaContacto").hide();
+	}
+
+
+});

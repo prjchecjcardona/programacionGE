@@ -42,13 +42,14 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" id="nav_home" href="home_Coordinadora.html" data-toggle="tooltip" data-placement="bottom" title="Menú Principal">
+          <a class="nav-link link-1" id="nav_home" href="home_Coordinadora.html" data-toggle="tooltip" data-placement="bottom" title="Menú Principal">
             <i class="fa fa-home fa-2x"></i>
           </a>
-         <a class="nav-link" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Banco de Herramientas">
+          <a class="nav-link link-1" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank" data-toggle="tooltip"
+            data-placement="bottom" title="Banco de Herramientas">
             <i class="fa fa-cube fa-2x"></i>
           </a>
-          <a class="nav-link" id="nav_out" href="http://drive.google.com" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión">
+          <a class="nav-link link-1" id="nav_out" href="http://drive.google.com" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión">
             <i class="fa fa-sign-out fa-2x"></i>
           </a>
         </li>
@@ -199,23 +200,30 @@
 
         <div id="nCumplimiento">
           <span>Nivel de Cumplimiento</span>
-          <div class="form-check">
-            <label class="form-check-label grisTexto">
-              <input class="form-check-input" type="radio" name="nCumplimiento" id="exampleRadios1" value="1" checked> Completamente
-            </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label grisTexto">
-              <input class="form-check-input" type="radio" name="nCumplimiento" id="exampleRadios1" value="2" checked> Parcialmente
-            </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label grisTexto">
-              <input class="form-check-input" type="radio" name="nCumplimiento" id="exampleRadios1" value="3" checked> No se cumplió
-            </label>
-          </div>
+          <p>
+            <div class="form-check">
+              <label class="form-check-label grisTexto">
+                <input class="form-check-input" type="radio" name="nCumplimiento" id="exampleRadios1" value="1" checked> Completamente
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label grisTexto">
+                <input class="form-check-input" type="radio" name="nCumplimiento" id="exampleRadios1" value="2" checked> Parcialmente
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label grisTexto">
+                <input class="form-check-input" type="radio" name="nCumplimiento" id="exampleRadios1" value="3" checked> No se cumplió
+              </label>
+            </div>
         </div>
         <hr>
+
+        <span>Observaciones</span>
+        <p></p>
+          <textarea class="form-control" id="textareaObservaciones" name="textareaObservaciones"></textarea>
+        <hr>
+
 
         <!-- Nivel de Competencia -->
         <div class="row filaTitulos">
@@ -489,7 +497,6 @@
         </div>
 
 
-
         <!-- Button (Double) -->
         <div class="form-group">
           <label class="col-md-12 control-label" for="button1id"></label>
@@ -508,6 +515,58 @@
     </div>
 
     <hr>
+
+    <!-- Multiple Radios (inline) Algun Contacto? -->
+    <div class="form-group">
+      <label class="col-md-12 control-label" for="radiosAlgunContacto">¿Cuentas con algún contacto?</label>
+      <div class="col-md-12" id="radiosContacto">
+        <label class="radio-inline" for="radiosAlgunContacto-0" id="radioContacto">
+          <input type="radio" name="radiosAlgunContacto" id="SiContacto" value="1"> Si
+        </label>
+        <label class="radio-inline" for="radiosAlgunContacto-1">
+          <input type="radio" name="radiosAlgunContacto" id="NoContacto" value="0" checked="checked"> No
+        </label>
+      </div>
+    </div>
+
+    <!--container PreguntaContacto-->
+    <div class="" id="preguntaContacto" style="displaynone">
+      <!-- Nombre Contacto -->
+      <span>Añadir Contacto</span>
+      <hr>
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textinputNombreContacto">Nombre</label>
+        <div class="col-md-4">
+          <input id="textinputNombreContacto" name="textinputNombreContacto" type="text" placeholder="" class="form-control input-md">
+        </div>
+      </div>
+
+      <!-- Cargo Contacto -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textinputCargoContacto">Cargo</label>
+        <div class="col-md-4">
+          <input id="textinputCargoContacto" name="textinputCargoContacto" type="text" placeholder="" class="form-control input-md">
+        </div>
+      </div>
+
+      <!-- Telefono Contacto -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textinputTelefonoContacto">Teléfono/Móvil</label>
+        <div class="col-md-4">
+          <input id="textinputTelefonoContacto" name="textinputTelefonoContacto" type="text" placeholder="" class="form-control input-md">
+        </div>
+      </div>
+
+      <!-- Correo Contacto -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textinputCorreoContacto">Correo</label>
+        <div class="col-md-4">
+          <input id="textinputCorreoContacto" name="textinputCorreoContacto" type="text" placeholder="" class="form-control input-md">
+        </div>
+      </div>
+    </div>
+    <hr>
+
     <div class="form-group">
       <h4>Adjuntar Evidencias Fotográficas</h4>
       <!-- <form enctype="multipart/form-data">
@@ -515,7 +574,7 @@
       </form>
       <hr> -->
       <a href="https://drive.google.com/drive/folders/1t8qjoFjkbOcSgZvvbyRbo8I4r1jrp1cQ" target="_blank" class="btn btn-warning">Subir archivo</a>
-      
+
     </div>
 
     <div class="form-group">
@@ -524,7 +583,7 @@
         <input id="file_asistencias" name="file_asistencias[]" type="file" multiple>
       </form>
       <hr> -->
-      <a href="https://drive.google.com/drive/folders/1t8qjoFjkbOcSgZvvbyRbo8I4r1jrp1cQ" target="_blank" class="btn btn-warning">Subir archivo</a>      
+      <a href="https://drive.google.com/drive/folders/1t8qjoFjkbOcSgZvvbyRbo8I4r1jrp1cQ" target="_blank" class="btn btn-warning">Subir archivo</a>
     </div>
 
     <!-- Button (Double) -->
@@ -537,7 +596,7 @@
     </div>
   </div>
 
-  
+
 
   <footer id="footer">
     <h6 class="text">Gestión Educativa</h6>
