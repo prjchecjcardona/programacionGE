@@ -687,12 +687,26 @@ img.umanizales {
     width: 14%
 }
 
-
-.tamanoTablero{
+.tamanoTablero {
     width: 100%
 }
-.colorLetraTablero{
+
+.colorLetraTablero {
     color: black
+}
+
+.contenedorForm {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 1em;
+    padding-left: 15em;
+    padding-right: 15em;
+    width: 100%
+}
+
+.contenedorForm iframe {
+    margin-bottom: 2em;
 }
 
 img.imagen_checum {
