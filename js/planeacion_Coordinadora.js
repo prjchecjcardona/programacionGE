@@ -267,6 +267,8 @@ $('#buttonGuardarPlaneacion').click(function () {
 
 					idPlaneacion = data.idPlaneacion;
 					//gestion de redes
+					console.log(idEtapa);
+					
 					if (idEtapa == 2) {
 						guardarGestionRedes();
 
@@ -359,11 +361,7 @@ function guardarGestionRedes() {
 	$.post("php/planeacion_Coordinadora.php", {
 			accion: 'guardarGestionRedes',
 			idPlaneacion: idPlaneacion,
-			idTema: $("#selectbasicTemare").val(),
-			indicadores: list,
-			tactico: $("#selectbasicTacticore").val()
-
-
+			indicadores: list
 		},
 		function (data) {
 			if (data.error != 1) {

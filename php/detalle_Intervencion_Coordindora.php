@@ -84,9 +84,9 @@ function cargarPlaneacionesPorIntrevencion($idIntrevencion){
 			JOIN tactico_por_planeacion tactxpl ON pl.id_planeacion = tactxpl.planeacion_id_planeacion
 			JOIN tactico tact ON tact.id_tactico = tactxpl.tactico_id_tactico
 			JOIN estrategias est ON tact.id_estrategia = est.id_estrategia
-			JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
-			JOIN subtemas sub ON subxpl.subtemas_id_subtema = sub.id_subtema
-			JOIN temas tem ON sub.id_temas = tem.id_temas
+			LEFT OUTER JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
+			LEFT OUTER JOIN subtemas sub ON subxpl.subtemas_id_subtema = sub.id_subtema
+			LEFT OUTER JOIN temas tem ON sub.id_temas = tem.id_temas
 			JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
 			WHERE plxint.intervenciones_id_intervenciones = ".$idIntrevencion."
 			GROUP BY pl.id_planeacion, etapaproceso, nombreestrategia, nombretactico, temas, fecha"; //consulta

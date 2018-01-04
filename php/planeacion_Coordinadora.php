@@ -30,7 +30,7 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="guardarGestionRedes")
 	{
-		guardarGestionRedes($_POST['idPlaneacion'],$_POST['idTema'],$_POST['indicadores'],$_POST['tactico']);
+		guardarGestionRedes($_POST['idPlaneacion'],$_POST['indicadores']);
 	}
 	if($_POST["accion"]=="guardarGestionEducativa")
 	{
@@ -282,92 +282,49 @@ function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$corr
 }
 
 
-function guardarGestionRedes($idPlaneacion,$idTema,$indicadores,$tactico){
+function guardarGestionRedes($idPlaneacion,$indicadores){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
 	
 	if( $con )
  	{
- 		
-		//consultar subtemas por temas
-		$sql = "SELECT id_subtema, subtemas
-				FROM subtemas
-				WHERE id_temas = '".$idTema."'
-			";
-
-			$array=array();
+		$array=array();
+	
+		//se recorren los indicadores
+		foreach($indicadores as $idIndicador){
+			//Insertar la indicadores_por_planeacion
+			$sql = "INSERT INTO indicadores_por_planeacion (indicadores_id_indicador, planeacion_id_planeacion)
+			VALUES ('".$idIndicador."', '".$idPlaneacion."'); 
+				";
+				
 			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
-					for ($i=0;$i<count($filas);$i++){
-						// $array[] = $fila;  
-
-						//Insertar la subtemas_por_planeacion
-						$sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtema, planeacion_id_planeacion)
-							VALUES (nextval('sec_subtemas_por_planeacion'),'".$filas[$i]['id_subtema']."', '".$idPlaneacion."'); 
-							  ";
-							  
-								if ($rs = $con->query($sql)) {
-									
-									 
-								}
-								else
-								{
-									print_r($con->errorInfo());
-									$data['mensaje']="No se realizo el insert subtemas_por_planeacion";
-									$data['error']=1;
-								}
-						
-					}
-				}
+				
 			}
 			else
 			{
-				print_r($conexion->errorInfo());
-				$data['mensaje']="No se realizo la consulta";
+				print_r($con->errorInfo());
+				$data['mensaje']="No se realizo el insert indicadores_por_planeacion";
 				$data['error']=1;
 			}
-		
-		
-		
-				//se recorren los indicadores
-				foreach($indicadores as $idIndicador)
-						{
-							//Insertar la indicadores_por_planeacion
-							$sql = "INSERT INTO indicadores_por_planeacion (indicadores_id_indicador, planeacion_id_planeacion)
-							VALUES ('".$idIndicador."', '".$idPlaneacion."'); 
-							  ";
-							  
-								if ($rs = $con->query($sql)) {
-									
-									 
-								}
-								else
-								{
-									print_r($con->errorInfo());
-									$data['mensaje']="No se realizo el insert indicadores_por_planeacion";
-									$data['error']=1;
-								}
-	
-						}
-						
-					//Insertar la tactico_por_planeacion
-				$sql = "INSERT INTO tactico_por_planeacion (tactico_id_tactico, planeacion_id_planeacion)
-					VALUES ('".$tactico."', '".$idPlaneacion."'); 
-					  ";
-					  
-					if ($rs = $con->query($sql)) {
-							
-							 
-						}
-						else
-						{
-							print_r($con->errorInfo());
-							$data['mensaje']="No se realizo el insert tactico_por_planeacion";
-							$data['error']=1;
-						}
+		}
+
+		//Insertar la tactico_por_planeacion
+    	$sql = "INSERT INTO tactico_por_planeacion (tactico_id_tactico, planeacion_id_planeacion)
+			VALUES (25, '".$idPlaneacion."'); 
+			  ";
+			  
+			if ($rs = $con->query($sql)) {
 					
+					 
+				}
+				else
+				{
+					print_r($con->errorInfo());
+					$data['mensaje']="No se realizo el insert tactico_por_planeacion";
+					$data['error']=1;
+				}
+						
 
 			
 		  echo json_encode($data);
