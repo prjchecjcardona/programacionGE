@@ -149,7 +149,7 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			{ title: "Tema" },
 			{ title: "Fecha" },
 			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' },
-			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="evaluacion_Coordinadora.html" id="evaluacion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' }
+			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Coordinadora.html" id="evaluacion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' }
 			],
             "paging":   true,
             "info":     false,
