@@ -518,7 +518,7 @@ function consultarIndicadoresGE(){
  	{
  		//Datos de la indicador
     	$sql = "SELECT id_indicador,nombreindicador 
-				from indicadores_ge
+				from indicadores_ge WHERE tipo=1
 			  ";
 			  
 			if ($rs = $con->query($sql)) {
@@ -539,7 +539,30 @@ function consultarIndicadoresGE(){
 			else
 			{
 				print_r($con->errorInfo());
-				$data['mensaje']="No se realizo la consulta de temas";
+				$data['mensaje']="No se realizo la consulta de indicadores";
+				$data['error']=1;
+			}
+
+			$sql = "SELECT id_indicador,nombreindicador 
+				from indicadores_ge WHERE tipo=0
+			  ";
+			if ($rs = $con->query($sql)) {
+				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+					
+					$data['indGr']="";
+						for ($i=0;$i<count($filas);$i++){
+							$data['indGr'].= '<div class="checkbox">
+					<label class="grisTexto"><input type="checkbox" value="'.$filas[$i]['id_indicador'].'"> '.$filas[$i]['nombreindicador'].'</label>
+				  </div>';
+					 }
+					 
+					
+				}
+			}
+			else
+			{
+				print_r($con->errorInfo());
+				$data['mensaje']="No se realizo la consulta de indicadores";
 				$data['error']=1;
 			}
 			

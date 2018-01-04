@@ -448,14 +448,13 @@ function consultarTemas() {
  * parametro: 
  */
 function consultarIndicadoresGE() {
-
 	$.post("php/planeacion_Coordinadora.php", {
 			accion: 'consultarIndicadoresGE'
-
 		},
 		function (data) {
 			if (data.error != 1) {
-				$('#indicadoresge,#indicadoresre').html(data.html);
+				$('#indicadoresge').html(data.html);
+				$('#indicadoresre').html(data.indGr);
 			}
 
 		}, "json");
