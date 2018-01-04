@@ -392,6 +392,36 @@ div.card-actions {
     cursor: pointer;
 }
 
+.boton-evaluacion {
+    width: 12em;
+    height: 7em;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    color: #fff;
+    margin-left: 2em;
+    cursor: pointer;
+}
+
+#activacion_encuesta {
+    margin-top: 1em;
+}
+
+.boton-encuesta {
+    width: 12em;
+    height: 5em;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    color: #fff;
+    margin-left: 2em;
+    cursor: pointer;
+}
+
 .botones-container {
     display: flex;
     justify-content: space-between;
@@ -415,6 +445,38 @@ div.card-actions {
 }
 
 .boton-dashboard.btn-gris:hover {
+    background-color: rgb(190, 190, 190);
+}
+
+.boton-evaluacion.btn-verde {
+    background-color: rgb(156, 193, 43);
+}
+
+.boton-evaluacion.btn-gris {
+    background-color: rgb(139, 141, 142);
+}
+
+.boton-evaluacion.btn-verde:hover {
+    background-color: rgb(189, 221, 83);
+}
+
+.boton-evaluacion.btn-gris:hover {
+    background-color: rgb(190, 190, 190);
+}
+
+.boton-encuesta.btn-verde {
+    background-color: rgb(156, 193, 43);
+}
+
+.boton-encuesta.btn-gris {
+    background-color: rgb(139, 141, 142);
+}
+
+.boton-encuesta.btn-verde:hover {
+    background-color: rgb(189, 221, 83);
+}
+
+.boton-encuesta.btn-gris:hover {
     background-color: rgb(190, 190, 190);
 }
 
@@ -635,6 +697,10 @@ button.btn.btn-success {
     cursor: pointer;
 }
 
+button.btn.btn-danger {
+    cursor: pointer;
+}
+
 buttonbtn.btn-sm.btn-success {
     cursor: pointer;
 }
@@ -697,12 +763,21 @@ img.umanizales {
 
 .contenedorForm {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    flex-direction: column;
     flex-wrap: wrap;
     padding-top: 1em;
     padding-left: 15em;
     padding-right: 15em;
     width: 100%
+}
+
+.main_contenedor_evaluacion {
+    min-height: 448px
+}
+
+#tipo_encuestas {
+    display: none;
 }
 
 .contenedorForm iframe {
