@@ -529,8 +529,8 @@ function guardarIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores
 			
 		
 		//Insertar la intervencion
-    	$sql = "INSERT INTO intervenciones (id_intervenciones, entidades_id_entidad, operadores_id_operadores, personas_por_zona_id_personas_por_zonacol, tipo_intervencion_id_tipo_intervencion)
-			VALUES (nextval('sec_intervenciones'),'".$idEntidad."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."'); 
+    	$sql = "INSERT INTO intervenciones (id_intervenciones, entidades_id_entidad, operadores_id_operadores, personas_por_zona_id_personas_por_zonacol, tipo_intervencion_id_tipo_intervencion, fecha)
+			VALUES (nextval('sec_intervenciones'),'".$idEntidad."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE); 
 			  ";
 			  
 			if ($rs = $con->query($sql)) {

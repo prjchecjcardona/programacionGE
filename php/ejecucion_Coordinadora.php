@@ -48,7 +48,7 @@ function cargarDatosPlaneacion($idPlaneacion){
 	include "conexion.php";
 	$data = array('error'=>0,'mensaje'=>'','html'=>array());
 	$sql = "
-	SELECT pl.fecha, pl.lugarEncuentro, mun.municipio, compor.comportamientos, compe.competencia, est.nombreestrategia, tac.nombretactico, ind.nombreindicador
+	SELECT pl.fecha, pl.lugarEncuentro, mun.municipio, comport.comportamientos, compet.competencia, est.nombreestrategia, tac.nombretactico, ind.nombreindicador
 	FROM planeacion pl
 	JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
 	JOIN intervenciones int ON int.id_intervenciones = plxint.intervenciones_id_intervenciones
@@ -57,19 +57,24 @@ function cargarDatosPlaneacion($idPlaneacion){
 	LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
 	LEFT OUTER JOIN veredas ver ON ver.id_veredas = ent.veredas_id_veredas
 	JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
-	JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
-	JOIN subtemas sub ON sub.id_subtema = subxpl.subtemas_id_subtema
-	JOIN temas tem ON tem.id_temas = sub.id_temas
-	JOIN competencias_por_comportamiento compexcompor ON compexcompor.competencias_id_competencia = tem.compe_por_compo_compe_id_compe AND compexcompor.comportamientos_id_comportamientos = tem.compe_por_compo_compo_id_compo
-	JOIN comportamientos compor ON compor.id_comportamientos = compexcompor.comportamientos_id_comportamientos
-	JOIN competencias compe ON compe.id_competencia = compexcompor.competencias_id_competencia
+	LEFT OUTER JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
+	LEFT OUTER JOIN subtemas sub ON sub.id_subtema = subxpl.subtemas_id_subtema
+	LEFT OUTER JOIN temas tem ON tem.id_temas = sub.id_temas
+	LEFT OUTER JOIN competencias_por_comportamiento compexcompor ON compexcompor.competencias_id_competencia = tem.compe_por_compo_compe_id_compe AND compexcompor.comportamientos_id_comportamientos = tem.compe_por_compo_compo_id_compo
+	LEFT OUTER JOIN comportamientos compor ON compor.id_comportamientos = compexcompor.comportamientos_id_comportamientos
+	LEFT OUTER JOIN competencias compe ON compe.id_competencia = compexcompor.competencias_id_competencia
 	JOIN tactico_por_planeacion tacxpl ON tacxpl.planeacion_id_planeacion = pl.id_planeacion
 	JOIN tactico tac ON tac. id_tactico = tacxpl.tactico_id_tactico
 	JOIN estrategias est ON est.id_estrategia = tac.id_estrategia
 	JOIN indicadores_por_planeacion indxpl ON indxpl.planeacion_id_planeacion = pl.id_planeacion
 	JOIN indicadores_ge ind ON ind.id_indicador = indxpl.indicadores_id_indicador
+	LEFT OUTER JOIN indicadores_chec_por_intervenciones icpi ON icpi.intervenciones_id_intervenciones = int.id_intervenciones
+	LEFT OUTER JOIN indicadores_chec ic ON ic.id_indicadores_chec = icpi.indicadores_chec_id_indicadores_chec
+	LEFT OUTER JOIN comportamientos comport ON comport.id_comportamientos = ic.comportamientos_id_comportamientos
+	LEFT OUTER JOIN competencias_por_comportamiento compexcomporT ON compexcomporT.comportamientos_id_comportamientos = comport.id_comportamientos
+	LEFT OUTER JOIN competencias compet ON compet.id_competencia = compexcomport.competencias_id_competencia
 	WHERE pl.id_planeacion = $idPlaneacion
-	GROUP BY pl.fecha, lugarencuentro, municipio, comportamientos, competencia, nombreestrategia, nombretactico, nombreindicador
+	GROUP BY pl.fecha, lugarencuentro, municipio, comport.comportamientos, compet.competencia, nombreestrategia, nombretactico, nombreindicador
 	";
 	
 			$array="";

@@ -49,13 +49,13 @@ function interevensionesPorZona(){
 									foreach($llamarIntervecion as $datosGestora)
 									{
 											
-											$data['html'].='<button id="intrevension_'.$datosGestora['id_intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_intervenciones'].')">'.$datosGestora['municipio'].'-'.$datosGestora['comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';
+											$data['html'].='<button id="intervencion_'.$datosGestora['id_intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_intervenciones'].')">'.$datosGestora['municipio'].'-'.$datosGestora['comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';
 									}
 								}
 								
 							$data['html'].='</div>';
 							$data['html'].='<div class="card-actions">';
-							  $data['html'].='<a href="listado_Intervenciones_Coordinadora.html" class="card-link">Ver más</a>';
+							  $data['html'].='<a href="listado_Intervenciones_Coordinadora.html?zona='.$datos['id_zona'].'" class="card-link">Ver más</a>';
 							  $data['html'].='<a id="'.$datos['id_zona'].'" class="card-link float-right" onclick="agregarIntervencion('.$datos['id_zona'].');"><i class="fa fa-plus-circle fa-2x"></i></a>';
 							$data['html'].='</div>';
 						  $data['html'].='</div>';
@@ -95,18 +95,13 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 			LEFT OUTER JOIN veredas ver ON ver.id_veredas = ent.veredas_id_veredas
 			JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
 			WHERE pxz.zonas_id_zona = ".$idZona."
-			GROUP BY id_intervenciones, municipio, comportamientos";
+			GROUP BY id_intervenciones, municipio, comportamientos, inter.fecha ORDER BY inter.fecha DESC LIMIT 3";
 		 // where ppz.Zonas_Id_Zona = '1'";
 	$resultados_zona = $con->query($intervencion_por_zona);
 	if(!$resultados_zona)
 	{
 	  die("Execute query error, because: ". print_r($con->errorInfo(),true) );
 	}
-	//success case
-	else{
-		 //continue flow
-	}
-
 
 	$contador=0;
 	while($row = $resultados_zona->fetch(PDO::FETCH_ASSOC)) {
@@ -117,34 +112,7 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 	     $intervencion[$contador]["municipio"] =  $row["municipio"];
 	     $contador++;
 	  }
-	 // $cantidad_intervenciones_por_zona = $contador;
-	// $intervenciones_por_comportamiento = "SELECT c.comportamientos
-	// from indicadores_chec_por_intervenciones ici inner join intervenciones i on
-	// ici.intervenciones_id_intervenciones = i.id_intervenciones inner join indicadores_chec ic on ici.indicadores_chec_id_indicadores_chec = ic.id_indicadores_chec
-	// inner join comportamientos c on ic.comportamientos_id_comportamientos = c.id_comportamientos
-	// where i.personas_por_zona_id_personas_por_zonacol = '".$idPersonasPorZona."'
-	// group by c.comportamientos";
 
-		// //where i.Personas_por_Zona_id_Personas_por_Zonacol = '".$idPersonasPorZona."'
-	  	// $resultados_comportamiento = $con->query($intervenciones_por_comportamiento);
-	  	// $contador=0;
-	  // // Parse returned data, and displays them
-	  // while($row = $resultados_comportamiento->fetch(PDO::FETCH_ASSOC)) {
-	  		// $intervencion[$contador]["Comportamientos"] =  $row["comportamientos"];
-	     // $contador++;
-
-	  // }
-		// if($cantidad_intervenciones_por_zona == $contador)//si la cantidad de las intervenciones son las mismas, se guarda la cantidad en una variable para el ciclo
-		// {
-			// $cantidad_intervenciones = $cantidad_intervenciones_por_zona;
-		// }
-	  //PENDIENTE HACER UN FOR
-		// for($cont=0;$cont<$cantidad_intervenciones;$cont++)
-		// {
-	  		// $fecha_intervencion = str_replace("-", "/", $intervencion[$cont]["Fecha_Intervencion"]);
-
-	  		// echo "<a id=".$intervencion[$cont]["id_Intervenciones"]." href='#' class='list-group-item active'>".$intervencion[$cont]["Municipio"]." - ".$fecha_intervencion." - ".$intervencion[$cont]["Tipo_Intervencion"]." - ".$intervencion[$cont]["Comportamientos"]."</a>";
-	  	// }
 	
 	return $intervencion;
 }
