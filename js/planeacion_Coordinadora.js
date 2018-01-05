@@ -209,6 +209,8 @@ $('#radiosContacto input:radio').click(function () {
 
 $('#buttonGuardarPlaneacion').click(function () {
 
+	$("#buttonGuardarPlaneacion").attr('disabled', 'true')
+
 	if (!validarInformacion()) {
 		swal(
 			'', //titulo
@@ -268,7 +270,7 @@ $('#buttonGuardarPlaneacion').click(function () {
 					idPlaneacion = data.idPlaneacion;
 					//gestion de redes
 					console.log(idEtapa);
-					
+
 					if (idEtapa == 2) {
 						guardarGestionRedes();
 
@@ -287,22 +289,29 @@ $('#buttonGuardarPlaneacion').click(function () {
 });
 
 function validarInformacion() {
+	console.log(idEtapa);
+	
 	var valido = true;
 	//select
 	$("select[id^=selectbasic]").each(function (e) {
-		if ($(this).val() == 0 && $(this).is(":visible")) { //alert("sel"+$( this ).attr('id'));
+		if ($(this).val() == 0 && $(this).is(":visible")) {
+			$("#buttonGuardarPlaneacion").removeAttr('disabled')
+			//alert("sel"+$( this ).attr('id'));
 			valido = false;
 		}
 	});
 	//input 
 	// $("input[id^=textinput]").each(function(e){  ("input[id^=textinput][id!=id_requerido]").each(fuanction(e){
 	$("input[id^=textinput]").each(function (e) {
-		if ($(this).val() == "" && $(this).is(":visible")) { //alert("input"+$( this ).attr('id'));
+		if ($(this).val() == "" && $(this).is(":visible")) {
+			$("#buttonGuardarPlaneacion").removeAttr('disabled')
+			//alert("input"+$( this ).attr('id'));
 			valido = false;
 		}
 	});
 
 	if (idEtapa == "") {
+		$("#buttonGuardarPlaneacion").removeAttr('disabled')
 		valido = false;
 	}
 	return valido;
@@ -317,7 +326,8 @@ $("#buttonCancelar").click(function () {
 function seleccionarEtapa(idEtapadb) {
 
 	idEtapa = idEtapadb;
-
+	console.log(idEtapa);
+	
 	consultarTemas();
 	consultarIndicadoresGE();
 

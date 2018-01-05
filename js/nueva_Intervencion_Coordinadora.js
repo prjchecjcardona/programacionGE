@@ -338,6 +338,8 @@ $("#selectbasicComportamiento").change(function () {
 
 function guardarIntervencion() {
 
+	$("#buttonEnviar").attr('disabled', 'true')
+
 	if (!validarInformacion()) {
 		swal(
 			'', //titulo
@@ -421,6 +423,9 @@ function initFileInput() {
 }
 
 function guardarNuevaComuna() {
+
+	$("#buttonEnviarComuna").attr('disabled', 'true')
+
 	let nombreComuna = $('#textinputComuna').val();
 	let municipio = $('#selectbasicMunicipio').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
@@ -454,6 +459,9 @@ function guardarNuevaComuna() {
 
 
 function guardarNuevoBarrio() {
+
+	$("#buttonEnviarBarrio").attr('disabled', 'true')
+
 	let nombreBarrio = $('#textinputBarrio').val();
 	let latitud = $('#textinputBarrioLan').val();
 	let longitud = $('#textinputBarrioLon').val();
@@ -495,6 +503,9 @@ function guardarNuevoBarrio() {
 }
 
 function guardarNuevaVereda() {
+
+	$("#buttonEnviarVereda").attr('disabled', 'true')
+
 	let nombreVereda = $('#textinputVereda').val();
 	let latitud = $('#textinputVeredaLan').val();
 	let longitud = $('#textinputVeredaLon').val();
@@ -538,6 +549,9 @@ function guardarNuevaVereda() {
 
 //TODO implementar guardar nueva entidad
 function guardarNuevaEntidad() {
+
+	$("#buttonEnviarEntidad").attr('disabled', 'true')
+
 	let nombreEntidad = $('#textinputEntidadNueva').val();
 	let direccion = $('#textinputDireccionEntidad').val();
 	let telefono = $('#textinputTelefonoEntidad').val();

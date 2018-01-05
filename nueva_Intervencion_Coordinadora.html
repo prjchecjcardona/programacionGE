@@ -133,7 +133,7 @@
                 <label class="col-md-12 control-label" for="button1id"></label>
                 <div class="col-md-8">
                   <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
-                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaVereda();">Guardar</button>
+                  <button id="buttonEnviarVereda" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaVereda();">Guardar</button>
                 </div>
               </div>
 
@@ -171,7 +171,7 @@
                 <label class="col-md-12 control-label" for="button1id"></label>
                 <div class="col-md-8">
                   <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
-                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaComuna();">Guardar</button>
+                  <button id="buttonEnviarComuna" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaComuna();">Guardar</button>
                 </div>
               </div>
 
@@ -201,12 +201,12 @@
               <!-- Campo Latitud Barrio -->
               <div class="col-md-12 espaciado">
                 <label class="col-md-12control-label" for="textinputBarrioLan">Latitud</label>
-                <input id="textinputBarrioLan" name="textinputBarrioLan" type="text" placeholder="" class="form-control input-md">
+                <input id="textinputBarrioLan" value="0" name="textinputBarrioLan" type="text" placeholder="" class="form-control input-md">
               </div>
               <!-- Campo Longitud Barrio -->
               <div class="col-md-12 espaciado">
                 <label class="col-md-12control-label" for="textinputBarrioLon">Longitud</label>
-                <input id="textinputBarrioLon" name="textinputBarrioLon" type="text" placeholder="" class="form-control input-md">
+                <input id="textinputBarrioLon" value="0" name="textinputBarrioLon" type="text" placeholder="" class="form-control input-md">
               </div>
 
               <!-- Button (Double) -->
@@ -214,7 +214,7 @@
                 <label class="col-md-12 control-label" for="button1id"></label>
                 <div class="col-md-8">
                   <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
-                  <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevoBarrio();">Guardar</button>
+                  <button id="buttonEnviarBarrio" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevoBarrio();">Guardar</button>
                 </div>
               </div>
             </div>
@@ -270,7 +270,7 @@
               <label class="col-md-12 control-label" for="button1id"></label>
               <div class="col-md-8">
                 <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
-                <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaEntidad();">Guardar</button>
+                <button id="buttonEnviarEntidad" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaEntidad();">Guardar</button>
                 <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
               </div>
             </div>
@@ -315,9 +315,6 @@
           </div>
 
 
-
-
-          <!-- Button (Double) -->
 
 
         </fieldset>

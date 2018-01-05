@@ -31,8 +31,7 @@ $(function () {
             }
 
         },
-
-        
+ 
 
         searching: true,
         paging: true,

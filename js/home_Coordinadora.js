@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
 	traerNombre();
-	interevensionesPorZona();
+	intervencionesPorZona();
 
 	$("#btnInformes").click(function () {
 
@@ -108,10 +108,10 @@ function traerNombre() {
 
 }
 
-function interevensionesPorZona() {
+function intervencionesPorZona() {
 
 	$.post("php/home_Coordinadora.php", {
-			accion: 'interevensionesPorZona'
+			accion: 'intervencionesPorZona'
 
 		},
 		function (data) {

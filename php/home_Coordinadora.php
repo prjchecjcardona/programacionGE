@@ -7,14 +7,14 @@ include('conexion.php');
 if(isset($_POST["accion"]))
 {
 
-	if($_POST["accion"]=="interevensionesPorZona")
+	if($_POST["accion"]=="intervencionesPorZona")
 	{
-		interevensionesPorZona();
+		intervencionesPorZona();
 	}
 
 }
 
-function interevensionesPorZona(){
+function intervencionesPorZona(){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
@@ -43,10 +43,10 @@ function interevensionesPorZona(){
 							$data['html'].='<div class="list-group">';
 
 							// traerIntervencionGestora();
-							$llamarIntervecion=traerIntervencionGestora($datos['id_zona'],$datos['id_personas_por_zonacol']);
+							$llamarIntervencion=traerIntervencionGestora($datos['id_zona'],$datos['id_personas_por_zonacol']);
 								
-								if (count($llamarIntervecion >0)){
-									foreach($llamarIntervecion as $datosGestora)
+								if (count($llamarIntervencion >0)){
+									foreach($llamarIntervencion as $datosGestora)
 									{
 											
 											$data['html'].='<button id="intrevension_'.$datosGestora['id_intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_intervenciones'].')">'.$datosGestora['municipio'].'-'.$datosGestora['comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';

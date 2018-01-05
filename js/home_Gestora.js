@@ -16,7 +16,7 @@ $(function () {
 		}
 	}
     
-    interevensionesPorZona($.get('id_zona'));
+    intervencionesPorZona($.get('id_zona'));
    
     $('#calendar').fullCalendar({
         events: {
@@ -59,10 +59,10 @@ function traerNombre() {
 
 }
 
-function interevensionesPorZona(id_zona) {
+function intervencionesPorZona(id_zona) {
         console.log(id_zona);
         $.post("php/home_Gestora.php", {
-                accion: 'interevensionesPorZona',
+                accion: 'intervencionesPorZona',
                 id_zona: id_zona
             },
             function (data) {
