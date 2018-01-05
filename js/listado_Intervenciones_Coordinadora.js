@@ -41,4 +41,50 @@ $(function () {
         autofill: true
         
     });
+
+    listIntervenciones(getZona());
+
+    
+    
 });
+
+function getZona(){
+    /*Extrae los parametros que llegan en la url
+	 * parametro: 
+	 */
+	$.get = function (key) {
+		key = key.replace(/[\[]/, '\\[');
+		key = key.replace(/[\]]/, '\\]');
+		var pattern = "[\\?&]" + key + "=([^&#]*)";
+		var regex = new RegExp(pattern);
+		var url = unescape(window.location.href);
+		var results = regex.exec(url);
+		if (results === null) {
+			return null;
+		} else {
+			return results[1];
+		}
+    }
+    
+    return $.get('zona');
+}
+
+function listIntervenciones(idZona){
+    $.post("php/listado_Intervenciones.php", {
+        idZona: idZona
+    },
+    function (data) {
+        if (data.error != 1) {
+
+            
+        }else{
+            swal(
+                'Error', //titulo
+                'Ocurrió un error, inténtalo de nuevo.',
+                'error'
+            );
+        }
+
+
+    }, "json");
+}
