@@ -1,7 +1,26 @@
 $(function () {
 
     var table = $('#detalle_intervencion_CHEC').DataTable({
-
+        ajax: {
+            url: "php/listado_Intervenciones.php?idZona="+getZona(),
+            dataSrc: "content"
+        },
+        columnDefs: [ {
+            "targets": -1,
+            "data": "id_intervenciones",
+            "render": function ( data, type, row, meta ) {
+              return '<a href="detalle_Intervencion_Coordinadora.html?idIntervencion='+data+'"><i class="fa fa-arrow-right"></i></a>';
+            },
+            "className": "dt-body-center"
+        } ],
+        columns: [
+            { data: 'municipio' },
+            { data: 'nombreentidad' },
+            { data: 'comportamientos' },
+            { data: 'tipo_intervencion' },
+            { data: 'fecha' },
+            null
+        ],
         "language": {
             select: {
                 rows: "%d Filas seleccionadas"
@@ -43,7 +62,7 @@ $(function () {
         
     });
 
-    listIntervenciones(getZona());
+  
 
     
     
