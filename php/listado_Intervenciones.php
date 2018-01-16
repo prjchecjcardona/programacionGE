@@ -1,14 +1,11 @@
 <?php
-ini_set('memory_limit', '4024M');
-set_time_limit(0);
+
 include('conexion.php');
 $data = array('error'=>0,'mensaje'=>'','content'=>'');
 
-if( isset($_POST['idZona']) )
+if( isset($_GET['idZona']) )
  {
-	$idZona = $_POST['idZona'];
-	$intervencion=array();
-
+	$idZona = $_GET['idZona'];
 	$sql= "SELECT inter.id_intervenciones, mun.municipio, ent.nombreentidad, compor.comportamientos, tipoint.tipo_intervencion, inter.fecha
 			FROM intervenciones inter
 			JOIN personas_por_zona pxz ON pxz.id_personas_por_zonacol = inter.personas_por_zona_id_personas_por_zonacol
@@ -21,32 +18,32 @@ if( isset($_POST['idZona']) )
 			LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
 			LEFT OUTER JOIN veredas ver ON ver.id_veredas = ent.veredas_id_veredas
 			JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
-			WHERE pxz.zonas_id_zona = ".$idZona."
+			WHERE pxz.zonas_id_zona = $idZona
 			GROUP BY id_intervenciones, municipio, ent.nombreentidad, comportamientos, tipoint.tipo_intervencion, inter.fecha ORDER BY inter.fecha DESC";
-	$resultados_zona = $con->query($intervencion_por_zona);
+	$resultados_zona = $con->query($sql);
 	if(!$resultados_zona)
 	{
 		$data['error']=1;
 	  	$data['mensaje']="Execute query error, because: ". print_r($con->errorInfo(),true);
 	}
-	
 	$contador=0;
+	$data['content'] = array();
 	while($row = $resultados_zona->fetch(PDO::FETCH_ASSOC)) {
-	
-		$data['content'][$contador]["id_intervenciones"] =  $row["id_intervenciones"];
-		$data['content'][$contador]["municipio"] =  $row["municipio"];
-		$data['content'][$contador]["nombreentidad"] =  $row["nombreentidad"];
-		$data['content'][$contador]["comportamientos"] =  $row["comportamientos"];
-		$data['content'][$contador]["tipo_intervencion"] =  $row["tipo_intervencion"];
-		$data['content'][$contador]["fecha"] =  $row["fecha"];
+		array_push($data['content'], array(
+			'id_intervenciones' => $row['id_intervenciones'],
+			'municipio' => $row['municipio'],
+			'nombreentidad' => $row['nombreentidad'],
+			'comportamientos' => $row['comportamientos'],
+			'tipo_intervencion' => $row['tipo_intervencion'],
+			'fecha' => $row['fecha']
+		));
 		$contador++;
 	}
 
-
-	}else{
-		$data['error']=1;
-		$data['mensaje']="Error en el envío de datos";
-	}
+}else{
+	$data['error']=1;
+	$data['mensaje']="Error en el envío de datos";
+}
 	
 	
 	echo json_encode($data);
