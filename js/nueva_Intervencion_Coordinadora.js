@@ -377,6 +377,10 @@ function guardarIntervencion() {
 					);
 
 				} else {
+
+
+
+
 					swal(
 						'', //titulo
 						'Guardado Correctamente',
@@ -416,7 +420,8 @@ function initFileInput() {
 		uploadUrl: 'php/uploadImgNuevaInterv.php',
 		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
 			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
-		]
+		],
+		maxFileCount: 1
 	});
 }
 

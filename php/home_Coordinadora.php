@@ -44,8 +44,7 @@ function interevensionesPorZona(){
 
 							// traerIntervencionGestora();
 							$llamarIntervecion=traerIntervencionGestora($datos['id_zona'],$datos['id_personas_por_zonacol']);
-								
-								if (count($llamarIntervecion >0)){
+								if (count($llamarIntervecion)>0){
 									foreach($llamarIntervecion as $datosGestora)
 									{
 											
@@ -113,7 +112,7 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 	     $contador++;
 	  }
 
-	
+
 	return $intervencion;
 }
 
