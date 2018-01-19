@@ -88,10 +88,9 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 			JOIN indicadores_chec_por_intervenciones indxinter ON indxinter.intervenciones_id_intervenciones = inter.id_intervenciones
 			JOIN indicadores_chec ind ON ind.id_indicadores_chec = indxinter.indicadores_chec_id_indicadores_chec
 			JOIN comportamientos compor ON compor.id_comportamientos = ind.comportamientos_id_comportamientos
-			JOIN entidades ent ON ent.id_entidad = inter.entidades_id_entidad
-			LEFT OUTER JOIN barrios bar ON bar.id_barrio = ent.id_barrio
+			LEFT OUTER JOIN barrios bar ON bar.id_barrio = inter.id_barrio
 			LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
-			LEFT OUTER JOIN veredas ver ON ver.id_veredas = ent.veredas_id_veredas
+			LEFT OUTER JOIN veredas ver ON ver.id_veredas = inter.id_vereda
 			JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
 			WHERE pxz.zonas_id_zona = ".$idZona."
 			GROUP BY id_intervenciones, municipio, comportamientos, inter.fecha ORDER BY inter.fecha DESC LIMIT 3";

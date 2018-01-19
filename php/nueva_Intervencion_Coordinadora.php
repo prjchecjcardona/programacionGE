@@ -32,10 +32,6 @@ if(isset($_POST["accion"]))
 	{
 		cargarTipoIntervencion();
 	}
-	if($_POST["accion"]=="cargarTipoEntidad")
-	{
-		cargarTipoEntidad();
-	}
 	if($_POST["accion"]=="cargarComportamientos")
 	{
 		cargarComportamientos();
@@ -46,7 +42,7 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="guardarIntervencion")
 	{
-		guardarIntervencion($_POST["idZona"],$_POST["idEntidad"],$_POST["idTipoIntervencion"],$_POST["indicadores"]);
+		guardarIntervencion($_POST["idZona"],$_POST["barrio"],$_POST["vereda"],$_POST["ubicacion"],$_POST["idTipoIntervencion"],$_POST["indicadores"]);
 	}
 	if($_POST["accion"]=="guardarNuevaComuna")
 	{
@@ -60,10 +56,7 @@ if(isset($_POST["accion"]))
 	{
 		guardarNuevaVereda($_POST["municipio"], $_POST["vereda"], $_POST["latitud"], $_POST["longitud"]);
 	}
-	if($_POST["accion"]=="guardarNuevaEntidad")
-	{
-		guardarNuevaEntidad($_POST["nombreEntidad"], $_POST["direccion"], $_POST["telefono"], $_POST["tipo_entidad"], $_POST["barrio"], $_POST["vereda"], $_POST["nodo"], $_POST["ubicacion"]);
-	}
+
 	
 	
 	
@@ -248,123 +241,11 @@ function cargarBarriosPorComuna($idComuna){
 	}
 }
 
-function cargarEntidadesPorBarrio($idBarrio){
 
-	include('conexion.php');
-	$data = array('error'=>0,'mensaje'=>'','html'=>'', 'tipo'=>'');
-	
-	if( $con )
- 	{
- 		//Datos de la zona que se selecciono 
-    	$sql = "SELECT e.id_entidad,e.nombreentidad,t.id_tipoentidad,t.tipoentidad
-				FROM entidades as e,tipoentidad as t
-				WHERE id_barrio= '".$idBarrio."'
-				AND e.id_tipoentidad = t.id_tipoentidad
-			  ";
-			  
-			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
-					$data['html']= '<option value="0">Selecciona tu opción</option>';
-					
-						for ($i=0;$i<count($filas);$i++){
-							$data['html'].= '<option value="'.$filas[$i]['id_entidad'].'">'.$filas[$i]['nombreentidad'].'</option>';
-					 }
-					
-					$data['tipo']= '<option value="0">Selecciona tu opción</option>';
-					
-						for ($i=0;$i<count($filas);$i++){
-							$data['tipo'].= '<option value="'.$filas[$i]['id_tipoentidad'].'">'.$filas[$i]['tipoentidad'].'</option>';
-					 }
-					
-				}
-			}
-			else
-			{
-				print_r($con->errorInfo());
-				$data['mensaje']="No se realizo la consulta de entidades";
-				$data['error']=1;
-			}
-			
-			
-		  echo json_encode($data);
-	}
-}
 
-function cargarTipoEntidad(){
-	include('conexion.php');
-	$data = array('error'=>0,'mensaje'=>'','html'=>'', 'tipo'=>'');
-	
-	if( $con )
- 	{
- 		//Datos de la zona que se selecciono 
-    	$sql = "SELECT * FROM public.tipoentidad";
-			  
-			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {					
-					$data['html']= '<option value="0">Selecciona tu opción</option>';
-					
-						for ($i=0;$i<count($filas);$i++){
-							$data['html'].= '<option value="'.$filas[$i]['id_tipoentidad'].'">'.$filas[$i]['tipoentidad'].'</option>';
-					 }
-				}
-			}
-			else
-			{
-				print_r($con->errorInfo());
-				$data['mensaje']="No se realizo la consulta de tipo entidades";
-				$data['error']=1;
-			}
-			
-			
-		  echo json_encode($data);
-	}
-}
 
-function cargarEntidadPorVereda($idVereda){
 
-	include('conexion.php');
-	$data = array('error'=>0,'mensaje'=>'','html'=>'', 'tipo'=>'');
-	
-	if( $con )
- 	{
- 		//Datos de la zona que se selecciono 
-    	$sql = "SELECT e.id_entidad,e.nombreentidad,t.id_tipoentidad,t.tipoentidad
-				FROM entidades as e,tipoentidad as t
-				WHERE veredas_id_veredas= '".$idVereda."'
-				AND e.id_tipoentidad = t.id_tipoentidad
-			  ";
-			  
-			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
-					$data['html']= '<option value="0">Selecciona tu opción</option>';
-					
-						for ($i=0;$i<count($filas);$i++){
-							$data['html'].= '<option value="'.$filas[$i]['id_entidad'].'">'.$filas[$i]['nombreentidad'].'</option>';
-					 }
-					 
-					 $data['tipo']= '<option value="0">Selecciona tu opción</option>';
-					
-						for ($i=0;$i<count($filas);$i++){
-							$data['tipo'].= '<option value="'.$filas[$i]['id_tipoentidad'].'">'.$filas[$i]['tipoentidad'].'</option>';
-					 }
-					
-					
-					
-				}
-			}
-			else
-			{
-				print_r($con->errorInfo());
-				$data['mensaje']="No se realizo la consulta de entidades por vereda";
-				$data['error']=1;
-			}
-			
-			
-		  echo json_encode($data);
-	}
-}
+
 
 function cargarTipoIntervencion(){
 
@@ -478,7 +359,7 @@ function cargarIndicadoresChec($idIndicador){
 	}
 }
 
-function guardarIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores){
+function guardarIntervencion($idZona,$barrio, $vereda, $ubicacion, $idTipoIntervencion,$indicadores){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
@@ -524,14 +405,17 @@ function guardarIntervencion($idZona,$idEntidad,$idTipoIntervencion,$indicadores
 				$data['mensaje']="No se realizo la consulta de operadores";
 				$data['error']=1;
 			}
-			
-			
-			
-		
-		//Insertar la intervencion
-    	$sql = "INSERT INTO intervenciones (id_intervenciones, entidades_id_entidad, operadores_id_operadores, personas_por_zona_id_personas_por_zonacol, tipo_intervencion_id_tipo_intervencion, fecha)
-			VALUES (nextval('sec_intervenciones'),'".$idEntidad."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE); 
+
+			//Determinar si la intervencion es de un barrio o una vereda
+			if($ubicacion == 1){ //rural
+				$sql = "INSERT INTO intervenciones (id_intervenciones, id_vereda, operadores_id_operadores, personas_por_zona_id_personas_por_zonacol, tipo_intervencion_id_tipo_intervencion, fecha)
+				VALUES (nextval('sec_intervenciones'),'".$vereda."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE); 
 			  ";
+			}else{  //urbano
+				$sql = "INSERT INTO intervenciones (id_intervenciones, id_barrio, operadores_id_operadores, personas_por_zona_id_personas_por_zonacol, tipo_intervencion_id_tipo_intervencion, fecha)
+			VALUES (nextval('sec_intervenciones'),'".$barrio."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE); 
+			  ";
+			}
 			  
 			if ($rs = $con->query($sql)) {
 				
@@ -657,39 +541,3 @@ function guardarNuevaVereda($municipio, $vereda, $latitud, $longitud){
 	echo json_encode($data);
 }
 
-function guardarNuevaEntidad($nombreEntidad, $direccion, $telefono, $tipo_entidad, $barrio, $vereda, $nodo, $ubicacion){
-	include('conexion.php');
-	if ($ubicacion==1) { //Entidad rural
-		$sql="INSERT INTO public.entidades(
-			id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
-			VALUES ((SELECT MAX(id_entidad)+1 FROM entidades),
-					'".$nombreEntidad."',
-					null,
-					".$vereda.",
-					'".$direccion."',
-					'".$telefono."',
-					".$tipo_entidad.",
-					'".$nodo."');";
-	}else{ //Entidad urbana
-		$sql="INSERT INTO public.entidades(
-			id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
-			VALUES ((SELECT MAX(id_entidad)+1 FROM entidades),
-					'".$nombreEntidad."',
-					".$barrio.",
-					null,
-					'".$direccion."',
-					'".$telefono."',
-					".$tipo_entidad.",
-					'".$nodo."');";
-	}
-	if ($rs = $con->query($sql)) {
-		$data['mensaje']="Guardado Exitosamente";
-	}
-	else
-	{
-		print_r($con->errorInfo());
-		$data['mensaje']="No se pudo insertar la entidad";
-		$data['error']=1;
-	}
-	echo json_encode($data);
-}

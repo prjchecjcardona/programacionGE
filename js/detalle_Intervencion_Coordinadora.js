@@ -85,10 +85,8 @@ function cargarDetalleIntervencion(idIntervencion) {
 				competencia = data.html.competencia;
 				idComportamientos = data.html.id_comportamientos
 				idCompetencia = data.html.id_competencia
-				idEntidad = data.html.id_entidad
 
 				$('#lblMunicipio').html("<b>Municipio</b>: " + data.html.municipio);
-				$('#lblEntidad').html("<b>Entidad</b>: " + data.html.nombreentidad);
 				$('#lblCoportamiento').html("<b>Comportamiento</b>: " + data.html.comportamientos);
 				$('#lblCompetencia').html("<b>Competencia</b>: " + data.html.competencia);
 				$('#lblTipoIntervencion').html("<b>Tipo Intervención</b>: " + data.html.tipo_intervencion);

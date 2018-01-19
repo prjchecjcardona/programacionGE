@@ -114,15 +114,6 @@
               </div>
             </div>
 
-            <!-- Fichero -->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="textinputFichero">Fichero</label>
-              <div class="col-md-12">
-                <input id="textinputFichero" name="textinputFichero" type="text" placeholder="" class="form-control input-md">
-
-              </div>
-            </div>
-
             <!-- Observaciones -->
             <div class="form-group">
               <label class="col-md-4 control-label" for="textareaObservaciones">Observaciones</label>
@@ -204,7 +195,7 @@
                   <div id="spanCompetencia" class="label label-success"></div>
                 </h5>
               </div>
-            
+
               <legend>Indicadores</legend>
               <div id="indicadoresre">
               </div>
@@ -222,6 +213,77 @@
                   <div id="spanCompetenciag" class="label label-success"></div>
                 </h5>
               </div>
+
+              <!-- INSERCION CAMPO ENTIDAD, CON DIALOGO PARA AÑADIR NUEVA ENTIDAD -->
+
+              <!-- Seleccion Entidades -->
+              <label class="col-md-12 control-label" for="selectbasicEntidad">Entidad</label>
+              <div class="form-inline">
+                <div class="col-sm-12">
+                  <select id="selectbasicEntidad" name="selectbasicEntidad" class="form-control">
+                  </select>
+                  <button id="btnNuevaEntidad" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
+                </div>
+              </div>
+
+              <!-- Modal Creacion Entidad -->
+              <div id="ex1" class="modal">
+                <!-- Campo Nombre Entidad -->
+
+                <head>
+                  <h2>Añadir nueva Entidad</h2>
+                </head>
+                <hr>
+                <div class="col-md-12">
+                  <label class="col-md-12control-label" for="textinputEntidad">* Nombre de la Entidad</label>
+                  <input id="textinputEntidadNueva" name="textinputEntidadN" type="text" placeholder="" class="form-control input-md">
+                </div>
+                <!-- Campo Direccion Entidad -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputDireccionEntidad">* Dirección</label>
+                  <input id="textinputDireccionEntidad" name="textinputDireccionEntidad" type="text" placeholder="" class="form-control input-md">
+                </div>
+                <!-- Campo Telefono Entidad -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputTelefonoEntidad">Teléfono</label>
+                  <input id="textinputTelefonoEntidad" name="textinputTelefonoEntidad" type="text" placeholder="" class="form-control input-md">
+                </div>
+                <!-- Seleccion Tipo de Entidad -->
+                <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">* Tipo de Entidad</label>
+                <div class="col-md-12">
+                  <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
+                  </select>
+                </div>
+                <!-- Campo Nodo Entidad -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputNodoEntidad">Nodo</label>
+                  <input id="text_inputNodoEntidad" name="textinputNodoEntidad" type="text" placeholder="" class="form-control input-md">
+                </div>
+
+                <!-- Button (Double) -->
+                <div class="form-group">
+                  <label class="col-md-12 control-label" for="button1id"></label>
+                  <div class="col-md-8">
+                    <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
+                    <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaEntidad();">Guardar</button>
+                    <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+                  </div>
+                </div>
+
+              </div>
+              <!-- Fin creacion entidad -->
+
+              <!-- FIN - INSERCION CAMPO ENTIDAD, CON DIALOGO PARA AÑADIR NUEVA ENTIDAD -->
+
+              <!-- Fichero -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="textinputFichero">Fichero</label>
+                <div class="col-md-12">
+                  <input id="textinputFichero" name="textinputFichero" type="text" placeholder="" class="form-control input-md">
+
+                </div>
+              </div>
+
               <!-- Estrategia -->
               <div class="form-group">
                 <label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>

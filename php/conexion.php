@@ -6,10 +6,10 @@ $uid = "postgres";
 $pwd = "gestion";
 $host = "localhost"; */
 
-$database = "d5sdlsrh69tg7v";
-$uid = "yockkrzyjzfmtt";
-$pwd = "e0c3afe7326d5f8f377730b3e166e2456363333d972a44a2b7ad424c5be019ac";
-$host = "ec2-54-235-119-0.compute-1.amazonaws.com";
+$database = "d4asqdqb9dlt9p";
+$uid = "ntafkvnrqqlbig";
+$pwd = "300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1";
+$host = "ec2-54-197-233-123.compute-1.amazonaws.com";
 
 //establecer la conexión
 $con = new PDO( "pgsql:host=$host; port=5432;dbname = $database", $uid, $pwd);

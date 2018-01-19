@@ -5,6 +5,9 @@ $(document).ready(function () {
 	nuevaentidad = "";
 
 
+	$("#buttonCancelar").click(function () {
+		window.location.href = "home_Coordinadora.html";
+	});
 
 
 	/*Dependiendo si seleccionan si cuenta con algun contacto
@@ -229,14 +232,8 @@ $("#selectbasicComuna").change(function () {
 
 					$('#selectbasicBarrio').html(data.html);
 				}
-
-
 			}
-
-
-
 		}, "json");
-
 });
 
 $("#selectbasicBarrio").change(function () {
@@ -358,12 +355,17 @@ function guardarIntervencion() {
 
 		//fin capturar los indicadores
 
+		let barrio = $('#selectbasicBarrio').val();
+		let vereda = $('#selectbasicVereda').val();
+		let ubicacion = $('#UrbanoRural input:radio:checked').val();
 
 
 		$.post("php/nueva_Intervencion_Coordinadora.php", {
 				accion: 'guardarIntervencion',
 				idZona: idZona,
-				idEntidad: $('#selectbasicEntidad').val(),
+				barrio: barrio,
+				vereda: vereda,
+				ubicacion: ubicacion,
 				idTipoIntervencion: $('#selectbasicTipoInvervencion').val(),
 				indicadores: list
 			},
@@ -406,11 +408,7 @@ function validarInformacion() {
 	return valido;
 }
 
-$("#buttonCancelar").click(function () {
 
-	window.location.href = "home_Coordinadora.html";
-
-});
 
 //Invocacion del archivo File Input para nueva intervencion coordinadora
 function initFileInput() {
@@ -541,57 +539,3 @@ function guardarNuevaVereda() {
 	}
 }
 
-//TODO implementar guardar nueva entidad
-function guardarNuevaEntidad() {
-	let nombreEntidad = $('#textinputEntidadNueva').val();
-	let direccion = $('#textinputDireccionEntidad').val();
-	let telefono = $('#textinputTelefonoEntidad').val();
-	let tipo_entidad = $('#selectbasicTipoEntidad').val();
-	let barrio = $('#selectbasicBarrio').val();
-	let vereda = $('#selectbasicVereda').val();
-	let nodo = $('#text_inputNodoEntidad').val();
-	let ubicacion = $('#UrbanoRural input:radio:checked').val();
-	let url = "php/nueva_Intervencion_Coordinadora.php";
-	if (nombreEntidad != "" && direccion != "" && tipo_entidad != "" ) {
-		$.post(url, {
-				accion: 'guardarNuevaEntidad',
-				nombreEntidad: nombreEntidad,
-				direccion: direccion,
-				telefono: telefono,
-				tipo_entidad: tipo_entidad,
-				barrio: barrio,
-				vereda: vereda,
-				nodo: nodo,
-				ubicacion: ubicacion
-			},
-			function (data) {
-				if (data.error == 1) {
-					swal(
-						'', //titulo
-						' No se guardo la entidad, intententalo nuevamente',
-						'error'
-					);
-				} else {
-					swal(
-						'', //titulo
-						'Guardado Correctamente',
-						'success'
-					).then(function () {
-						$.modal.close();
-						let ubicacion = $('#UrbanoRural input:radio:checked').val();
-						if (ubicacion == 1) {
-							$('#selectbasicVereda').trigger('change');
-						} else {
-							$('#selectbasicBarrio').trigger('change');
-						}
-					});
-				}
-			}, "json");
-	} else {
-		swal(
-			'Error',
-			'Debes diligenciar todos los campos',
-			'error'
-		)
-	}
-}
