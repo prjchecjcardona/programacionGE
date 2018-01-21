@@ -20,9 +20,9 @@ if(isset($_POST["accion"]))
 	{
 		cargarTacticos();
 	}
-	if($_POST["accion"]=="guararPlaneacion")
+	if($_POST["accion"]=="guardarPlaneacion")
 	{
-		guararPlaneacion($_POST['nombreContacto'],$_POST['cargoContacto'],$_POST['telefonoContacto'],$_POST['correoContacto'],$_POST['fecha'],$_POST['lugar'],$_POST['jornada'],$_POST['comunidad'],$_POST['poblacion'],$_POST['observaciones'],$_POST['idIntervencion'],$_POST['idEtapa'],$_POST['idEntidad'],$_POST['contacto']);
+		guardarPlaneacion($_POST['nombreContacto'],$_POST['cargoContacto'],$_POST['telefonoContacto'],$_POST['correoContacto'],$_POST['fecha'],$_POST['lugar'],$_POST['jornada'],$_POST['comunidad'],$_POST['poblacion'],$_POST['observaciones'],$_POST['idIntervencion'],$_POST['idEtapa'],$_POST['idEntidad'],$_POST['contacto']);
 	}
 	if($_POST["accion"]=="cargarEtapas")
 	{
@@ -54,7 +54,7 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="guardarNuevaEntidad")
 	{
-		guardarNuevaEntidad($_POST["nombreEntidad"], $_POST["direccion"], $_POST["telefono"], $_POST["tipo_entidad"], $_POST["barrio"], $_POST["vereda"], $_POST["nodo"], $_POST["ubicacion"]);
+		guardarNuevaEntidad($_POST["idIntervencion"], $_POST["nombreEntidad"], $_POST["direccion"], $_POST["telefono"], $_POST["tipo_entidad"], $_POST["nodo"]);
 	}
 	
 }
@@ -349,7 +349,7 @@ function cargarEntidadesPorBarrio($idBarrio){
 }
 
 
-function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$correoContacto,$fecha,$lugar,$jornada,$comunidad,$poblacion,$observaciones,$idIntervencion,$idEtapa,$idEntidad,$contacto){
+function guardarPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$correoContacto,$fecha,$lugar,$jornada,$comunidad,$poblacion,$observaciones,$idIntervencion,$idEtapa,$idEntidad,$contacto){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
@@ -374,11 +374,18 @@ function guararPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$corr
 								}
 		
 		}
-		
-		//Insertar la planeacion
-    	$sql = "INSERT INTO planeacion (id_planeacion, etapaproceso_id_etapaproceso, fecha, lugarencuentro, id_jornada, comunidadespecial,id_tipopoblacion,observaciones)
-			VALUES (nextval('sec_planeacion'),'".$idEtapa."', '".$fecha."', '".$lugar."', '".$jornada."', '".$comunidad."', '".$poblacion."', '".$observaciones."'); 
-			  ";
+
+		if($idEntidad == ""){
+			//Insertar la planeacion
+			$sql = "INSERT INTO planeacion (id_planeacion, etapaproceso_id_etapaproceso, fecha, lugarencuentro, id_jornada, comunidadespecial,id_tipopoblacion,observaciones)
+				VALUES (nextval('sec_planeacion'),'".$idEtapa."', '".$fecha."', '".$lugar."', '".$jornada."', '".$comunidad."', '".$poblacion."', '".$observaciones."'); 
+				  ";
+		}else{
+			$sql = "INSERT INTO planeacion (id_planeacion, etapaproceso_id_etapaproceso, fecha, lugarencuentro, id_jornada, comunidadespecial,id_tipopoblacion,observaciones, id_entidad)
+				VALUES (nextval('sec_planeacion'),'".$idEtapa."', '".$fecha."', '".$lugar."', '".$jornada."', '".$comunidad."', '".$poblacion."', '".$observaciones."', '".$idEntidad."'); 
+				  ";
+
+		}
 			  
 			if ($rs = $con->query($sql)) {
 				
@@ -681,31 +688,50 @@ function consultarIndicadoresGE(){
 
 }
 
-function guardarNuevaEntidad($nombreEntidad, $direccion, $telefono, $tipo_entidad, $barrio, $vereda, $nodo, $ubicacion){
+function guardarNuevaEntidad($idIntervencion, $nombreEntidad, $direccion, $telefono, $tipo_entidad, $nodo){
 	include('conexion.php');
-	if ($ubicacion==1) { //Entidad rural
-		$sql="INSERT INTO public.entidades(
-			id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
-			VALUES ((SELECT MAX(id_entidad)+1 FROM entidades),
-					'".$nombreEntidad."',
-					null,
-					".$vereda.",
-					'".$direccion."',
-					'".$telefono."',
-					".$tipo_entidad.",
-					'".$nodo."');";
-	}else{ //Entidad urbana
-		$sql="INSERT INTO public.entidades(
-			id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
-			VALUES ((SELECT MAX(id_entidad)+1 FROM entidades),
-					'".$nombreEntidad."',
-					".$barrio.",
-					null,
-					'".$direccion."',
-					'".$telefono."',
-					".$tipo_entidad.",
-					'".$nodo."');";
+
+	$data = array('error'=>0,'mensaje'=>'','html'=>'');					  
+	if($con){
+		$sql = "SELECT id_barrio, id_vereda FROM intervenciones WHERE id_intervenciones = $idIntervencion";
+		if ($rs = $con->query($sql)) {
+			if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+				$barrio = $filas[0]['id_barrio'];
+				$vereda = $filas[0]['id_vereda'];
+				if(is_null($barrio)){
+					$sql="INSERT INTO public.entidades(
+						id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
+						VALUES ((SELECT MAX(id_entidad)+1 FROM entidades),
+								'".$nombreEntidad."',
+								null,
+								".$vereda.",
+								'".$direccion."',
+								'".$telefono."',
+								".$tipo_entidad.",
+								'".$nodo."');";
+				}else{
+					$sql="INSERT INTO public.entidades(
+						id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
+						VALUES ((SELECT MAX(id_entidad)+1 FROM entidades),
+								'".$nombreEntidad."',
+								".$barrio.",
+								null,
+								'".$direccion."',
+								'".$telefono."',
+								".$tipo_entidad.",
+								'".$nodo."');";
+				}
+			}
+		}
+		else
+		{
+			print_r($con->errorInfo());
+			$data['mensaje']="No se realizo el insert de contacto";
+			$data['error']=1;
+		}
 	}
+
+
 	if ($rs = $con->query($sql)) {
 		$data['mensaje']="Guardado Exitosamente";
 	}

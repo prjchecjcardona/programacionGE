@@ -249,7 +249,14 @@ function guardarEjecucion() {
 
 		});
 
-		//fin capturar los indicadores
+		//fin capturar detalle nivel cumplimiento
+
+
+		//Verificar si el registro de ejecución no tiene asistentes.
+		if(arrayAsistentes.length==0){
+			arrayAsistentes = ["1"];
+		}
+
 
 
 		$.post("php/ejecucion_Coordinadora.php", {
@@ -259,6 +266,7 @@ function guardarEjecucion() {
 				asistentes: $('#textinputAsisNum').val(),
 				detalleCumplimiento: list,
 				nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
+				observaciones: $('#textareaObservaciones').val(),
 				idPlaneacion: idPlaneacion,
 				arrayAsistentes: arrayAsistentes
 			},
@@ -276,9 +284,10 @@ function guardarEjecucion() {
 						'', //titulo
 						'Guardado Correctamente',
 						'success'
-					);
+					).then(function(){
+						window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+					});
 
-					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
 				}
 
 			}, "json");

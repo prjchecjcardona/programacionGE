@@ -146,8 +146,8 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			{ title: "Táctico" },
 			{ title: "Tema" },
 			{ title: "Fecha" },
-			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' },
-			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Coordinadora.html" id="evaluacion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' }
+			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" id="ejecucion" class="ejec_btn btn btn-sm btn-success" alt="Ejecución"><span class="ejec fa fa-book"></span></a>' },
+			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Coordinadora.html" id="evaluacion" class="eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' }
 			],
             "paging":   true,
             "info":     false,
@@ -182,8 +182,9 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion){
 			})
 			if(isEjecutada){
 				$($('#coordinadora_tabla tbody').children()[index]).addClass('rowEjecutada');
-				$($('#coordinadora_tabla tbody').children()[index]).find('span').removeClass('fa-book');
-				$($('#coordinadora_tabla tbody').children()[index]).find('span').addClass('fa-check');
+				$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').removeClass('fa-book');
+				$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-check');
+				$($('#coordinadora_tabla tbody').children()[index]).find('a.ejec_btn').addClass('disabled');
 			}
 		});
 	}

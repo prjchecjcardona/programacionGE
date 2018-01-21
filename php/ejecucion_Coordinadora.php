@@ -10,7 +10,7 @@ if (isset($_POST["accion"])) {
         cargarDatosPlaneacion($_POST["idPlaneacion"]);
     }
     if ($_POST["accion"] == "guardarEjecucion") {
-        guardarEjecucion($_POST["fecha"], $_POST["hora"], $_POST["asistentes"], $_POST["detalleCumplimiento"], $_POST["nCumplimiento"], $_POST["idPlaneacion"], $_POST["arrayAsistentes"]);
+        guardarEjecucion($_POST["fecha"], $_POST["hora"], $_POST["asistentes"], $_POST["detalleCumplimiento"], $_POST["nCumplimiento"], $_POST["idPlaneacion"], $_POST["arrayAsistentes"], $_POST["observaciones"]);
     }
     if ($_POST["accion"] == "cargarTipoCedula") {
         cargarTipoCedula();
@@ -44,18 +44,20 @@ function cargarCompetencia()
     echo json_encode($data);
 }
 
+
+//todo: ARREGLAR CONSULTA PARA DETALLE EJECUCION
 function cargarDatosPlaneacion($idPlaneacion){
 	include "conexion.php";
 	$data = array('error'=>0,'mensaje'=>'','html'=>array());
 	$sql = "
-	SELECT pl.fecha, pl.lugarEncuentro, mun.municipio, comport.comportamientos, compet.competencia, est.nombreestrategia, tac.nombretactico, ind.nombreindicador
+	SELECT pl.fecha, ent.nombreentidad AS lugarEncuentro, mun.municipio, comport.comportamientos, compet.competencia, est.nombreestrategia, tac.nombretactico, ind.nombreindicador
 	FROM planeacion pl
 	JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
 	JOIN intervenciones int ON int.id_intervenciones = plxint.intervenciones_id_intervenciones
-	JOIN entidades ent ON ent.id_entidad = int.entidades_id_entidad
-	LEFT OUTER JOIN barrios bar ON bar.id_barrio = ent.id_barrio
+	LEFT OUTER JOIN entidades ent ON ent.id_entidad = pl.id_entidad
+	LEFT OUTER JOIN barrios bar ON bar.id_barrio = int.id_barrio
 	LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
-	LEFT OUTER JOIN veredas ver ON ver.id_veredas = ent.veredas_id_veredas
+	LEFT OUTER JOIN veredas ver ON ver.id_veredas = int.id_vereda
 	JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
 	LEFT OUTER JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
 	LEFT OUTER JOIN subtemas sub ON sub.id_subtema = subxpl.subtemas_id_subtema
@@ -74,7 +76,7 @@ function cargarDatosPlaneacion($idPlaneacion){
 	LEFT OUTER JOIN competencias_por_comportamiento compexcomporT ON compexcomporT.comportamientos_id_comportamientos = comport.id_comportamientos
 	LEFT OUTER JOIN competencias compet ON compet.id_competencia = compexcomport.competencias_id_competencia
 	WHERE pl.id_planeacion = $idPlaneacion
-	GROUP BY pl.fecha, lugarencuentro, municipio, comport.comportamientos, compet.competencia, nombreestrategia, nombretactico, nombreindicador
+	GROUP BY pl.fecha, ent.nombreentidad, municipio, comport.comportamientos, compet.competencia, nombreestrategia, nombretactico, nombreindicador
 	";
 	
 			$array="";
@@ -105,7 +107,7 @@ function cargarDatosPlaneacion($idPlaneacion){
 		  echo json_encode($data);
 }
 
-function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $arrayAsistentes)
+function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $arrayAsistentes, $observaciones)
 {
 
     include 'conexion.php';
@@ -115,7 +117,7 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
 
         //Insertar en ejecucion
         $sql = "INSERT INTO ejecucion (id_ejecucion, nivelcumplimiento,fecha,horafinalizacion,numeroasistentes,observaciones)
-			VALUES (nextval('sec_ejecucion'),'" . $nCumplimiento . "', '" . $fecha . "', '" . $hora . "', '" . $asistentes . "','');";
+			VALUES (nextval('sec_ejecucion'),'" . $nCumplimiento . "', '" . $fecha . "', '" . $hora . "', '" . $asistentes . "','$observaciones');";
 
         if ($rs = $con->query($sql)) {
 
@@ -128,29 +130,32 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
 
                     $id_ejecucion = $filas[0]['id_ejecucion'];
                     if ($id_ejecucion != "") {
-
-                        //Añadir asistentes por ejecucion
-                        foreach ($arrayAsistentes as $i => $value) {
-                            $sql = "INSERT INTO public.asistentes(id_asistente, tipo_documento_id_tipo_documento, numerodocumento, nombres, apellidos, genero, cuentachec, telefonofijo, celular, direccion, correoelectronico, rol, fecha_nacimiento, manejodatos, sesionesformacion) VALUES (nextval('sec_asistentes'), " . $value['tipo_documento'] . ", '" . $value['numero_documento'] . "', '" . $value['nombres'] . "', '" . $value['apellidos'] . "', '" . $value['genero'] . "', '" . $value['cuenta_CHEC'] . "', '" . $value['telefono'] . "', '" . $value['movil'] . "', '" . $value['direccion'] . "', '" . $value['correo_electronico'] . "', '" . $value['rol'] . "', '" . $value['fecha_asistencia'] . "', " . $value['manejo_datos'] . ", " . $value['sesiones'] . ");";
-                            if ($rs = $con->query($sql)) {
-                                $sql = "SELECT MAX(id_asistente) as id_asistente FROM asistentes";
+                        //Validar si hay asistentes en la ejecucion
+                        if($arrayAsistentes[0] != "1"){
+                            //Añadir asistentes por ejecucion
+                            foreach ($arrayAsistentes as $i => $value) {
+                                $sql = "INSERT INTO public.asistentes(id_asistente, tipo_documento_id_tipo_documento, numerodocumento, nombres, apellidos, genero, cuentachec, telefonofijo, celular, direccion, correoelectronico, rol, fecha_nacimiento, manejodatos, sesionesformacion) VALUES (nextval('sec_asistentes'), " . $value['tipo_documento'] . ", '" . $value['numero_documento'] . "', '" . $value['nombres'] . "', '" . $value['apellidos'] . "', '" . $value['genero'] . "', '" . $value['cuenta_CHEC'] . "', '" . $value['telefono'] . "', '" . $value['movil'] . "', '" . $value['direccion'] . "', '" . $value['correo_electronico'] . "', '" . $value['rol'] . "', '" . $value['fecha_asistencia'] . "', " . $value['manejo_datos'] . ", " . $value['sesiones'] . ");";
                                 if ($rs = $con->query($sql)) {
-                                    if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-                                        $id_asistente = $filas[0]['id_asistente'];
-                                        $sql = "INSERT INTO public.ejecucion_asistentes(
-														id_ejecucion_asistentes, id_ejecucion, id_asistente)
-														VALUES ((SELECT MAX(id_ejecucion_asistentes)+1 FROM ejecucion_asistentes), " . $id_ejecucion . ", " . $id_asistente . ");";
-                                        if ($rs = $con->query($sql)) {
-                                            $data['mensajeAsist'] = "Guardado Exitosamente";
-                                        } else {
-                                            print_r($con->errorInfo());
-                                            $data['mensaje'] = "No se inserto la ejecuciones por planeacion";
-                                            $data['error'] = 1;
+                                    $sql = "SELECT MAX(id_asistente) as id_asistente FROM asistentes";
+                                    if ($rs = $con->query($sql)) {
+                                        if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+                                            $id_asistente = $filas[0]['id_asistente'];
+                                            $sql = "INSERT INTO public.ejecucion_asistentes(
+                                                            id_ejecucion_asistentes, id_ejecucion, id_asistente)
+                                                            VALUES (nextval('sec_ejecucion_asistentes'), " . $id_ejecucion . ", " . $id_asistente . ");";
+                                            if ($rs = $con->query($sql)) {
+                                                $data['mensajeAsist'] = "Guardado Exitosamente";
+                                            } else {
+                                                print_r($con->errorInfo());
+                                                $data['mensaje'] = "No se inserto la ejecuciones por planeacion";
+                                                $data['error'] = 1;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+
 
                         //Se obtiene el id_planeaciones_por_intervencion
                         $sql = "SELECT id_planeaciones_por_intervencion FROM planeaciones_por_intervencion WHERE planeacion_id_planeacion = $idPlaneacion";
@@ -160,7 +165,7 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
                                 // SE INSERTA EN ejecuciones por planeacion
 
                                 $sql = "INSERT INTO ejecuciones_por_planeacion (id_ejecuciones_por_planeacion, ejecucion_id_ejecucion,id_planeaciones_por_intervencion)
-												VALUES ((SELECT MAX(id_ejecuciones_por_planeacion)+1 FROM ejecuciones_por_planeacion)," . $id_ejecucion . ", " . $id_planeaciones_por_intervencion . ");
+												VALUES (nextval('sec_ejecuciones_por_planeacion')," . $id_ejecucion . ", " . $id_planeaciones_por_intervencion . ");
 												  ";
 
                                 if ($rs = $con->query($sql)) {

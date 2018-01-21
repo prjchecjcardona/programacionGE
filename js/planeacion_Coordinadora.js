@@ -5,6 +5,7 @@ $(document).ready(function () {
 	cargarPoblacion();
 	cargarEstrategias();
 	cargarEtapas();
+	cargarTipoEntidad();
 	
 	$("#planeacion2").hide();
 	$("#planeacion3").hide();
@@ -52,6 +53,18 @@ $(document).ready(function () {
 	$("#spanCompetencia, #spanCompetenciag").html(competencia);
 	cargarEntidades(idIntervencion);
 
+	$('#btnNuevaEntidad').click(function () {
+		$("#ex1").modal({
+			fadeDuration: 500,
+			fadeDelay: 0.50,
+			escapeClose: false,
+			clickClose: false,
+			showClose: false
+		});
+		$('.imagenCoordinadora').removeClass('imagenCoordinadora')
+
+	})
+
 });
 
 /*Consulta el nombre de la persona que inicio sesión
@@ -94,6 +107,17 @@ function cargarJornadas() {
 				$('#selectbasicJornada').html(data.html);
 			}
 
+		}, "json");
+}
+
+function cargarTipoEntidad() {
+	$.post("php/planeacion_Coordinadora.php", {
+			accion: 'cargarTipoEntidad'
+		},
+		function (data) {
+			if (data.error != 1) {
+				$('#selectbasicTipoEntidad').html(data.html);
+			}
 		}, "json");
 }
 
@@ -246,8 +270,14 @@ $('#buttonGuardarPlaneacion').click(function () {
 			correoContacto = "";
 		}
 
+		if($('#selectbasicEntidad').val() == "0"){
+			idEntidad = null;
+		}else{
+			idEntidad = $('#selectbasicEntidad').val();
+		}
+
 		$.post("php/planeacion_Coordinadora.php", {
-				accion: 'guararPlaneacion',
+				accion: 'guardarPlaneacion',
 				nombreContacto: nombreContacto,
 				cargoContacto: cargoContacto,
 				telefonoContacto: telefonoContacto,
@@ -274,25 +304,17 @@ $('#buttonGuardarPlaneacion').click(function () {
 					);
 
 				} else {
-					// swal(
-					// '', //titulo
-					// 'Guardado Correctamente',
-					// 'success'
-					// );
-
+					
 					idPlaneacion = data.idPlaneacion;
 					//gestion de redes
-					console.log(idEtapa);
 					
 					if (idEtapa == 2) {
 						guardarGestionRedes();
-
 					} //gestion educativa
 					else if (idEtapa == 3) {
-						alert(1);
 						guardarGestionEducativa();
 					}
-					// window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion="+data.idIntervencion;
+					 
 				}
 
 
@@ -384,9 +406,10 @@ function guardarGestionRedes() {
 					'', //titulo
 					'Guardado Correctamente',
 					'success'
-				);
+				).then(function(){
+					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+				});
 
-				window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
 			} else {
 				swal(
 					'', //titulo
@@ -425,9 +448,10 @@ function guardarGestionEducativa() {
 					'', //titulo
 					'Guardado Correctamente',
 					'success'
-				);
+				).then(function(){
+					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+				});
 
-				window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
 			} else {
 				swal(
 					'', //titulo
@@ -483,26 +507,22 @@ $("#buttonCancelar").click(function () {
  * parametro: 
  */
 function guardarNuevaEntidad() {
+	let idIntervencion = $.get("idIntervencion");
 	let nombreEntidad = $('#textinputEntidadNueva').val();
 	let direccion = $('#textinputDireccionEntidad').val();
 	let telefono = $('#textinputTelefonoEntidad').val();
 	let tipo_entidad = $('#selectbasicTipoEntidad').val();
-	let barrio = $('#selectbasicBarrio').val();
-	let vereda = $('#selectbasicVereda').val();
 	let nodo = $('#text_inputNodoEntidad').val();
-	let ubicacion = $('#UrbanoRural input:radio:checked').val();
-	let url = "php/nueva_Intervencion_Coordinadora.php";
-	if (nombreEntidad != "" && direccion != "" && tipo_entidad != "" ) {
+	let url = "php/planeacion_Coordinadora.php";
+	if (nombreEntidad != "" && direccion != "" && tipo_entidad != "0" ) {
 		$.post(url, {
 				accion: 'guardarNuevaEntidad',
+				idIntervencion: idIntervencion,
 				nombreEntidad: nombreEntidad,
 				direccion: direccion,
 				telefono: telefono,
 				tipo_entidad: tipo_entidad,
-				barrio: barrio,
-				vereda: vereda,
-				nodo: nodo,
-				ubicacion: ubicacion
+				nodo: nodo
 			},
 			function (data) {
 				if (data.error == 1) {
@@ -518,12 +538,7 @@ function guardarNuevaEntidad() {
 						'success'
 					).then(function () {
 						$.modal.close();
-						let ubicacion = $('#UrbanoRural input:radio:checked').val();
-						if (ubicacion == 1) {
-							$('#selectbasicVereda').trigger('change');
-						} else {
-							$('#selectbasicBarrio').trigger('change');
-						}
+						cargarEntidades(idIntervencion);
 					});
 				}
 			}, "json");

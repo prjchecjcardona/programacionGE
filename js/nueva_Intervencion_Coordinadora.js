@@ -32,17 +32,6 @@ $(document).ready(function () {
 
 	});
 
-	$('#btnNuevaEntidad').click(function () {
-		$("#ex1").modal({
-			fadeDuration: 500,
-			fadeDelay: 0.50,
-			escapeClose: false,
-			clickClose: false,
-			showClose: false
-		});
-		$('.imagenCoordinadora').removeClass('imagenCoordinadora')
-
-	})
 
 	$('#btnNuevaVereda').click(function () {
 		$("#ex2").modal({
@@ -109,7 +98,6 @@ $(document).ready(function () {
 	cargarZonasPorId(idZona);
 	cargarPorMunicipiosPorIdZona(idZona);
 	cargarTipoIntervencion();
-	cargarTipoEntidad();
 	cargarComportamientos();
 
 
@@ -275,21 +263,7 @@ function cargarTipoIntervencion() {
 		}, "json");
 }
 
-function cargarTipoEntidad() {
 
-	$.post("php/nueva_Intervencion_Coordinadora.php", {
-			accion: 'cargarTipoEntidad'
-
-		},
-		function (data) {
-			if (data.error != 1) {
-
-				$('#selectbasicTipoEntidad').html(data.html);
-
-			}
-
-		}, "json");
-}
 
 function cargarComportamientos() {
 
