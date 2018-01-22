@@ -57,13 +57,32 @@ function cargarDetalleIntervencion($idIntervencion){
 
 					//TODO: Aqui hacer la consulta para obtener los registros de evolucion de estado por intervencion. Ejecutarla
 					// y luego añadirla al objeto html de respuesta
-					$sql = "";
+					$sql = "SELECT evo.img_url, evo.fecha
+					FROM intervenciones inter
+					LEFT OUTER JOIN evolucion_estado_comportamientos evo ON evo.intervenciones_id_intervenciones = inter.id_intervenciones
+					WHERE inter.id_intervenciones = ".$idIntervencion;
+
+					if ($rs = $con->query($sql)){
+						if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+							//si hay imagenes de evolucion
+							if(count($filas)>0){
+								$data['html']['evolucion'] = array();
+								for ($i=0;$i<count($filas);$i++){
+									$data['html']['evolucion'][$i] = array('img_url'=>$filas[$i]['img_url'], 'fecha'=>$filas[$i]['fecha']);
+								}
+							}else{ //no hay imagenes de evolucion
+								$data['html']['evolucion'] = null;
+							}
+						}
+					}else{
+						$data['mensaje']="No se realizo la consulta";
+						$data['error']=1;
+					}
 
 				}
 			}
 			else
 			{
-				// print_r($con->getPDO()->errorInfo());
 				$data['mensaje']="No se realizo la consulta";
 				$data['error']=1;
 			}
