@@ -79,6 +79,26 @@ $(function () {
 		scrollY: 200,
 	});
 
+	var dateToday = new Date();
+	var dates = $("#textFecha").datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		changeYear: true,
+		numberOfMonths: 1
+	});
+
+
+	var dateToday = new Date();
+	var dates = $("#FechainputNacimientoAsis").datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		changeYear: true,
+		numberOfMonths: 1,
+		yearRange: '1900:2018'
+	});
+
+
+
 	bindEvents();
 });
 

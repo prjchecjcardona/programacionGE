@@ -357,25 +357,74 @@ function getGlosario() {
 }
 
 function getRecurso() {
-  return `<!-- List group -->
-  <div>
-  <!-- List group -->
-  <div class="list-group" id="myList" role="tablist">
-    <a class="list-group-item list-group-item-action" data-toggle="list" href="#home" role="tab">Home</a>
-    <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile" role="tab">Profile</a>
-    <a class="list-group-item list-group-item-action" data-toggle="list" href="#messages" role="tab">Messages</a>
-    <a class="list-group-item list-group-item-action" data-toggle="list" href="#settings" role="tab">Settings</a>
-  </div>
-  
-  <!-- Tab panes -->
-  <div class="tab-content">
-  <div class="tab-pane fade" id="home" role="tabpanel">...</div>
-  <div class="tab-pane fade" id="profile" role="tabpanel">hghdfdjgfhgfdhfdhgfd</div>
-  <div class="tab-pane fade" id="messages" role="tabpanel">...</div>
-  <div class="tab-pane fade" id="settings" role="tabpanel">qweqwqewqewqewqewqewq</div>
+  return `<div id="recursos_tabs" class="container col-xs-12">
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#1" data-toggle="tab">Documentos</a>
+    </li>
+    <li>
+      <a href="#2" data-toggle="tab">Videos</a>
+    </li>
+    <li>
+      <a href="#3" data-toggle="tab">Imagenes</a>
+    </li>
+    <li>
+      <a href="#4" data-toggle="tab">Presentaciones</a>
+    </li>
+    <li>
+    <a href="#5" data-toggle="tab">Todos</a>
+  </li>
+  </ul>
+  <div class="tab-content ">
+    <div class="tab-pane active" id="1">
+      <div class="col-xs-12">
+      <hr>
+      <h3>Documentos</h3>
+      <hr>
+      <div class="list-group">
+  <a class="list-group-item list-group-item-action">Documento # 1 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
+  <a class="list-group-item list-group-item-action">Documento # 2 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
+  <a class="list-group-item list-group-item-action">Documento # 3 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
+  <a class="list-group-item list-group-item-action">Documento # 4 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
+  <a class="list-group-item list-group-item-action">Documento # 5 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
 </div>
+       
+      </div>
+    </div>
+    <div class="tab-pane" id="2">
+      <hr>
+      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+      <hr>
+      <div class="col-xs-12">
+        <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+      </div>
+    </div>
+    <div class="tab-pane" id="3">
+      <hr>
+      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+      <hr>
+      <div class="col-xs-12">
+        <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="4">
+      <hr>
+      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+      <hr>
+      <div class="col-xs-12">
+        <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="5">
+    <hr>
+    <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+    <hr>
+    <div class="col-xs-12">
+      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+    </div>
   </div>
-  
-  
-  `;
+  </div>
+</div>`;
 }

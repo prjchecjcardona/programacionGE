@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
 	traerNombre();
-	interevensionesPorZona();
+	intervencionesPorZona();
 
 	$("#btnInformes").click(function () {
 
@@ -108,16 +108,16 @@ function traerNombre() {
 
 }
 
-function interevensionesPorZona() {
+function intervencionesPorZona() {
 
 	$.post("php/home_Coordinadora.php", {
-			accion: 'interevensionesPorZona'
+			accion: 'intervencionesPorZona'
 
 		},
 		function (data) {
 			if (data.error != 1) {
 
-				$('#interversionesPorZona').html(data.html);
+				$('#intervercionesPorZona').html(data.html);
 			}
 			// else{
 			// mostrarPopUpError(data.error);

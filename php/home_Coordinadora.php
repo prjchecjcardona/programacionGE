@@ -7,14 +7,14 @@ include('conexion.php');
 if(isset($_POST["accion"]))
 {
 
-	if($_POST["accion"]=="interevensionesPorZona")
+	if($_POST["accion"]=="intervencionesPorZona")
 	{
-		interevensionesPorZona();
+		intervencionesPorZona();
 	}
 
 }
 
-function interevensionesPorZona(){
+function intervencionesPorZona(){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
