@@ -83,8 +83,7 @@ function cargarDetalleIntervencion(idIntervencion) {
 			if (data.error == 0) {
 				comportamientos = data.html.comportamientos;
 				competencia = data.html.competencia;
-				idComportamientos = data.html.id_comportamientos
-				idCompetencia = data.html.id_competencia
+
 
 				$('#lblMunicipio').html("<b>Municipio</b>: " + data.html.municipio);
 				$('#lblCoportamiento').html("<b>Comportamiento</b>: " + data.html.comportamientos);
@@ -92,6 +91,11 @@ function cargarDetalleIntervencion(idIntervencion) {
 				$('#lblTipoIntervencion').html("<b>Tipo Intervención</b>: " + data.html.tipo_intervencion);
 				$("#indicadoresChec").html("<b>Indicadores</b>: ");
 				$("#indicadoresChec").append(data.html.indicador);
+				$('#fecha_estado_base').append(data.html.fecha);
+				$('#img_estado_base').attr('src', data.html.img_url);
+
+				//TODO: Falta recibir del back, los registros de imgs de evolucion, añadir una por defecto cuando no haya y 
+				// montar la interfaz de subida con fileinput al backend.
 
 			} else {
 				swal(

@@ -317,7 +317,7 @@ function guardarIntervencion() {
 		);
 	} else {
 
-
+		
 		//capturar los indicadores
 		var list = new Array();
 
@@ -354,16 +354,17 @@ function guardarIntervencion() {
 
 				} else {
 
+					$('#upload_files_input').on('filebatchuploadcomplete', function(event, files, extra) {
+						swal(
+							'', //titulo
+							'Guardado Correctamente',
+							'success'
+						).then(function () {
+							window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + data.idIntervencion;
+						});
+					});	
+					$('#upload_files_input').fileinput('upload');
 
-
-
-					swal(
-						'', //titulo
-						'Guardado Correctamente',
-						'success'
-					).then(function () {
-						window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + data.idIntervencion;
-					});
 				}
 			}, "json");
 	}

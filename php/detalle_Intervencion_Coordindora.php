@@ -23,8 +23,7 @@ if(isset($_POST["accion"]))
 function cargarDetalleIntervencion($idIntervencion){
 	include "conexion.php";
 	$data = array('error'=>0,'mensaje'=>'','html'=>array()); 
-	$idIntrevencion = $_POST['idIntervencion']; //para la consulta
-	$sql = "SELECT mun.municipio, compor.comportamientos, compe.competencia, ind.indicador, tipo.tipo_intervencion,compor.id_comportamientos,compe.id_competencia
+	$sql = "SELECT mun.municipio, compor.comportamientos, compe.competencia, ind.indicador, tipo.tipo_intervencion, inter.img_url, inter.fecha
 			FROM intervenciones inter
 			JOIN tipo_intervencion tipo ON tipo.id_tipo_intervencion = inter.tipo_intervencion_id_tipo_intervencion
 			JOIN indicadores_chec_por_intervenciones indxinter ON indxinter.intervenciones_id_intervenciones = inter.id_intervenciones
@@ -39,22 +38,27 @@ function cargarDetalleIntervencion($idIntervencion){
 			WHERE inter.id_intervenciones = ".$idIntervencion; 
 			  
 			 
-			$array="";
+			$string_indicadores="";
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
 					for ($i=0;$i<count($filas);$i++){
 						$data['html']['municipio']= $filas[0]["municipio"];
 						$data['html']['comportamientos']= $filas[0]['comportamientos'];
 						$data['html']['competencia']= $filas[0]['competencia'];
-						$data['html']['id_comportamientos']= $filas[0]['id_comportamientos'];
-						$data['html']['id_competencia']= $filas[0]['id_competencia'];
 						$data['html']['tipo_intervencion']= $filas[0]['tipo_intervencion'];
+						$data['html']['img_url'] = $filas[0]['img_url'];
+						$data['html']['fecha'] = $filas[0]['fecha'];
 						
-						$array.= '<div class="row"><div class="col-md-5">
+						$string_indicadores.= '<div class="row"><div class="col-md-5">
 						<label class="mr-sm-2" id="lblIndicadorChec1"> <li>'.$filas[$i]['indicador'].'</li></label></div></div>';
 						
 					}
-					$data['html']['indicador']= $array;
+					$data['html']['indicador']= $string_indicadores;
+
+					//TODO: Aqui hacer la consulta para obtener los registros de evolucion de estado por intervencion. Ejecutarla
+					// y luego añadirla al objeto html de respuesta
+					$sql = "";
+
 				}
 			}
 			else
