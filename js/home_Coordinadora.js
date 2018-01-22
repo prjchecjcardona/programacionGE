@@ -117,7 +117,7 @@ function intervencionesPorZona() {
 		function (data) {
 			if (data.error != 1) {
 
-				$('#interversionesPorZona').html(data.html);
+				$('#intervercionesPorZona').html(data.html);
 			}
 			// else{
 			// mostrarPopUpError(data.error);
