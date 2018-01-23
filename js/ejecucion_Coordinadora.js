@@ -213,10 +213,16 @@ function cargarDatosPlaneacion() {
 					$('#indicadoresInd').html(data.html.indicador);
 
 					//datos de la ejecucion registrada
-					let valor = data.html.datosejec.horafinalizacion.split(':');
-					$('#textFecha').html(dta.html.datosEjec.fecha);
-					$('#selectbasicHoraEje').val(valor[0]);
-					$('#selectbasicHoraEje').val(valor[0]);
+					let valor = data.html.datosEjec.horafinalizacion.split(':');
+					$('#textFecha')
+						.val(data.html.datosEjec.fecha)
+						.attr('disabled', 'disabled');
+					$('#selectbasicHoraEje').val(valor[0])
+						.attr('disabled', 'disabled');
+					$('#selectbasicMinEje').val(valor[1])
+						.attr('disabled', 'disabled');
+					$('#textinputAsisNum').val(data.html.datosEjec.numeroasistentes)
+						.attr('disabled', 'disabled');
 
 				} else {
 					swal(

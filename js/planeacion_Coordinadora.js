@@ -300,7 +300,7 @@ $('#buttonGuardarPlaneacion').click(function () {
 				cargoContacto: cargoContacto,
 				telefonoContacto: telefonoContacto,
 				correoContacto: correoContacto,
-				fecha: $('#Fechainput').val(),
+				fecha: $('#fecha_planeacion').val(),
 				lugar: $('#textinputLugarEncuentro').val(),
 				jornada: $('#selectbasicJornada').val(),
 				comunidad: $('#comunidad input:radio[name=radiosComunidadEspecial]:checked').val(),
