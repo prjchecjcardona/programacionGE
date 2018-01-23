@@ -1,6 +1,6 @@
 $(function () {
 	traerNombre();
-	
+
 
 	/*Extrae los parametros que llegan en la url
 	 * parametro: 
@@ -38,13 +38,13 @@ function initFileInput(idIntervencion) {
 		language: 'es',
 		'theme': 'fa',
 		uploadUrl: 'php/uploadImgDetalleInterv.php',
-		uploadExtraData : {idIntervencion: idIntervencion},
+		uploadExtraData: { idIntervencion: idIntervencion },
 		allowedFileExtensions: ['jpg', 'png']
 	});
 
-	$('.upload_files_input').on('filebatchuploadcomplete', function(event, files, extra) {
+	$('.upload_files_input').on('filebatchuploadcomplete', function (event, files, extra) {
 		location.reload();
-	});	
+	});
 }
 
 
@@ -87,6 +87,8 @@ function cargarDetalleIntervencion(idIntervencion) {
 			if (data.error == 0) {
 				comportamientos = data.html.comportamientos;
 				competencia = data.html.competencia;
+				idCompetencia = data.html.id_competencia;
+				idComportamientos = data.html.id_comportamientos;
 
 
 				$('#lblMunicipio').html("<b>Municipio</b>: " + data.html.municipio);
@@ -99,9 +101,9 @@ function cargarDetalleIntervencion(idIntervencion) {
 				$('#img_estado_base').attr('src', data.html.img_url);
 
 
-				if(data.html.evolucion[0].img_url){
+				if (data.html.evolucion[0].img_url) {
 					data.html.evolucion.forEach(function (element, index) {
-						if(index==0){
+						if (index == 0) {
 							$('.carousel-inner').append(`
 								<div class="carousel-item active">
 									<img class="d-block w-100" src="${element.img_url}">
@@ -110,7 +112,7 @@ function cargarDetalleIntervencion(idIntervencion) {
 									</div>
 								</div>
 							`)
-						}else{
+						} else {
 							$('.carousel-inner').append(`
 								<div class="carousel-item">
 									<img class="d-block w-100" src="${element.img_url}" >
@@ -121,7 +123,7 @@ function cargarDetalleIntervencion(idIntervencion) {
 							`)
 						}
 					})
-				}else{
+				} else {
 					$('.carousel-inner').append(`
 						<div class="carousel-item active">
 							<img class="d-block w-100" src="img/default-image.jpg" >
@@ -163,7 +165,9 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion) {
 						cargarInformacionEnTabla(data);
 						setTimeout(() => {
 							identificarEjecutadas(data, JSON.parse(ejecutadas));
+
 						}, 1000);
+						
 
 					})
 
@@ -184,7 +188,7 @@ function cargarInformacionEnTabla(data) { //alert(data);
 			{ title: "Táctico" },
 			{ title: "Tema" },
 			{ title: "Fecha" },
-			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" id="ejecucion" class="ejec_btn btn btn-sm btn-success" alt="Ejecución"><span class="ejec fa fa-book"></span></a>' },
+			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" class="ejecucion ejec_btn btn btn-sm btn-success" alt="Ejecución"><span class="ejec fa fa-book"></span></a>' },
 			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Coordinadora.html" id="evaluacion" class="eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' }
 		],
 		"paging": true,
@@ -221,26 +225,43 @@ function identificarEjecutadas(data, ejecutadas) {
 		if (isEjecutada) {
 			$($('#coordinadora_tabla tbody').children()[index]).addClass('rowEjecutada');
 			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').removeClass('fa-book');
-			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-check');
-			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejec_btn').addClass('disabled');
+			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-search');
+
+			//Esta es para el perfil de gestora
+			/* $($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-check');
+			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejec_btn').addClass('disabled'); */
+
+			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejecucion').click(function(){
+				let data = table.row($(this).parents('tr')).data();
+				idPlaneacion = data[0];
+				window.location.href = "ejecucion_Coordinadora.html?isEjecutada=1&idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+			})
+		}else{
+			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejecucion').click(function(){
+				let data = table.row($(this).parents('tr')).data();
+				idPlaneacion = data[0];
+				window.location.href = "ejecucion_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+			})
 		}
 	});
+
+	//Evento para ver detalle ejecucion//
+/* 	$('.ejecucion').click(function () {
+		var data = table.row($(this).parents('tr')).data();
+		var iconEjec = $(this).find('span').attr('class')
+		idPlaneacion = data[0];
+		if (data[0] != "") {
+			if (iconEjec !== "fa fa-check") {
+				window.location.href = "ejecucion_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+			} else {
+				window.location.href = "ejecucion_Coordinadora.html?isEjecutada=1&idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+			}
+
+		}
+	}) */
 }
 
-//Evento para ver detalle ejecucion//
-$(document).on('click', '#ejecucion', function () {
-	var data = table.row($(this).parents('tr')).data();
-	var iconEjec = $(this).find('span').attr('class')
-	idPlaneacion = data[0];
-	if (data[0] != "") {
-		if (iconEjec !== "fa fa-check") {
-			window.location.href = "ejecucion_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
-		}/* else{
-					window.location.href = "ejecucion_Coordinadora.html?isEjecutada=1&idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
-				} */
 
-	}
-});
 
 
 
@@ -251,7 +272,7 @@ $("#btnNuevaPlaneacion").click(function () {
 
 	// window.location.href = "planeacion_Coordinadora.html?idIntervencion="+idIntervencion; 
 
-	window.location.href = "planeacion_Coordinadora.html?idIntervencion=" + idIntervencion + "&comportamientos=" + comportamientos + "&competencia=" + competencia + "&idComportamientos=" + idComportamientos + "&idCompetencia=" + idCompetencia + "&idEntidad=" + idEntidad;
+	window.location.href = "planeacion_Coordinadora.html?idIntervencion=" + idIntervencion + "&comportamientos=" + comportamientos + "&competencia=" + competencia + "&idComportamientos=" + idComportamientos + "&idCompetencia=" + idCompetencia;
 
 });
 

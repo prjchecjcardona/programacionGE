@@ -7,7 +7,7 @@ if (isset($_POST["accion"])) {
         cargarCompetencia();
     }
     if ($_POST["accion"] == "cargarDatosPlaneacion") {
-        cargarDatosPlaneacion($_POST["idPlaneacion"]);
+        cargarDatosPlaneacion($_POST["idPlaneacion"], $_POST["isEjecutada"]);
     }
     if ($_POST["accion"] == "guardarEjecucion") {
         guardarEjecucion($_POST["fecha"], $_POST["hora"], $_POST["asistentes"], $_POST["detalleCumplimiento"], $_POST["nCumplimiento"], $_POST["idPlaneacion"], $_POST["arrayAsistentes"], $_POST["observaciones"]);
@@ -45,8 +45,7 @@ function cargarCompetencia()
 }
 
 
-//todo: ARREGLAR CONSULTA PARA DETALLE EJECUCION
-function cargarDatosPlaneacion($idPlaneacion){
+function cargarDatosPlaneacion($idPlaneacion, $isEjecutada){
 	include "conexion.php";
 	$data = array('error'=>0,'mensaje'=>'','html'=>array());
 	$sql = "
@@ -79,32 +78,36 @@ function cargarDatosPlaneacion($idPlaneacion){
 	GROUP BY pl.fecha, ent.nombreentidad, municipio, comport.comportamientos, compet.competencia, nombreestrategia, nombretactico, nombreindicador
 	";
 	
-			$array="";
-			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					$data['html']['fecha']= $filas[0]['fecha'];
-					$data['html']['lugar']= $filas[0]['lugarencuentro'];
-					$data['html']['municipio']= $filas[0]['municipio'];
-					$data['html']['comportamiento']= $filas[0]['comportamientos'];
-					$data['html']['competencia']= $filas[0]['competencia'];
-					$data['html']['estrategia']= $filas[0]['nombreestrategia'];
-					$data['html']['tactico']= $filas[0]['nombretactico'];
-					for ($i=0;$i<count($filas);$i++)
-					{				
-						$array.= '<div class="row"><div class="col-md-12">
-						<label class="mr-sm-2" id="lblIndicadorChec1"><li>'.$filas[$i]['nombreindicador'].'</li></label></div></div>';
-					}
-					$data['html']['indicador']= $array;
-				}
-			}
-			else
-			{
-				print_r($conexion->errorInfo());
-				$data['mensaje']="No se realizo la consulta";
-				$data['error']=1;
-			}
-			
-		  echo json_encode($data);
+    $array="";
+    if ($rs = $con->query($sql)) {
+        if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+            $data['html']['fecha']= $filas[0]['fecha'];
+            $data['html']['lugar']= $filas[0]['lugarencuentro'];
+            $data['html']['municipio']= $filas[0]['municipio'];
+            $data['html']['comportamiento']= $filas[0]['comportamientos'];
+            $data['html']['competencia']= $filas[0]['competencia'];
+            $data['html']['estrategia']= $filas[0]['nombreestrategia'];
+            $data['html']['tactico']= $filas[0]['nombretactico'];
+            for ($i=0;$i<count($filas);$i++)
+            {				
+                $array.= '<div class="row"><div class="col-md-12">
+                <label class="mr-sm-2" id="lblIndicadorChec1"><li>'.$filas[$i]['nombreindicador'].'</li></label></div></div>';
+            }
+            $data['html']['indicador']= $array;
+        }
+    }
+    else
+    {
+        print_r($conexion->errorInfo());
+        $data['mensaje']="No se realizo la consulta";
+        $data['error']=1;
+    }
+
+    if($isEjecutada){
+
+    }
+    
+    echo json_encode($data);
 }
 
 function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $arrayAsistentes, $observaciones)
@@ -180,7 +183,9 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
                                     $data['error'] = 1;
                                 }
 
+                                //TODO REVISAR GUARDADO DE DETALLE NIVEL CUMPL EN BD
                                 //se inserta en detalle nivel cumplimiento por ejecucion
+                                var_dump($detalleCumplimiento);
                                 for ($i = 0; $i < count($detalleCumplimiento); $i++) {
                                     if ($detalleCumplimiento[$i] == 1) {$nivelCumplimiento = "Completa";}
                                     if ($detalleCumplimiento[$i] == 2) {$nivelCumplimiento = "Parcial";}
