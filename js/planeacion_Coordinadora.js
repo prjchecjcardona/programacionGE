@@ -265,7 +265,6 @@ $('#radiosContacto input:radio').click(function () {
 
 $('#buttonGuardarPlaneacion').click(function () {
 
-	$("#buttonGuardarPlaneacion").attr('disabled', 'true')
 
 	if (!validarInformacion()) {
 		swal(
