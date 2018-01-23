@@ -74,7 +74,8 @@ function getHerramientas() {
             <option value="5">Cuidado - Disfrute del servicio de energía como aporte a a la calidad de vida</option>
           </select>
         </div>
-
+        
+        <!--
         <div class="form-group">
           <label for="poblacion" class="ontrol-label">Población objetivo</label>
           <select class="form-control" id="poblacion">
@@ -83,7 +84,7 @@ function getHerramientas() {
             <option value="3">Jóvenes</option>
             <option value="4">Adultos</option>
           </select>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label for="tema" class="ontrol-label">Tema</label>
@@ -353,7 +354,38 @@ function getCriterios() {
 }
 
 function getGlosario() {
-  return ``;
+  return `<div id="glosario_tabs" class="container col-xs-12">
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#1" data-toggle="tab">Glosario</a>
+    </li>
+    <li>
+      <a href="#2" data-toggle="tab">Adicionales</a>
+    </li>
+
+    <div class="tab-content ">
+
+    <div class="tab-pane active" id="1">
+      <div class="col-xs-12">
+      <hr>
+      <h3>Glosario</h3>
+      <hr>
+      <div class="list-group">
+      <span>Aún no se cargan documentos en el módulo de Glosario</span>
+      </div> 
+    </div>
+  </div>
+
+    <div class="tab-pane" id="2">
+    <div class="col-xs-12">
+      <hr>
+      <h3>Adicionales</h3>
+      <hr>
+      <span>Aún no se cargan documentos en el módulo de Adicionales</span>
+    </div>
+  </div>
+</div>   
+`;
 }
 
 function getRecurso() {
@@ -363,7 +395,7 @@ function getRecurso() {
       <a href="#1" data-toggle="tab">Documentos</a>
     </li>
     <li>
-      <a href="#2" data-toggle="tab">Videos</a>
+      <a href="#2" data-toggle="tab">Vídeos</a>
     </li>
     <li>
       <a href="#3" data-toggle="tab">Imagenes</a>
@@ -372,59 +404,64 @@ function getRecurso() {
       <a href="#4" data-toggle="tab">Presentaciones</a>
     </li>
     <li>
-    <a href="#5" data-toggle="tab">Todos</a>
+    <a href="#5" data-toggle="tab">Juegos</a>
   </li>
   </ul>
+
   <div class="tab-content ">
+
     <div class="tab-pane active" id="1">
       <div class="col-xs-12">
       <hr>
       <h3>Documentos</h3>
       <hr>
       <div class="list-group">
-  <a class="list-group-item list-group-item-action">Documento # 1 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
-  <a class="list-group-item list-group-item-action">Documento # 2 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
-  <a class="list-group-item list-group-item-action">Documento # 3 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
-  <a class="list-group-item list-group-item-action">Documento # 4 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
-  <a class="list-group-item list-group-item-action">Documento # 5 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
-</div>
-       
-      </div>
+      <a class="list-group-item list-group-item-action">Aún no se cargan documentos en el módulo de Documentos <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+      </div> 
     </div>
+  </div>
+
     <div class="tab-pane" id="2">
-      <hr>
-      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      <hr>
-      <div class="col-xs-12">
-        <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      </div>
-    </div>
-    <div class="tab-pane" id="3">
-      <hr>
-      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      <hr>
-      <div class="col-xs-12">
-        <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      </div>
-    </div>
-
-    <div class="tab-pane" id="4">
-      <hr>
-      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      <hr>
-      <div class="col-xs-12">
-        <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      </div>
-    </div>
-
-    <div class="tab-pane" id="5">
-    <hr>
-    <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-    <hr>
     <div class="col-xs-12">
-      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+      <hr>
+      <h3>Vídeos</h3>
+      <hr>
+      <div class="list-group">
+      <a class="list-group-item list-group-item-action">Aún no se cargan vídeos en el módulo de Vídeos <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+      </div> 
     </div>
   </div>
+
+    <div class="tab-pane" id="3">
+    <div class="col-xs-12">
+      <hr>
+      <h3>Imagenes</h3>
+      <hr>
+      <div class="list-group">
+      <a class="list-group-item list-group-item-action">Aún no se cargan imagenes en el módulo de Imagenes <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+      </div> 
+    </div>
   </div>
+
+  <div class="tab-pane" id="4">
+  <div class="col-xs-12">
+    <hr>
+    <h3>Presentaciones</h3>
+    <hr>
+    <div class="list-group">
+    <a class="list-group-item list-group-item-action">Aún no se cargan presentaciones en el módulo de Presentaciones <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+    </div>
+  </div>
+</div>
+
+<div class="tab-pane" id="5">
+<div class="col-xs-12">
+  <hr>
+  <h3>Juegos</h3>
+  <hr>
+  <div class="list-group">
+  <a class="list-group-item list-group-item-action">Aún no se cargan juegos en el módulo de Juegos <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+  </div> 
+</div>
 </div>`;
 }
