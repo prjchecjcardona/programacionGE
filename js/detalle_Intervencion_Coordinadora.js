@@ -262,17 +262,3 @@ function identificarEjecutadas(data, ejecutadas) {
 }
 
 
-
-
-
-
-
-
-$("#btnNuevaPlaneacion").click(function () {
-
-	// window.location.href = "planeacion_Coordinadora.html?idIntervencion="+idIntervencion; 
-
-	window.location.href = "planeacion_Coordinadora.html?idIntervencion=" + idIntervencion + "&comportamientos=" + comportamientos + "&competencia=" + competencia + "&idComportamientos=" + idComportamientos + "&idCompetencia=" + idCompetencia;
-
-});
-
