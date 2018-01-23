@@ -36,7 +36,6 @@ function getGeneralidades() {
     <div class="text-title-container">
      <h2 class="gen-title" id="title-presentacion">Presentación</h2>
      <div class="gen-img-container">
-      <img id="girl-gen" src="bh/img/Señorita-01.png" alt="">
      </div>
       <div class="floating-text">
         <p>
@@ -74,7 +73,8 @@ function getHerramientas() {
             <option value="5">Cuidado - Disfrute del servicio de energía como aporte a a la calidad de vida</option>
           </select>
         </div>
-
+        
+        <!--
         <div class="form-group">
           <label for="poblacion" class="ontrol-label">Población objetivo</label>
           <select class="form-control" id="poblacion">
@@ -83,7 +83,7 @@ function getHerramientas() {
             <option value="3">Jóvenes</option>
             <option value="4">Adultos</option>
           </select>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label for="tema" class="ontrol-label">Tema</label>
@@ -266,84 +266,100 @@ function getCriterios() {
   return `
  <div id="presentacion" class="gen-block">
     <div class="text-title-container">
+    <h2 class="gen-title" id="title-presentacion">Criterios Conceptuales</h2>
+
       <div id="accordion" role="tablist">
+
       <div class="card">
         <div class="card-header" role="tab" id="headingOne">
-          <h5 class="mb-0">
+          <h3 class="mb-0">
             <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
               Grupos de Interés
             </a>
-          </h5>
+          </h3>
         </div>
-
         <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
           <div class="card-body">
-            <p>CHEC reconoce como partes interesadas o grupos de interés a las personas o grupos de personas que generan impactos en la organización
+          <br>
+            <p class="floating-text2">CHEC reconoce como partes interesadas o grupos de interés a las personas o grupos de personas que generan impactos en la organización
             o se ven impactados por las diferentes decisiones, actividades, productos o servicios que brinda como empresa prestadora del servicio
              público de energía.<a href="bh/ficheros/GruposDeInteresChec.pdf" target="_blank">(Ver PDF)</a></p>
           </div>
         </div>
       </div>
+      <br> 
+
       <div class="card">
         <div class="card-header" role="tab" id="headingTwo">
-          <h5 class="mb-0">
+          <h3 class="mb-0">
             <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
               Competencia Ciudadana
             </a>
-          </h5>
+          </h3>
         </div>
         <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
           <div class="card-body">
-          <p><a href="bh/ficheros/CompetenciaCiudadana.pdf" target="_blank">(Ver PDF)</a></p>
+          <br>
+          <p class="floating-text2">Como alternativa para dicha movilización, se plantea la Gestión Educativa, la cual desde un enfoque experiencial y a través del fortalecimiento de competencias ciudadanas como la preservación, el respeto, el cuidado, la confianza y la corresponsabilidad, posibilita la participación de los ciudadanos – clientes del servicio de energía en procesos de formación grupal, para propiciar la reflexión frente a nuevos conocimientos, los cuales, asociados a las prácticas cotidianas favorecen el bienestar colectivo frente al uso responsable, cultura de pago, disfrute del servicio de energía y uso de canales vanguardistas relacionados con la prestación del servicio de energía eléctrica. <a href="bh/ficheros/CompetenciaCiudadana.pdf" target="_blank">(Ver PDF)</a></p>
+          <hr>
           </div>
         </div>
       </div>
+      <br>
+
       <div class="card">
         <div class="card-header" role="tab" id="headingThree">
-          <h5 class="mb-0">
+          <h3 class="mb-0">
             <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
               Cultura Ciudadana
             </a>
-          </h5>
+          </h3>
       </div>
       <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
         <div class="card-body">
-          <p>La cultura ciudadana la construimos entre todos a través de las prácticas cotidianas que favorecen el bienestar común. 
+        <br>
+          <p class="floating-text2">La cultura ciudadana la construimos entre todos a través de las prácticas cotidianas que favorecen el bienestar común. 
           La ciudadanía otorga características especiales a los sujetos como actores activos, con derechos y deberes con ellos mismos, 
           con los demás y con el entorno.  En este sentido, desde la Gestión Educativa, se busca aportar al fortalecimiento de competencias 
           ciudadanas con las cuales las personas lleven a la práctica conocimientos que posibiliten el bienestar de todos los ciudadanos, clientes del 
           servicio de energía eléctrica <a href="bh/ficheros/CulturaCiudadana.pdf" target="_blank">(Ver PDF)</a></p>
         </div>
       </div>
+      <br>
+
       <div class="card">
         <div class="card-header" role="tab" id="headingFour">
-          <h5 class="mb-0">
+          <h3 class="mb-0">
             <a class="collapsed" data-toggle="collapse" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
               Comportamientos Deseables
             </a>
-          </h5>
+          </h3>
       </div>
       <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
         <div class="card-body">
-          <p>Los comportamientos deseables son las actitudes adecuadas para vivir en sociedad, fomentando el sentido de pertenencia de los ciudadanos 
+        <br>
+          <p class="floating-text2">Los comportamientos deseables son las actitudes adecuadas para vivir en sociedad, fomentando el sentido de pertenencia de los ciudadanos 
           por los bienes públicos al hacer un uso responsable de la energía, fortaleciendo la cultura de pago, disfrutando del servicio de energía 
           y reconociendo su aporte a la calidad de vida de los clientes y haciendo uso de los canales vanguardistas para interactuar con la empresa 
           CHEC <a href="bh/ficheros/ComportamientosDesables.pdf" target="_blank">(Ver PDF)</a></p>
         </div>
       </div>
+      <br>
 
       <div class="card">
         <div class="card-header" role="tab" id="headingFive">
-          <h5 class="mb-0">
+          <h3 class="mb-0">
             <a class="collapsed" data-toggle="collapse" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
               Aprendizaje Experiencial
             </a>
-          </h5>
+          </h3>
       </div>
       <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive" data-parent="#accordion">
         <div class="card-body">
-          <p><a href="bh/ficheros/AprendizajeExperiencial.pdf" target="_blank">(Ver PDF)</a></p>
-        </div>
+        <br>
+          <p class="floating-text2">Para el caso de la Gestión Educativa, se basa en el planteamiento de Kolb, en tanto permite retomar las experiencias de las personas, para observarlas, reflexionar, abstraer y conceptualizar sobre ellas, con el fin de generar nuevas experiencias, en este sentido, para el desarrollo del acompañamiento educativo que se hace a los grupos de interés Clientes y Comunidad, se desarrolla la siguiente planeación estratégica, que da cuenta del aprendizaje experiencial en las sesiones formativas. <a href="bh/ficheros/AprendizajeExperiencial.pdf" target="_blank">(Ver PDF)</a></p>
+        <hr>  
+          </div>
       </div>
       </div>
     </div>
@@ -353,7 +369,38 @@ function getCriterios() {
 }
 
 function getGlosario() {
-  return ``;
+  return `<div id="glosario_tabs" class="container col-xs-12">
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#1" data-toggle="tab">Glosario</a>
+    </li>
+    <li>
+      <a href="#2" data-toggle="tab">Adicionales</a>
+    </li>
+
+    <div class="tab-content ">
+
+    <div class="tab-pane active" id="1">
+      <div class="col-xs-12">
+      <hr>
+      <h3>Glosario</h3>
+      <hr>
+      <div class="list-group">
+      <span>Aún no se cargan documentos en el módulo de Glosario</span>
+      </div> 
+    </div>
+  </div>
+
+    <div class="tab-pane" id="2">
+    <div class="col-xs-12">
+      <hr>
+      <h3>Adicionales</h3>
+      <hr>
+      <span>Aún no se cargan documentos en el módulo de Adicionales</span>
+    </div>
+  </div>
+</div>   
+`;
 }
 
 function getRecurso() {
@@ -363,7 +410,7 @@ function getRecurso() {
       <a href="#1" data-toggle="tab">Documentos</a>
     </li>
     <li>
-      <a href="#2" data-toggle="tab">Videos</a>
+      <a href="#2" data-toggle="tab">Vídeos</a>
     </li>
     <li>
       <a href="#3" data-toggle="tab">Imagenes</a>
@@ -372,59 +419,64 @@ function getRecurso() {
       <a href="#4" data-toggle="tab">Presentaciones</a>
     </li>
     <li>
-    <a href="#5" data-toggle="tab">Todos</a>
+    <a href="#5" data-toggle="tab">Juegos</a>
   </li>
   </ul>
+
   <div class="tab-content ">
+
     <div class="tab-pane active" id="1">
       <div class="col-xs-12">
       <hr>
       <h3>Documentos</h3>
       <hr>
       <div class="list-group">
-  <a class="list-group-item list-group-item-action">Documento # 1 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
-  <a class="list-group-item list-group-item-action">Documento # 2 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
-  <a class="list-group-item list-group-item-action">Documento # 3 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
-  <a class="list-group-item list-group-item-action">Documento # 4 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
-  <a class="list-group-item list-group-item-action">Documento # 5 <button type="button" class="btn btn-primary btn-sm">Descargar</button></a>
-</div>
-       
-      </div>
+      <a class="list-group-item list-group-item-action">Aún no se cargan documentos en el módulo de Documentos <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+      </div> 
     </div>
+  </div>
+
     <div class="tab-pane" id="2">
-      <hr>
-      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      <hr>
-      <div class="col-xs-12">
-        <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      </div>
-    </div>
-    <div class="tab-pane" id="3">
-      <hr>
-      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      <hr>
-      <div class="col-xs-12">
-        <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      </div>
-    </div>
-
-    <div class="tab-pane" id="4">
-      <hr>
-      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      <hr>
-      <div class="col-xs-12">
-        <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-      </div>
-    </div>
-
-    <div class="tab-pane" id="5">
-    <hr>
-    <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
-    <hr>
     <div class="col-xs-12">
-      <h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+      <hr>
+      <h3>Vídeos</h3>
+      <hr>
+      <div class="list-group">
+      <a class="list-group-item list-group-item-action">Aún no se cargan vídeos en el módulo de Vídeos <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+      </div> 
     </div>
   </div>
+
+    <div class="tab-pane" id="3">
+    <div class="col-xs-12">
+      <hr>
+      <h3>Imagenes</h3>
+      <hr>
+      <div class="list-group">
+      <a class="list-group-item list-group-item-action">Aún no se cargan imagenes en el módulo de Imagenes <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+      </div> 
+    </div>
   </div>
+
+  <div class="tab-pane" id="4">
+  <div class="col-xs-12">
+    <hr>
+    <h3>Presentaciones</h3>
+    <hr>
+    <div class="list-group">
+    <a class="list-group-item list-group-item-action">Aún no se cargan presentaciones en el módulo de Presentaciones <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+    </div>
+  </div>
+</div>
+
+<div class="tab-pane" id="5">
+<div class="col-xs-12">
+  <hr>
+  <h3>Juegos</h3>
+  <hr>
+  <div class="list-group">
+  <a class="list-group-item list-group-item-action">Aún no se cargan juegos en el módulo de Juegos <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+  </div> 
+</div>
 </div>`;
 }

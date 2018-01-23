@@ -281,7 +281,7 @@ function cargarComportamientos() {
 			// mostrarPopUpError(data.error);
 			// }
 
-
+			$('.loader').hide();
 		}, "json");
 }
 
@@ -319,7 +319,7 @@ function guardarIntervencion() {
 		);
 	} else {
 
-		
+
 		//capturar los indicadores
 		var list = new Array();
 
@@ -356,7 +356,7 @@ function guardarIntervencion() {
 
 				} else {
 
-					$('#upload_files_input').on('filebatchuploadcomplete', function(event, files, extra) {
+					$('#upload_files_input').on('filebatchuploadcomplete', function (event, files, extra) {
 						swal(
 							'', //titulo
 							'Guardado Correctamente',
@@ -364,7 +364,7 @@ function guardarIntervencion() {
 						).then(function () {
 							window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + data.idIntervencion;
 						});
-					});	
+					});
 					$('#upload_files_input').fileinput('upload');
 
 				}
@@ -380,7 +380,7 @@ function validarInformacion() {
 			valido = false;
 		}
 	});
-	
+
 
 	return valido;
 }
@@ -525,4 +525,3 @@ function guardarNuevaVereda() {
 		)
 	}
 }
-

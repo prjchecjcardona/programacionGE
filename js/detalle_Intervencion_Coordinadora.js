@@ -165,7 +165,7 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion) {
 						cargarInformacionEnTabla(data);
 						setTimeout(() => {
 							identificarEjecutadas(data, JSON.parse(ejecutadas));
-
+							$('.loader').hide();
 						}, 1000);
 						
 

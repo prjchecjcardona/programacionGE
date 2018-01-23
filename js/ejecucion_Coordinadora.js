@@ -82,6 +82,7 @@ $(function () {
 	var dateToday = new Date();
 	var dates = $("#textFecha").datepicker({
 		defaultDate: "+1w",
+		dateFormat: "yy-mm-dd",
 		changeMonth: true,
 		changeYear: true,
 		numberOfMonths: 1
@@ -91,6 +92,7 @@ $(function () {
 	var dateToday = new Date();
 	var dates = $("#FechainputNacimientoAsis").datepicker({
 		defaultDate: "+1w",
+		dateFormat: "yy-mm-dd",
 		changeMonth: true,
 		changeYear: true,
 		numberOfMonths: 1,
@@ -209,6 +211,12 @@ function cargarDatosPlaneacion() {
 					$('#estrategiaInd').html(data.html.estrategia);
 					$('#tacticoInd').html(data.html.tactico);
 					$('#indicadoresInd').html(data.html.indicador);
+
+					//datos de la ejecucion registrada
+					let valor = data.html.datosejec.horafinalizacion.split(':');
+					$('#textFecha').html(dta.html.datosEjec.fecha);
+					$('#selectbasicHoraEje').val(dta.html.datosEjec.fecha);
+
 				} else {
 					swal(
 						'', //titulo
@@ -217,6 +225,7 @@ function cargarDatosPlaneacion() {
 					);
 
 				}
+				$('.loader').hide();
 			}, "json");
 
 	} else {
@@ -244,6 +253,7 @@ function cargarDatosPlaneacion() {
 					);
 
 				}
+				$('.loader').hide();
 			}, "json");
 	}
 
@@ -427,3 +437,4 @@ $('#radiosContacto input:radio').click(function () {
 
 
 });
+

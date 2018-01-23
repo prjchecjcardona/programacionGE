@@ -1,4 +1,5 @@
 <?php
+
 include 'conexion.php';
 
 if (isset($_POST["accion"])) {
@@ -104,7 +105,29 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada){
     }
 
     if($isEjecutada){
+        $data['html']['datosEjec'] = array();
+        //Obtiene los datos registrados en la ejecucion
+        $sql = "SELECT ejec.fecha, ejec.horafinalizacion, ejec.numeroasistentes, ejec.observaciones, nc.nivel_cumplimiento, dncxe.id_detalle_nivelcumplimiento, dncxe.nivel_cumplimiento
+        FROM ejecucion ejec
+        JOIN ejecuciones_por_planeacion ep ON ejec.id_ejecucion = ep.ejecucion_id_ejecucion
+        JOIN planeaciones_por_intervencion pi ON ep.id_planeaciones_por_intervencion = pi.id_planeaciones_por_intervencion
+        JOIN nivelcumplimiento nc ON nc.id_nivelcumplimiento = ejec.nivelcumplimiento
+        JOIN detallenivelcumplimiento_por_ejecucion dncxe ON dncxe.ejecucion_id_ejecucion = ejec.id_ejecucion
+        WHERE pi.planeacion_id_planeacion = $idPlaneacion";
 
+        if ($rs = $con->query($sql)) {
+            if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+                $data['html']['datosEjec']['fecha'] = $filas[0]['fecha'];
+                $data['html']['datosEjec']['horafinalizacion'] = $filas[0]['horafinalizacion'];
+                $data['html']['datosEjec']['numeroasistentes'] = $filas[0]['numeroasistentes'];
+                $data['html']['datosEjec']['observaciones'] = $filas[0]['observaciones'];
+                $data['html']['datosEjec']['nivel_cumplimiento'] = $filas[0]['nivel_cumplimiento'];
+                $data['html']['datosEjec']['detalle_nivel'] = array();
+                foreach ($filas as $key => $value) {
+                    $data['html']['datosEjec']['detalle_nivel'][$key] = $value['id_detalle_nivelcumplimiento'];
+                }
+            }
+        }
     }
     
     echo json_encode($data);
@@ -112,7 +135,6 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada){
 
 function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $arrayAsistentes, $observaciones)
 {
-
     include 'conexion.php';
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
 
@@ -185,16 +207,19 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
 
                                 //TODO REVISAR GUARDADO DE DETALLE NIVEL CUMPL EN BD
                                 //se inserta en detalle nivel cumplimiento por ejecucion
-                                var_dump($detalleCumplimiento);
                                 for ($i = 0; $i < count($detalleCumplimiento); $i++) {
                                     if ($detalleCumplimiento[$i] == 1) {$nivelCumplimiento = "Completa";}
                                     if ($detalleCumplimiento[$i] == 2) {$nivelCumplimiento = "Parcial";}
                                     if ($detalleCumplimiento[$i] == 3) {$nivelCumplimiento = "No se cumplio";}
 
+                                    
+
                                     //Insertar la detallenivelcumplimiento_por_ejecucion  FALTA CREA LA SECENCIA
                                     $sql = "INSERT INTO detallenivelcumplimiento_por_ejecucion (id_detallenivelcumplimiento_por_ejecucioncl, id_detalle_nivelcumplimiento, ejecucion_id_ejecucion,nivel_cumplimiento)
 															VALUES (nextval('sec_detallenivelcumplimiento_por_ejecucion'),'" . $detalleCumplimiento[$i] . "', '" . $id_ejecucion . "','" . $nivelCumplimiento . "');
-															  ";
+                                                              ";
+                                                              
+                                   
 
                                     if ($rs = $con->query($sql)) {
                                         $data['mensaje'] = "exito";
@@ -229,8 +254,7 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
     }
 }
 
-function cargarTipoCedula()
-{
+function cargarTipoCedula(){
     include 'conexion.php';
     $sql = "SELECT id_tipo_documento, tipo_documento FROM public.tipo_documento;";
     if ($rs = $con->query($sql)) {
@@ -245,3 +269,4 @@ function cargarTipoCedula()
 
     echo json_encode($data);
 }
+

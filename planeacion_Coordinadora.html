@@ -12,11 +12,14 @@
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
+  <link rel="stylesheet" href="css/css-loader.css">
+  <link rel="stylesheet" href="css/loader-double.css">
   <link rel="stylesheet" href="css/styles.css">
 
 </head>
 
 <body>
+  <div class="loader loader-double is-active"></div>
 
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -57,7 +60,7 @@
     <div class="row">
       <!-- Form Name -->
       <legend>Planeación</legend>
-      <div class="col-md-4 col-md-offset-2 card-body customBack">
+      <div class="col-md-5 col-md-offset-2 card-body customBack">
         <div class="form-horizontal" id="formulario">
           <fieldset>
 
@@ -66,7 +69,7 @@
               <label class="col-md-12 control-label" for="Fechainput">Fecha de Encuentro</label>
               <div class="col-md-12">
                 <p>
-                  <input id="Fechainput" type="text" class="datepicker" placeholder=" Selecciona Fecha...">
+                  <input id="fecha_planeacion" type="text" class="datepicker" placeholder=" Selecciona Fecha...">
                 </p>
               </div>
             </div>
@@ -75,7 +78,7 @@
             <div class="form-group">
               <label class="col-md-12 control-label" for="textinputLugarEncuentro">Lugar de Encuentro</label>
               <div class="col-md-12">
-                <input id="textinputLugarEncuentro" name="textinputLugarEncuentro" type="text" placeholder="Digite Lugar de Encuentro" class="form-control input-md">
+                <input id="textinputLugarEncuentro" name="textinputLugarEncuentro" type="text" placeholder="" class="form-control input-md">
 
               </div>
             </div>
@@ -327,7 +330,7 @@
         </div>
 
       </div>
-      <div class="col-md-8">
+      <div class="col-md-7">
         <img class="planeacionImg" src="img/SeñoritaEscritorio385pxV1.png">
 
         <div class="boton-dashboard btn-verde posicionBtnBancoHerramientas" id="btnBancoHerramientas" style="height:70px">

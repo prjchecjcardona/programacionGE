@@ -41,7 +41,7 @@
   flex-flow: column nowrap;
   justify-content: space-between;
   width: 100%;
-  padding-top: 5em;
+  padding-top: 1em;
   padding-right: 2em;
 }
 .floating-text{
@@ -49,7 +49,15 @@
   height: 23em;
   text-align: justify;  
   font-size: 1.1em;
-   padding-left: 12em;
+  padding-left: 1em;
+}
+
+.floating-text2{
+  width: 100%;
+  height: 5em;
+  text-align: justify;  
+  font-size: 1.1em;
+  padding-left: 1em;
 }
 .gen-block{
   display: flex;
@@ -134,4 +142,10 @@
 .fich-found .file-group .file-text{
   width: 100%;
   height: 45%;
+}
+
+a.list-group-item{
+  display: flex;
+  justify-content: space-between;
+
 }
