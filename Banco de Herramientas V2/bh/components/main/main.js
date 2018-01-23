@@ -36,7 +36,6 @@ function getGeneralidades() {
     <div class="text-title-container">
      <h2 class="gen-title" id="title-presentacion">Presentación</h2>
      <div class="gen-img-container">
-      <img id="girl-gen" src="bh/img/Señorita-01.png" alt="">
      </div>
       <div class="floating-text">
         <p>
@@ -267,84 +266,100 @@ function getCriterios() {
   return `
  <div id="presentacion" class="gen-block">
     <div class="text-title-container">
+    <h2 class="gen-title" id="title-presentacion">Criterios Conceptuales</h2>
+
       <div id="accordion" role="tablist">
+
       <div class="card">
         <div class="card-header" role="tab" id="headingOne">
-          <h5 class="mb-0">
+          <h3 class="mb-0">
             <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
               Grupos de Interés
             </a>
-          </h5>
+          </h3>
         </div>
-
         <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
           <div class="card-body">
-            <p>CHEC reconoce como partes interesadas o grupos de interés a las personas o grupos de personas que generan impactos en la organización
+          <br>
+            <p class="floating-text2">CHEC reconoce como partes interesadas o grupos de interés a las personas o grupos de personas que generan impactos en la organización
             o se ven impactados por las diferentes decisiones, actividades, productos o servicios que brinda como empresa prestadora del servicio
              público de energía.<a href="bh/ficheros/GruposDeInteresChec.pdf" target="_blank">(Ver PDF)</a></p>
           </div>
         </div>
       </div>
+      <br> 
+
       <div class="card">
         <div class="card-header" role="tab" id="headingTwo">
-          <h5 class="mb-0">
+          <h3 class="mb-0">
             <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
               Competencia Ciudadana
             </a>
-          </h5>
+          </h3>
         </div>
         <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
           <div class="card-body">
-          <p><a href="bh/ficheros/CompetenciaCiudadana.pdf" target="_blank">(Ver PDF)</a></p>
+          <br>
+          <p class="floating-text2">Como alternativa para dicha movilización, se plantea la Gestión Educativa, la cual desde un enfoque experiencial y a través del fortalecimiento de competencias ciudadanas como la preservación, el respeto, el cuidado, la confianza y la corresponsabilidad, posibilita la participación de los ciudadanos – clientes del servicio de energía en procesos de formación grupal, para propiciar la reflexión frente a nuevos conocimientos, los cuales, asociados a las prácticas cotidianas favorecen el bienestar colectivo frente al uso responsable, cultura de pago, disfrute del servicio de energía y uso de canales vanguardistas relacionados con la prestación del servicio de energía eléctrica. <a href="bh/ficheros/CompetenciaCiudadana.pdf" target="_blank">(Ver PDF)</a></p>
+          <hr>
           </div>
         </div>
       </div>
+      <br>
+
       <div class="card">
         <div class="card-header" role="tab" id="headingThree">
-          <h5 class="mb-0">
+          <h3 class="mb-0">
             <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
               Cultura Ciudadana
             </a>
-          </h5>
+          </h3>
       </div>
       <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
         <div class="card-body">
-          <p>La cultura ciudadana la construimos entre todos a través de las prácticas cotidianas que favorecen el bienestar común. 
+        <br>
+          <p class="floating-text2">La cultura ciudadana la construimos entre todos a través de las prácticas cotidianas que favorecen el bienestar común. 
           La ciudadanía otorga características especiales a los sujetos como actores activos, con derechos y deberes con ellos mismos, 
           con los demás y con el entorno.  En este sentido, desde la Gestión Educativa, se busca aportar al fortalecimiento de competencias 
           ciudadanas con las cuales las personas lleven a la práctica conocimientos que posibiliten el bienestar de todos los ciudadanos, clientes del 
           servicio de energía eléctrica <a href="bh/ficheros/CulturaCiudadana.pdf" target="_blank">(Ver PDF)</a></p>
         </div>
       </div>
+      <br>
+
       <div class="card">
         <div class="card-header" role="tab" id="headingFour">
-          <h5 class="mb-0">
+          <h3 class="mb-0">
             <a class="collapsed" data-toggle="collapse" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
               Comportamientos Deseables
             </a>
-          </h5>
+          </h3>
       </div>
       <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
         <div class="card-body">
-          <p>Los comportamientos deseables son las actitudes adecuadas para vivir en sociedad, fomentando el sentido de pertenencia de los ciudadanos 
+        <br>
+          <p class="floating-text2">Los comportamientos deseables son las actitudes adecuadas para vivir en sociedad, fomentando el sentido de pertenencia de los ciudadanos 
           por los bienes públicos al hacer un uso responsable de la energía, fortaleciendo la cultura de pago, disfrutando del servicio de energía 
           y reconociendo su aporte a la calidad de vida de los clientes y haciendo uso de los canales vanguardistas para interactuar con la empresa 
           CHEC <a href="bh/ficheros/ComportamientosDesables.pdf" target="_blank">(Ver PDF)</a></p>
         </div>
       </div>
+      <br>
 
       <div class="card">
         <div class="card-header" role="tab" id="headingFive">
-          <h5 class="mb-0">
+          <h3 class="mb-0">
             <a class="collapsed" data-toggle="collapse" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
               Aprendizaje Experiencial
             </a>
-          </h5>
+          </h3>
       </div>
       <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive" data-parent="#accordion">
         <div class="card-body">
-          <p><a href="bh/ficheros/AprendizajeExperiencial.pdf" target="_blank">(Ver PDF)</a></p>
-        </div>
+        <br>
+          <p class="floating-text2">Para el caso de la Gestión Educativa, se basa en el planteamiento de Kolb, en tanto permite retomar las experiencias de las personas, para observarlas, reflexionar, abstraer y conceptualizar sobre ellas, con el fin de generar nuevas experiencias, en este sentido, para el desarrollo del acompañamiento educativo que se hace a los grupos de interés Clientes y Comunidad, se desarrolla la siguiente planeación estratégica, que da cuenta del aprendizaje experiencial en las sesiones formativas. <a href="bh/ficheros/AprendizajeExperiencial.pdf" target="_blank">(Ver PDF)</a></p>
+        <hr>  
+          </div>
       </div>
       </div>
     </div>

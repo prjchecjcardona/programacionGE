@@ -82,6 +82,7 @@ $(function () {
 	var dateToday = new Date();
 	var dates = $("#textFecha").datepicker({
 		defaultDate: "+1w",
+		dateFormat: "yy-mm-dd",
 		changeMonth: true,
 		changeYear: true,
 		numberOfMonths: 1
@@ -91,6 +92,7 @@ $(function () {
 	var dateToday = new Date();
 	var dates = $("#FechainputNacimientoAsis").datepicker({
 		defaultDate: "+1w",
+		dateFormat: "yy-mm-dd",
 		changeMonth: true,
 		changeYear: true,
 		numberOfMonths: 1,
@@ -217,6 +219,7 @@ function cargarDatosPlaneacion() {
 					);
 
 				}
+				$('.loader').hide();
 			}, "json");
 
 	} else {
@@ -244,6 +247,7 @@ function cargarDatosPlaneacion() {
 					);
 
 				}
+				$('.loader').hide();
 			}, "json");
 	}
 
