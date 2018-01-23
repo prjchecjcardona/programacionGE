@@ -1,4 +1,9 @@
 $(document).ready(function () {
+
+	$("#selectbasicVereda").attr('disabled');
+	$("#selectbasicComuna").attr('disabled');
+	$("#selectbasicBarrio").attr('disabled');
+
 	$("#Rural").show();
 	$("#Urbano").hide();
 	traerNombre();
@@ -165,6 +170,9 @@ function cargarPorMunicipiosPorIdZona(idZona) {
 
 $("#selectbasicMunicipio").change(function () {
 
+	$("#selectbasicVereda").removeAttr('disabled');
+	$("#selectbasicComuna").removeAttr('disabled');
+
 	$('#UrbanoRural input:radio').trigger('click');
 
 });
@@ -208,6 +216,9 @@ $("#selectbasicVereda").change(function () {
 });
 
 $("#selectbasicComuna").change(function () {
+
+	$("#selectbasicBarrio").removeAttr('disabled');
+
 
 	$.post("php/nueva_Intervencion_Coordinadora.php", {
 			accion: 'cargarBarriosPorComuna',
@@ -309,9 +320,10 @@ $("#selectbasicComportamiento").change(function () {
 
 function guardarIntervencion() {
 
-	$("#buttonEnviar").attr('disabled', 'true')
+	$('.loader').show();
 
 	if (!validarInformacion()) {
+		$('.loader').hide();
 		swal(
 			'', //titulo
 			'Debes ingresar todos los datos!',
@@ -346,6 +358,7 @@ function guardarIntervencion() {
 				indicadores: list
 			},
 			function (data) {
+				$('.loader').hide();
 				if (data.error == 1) {
 
 					swal(
@@ -402,7 +415,7 @@ function initFileInput() {
 
 function guardarNuevaComuna() {
 
-	$("#buttonEnviarComuna").attr('disabled', 'true')
+	$('.loader').show();
 
 	let nombreComuna = $('#textinputComuna').val();
 	let municipio = $('#selectbasicMunicipio').val();
@@ -415,12 +428,14 @@ function guardarNuevaComuna() {
 			},
 			function (data) {
 				if (data.error == 1) {
+					$('.loader').hide();
 					swal(
 						'', //titulo
 						' No se guardo la comuna, intententalo nuevamente',
 						'error'
 					);
 				} else {
+					$('.loader').hide();
 					swal(
 						'', //titulo
 						'Guardado Correctamente',
@@ -432,13 +447,20 @@ function guardarNuevaComuna() {
 					});
 				}
 			}, "json");
+	} else {
+		$('.loader').hide();
+		swal(
+			'Error',
+			'Debes diligenciar todos los campos',
+			'error'
+		)
 	}
 }
 
 
 function guardarNuevoBarrio() {
 
-	$("#buttonEnviarBarrio").attr('disabled', 'true')
+	$('.loader').show();
 
 	let nombreBarrio = $('#textinputBarrio').val();
 	let latitud = $('#textinputBarrioLan').val();
@@ -452,15 +474,18 @@ function guardarNuevoBarrio() {
 				comuna: comuna,
 				latitud: latitud,
 				longitud: longitud
+
 			},
 			function (data) {
 				if (data.error == 1) {
+					$('.loader').hide();
 					swal(
 						'', //titulo
-						' No se guardo la comuna, intententalo nuevamente',
+						' No se guardo el barrio, intententalo nuevamente',
 						'error'
 					);
 				} else {
+					$('.loader').hide();
 					swal(
 						'', //titulo
 						'Guardado Correctamente',
@@ -472,6 +497,7 @@ function guardarNuevoBarrio() {
 				}
 			}, "json");
 	} else {
+		$('.loader').hide();
 		swal(
 			'Error',
 			'Debes diligenciar todos los campos',
@@ -482,7 +508,8 @@ function guardarNuevoBarrio() {
 
 function guardarNuevaVereda() {
 
-	$("#buttonEnviarVereda").attr('disabled', 'true')
+	$('.loader').show();
+
 
 	let nombreVereda = $('#textinputVereda').val();
 	let latitud = $('#textinputVeredaLan').val();
@@ -499,12 +526,14 @@ function guardarNuevaVereda() {
 			},
 			function (data) {
 				if (data.error == 1) {
+					$('.loader').hide();
 					swal(
 						'', //titulo
-						' No se guardo la comuna, intententalo nuevamente',
+						' No se guardo la vereda, intententalo nuevamente',
 						'error'
 					);
 				} else {
+					$('.loader').hide();
 					swal(
 						'', //titulo
 						'Guardado Correctamente',
@@ -517,6 +546,7 @@ function guardarNuevaVereda() {
 				}
 			}, "json");
 	} else {
+		$('.loader').hide();
 		swal(
 			'Error',
 			'Debes diligenciar todos los campos',

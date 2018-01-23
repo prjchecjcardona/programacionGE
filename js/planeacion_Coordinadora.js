@@ -183,6 +183,7 @@ function cargarEntidades(idIntervencion) {
 		},
 		function (data) {
 			$('#selectbasicEntidad').html(data.html);
+			$('.loader').hide();
 		}, "json");
 }
 

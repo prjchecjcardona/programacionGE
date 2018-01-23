@@ -21,8 +21,9 @@
 
 </head>
 
-<body><div class="loader loader-double is-active"></div>
-    
+<body>
+  <div class="loader loader-double is-active"></div>
+
 
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -58,220 +59,220 @@
     </div>
   </nav>
 
-  
+
   <!-- Inicio Formulario Nueva Intervencion Coordinadora  -->
   <div class="container">
     <div class="row">
       <legend>Nueva Intervención Coordinadora</legend>
-      <div class="col-md-5 card-body customBack">
-        <fieldset>
-          <!-- Form Name -->
+        <div class="col-md-5 card-body customBack">
+          <fieldset>
+            <!-- Form Name -->
 
 
-          <!-- Zona -->
-          <div class="form-group">
-            <label class="col-md-12 control-label" for="selectbasicZonas">Zona:&nbsp;
-              <span id="nombreZona" class="card-subtitle mb-2 text-muted" for="selectbasicZonas"></span>
-            </label>
-          </div>
-
-          <!-- Seleccion Municipio -->
-          <div class="form-group">
-            <label class="col-md-12 control-label" for="selectbasicMunicipio">Municipio</label>
-            <div class="col-md-12">
-              <select id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
-
-              </select>
-            </div>
-          </div>
-
-          <!-- Multiple Radios (inline) -->
-          <div class="form-group">
-            <label class="col-md-12 control-label" for="radiosMunicipio">Ubicación Municipio</label>
-            <div class="col-md-12" id="UrbanoRural">
-              <label class="radio-inline" for="radiosMunicipio-0">
-                <input onChange="" type="radio" name="radiosMunicipio" id="radiosMunicipio-0" value="1" checked="checked"> Rural
-              </label>
-              <label class="radio-inline" for="radiosMunicipio-1">
-                <input onChange="" type="radio" name="radiosMunicipio" id="radiosMunicipio-1" value="2"> Urbano
+            <!-- Zona -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="selectbasicZonas">Zona:&nbsp;
+                <span id="nombreZona" class="card-subtitle mb-2 text-muted" for="selectbasicZonas"></span>
               </label>
             </div>
-          </div>
 
+            <!-- Seleccion Municipio -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="selectbasicMunicipio">Municipio</label>
+              <div class="col-md-12">
+                <select id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
 
-          <!-- Seleccion Vereda -->
-          <div id="Rural">
-            <label class="col-md-12 control-label" for="selectbasicVereda">Vereda</label>
-            <div class="form-inline">
-              <div class="col-sm-12">
-                <select id="selectbasicVereda" name="selectbasicVereda" class="form-control">
                 </select>
-                <button id="btnNuevaVereda" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
               </div>
             </div>
-            <!-- Modal creacion Vereda -->
-            <div id="ex2" class="modal">
 
-              <head>
-                <h2>Añadir nueva Vereda</h2>
-              </head>
-              <hr>
-              <!-- Campo Vereda -->
-              <div class="col-md-12 espaciado">
-                <label class="col-md-12control-label" for="textinputVereda">* Nombre de la Vereda</label>
-                <input id="textinputVereda" name="textinputVereda" type="text" placeholder="" class="form-control input-md">
+            <!-- Multiple Radios (inline) -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="radiosMunicipio">Ubicación Municipio</label>
+              <div class="col-md-12" id="UrbanoRural">
+                <label class="radio-inline" for="radiosMunicipio-0">
+                  <input onChange="" type="radio" name="radiosMunicipio" id="radiosMunicipio-0" value="1" checked="checked"> Rural
+                </label>
+                <label class="radio-inline" for="radiosMunicipio-1">
+                  <input onChange="" type="radio" name="radiosMunicipio" id="radiosMunicipio-1" value="2"> Urbano
+                </label>
               </div>
+            </div>
 
-              <!-- Campo Latitud Vereda -->
-              <div class="col-md-12 espaciado">
-                <label class="col-md-12control-label" for="textinputVeredaLan">Latitud</label>
-                <input id="textinputVeredaLan" name="textinputVeredaLan" type="text" placeholder="" class="form-control input-md">
-              </div>
-              <!-- Campo Longitud Vereda -->
-              <div class="col-md-12 espaciado">
-                <label class="col-md-12control-label" for="textinputVeredaLon">Longitud</label>
-                <input id="textinputVeredaLon" name="textinputVeredaLon" type="text" placeholder="" class="form-control input-md">
-              </div>
-              <!-- Button (Double) -->
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="button1id"></label>
-                <div class="col-md-8">
-                  <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
-                  <button id="buttonEnviarVereda" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaVereda();">Guardar</button>
+
+            <!-- Seleccion Vereda -->
+            <div id="Rural">
+              <label class="col-md-12 control-label" for="selectbasicVereda">Vereda</label>
+              <div class="form-inline">
+                <div class="col-sm-12">
+                  <select disabled id="selectbasicVereda" name="selectbasicVereda" class="form-control">
+                  </select>
+                  <button id="btnNuevaVereda" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
                 </div>
               </div>
+              <!-- Modal creacion Vereda -->
+              <div id="ex2" class="modal">
 
-            </div>
-          </div>
+                <head>
+                  <h2>Añadir nueva Vereda</h2>
+                </head>
+                <hr>
+                <!-- Campo Vereda -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputVereda">* Nombre de la Vereda</label>
+                  <input id="textinputVereda" name="textinputVereda" type="text" placeholder="" class="form-control input-md">
+                </div>
 
+                <!-- Campo Latitud Vereda -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputVeredaLan">Latitud</label>
+                  <input id="textinputVeredaLan" name="textinputVeredaLan" type="text" placeholder="" class="form-control input-md">
+                </div>
+                <!-- Campo Longitud Vereda -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputVeredaLon">Longitud</label>
+                  <input id="textinputVeredaLon" name="textinputVeredaLon" type="text" placeholder="" class="form-control input-md">
+                </div>
+                <!-- Button (Double) -->
+                <div class="form-group">
+                  <label class="col-md-12 control-label" for="button1id"></label>
+                  <div class="col-md-8">
+                    <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
+                    <button id="buttonEnviarVereda" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaVereda();">Guardar</button>
+                  </div>
+                </div>
 
-          <div id="Urbano">
-            <!-- Seleccion Comuna -->
-            <label class="col-md-12 control-label" for="selectbasicComuna">Comuna</label>
-            <div class="form-inline">
-              <div class="col-sm-12">
-                <select id="selectbasicComuna" name="selectbasicComuna" class="form-control">
-                  <!-- <option value="0">Seleccione...</option> -->
-                </select>
-                <button id="btnNuevaComuna" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
               </div>
             </div>
-            <!-- Modal creacion Comuna -->
-            <div id="ex4" class="modal">
-
-              <head>
-                <h2>Añadir nueva Comuna</h2>
-              </head>
-              <hr>
-              <!-- Campo Comuna -->
-              <div class="col-md-12 espaciado">
-                <label class="col-md-12control-label" for="textinputComuna">Nombre de la Comuna</label>
-                <input id="textinputComuna" name="textinputComuna" type="text" placeholder="" class="form-control input-md">
-              </div>
 
 
-              <!-- Button (Double) -->
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="button1id"></label>
-                <div class="col-md-8">
-                  <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
-                  <button id="buttonEnviarComuna" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaComuna();">Guardar</button>
+            <div id="Urbano">
+              <!-- Seleccion Comuna -->
+              <label class="col-md-12 control-label" for="selectbasicComuna">Comuna</label>
+              <div class="form-inline">
+                <div class="col-sm-12">
+                  <select disabled id="selectbasicComuna" name="selectbasicComuna" class="form-control">
+                    <!-- <option value="0">Seleccione...</option> -->
+                  </select>
+                  <button id="btnNuevaComuna" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
                 </div>
               </div>
+              <!-- Modal creacion Comuna -->
+              <div id="ex4" class="modal">
 
-            </div>
+                <head>
+                  <h2>Añadir nueva Comuna</h2>
+                </head>
+                <hr>
+                <!-- Campo Comuna -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputComuna">Nombre de la Comuna</label>
+                  <input id="textinputComuna" name="textinputComuna" type="text" placeholder="" class="form-control input-md">
+                </div>
 
-            <label class="col-md-12 control-label" for="selectbasicBarrio">Barrio</label>
-            <div class="form-inline">
-              <div class="col-sm-12">
-                <select id="selectbasicBarrio" name="selectbasicBarrio" class="form-control">
-                </select>
-                <button id="btnNuevoBarrio" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
-              </div>
-            </div>
-            <!-- Modal creacion Barrio -->
-            <div id="ex3" class="modal">
 
-              <head>
-                <h2>Añadir nuevo Barrio</h2>
-              </head>
-              <hr>
-              <!-- Campo Barrio -->
-              <div class="col-md-12 espaciado">
-                <label class="col-md-12control-label" for="textinputBarrio">* Nombre del Barrio</label>
-                <input id="textinputBarrio" name="textinputBarrio" type="text" placeholder="" required class="form-control input-md">
-              </div>
+                <!-- Button (Double) -->
+                <div class="form-group">
+                  <label class="col-md-12 control-label" for="button1id"></label>
+                  <div class="col-md-8">
+                    <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
+                    <button id="buttonEnviarComuna" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaComuna();">Guardar</button>
+                  </div>
+                </div>
 
-              <!-- Campo Latitud Barrio -->
-              <div class="col-md-12 espaciado">
-                <label class="col-md-12control-label" for="textinputBarrioLan">Latitud</label>
-                <input id="textinputBarrioLan" value="0" name="textinputBarrioLan" type="text" placeholder="" class="form-control input-md">
-              </div>
-              <!-- Campo Longitud Barrio -->
-              <div class="col-md-12 espaciado">
-                <label class="col-md-12control-label" for="textinputBarrioLon">Longitud</label>
-                <input id="textinputBarrioLon" value="0" name="textinputBarrioLon" type="text" placeholder="" class="form-control input-md">
               </div>
 
-              <!-- Button (Double) -->
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="button1id"></label>
-                <div class="col-md-8">
-                  <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
-                  <button id="buttonEnviarBarrio" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevoBarrio();">Guardar</button>
+              <label class="col-md-12 control-label" for="selectbasicBarrio">Barrio</label>
+              <div class="form-inline">
+                <div class="col-sm-12">
+                  <select disabled id="selectbasicBarrio" name="selectbasicBarrio" class="form-control">
+                  </select>
+                  <button id="btnNuevoBarrio" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
+                </div>
+              </div>
+              <!-- Modal creacion Barrio -->
+              <div id="ex3" class="modal">
+
+                <head>
+                  <h2>Añadir nuevo Barrio</h2>
+                </head>
+                <hr>
+                <!-- Campo Barrio -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputBarrio">* Nombre del Barrio</label>
+                  <input id="textinputBarrio" name="textinputBarrio" type="text" placeholder="" required class="form-control input-md">
+                </div>
+
+                <!-- Campo Latitud Barrio -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputBarrioLan">Latitud</label>
+                  <input id="textinputBarrioLan" value="0" name="textinputBarrioLan" type="text" placeholder="" class="form-control input-md">
+                </div>
+                <!-- Campo Longitud Barrio -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputBarrioLon">Longitud</label>
+                  <input id="textinputBarrioLon" value="0" name="textinputBarrioLon" type="text" placeholder="" class="form-control input-md">
+                </div>
+
+                <!-- Button (Double) -->
+                <div class="form-group">
+                  <label class="col-md-12 control-label" for="button1id"></label>
+                  <div class="col-md-8">
+                    <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
+                    <button id="buttonEnviarBarrio" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevoBarrio();">Guardar</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
 
-          <!-- Seleccion Tipo de Intervención -->
-          <div class="form-group">
-            <label class="col-md-12 control-label" for="selectbasicTipoInvervencion">Tipo de Intervención</label>
-            <div class="col-md-12">
-              <select id="selectbasicTipoInvervencion" name="selectbasicTipoInvervencion" class="form-control">
-              </select>
+            <!-- Seleccion Tipo de Intervención -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="selectbasicTipoInvervencion">Tipo de Intervención</label>
+              <div class="col-md-12">
+                <select id="selectbasicTipoInvervencion" name="selectbasicTipoInvervencion" class="form-control">
+                </select>
+              </div>
             </div>
-          </div>
 
-          <!-- Seleccion Comportamiento -->
-          <div class="form-group">
-            <label class="col-md-12 control-label" for="selectbasicComportamiento">Comportamiento</label>
-            <div class="col-md-12">
-              <select onChange="" id="selectbasicComportamiento" name="selectbasicComportamiento" class="form-control">
-              </select>
+            <!-- Seleccion Comportamiento -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="selectbasicComportamiento">Comportamiento</label>
+              <div class="col-md-12">
+                <select onChange="" id="selectbasicComportamiento" name="selectbasicComportamiento" class="form-control">
+                </select>
+              </div>
             </div>
-          </div>
 
-          <!-- Indicadores -->
-          <div class="form-group">
-            <label class="col-md-12 control-label" for="selectbasicIndicadores">Indicadores de control CHEC</label>
+            <!-- Indicadores -->
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="selectbasicIndicadores">Indicadores de control CHEC</label>
 
-            <div class="col-md-12">
+              <div class="col-md-12">
                 <span class="grisTexto">Estos son los indicadores de control CHEC más relevantes observados en los tableros de control.</span>
                 <hr>
 
-              <select multiple onChange="" id="selectbasicIndicadores" name="selectbasicIndicadores" class="form-control">
-              </select>
+                <select multiple onChange="" id="selectbasicIndicadores" name="selectbasicIndicadores" class="form-control">
+                </select>
+                <hr>
+                <span class="grisTexto">Para seleccionar varios indicadores, mantenga la tecla Ctrl Presionada y seleccione las opciones requeridas</span>
+              </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <hr>
-            <h4>Adjuntar Imágen</h4>
-            <form enctype="multipart/form-data">
-              <input id="upload_files_input" name="archivo" type="file" multiple>
-            </form>
-            <hr>
-          </div>
+            <div class="form-group">
+              <hr>
+              <h4>Adjuntar Imágen</h4>
+              <form enctype="multipart/form-data">
+                <input id="upload_files_input" name="archivo" type="file" multiple>
+              </form>
+              <hr>
+            </div>
+
+          </fieldset>
+          <!-- </form> -->
+        </div>
 
 
-
-
-        </fieldset>
-        <!-- </form> -->
-
-      </div>
 
 
 
