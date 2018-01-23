@@ -406,9 +406,10 @@ function initFileInput() {
 		language: 'es',
 		'theme': 'fa',
 		uploadUrl: 'php/uploadImgNuevaInterv.php',
-		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
-		],
+		showUpload: false,
+		showcaption: false,
+		showPreview: false,
+		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp'],
 		maxFileCount: 1
 	});
 }

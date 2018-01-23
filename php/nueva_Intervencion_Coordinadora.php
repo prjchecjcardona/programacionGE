@@ -523,12 +523,11 @@ function guardarNuevaVereda($municipio, $vereda, $latitud, $longitud){
 	$sql = "INSERT INTO public.veredas(
 		id_veredas, vereda, id_municipio, lat, long)
 		VALUES (
-			(SELECT MAX(id_veredas)+1 FROM veredas), 
+			nextval('sec_veredas'), 
 			'".$vereda."', 
-			".$municipio."),
+			".$municipio.",
 			'".$latitud."',
 			'".$longitud."');";
-  
 	if ($rs = $con->query($sql)) {
 		$data['mensaje']="Guardado Exitosamente";
 	}

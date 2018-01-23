@@ -1,4 +1,5 @@
 <?php
+
 include 'conexion.php';
 
 if (isset($_POST["accion"])) {
@@ -7,7 +8,7 @@ if (isset($_POST["accion"])) {
         cargarCompetencia();
     }
     if ($_POST["accion"] == "cargarDatosPlaneacion") {
-        cargarDatosPlaneacion($_POST["idPlaneacion"]);
+        cargarDatosPlaneacion($_POST["idPlaneacion"], $_POST["isEjecutada"]);
     }
     if ($_POST["accion"] == "guardarEjecucion") {
         guardarEjecucion($_POST["fecha"], $_POST["hora"], $_POST["asistentes"], $_POST["detalleCumplimiento"], $_POST["nCumplimiento"], $_POST["idPlaneacion"], $_POST["arrayAsistentes"], $_POST["observaciones"]);
@@ -45,8 +46,7 @@ function cargarCompetencia()
 }
 
 
-//todo: ARREGLAR CONSULTA PARA DETALLE EJECUCION
-function cargarDatosPlaneacion($idPlaneacion){
+function cargarDatosPlaneacion($idPlaneacion, $isEjecutada){
 	include "conexion.php";
 	$data = array('error'=>0,'mensaje'=>'','html'=>array());
 	$sql = "
@@ -79,37 +79,62 @@ function cargarDatosPlaneacion($idPlaneacion){
 	GROUP BY pl.fecha, ent.nombreentidad, municipio, comport.comportamientos, compet.competencia, nombreestrategia, nombretactico, nombreindicador
 	";
 	
-			$array="";
-			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					$data['html']['fecha']= $filas[0]['fecha'];
-					$data['html']['lugar']= $filas[0]['lugarencuentro'];
-					$data['html']['municipio']= $filas[0]['municipio'];
-					$data['html']['comportamiento']= $filas[0]['comportamientos'];
-					$data['html']['competencia']= $filas[0]['competencia'];
-					$data['html']['estrategia']= $filas[0]['nombreestrategia'];
-					$data['html']['tactico']= $filas[0]['nombretactico'];
-					for ($i=0;$i<count($filas);$i++)
-					{				
-						$array.= '<div class="row"><div class="col-md-12">
-						<label class="mr-sm-2" id="lblIndicadorChec1"><li>'.$filas[$i]['nombreindicador'].'</li></label></div></div>';
-					}
-					$data['html']['indicador']= $array;
-				}
-			}
-			else
-			{
-				print_r($conexion->errorInfo());
-				$data['mensaje']="No se realizo la consulta";
-				$data['error']=1;
-			}
-			
-		  echo json_encode($data);
+    $array="";
+    if ($rs = $con->query($sql)) {
+        if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+            $data['html']['fecha']= $filas[0]['fecha'];
+            $data['html']['lugar']= $filas[0]['lugarencuentro'];
+            $data['html']['municipio']= $filas[0]['municipio'];
+            $data['html']['comportamiento']= $filas[0]['comportamientos'];
+            $data['html']['competencia']= $filas[0]['competencia'];
+            $data['html']['estrategia']= $filas[0]['nombreestrategia'];
+            $data['html']['tactico']= $filas[0]['nombretactico'];
+            for ($i=0;$i<count($filas);$i++)
+            {				
+                $array.= '<div class="row"><div class="col-md-12">
+                <label class="mr-sm-2" id="lblIndicadorChec1"><li>'.$filas[$i]['nombreindicador'].'</li></label></div></div>';
+            }
+            $data['html']['indicador']= $array;
+        }
+    }
+    else
+    {
+        print_r($conexion->errorInfo());
+        $data['mensaje']="No se realizo la consulta";
+        $data['error']=1;
+    }
+
+    if($isEjecutada){
+        $data['html']['datosEjec'] = array();
+        //Obtiene los datos registrados en la ejecucion
+        $sql = "SELECT ejec.fecha, ejec.horafinalizacion, ejec.numeroasistentes, ejec.observaciones, nc.nivel_cumplimiento, dncxe.id_detalle_nivelcumplimiento, dncxe.nivel_cumplimiento
+        FROM ejecucion ejec
+        JOIN ejecuciones_por_planeacion ep ON ejec.id_ejecucion = ep.ejecucion_id_ejecucion
+        JOIN planeaciones_por_intervencion pi ON ep.id_planeaciones_por_intervencion = pi.id_planeaciones_por_intervencion
+        JOIN nivelcumplimiento nc ON nc.id_nivelcumplimiento = ejec.nivelcumplimiento
+        JOIN detallenivelcumplimiento_por_ejecucion dncxe ON dncxe.ejecucion_id_ejecucion = ejec.id_ejecucion
+        WHERE pi.planeacion_id_planeacion = $idPlaneacion";
+
+        if ($rs = $con->query($sql)) {
+            if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+                $data['html']['datosEjec']['fecha'] = $filas[0]['fecha'];
+                $data['html']['datosEjec']['horafinalizacion'] = $filas[0]['horafinalizacion'];
+                $data['html']['datosEjec']['numeroasistentes'] = $filas[0]['numeroasistentes'];
+                $data['html']['datosEjec']['observaciones'] = $filas[0]['observaciones'];
+                $data['html']['datosEjec']['nivel_cumplimiento'] = $filas[0]['nivel_cumplimiento'];
+                $data['html']['datosEjec']['detalle_nivel'] = array();
+                foreach ($filas as $key => $value) {
+                    $data['html']['datosEjec']['detalle_nivel'][$key] = $value['id_detalle_nivelcumplimiento'];
+                }
+            }
+        }
+    }
+    
+    echo json_encode($data);
 }
 
 function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $arrayAsistentes, $observaciones)
 {
-
     include 'conexion.php';
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
 
@@ -180,16 +205,21 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
                                     $data['error'] = 1;
                                 }
 
+                                //TODO REVISAR GUARDADO DE DETALLE NIVEL CUMPL EN BD
                                 //se inserta en detalle nivel cumplimiento por ejecucion
                                 for ($i = 0; $i < count($detalleCumplimiento); $i++) {
                                     if ($detalleCumplimiento[$i] == 1) {$nivelCumplimiento = "Completa";}
                                     if ($detalleCumplimiento[$i] == 2) {$nivelCumplimiento = "Parcial";}
                                     if ($detalleCumplimiento[$i] == 3) {$nivelCumplimiento = "No se cumplio";}
 
+                                    
+
                                     //Insertar la detallenivelcumplimiento_por_ejecucion  FALTA CREA LA SECENCIA
                                     $sql = "INSERT INTO detallenivelcumplimiento_por_ejecucion (id_detallenivelcumplimiento_por_ejecucioncl, id_detalle_nivelcumplimiento, ejecucion_id_ejecucion,nivel_cumplimiento)
 															VALUES (nextval('sec_detallenivelcumplimiento_por_ejecucion'),'" . $detalleCumplimiento[$i] . "', '" . $id_ejecucion . "','" . $nivelCumplimiento . "');
-															  ";
+                                                              ";
+                                                              
+                                   
 
                                     if ($rs = $con->query($sql)) {
                                         $data['mensaje'] = "exito";
@@ -224,8 +254,7 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
     }
 }
 
-function cargarTipoCedula()
-{
+function cargarTipoCedula(){
     include 'conexion.php';
     $sql = "SELECT id_tipo_documento, tipo_documento FROM public.tipo_documento;";
     if ($rs = $con->query($sql)) {
@@ -240,3 +269,4 @@ function cargarTipoCedula()
 
     echo json_encode($data);
 }
+

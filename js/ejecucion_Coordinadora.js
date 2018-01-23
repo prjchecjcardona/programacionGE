@@ -211,6 +211,12 @@ function cargarDatosPlaneacion() {
 					$('#estrategiaInd').html(data.html.estrategia);
 					$('#tacticoInd').html(data.html.tactico);
 					$('#indicadoresInd').html(data.html.indicador);
+
+					//datos de la ejecucion registrada
+					let valor = data.html.datosejec.horafinalizacion.split(':');
+					$('#textFecha').html(dta.html.datosEjec.fecha);
+					$('#selectbasicHoraEje').val(dta.html.datosEjec.fecha);
+
 				} else {
 					swal(
 						'', //titulo
@@ -431,3 +437,4 @@ $('#radiosContacto input:radio').click(function () {
 
 
 });
+
