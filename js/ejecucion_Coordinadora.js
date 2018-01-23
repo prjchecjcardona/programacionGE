@@ -215,7 +215,8 @@ function cargarDatosPlaneacion() {
 					//datos de la ejecucion registrada
 					let valor = data.html.datosejec.horafinalizacion.split(':');
 					$('#textFecha').html(dta.html.datosEjec.fecha);
-					$('#selectbasicHoraEje').val(dta.html.datosEjec.fecha);
+					$('#selectbasicHoraEje').val(valor[0]);
+					$('#selectbasicHoraEje').val(valor[0]);
 
 				} else {
 					swal(
