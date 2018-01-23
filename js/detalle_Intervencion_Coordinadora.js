@@ -39,9 +39,7 @@ function initFileInput(idIntervencion) {
 		'theme': 'fa',
 		uploadUrl: 'php/uploadImgDetalleInterv.php',
 		uploadExtraData : {idIntervencion: idIntervencion},
-		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
-		]
+		allowedFileExtensions: ['jpg', 'png']
 	});
 
 	$('.upload_files_input').on('filebatchuploadcomplete', function(event, files, extra) {
