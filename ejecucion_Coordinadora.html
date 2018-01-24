@@ -155,7 +155,7 @@
         <!-- Fecha de Ejecución -->
         <div class="row">
           <div class="form-inline fecha-ejec-form">
-            <label class="col-md-4 control-label" for="datepicker">Fecha de Ejecución: </label>
+            <label class="col-md-4 control-label" for="datepicker"><span class="red">* </span> Fecha de Ejecución: </label>
             <div class="col-md-6">
               <input type="text" class=datepicker placeholder=" Selecciona Fecha..." id="textFecha">
             </div>
@@ -166,7 +166,7 @@
         <!-- Duración de Ejecución -->
         <div class="row">
           <div class="col-md-4 centrado-vertical">
-            <label class="mr-sm-2">Duración: </label>
+            <label class="mr-sm-2"><span class="red">* </span> Duración: </label>
           </div>
           <div class="col-md-4">
             <select id="selectbasicHoraEje" name="selectbasicHoraEje" class="form-control alargadoTiempoEjecucion">
@@ -191,7 +191,7 @@
         <!-- Label Total de Asistentes -->
         <div class="row">
           <div class="col-md-4 centrado-vertical">
-            <label>Total de Asistentes: </label>
+            <label><span class="red">* </span> Total de Asistentes: </label>
           </div>
           <div class="col-md-4">
             <input id="textinputAsisNum" name="textinputAsisNum" type="text" placeholder="" class="form-control input-md">
@@ -201,7 +201,7 @@
         <hr>
 
         <div id="nCumplimiento">
-          <span>Nivel de Cumplimiento</span>
+          <span><span class="red">* </span> Nivel de Cumplimiento</span>
           <p>
             <div class="form-check">
               <label class="form-check-label grisTexto">
@@ -221,7 +221,7 @@
         </div>
         <hr>
 
-        <span>Observaciones</span>
+        <span><span class="red">* </span> Observaciones</span>
         <p></p>
         <textarea class="form-control" id="textareaObservaciones" name="textareaObservaciones"></textarea>
         <hr>
@@ -363,7 +363,7 @@
 
         <!-- Tipo de Documento -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="selectbasicTipoDocumento">Tipo de Documento</label>
+          <label class="col-md-12 control-label" for="selectbasicTipoDocumento" ><span class="red">* </span>Tipo de Documento</label>
           <div class="col-md-12">
             <select id="selectbasicTipoDocumento" name="selectbasicTipoDocumento" class="form-control">
 
@@ -373,7 +373,7 @@
 
         <!-- Documento -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="textinputDocumento">Número de Documento</label>
+          <label class="col-md-12 control-label" for="textinputDocumento"><span class="red">* </span>Número de Documento</label>
           <div class="col-md-12">
             <input id="textinputDocumento" name="textinputDocumento" type="text" placeholder="" class="form-control input-md">
           </div>
@@ -381,7 +381,7 @@
 
         <!-- Nombres -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="textinputNombres">Nombres</label>
+          <label class="col-md-12 control-label" for="textinputNombres"><span class="red">* </span>Nombres</label>
           <div class="col-md-12">
             <input id="textinputNombres" name="textinputNombres" type="text" placeholder="" class="form-control input-md">
           </div>
@@ -389,7 +389,7 @@
 
         <!-- Apellidos -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="textinputApellidos">Apellidos</label>
+          <label class="col-md-12 control-label" for="textinputApellidos"><span class="red">* </span>Apellidos</label>
           <div class="col-md-12">
             <input id="textinputApellidos" name="textinputApellidos" type="text" placeholder="" class="form-control input-md">
           </div>
@@ -455,7 +455,7 @@
 
         <!-- Rol -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="textinputRolAsis">Rol</label>
+          <label class="col-md-12 control-label" for="textinputRolAsis"><span class="red">* </span>Rol</label>
           <div class="col-md-12">
             <input id="textinputRolAsis" name="textinputRolAsis" type="text" placeholder="" class="form-control input-md">
 
@@ -464,7 +464,7 @@
 
         <!-- Fecha de Nacimiento Asistente -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="FechainputNacimientoAsis">Fecha de Nacimiento</label>
+          <label class="col-md-12 control-label" for="FechainputNacimientoAsis"><span class="red">* </span> Fecha de Nacimiento</label>
           <div class="col-md-12">
             <p>
               <input id="FechainputNacimientoAsis" name="FechainputNacimientoAsis" type="text" class="" placeholder=" Selecciona...">
@@ -498,7 +498,9 @@
           </div>
         </div>
 
-
+        <hr>
+        <span class="red">* </span>
+        <span class=""> Campo Obligatorio </span>
         <!-- Button (Double) -->
         <div class="form-group">
           <label class="col-md-12 control-label" for="button1id"></label>

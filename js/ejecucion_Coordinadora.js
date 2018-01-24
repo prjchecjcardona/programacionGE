@@ -282,7 +282,10 @@ function cargarDatosPlaneacion() {
 
 function guardarEjecucion() {
 
+	$('.loader').show();
+
 	if (!validarInformacion()) {
+		$('.loader').hide();
 		swal(
 			'', //titulo
 			'Debes ingresar todos los datos!',
@@ -322,7 +325,7 @@ function guardarEjecucion() {
 		},
 			function (data) {
 				if (data.error == 1) {
-
+					$('.loader').hide();
 					swal(
 						'', //titulo
 						' No se guardo la ejecución, intententalo nuevamente',
@@ -330,6 +333,7 @@ function guardarEjecucion() {
 					);
 
 				} else {
+					$('.loader').hide();
 					swal(
 						'', //titulo
 						'Guardado Correctamente',
@@ -384,10 +388,13 @@ var arrayAsistentes = [];
 
 function guardarAsistencia() {
 
+	$('.loader').show();
+
 	if ($('#selectbasicTipoDocumento').val() == "" || $('#textinputDocumento').val() == "" ||
 		$('#textinputNombres').val() == "" || $('#textinputApellidos').val() == "" ||
 		$('#textinputRolAsis').val() == "" ||
 		$('#FechainputNacimientoAsis').val() == "") {
+			$('.loader').hide();
 		swal(
 			'Error', //titulo
 			'Debes diligenciar todos los campos',
@@ -416,7 +423,7 @@ function guardarAsistencia() {
 		var table = $('#ejecucion_coordinadora_asistencia');
 		table.dataTable().fnClearTable();
 		table.dataTable().fnAddData(arrayAsistentes);
-
+		$('.loader').hide();
 		swal({
 			position: 'top-right',
 			type: 'success',

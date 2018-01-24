@@ -265,9 +265,12 @@ $('#radiosContacto input:radio').click(function () {
 
 $('#buttonGuardarPlaneacion').click(function () {
 
-	$("#buttonGuardarPlaneacion").attr('disabled', 'true')
+	$('.loader').show();
+
+
 
 	if (!validarInformacion()) {
+		$('.loader').hide();
 		swal(
 			'', //titulo
 			'Debes ingresar todos los datos, incluyendo la etapa!',
@@ -429,6 +432,7 @@ function guardarGestionRedes() {
 		},
 		function (data) {
 			if (data.error != 1) {
+				$('.loader').hide();
 				swal(
 					'', //titulo
 					'Guardado Correctamente',
@@ -471,6 +475,7 @@ function guardarGestionEducativa() {
 		},
 		function (data) {
 			if (data.error != 1) {
+				$('.loader').hide();
 				swal(
 					'', //titulo
 					'Guardado Correctamente',
@@ -534,6 +539,9 @@ $("#buttonCancelar").click(function () {
  * parametro: 
  */
 function guardarNuevaEntidad() {
+
+	$('.loader').show();
+	
 	let idIntervencion = $.get("idIntervencion");
 	let nombreEntidad = $('#textinputEntidadNueva').val();
 	let direccion = $('#textinputDireccionEntidad').val();
@@ -553,12 +561,14 @@ function guardarNuevaEntidad() {
 			},
 			function (data) {
 				if (data.error == 1) {
+					$('.loader').hide();
 					swal(
 						'', //titulo
 						' No se guardo la entidad, intententalo nuevamente',
 						'error'
 					);
 				} else {
+					$('.loader').hide();
 					swal(
 						'', //titulo
 						'Guardado Correctamente',
@@ -570,6 +580,7 @@ function guardarNuevaEntidad() {
 				}
 			}, "json");
 	} else {
+		$('.loader').hide();
 		swal(
 			'Error',
 			'Debes diligenciar todos los campos',
