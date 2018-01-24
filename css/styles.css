@@ -823,7 +823,7 @@ li.paginate_button.page-item a {
 }
 
 .red{
-    color: red;
+    color: red !important;
 }
 
 @-webkit-keyframes fadeIn {

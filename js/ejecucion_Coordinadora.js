@@ -235,7 +235,11 @@ function cargarDatosPlaneacion() {
 					table.dataTable().fnClearTable();
 					table.dataTable().fnAddData(data.html.datosEjec.asistentes);
 
-					$('#contacto').hide();
+					$('.esconder, #button2id').hide();
+					$('#button1id')
+						.html('Atras')
+						.removeClass('btn-danger')
+						.addClass('btn-warning');
 
 				} else {
 					swal(

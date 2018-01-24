@@ -62,7 +62,7 @@ function traerNombre() {
 function intervencionesPorZona(id_zona) {
 
     $.post("php/home_Gestora.php", {
-        accion: 'intervencionesPorZona',
+        accion: 'app_intervencionesPorZona',
         id_zona: id_zona
     },
         function (data) {

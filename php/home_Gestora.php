@@ -13,6 +13,10 @@ if(isset($_POST["accion"]) && isset($_POST["id_zona"]))
 	{
 		intervencionesPorZona($_POST["id_zona"]);
 	}
+	if($_POST["accion"]=="app_intervencionesPorZona")
+	{
+		app_intervencionesPorZona($_POST["id_zona"]);
+	}
 
 }
 
@@ -43,8 +47,6 @@ function intervencionesPorZona($id_zona){
 							$data['html'].='<h4 class="card-title">'.$datos['zonas'].'</h4>';
 							$data['html'].='<h6 class="card-subtitle mb-2 text-muted">'.$datos['nombres'].'</h6>';
 							$data['html'].='<div class="list-group">';
-
-							// traerIntervencionGestora();
 							$llamarIntervencion=traerIntervencionGestora($datos['id_zona'],$datos['id_personas_por_zonacol']);
 								
 								if (count($llamarIntervencion) >0){
@@ -84,7 +86,6 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 	include "conexion.php";
 	$intervencion=array();
 
-	//$id_Personas_por_Zona = $_SESSION["IdPersonasPorZona"];
 	$intervencion_por_zona= "SELECT inter.id_intervenciones, mun.municipio, compor.comportamientos
 			FROM intervenciones inter
 			JOIN personas_por_zona pxz ON pxz.id_personas_por_zonacol = inter.personas_por_zona_id_personas_por_zonacol

@@ -15,7 +15,6 @@ $(function () {
         } ],
         columns: [
             { data: 'municipio' },
-            { data: 'nombreentidad' },
             { data: 'comportamientos' },
             { data: 'tipo_intervencion' },
             { data: 'fecha' },
