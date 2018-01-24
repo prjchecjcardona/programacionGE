@@ -66,7 +66,7 @@
 
             <!-- Fecha de Encuentro -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="Fechainput">Fecha de Encuentro</label>
+              <label class="col-md-12 control-label" for="Fechainput"><span class="red">* </span> Fecha de Encuentro</label>
               <div class="col-md-12">
                 <p>
                   <input id="fecha_planeacion" type="text" class="datepicker" placeholder=" Selecciona Fecha...">
@@ -76,7 +76,7 @@
 
             <!-- Lugar de encuentro -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="textinputLugarEncuentro">Lugar de Encuentro</label>
+              <label class="col-md-12 control-label" for="textinputLugarEncuentro"><span class="red">* </span> Lugar de Encuentro</label>
               <div class="col-md-12">
                 <input id="textinputLugarEncuentro" name="textinputLugarEncuentro" type="text" placeholder="" class="form-control input-md">
 
@@ -85,7 +85,8 @@
 
             <!-- Jornada -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="selectbasicJornada">Jornada</label>
+              <label class="col-md-12 control-label" for="selectbasicJornada">
+                <span class="red">* </span>Jornada</label>
               <div class="col-md-12">
                 <select id="selectbasicJornada" name="selectbasicJornada" class="form-control">
                   <!-- <option value="1">Opción 1</option> -->
@@ -109,7 +110,8 @@
 
             <!-- Poblacion -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="selectbasicPoblacion">Población</label>
+              <label class="col-md-12 control-label" for="selectbasicPoblacion">
+                <span class="red">* </span>Población</label>
               <div class="col-md-12">
                 <select id="selectbasicPoblacion" name="selectbasicPoblacion" class="form-control">
                   <!-- <option value="1">Opción 1</option> -->
@@ -128,7 +130,7 @@
 
             <!-- Multiple Radios (inline) Algun Contacto? -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="radiosAlgunContacto">¿Cuentas con algún contacto?</label>
+              <label class="col-md-12 control-label" for="radiosAlgunContacto"><span class="red">* </span> ¿Cuentas con algún contacto?</label>
               <div class="col-md-12" id="radiosContacto">
                 <label class="radio-inline" for="radiosAlgunContacto-0" id="radioContacto">
                   <input type="radio" name="radiosAlgunContacto" id="SiContacto" value="1"> Si
@@ -145,7 +147,7 @@
               <span>Añadir Contacto</span>
               <hr>
               <div class="form-group">
-                <label class="col-md-12 control-label" for="textinputNombreContacto">Nombre</label>
+                <label class="col-md-12 control-label" for="textinputNombreContacto"><span class="red">* </span> Nombre</label>
                 <div class="col-md-12">
                   <input id="textinputNombreContacto" name="textinputNombreContacto" type="text" placeholder="" class="form-control input-md">
                 </div>
@@ -153,7 +155,7 @@
 
               <!-- Cargo Contacto -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="textinputCargoContacto">Cargo</label>
+                <label class="col-md-12 control-label" for="textinputCargoContacto"><span class="red">* </span> Cargo</label>
                 <div class="col-md-12">
                   <input id="textinputCargoContacto" name="textinputCargoContacto" type="text" placeholder="" class="form-control input-md">
                 </div>
@@ -161,7 +163,7 @@
 
               <!-- Telefono Contacto -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="textinputTelefonoContacto">Teléfono/Móvil</label>
+                <label class="col-md-12 control-label" for="textinputTelefonoContacto"><span class="red">* </span> Teléfono/Móvil</label>
                 <div class="col-md-12">
                   <input id="textinputTelefonoContacto" name="textinputTelefonoContacto" type="text" placeholder="" class="form-control input-md">
                 </div>
@@ -169,7 +171,7 @@
 
               <!-- Correo Contacto -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="textinputCorreoContacto">Correo</label>
+                <label class="col-md-12 control-label" for="textinputCorreoContacto"><span class="red">* </span> Correo</label>
                 <div class="col-md-12">
                   <input id="textinputCorreoContacto" name="textinputCorreoContacto" type="text" placeholder="" class="form-control input-md">
                 </div>
@@ -221,7 +223,8 @@
               <!-- INSERCION CAMPO ENTIDAD, CON DIALOGO PARA AÑADIR NUEVA ENTIDAD -->
 
               <!-- Seleccion Entidades -->
-              <label class="col-md-12 control-label" for="selectbasicEntidad">Entidad</label>
+              <label class="col-md-12 control-label" for="selectbasicEntidad">
+                <span class="red">* </span>Entidad</label>
               <div class="form-inline">
                 <div class="col-sm-12">
                   <select id="selectbasicEntidad" name="selectbasicEntidad" class="form-control">
@@ -239,12 +242,14 @@
                 </head>
                 <hr>
                 <div class="col-md-12">
-                  <label class="col-md-12control-label" for="textinputEntidad">* Nombre de la Entidad</label>
+                  <label class="col-md-12control-label" for="textinputEntidad">
+                    <span class="red">* </span>Nombre de la Entidad</label>
                   <input id="textinputEntidadNueva" name="textinputEntidadN" type="text" placeholder="" class="form-control input-md">
                 </div>
                 <!-- Campo Direccion Entidad -->
                 <div class="col-md-12 espaciado">
-                  <label class="col-md-12control-label" for="textinputDireccionEntidad">* Dirección</label>
+                  <label class="col-md-12control-label" for="textinputDireccionEntidad">
+                    <span class="red">* </span>Dirección</label>
                   <input id="textinputDireccionEntidad" name="textinputDireccionEntidad" type="text" placeholder="" class="form-control input-md">
                 </div>
                 <!-- Campo Telefono Entidad -->
@@ -253,7 +258,8 @@
                   <input id="textinputTelefonoEntidad" name="textinputTelefonoEntidad" type="text" placeholder="" class="form-control input-md">
                 </div>
                 <!-- Seleccion Tipo de Entidad -->
-                <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">* Tipo de Entidad</label>
+                <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">
+                  <span class="red">* </span>Tipo de Entidad</label>
                 <div class="col-md-12">
                   <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
                   </select>
@@ -263,7 +269,9 @@
                   <label class="col-md-12control-label" for="textinputNodoEntidad">Nodo</label>
                   <input id="text_inputNodoEntidad" name="textinputNodoEntidad" type="text" placeholder="" class="form-control input-md">
                 </div>
-
+                <hr>
+                <span class="red">* </span>
+                <span class=""> Campo Obligatorio </span>
                 <!-- Button (Double) -->
                 <div class="form-group">
                   <label class="col-md-12 control-label" for="button1id"></label>
@@ -290,7 +298,8 @@
 
               <!-- Estrategia -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>
+                <label class="col-md-12 control-label" for="selectbasicEstrategia">
+                  <span class="red">* </span>Estrategia</label>
                 <div class="col-md-12">
                   <select id="selectbasicEstrategia" name="selectbasicEstrategia" class="form-control">
                     <!-- <option value="1">Opción 1</option> -->
@@ -301,7 +310,8 @@
 
               <!-- Táctico Planeación -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
+                <label class="col-md-12 control-label" for="selectbasicTactico">
+                  <span class="red">* </span>Táctico</label>
                 <div class="col-md-12">
                   <select id="selectbasicTactico" name="selectbasicTactico" class="form-control">
                     <option value="0">Selecciona una opción</option>
@@ -312,7 +322,8 @@
 
               <!-- Tema Planeación -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
+                <label class="col-md-12 control-label" for="selectbasicTema">
+                  <span class="red">* </span>Tema</label>
                 <div class="col-md-12">
                   <select id="selectbasicTema" name="selectbasicTema" class="form-control">
                     <!-- <option value="1">Opción 1</option> -->
@@ -326,8 +337,14 @@
               <div id="indicadoresge">
               </div>
             </div>
+
           </fieldset>
+
         </div>
+        <hr>
+        <span class="red">* </span>
+        <span class=""> Campo Obligatorio </span>
+
 
       </div>
       <div class="col-md-7">

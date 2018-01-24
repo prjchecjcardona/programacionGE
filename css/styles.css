@@ -822,6 +822,10 @@ li.paginate_button.page-item a {
     animation-fill-mode: both;
 }
 
+.red{
+    color: red;
+}
+
 @-webkit-keyframes fadeIn {
     0% {
         opacity: 0;
