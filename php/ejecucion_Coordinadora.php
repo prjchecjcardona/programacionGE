@@ -128,6 +128,24 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada){
                 }
             }
         }
+
+        //Obtener los asistentes de la ejecucion
+        $sql="SELECT asi.numerodocumento, asi.nombres, asi.apellidos, asi.celular
+        FROM asistentes asi
+        JOIN ejecucion_asistentes ea ON ea.id_asistente = asi.id_asistente
+        JOIN ejecucion e ON e.id_ejecucion = ea.id_ejecucion
+        JOIN ejecuciones_por_planeacion epp ON epp.ejecucion_id_ejecucion = e.id_ejecucion
+        JOIN planeaciones_por_intervencion ppi ON ppi.id_planeaciones_por_intervencion = epp.id_planeaciones_por_intervencion
+        WHERE ppi.planeacion_id_planeacion = $idPlaneacion";
+
+        $data['html']['datosEjec']['asistentes'] = array();
+        if ($rs = $con->query($sql)) {
+            if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+                foreach ($filas as $key => $value) {
+                    $data['html']['datosEjec']['asistentes'][$key] = array('numero_documento' => $value['numerodocumento'], 'nombres' => $value['nombres'], 'apellidos' => $value['apellidos'], 'movil' => $value['celular']);;
+                }
+            }
+        }
     }
     
     echo json_encode($data);

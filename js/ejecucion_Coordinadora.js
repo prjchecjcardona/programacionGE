@@ -30,21 +30,21 @@ $(function () {
 	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
 		data: arrayAsistentes,
 		columns: [{
-				data: "numero_documento",
-				title: "Documento"
-			},
-			{
-				data: "nombres",
-				title: "Nombre"
-			},
-			{
-				data: "apellidos",
-				title: "Apellidos"
-			},
-			{
-				data: "movil",
-				title: "Móvil"
-			}
+			data: "numero_documento",
+			title: "Documento"
+		},
+		{
+			data: "nombres",
+			title: "Nombre"
+		},
+		{
+			data: "apellidos",
+			title: "Apellidos"
+		},
+		{
+			data: "movil",
+			title: "Móvil"
+		}
 		],
 		"language": {
 			"sProcessing": "Procesando...",
@@ -174,8 +174,8 @@ function initFileInput() {
 function traerNombre() {
 
 	$.post("php/CapturaVariableSession.php", {
-			accion: 'traerNombre'
-		},
+		accion: 'traerNombre'
+	},
 		function (data) {
 			if (data != "") {
 				$('#Nombre').html(data);
@@ -196,10 +196,10 @@ function cargarDatosPlaneacion() {
 	//TODO PENDIENTE LLAMADO A BACKEND DE YA EJECUTADAS
 	if (isEjecutada == 1) {
 		$.post("php/ejecucion_Coordinadora.php", {
-				accion: 'cargarDatosPlaneacion',
-				idPlaneacion: idPlaneacion,
-				isEjecutada: true
-			},
+			accion: 'cargarDatosPlaneacion',
+			idPlaneacion: idPlaneacion,
+			isEjecutada: true
+		},
 			function (data) {
 				if (data.error == 0) {
 
@@ -223,13 +223,19 @@ function cargarDatosPlaneacion() {
 						.attr('disabled', 'disabled');
 					$('#textinputAsisNum').val(data.html.datosEjec.numeroasistentes)
 						.attr('disabled', 'disabled');
-					$('input:radio[value='+data.html.datosEjec.nivel_cumplimiento+']')[0].checked = true;
+					$('input:radio[value=' + data.html.datosEjec.nivel_cumplimiento + ']')[0].checked = true;
 					$('input:radio').attr('disabled', 'disabled');
 					$('#textareaObservaciones').val(data.html.datosEjec.observaciones)
 						.attr('disabled', 'disabled');
 					data.html.datosEjec.detalle_nivel.forEach((element, index) => {
-						$('input:radio[name=detalle_'+String(index+1)+'][value='+element+']')[0].checked = true;
+						$('input:radio[name=detalle_' + String(index + 1) + '][value=' + element + ']')[0].checked = true;
 					});
+
+					var table = $('#ejecucion_coordinadora_asistencia');
+					table.dataTable().fnClearTable();
+					table.dataTable().fnAddData(data.html.datosEjec.asistentes);
+
+					$('#contacto').hide();
 
 				} else {
 					swal(
@@ -244,10 +250,10 @@ function cargarDatosPlaneacion() {
 
 	} else {
 		$.post("php/ejecucion_Coordinadora.php", {
-				accion: 'cargarDatosPlaneacion',
-				idPlaneacion: idPlaneacion,
-				isEjecutada: false
-			},
+			accion: 'cargarDatosPlaneacion',
+			idPlaneacion: idPlaneacion,
+			isEjecutada: false
+		},
 			function (data) {
 				if (data.error == 0) {
 
@@ -297,23 +303,23 @@ function guardarEjecucion() {
 
 
 		//Verificar si el registro de ejecución no tiene asistentes.
-		if(arrayAsistentes.length==0){
+		if (arrayAsistentes.length == 0) {
 			arrayAsistentes = ["1"];
 		}
 
 
 
 		$.post("php/ejecucion_Coordinadora.php", {
-				accion: 'guardarEjecucion',
-				fecha: $('#textFecha').val(),
-				hora: $('#selectbasicHoraEje').val() + ":" + $('#selectbasicMinEje').val(),
-				asistentes: $('#textinputAsisNum').val(),
-				detalleCumplimiento: list,
-				nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
-				observaciones: $('#textareaObservaciones').val(),
-				idPlaneacion: idPlaneacion,
-				arrayAsistentes: arrayAsistentes
-			},
+			accion: 'guardarEjecucion',
+			fecha: $('#textFecha').val(),
+			hora: $('#selectbasicHoraEje').val() + ":" + $('#selectbasicMinEje').val(),
+			asistentes: $('#textinputAsisNum').val(),
+			detalleCumplimiento: list,
+			nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
+			observaciones: $('#textareaObservaciones').val(),
+			idPlaneacion: idPlaneacion,
+			arrayAsistentes: arrayAsistentes
+		},
 			function (data) {
 				if (data.error == 1) {
 
@@ -328,7 +334,7 @@ function guardarEjecucion() {
 						'', //titulo
 						'Guardado Correctamente',
 						'success'
-					).then(function(){
+					).then(function () {
 						window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
 					});
 
