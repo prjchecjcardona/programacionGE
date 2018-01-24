@@ -107,7 +107,7 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada){
     if($isEjecutada){
         $data['html']['datosEjec'] = array();
         //Obtiene los datos registrados en la ejecucion
-        $sql = "SELECT ejec.fecha, ejec.horafinalizacion, ejec.numeroasistentes, ejec.observaciones, nc.nivel_cumplimiento, dncxe.id_detalle_nivelcumplimiento, dncxe.nivel_cumplimiento
+        $sql = "SELECT ejec.fecha, ejec.horafinalizacion, ejec.numeroasistentes, ejec.observaciones, nc.id_nivelcumplimiento, dncxe.id_detalle_nivelcumplimiento, dncxe.nivel_cumplimiento
         FROM ejecucion ejec
         JOIN ejecuciones_por_planeacion ep ON ejec.id_ejecucion = ep.ejecucion_id_ejecucion
         JOIN planeaciones_por_intervencion pi ON ep.id_planeaciones_por_intervencion = pi.id_planeaciones_por_intervencion
@@ -121,10 +121,28 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada){
                 $data['html']['datosEjec']['horafinalizacion'] = $filas[0]['horafinalizacion'];
                 $data['html']['datosEjec']['numeroasistentes'] = $filas[0]['numeroasistentes'];
                 $data['html']['datosEjec']['observaciones'] = $filas[0]['observaciones'];
-                $data['html']['datosEjec']['nivel_cumplimiento'] = $filas[0]['nivel_cumplimiento'];
+                $data['html']['datosEjec']['nivel_cumplimiento'] = $filas[0]['id_nivelcumplimiento'];
                 $data['html']['datosEjec']['detalle_nivel'] = array();
                 foreach ($filas as $key => $value) {
                     $data['html']['datosEjec']['detalle_nivel'][$key] = $value['id_detalle_nivelcumplimiento'];
+                }
+            }
+        }
+
+        //Obtener los asistentes de la ejecucion
+        $sql="SELECT asi.numerodocumento, asi.nombres, asi.apellidos, asi.celular
+        FROM asistentes asi
+        JOIN ejecucion_asistentes ea ON ea.id_asistente = asi.id_asistente
+        JOIN ejecucion e ON e.id_ejecucion = ea.id_ejecucion
+        JOIN ejecuciones_por_planeacion epp ON epp.ejecucion_id_ejecucion = e.id_ejecucion
+        JOIN planeaciones_por_intervencion ppi ON ppi.id_planeaciones_por_intervencion = epp.id_planeaciones_por_intervencion
+        WHERE ppi.planeacion_id_planeacion = $idPlaneacion";
+
+        $data['html']['datosEjec']['asistentes'] = array();
+        if ($rs = $con->query($sql)) {
+            if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+                foreach ($filas as $key => $value) {
+                    $data['html']['datosEjec']['asistentes'][$key] = array('numero_documento' => $value['numerodocumento'], 'nombres' => $value['nombres'], 'apellidos' => $value['apellidos'], 'movil' => $value['celular']);;
                 }
             }
         }
