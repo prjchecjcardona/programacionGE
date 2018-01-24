@@ -223,6 +223,13 @@ function cargarDatosPlaneacion() {
 						.attr('disabled', 'disabled');
 					$('#textinputAsisNum').val(data.html.datosEjec.numeroasistentes)
 						.attr('disabled', 'disabled');
+					$('input:radio[value='+data.html.datosEjec.nivel_cumplimiento+']')[0].checked = true;
+					$('input:radio').attr('disabled', 'disabled');
+					$('#textareaObservaciones').val(data.html.datosEjec.observaciones)
+						.attr('disabled', 'disabled');
+					data.html.datosEjec.detalle_nivel.forEach((element, index) => {
+						$('input:radio[name=detalle_'+String(index+1)+'][value='+element+']')[0].checked = true;
+					});
 
 				} else {
 					swal(
