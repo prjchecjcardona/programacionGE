@@ -413,7 +413,7 @@ function getRecurso() {
       <a href="#2" data-toggle="tab">Vídeos</a>
     </li>
     <li>
-      <a href="#3" data-toggle="tab">Imagenes</a>
+      <a href="#3" data-toggle="tab">Imágenes</a>
     </li>
     <li>
       <a href="#4" data-toggle="tab">Presentaciones</a>
@@ -431,7 +431,7 @@ function getRecurso() {
       <h3>Documentos</h3>
       <hr>
       <div class="list-group">
-      <a class="list-group-item list-group-item-action">Aún no se cargan documentos en el módulo de Documentos <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+      <a class="list-group-item list-group-item-action">Aún no se cargan documentos en el módulo.<button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
       </div> 
     </div>
   </div>
@@ -442,7 +442,7 @@ function getRecurso() {
       <h3>Vídeos</h3>
       <hr>
       <div class="list-group">
-      <a class="list-group-item list-group-item-action">Aún no se cargan vídeos en el módulo de Vídeos <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+      <a class="list-group-item list-group-item-action">Aún no se cargan vídeos en el módulo.<button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
       </div> 
     </div>
   </div>
@@ -453,7 +453,7 @@ function getRecurso() {
       <h3>Imagenes</h3>
       <hr>
       <div class="list-group">
-      <a class="list-group-item list-group-item-action">Aún no se cargan imagenes en el módulo de Imagenes <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+      <a class="list-group-item list-group-item-action">Aún no se cargan imágenes en el módulo.<button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
       </div> 
     </div>
   </div>
@@ -464,7 +464,7 @@ function getRecurso() {
     <h3>Presentaciones</h3>
     <hr>
     <div class="list-group">
-    <a class="list-group-item list-group-item-action">Aún no se cargan presentaciones en el módulo de Presentaciones <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+    <a class="list-group-item list-group-item-action">Aún no se cargan presentaciones en el módulo.<button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
     </div>
   </div>
 </div>
@@ -475,7 +475,7 @@ function getRecurso() {
   <h3>Juegos</h3>
   <hr>
   <div class="list-group">
-  <a class="list-group-item list-group-item-action">Aún no se cargan juegos en el módulo de Juegos <button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+  <a class="list-group-item list-group-item-action">Aún no se cargan juegos en el módulo.<button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
   </div> 
 </div>
 </div>`;

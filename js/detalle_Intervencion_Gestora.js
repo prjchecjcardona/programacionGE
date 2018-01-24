@@ -1,6 +1,6 @@
 $(function () {
 	traerNombre();
-	initFileInput();
+
 
 	/*Extrae los parametros que llegan en la url
 	 * parametro: 
@@ -28,18 +28,22 @@ $(function () {
 	idEntidad = "";
 	cargarDetalleIntervencion(idIntervencion);
 	cargarPlaneacionesPorIntrevencion(idIntervencion);
+	initFileInput(idIntervencion);
 
 });
 
 //Invocacion del archivo File Input para nueva intervencion coordinadora
-function initFileInput() {
+function initFileInput(idIntervencion) {
 	$('.upload_files_input').fileinput({
 		language: 'es',
 		'theme': 'fa',
-		uploadUrl: '#',
-		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
-		]
+		uploadUrl: 'php/uploadImgDetalleInterv.php',
+		uploadExtraData: { idIntervencion: idIntervencion },
+		allowedFileExtensions: ['jpg', 'png']
+	});
+
+	$('.upload_files_input').on('filebatchuploadcomplete', function (event, files, extra) {
+		location.reload();
 	});
 }
 
@@ -50,10 +54,10 @@ function initFileInput() {
 function traerNombre() {
 
 	$.post("php/CapturaVariableSession.php", {
-			accion: 'traerNombre'
+		accion: 'traerNombre'
 
 
-		},
+	},
 		function (data) {
 			if (data != "") {
 				$('#Nombre').html(data);
@@ -75,25 +79,59 @@ function traerNombre() {
 function cargarDetalleIntervencion(idIntervencion) {
 
 	$.post("php/detalle_Intervencion_Coordindora.php", {
-			accion: 'cargarDetalleIntervencion',
-			idIntervencion: idIntervencion
+		accion: 'cargarDetalleIntervencion',
+		idIntervencion: idIntervencion
 
-		},
+	},
 		function (data) {
 			if (data.error == 0) {
 				comportamientos = data.html.comportamientos;
 				competencia = data.html.competencia;
-				idComportamientos = data.html.id_comportamientos
-				idCompetencia = data.html.id_competencia
-				idEntidad = data.html.id_entidad
+				idCompetencia = data.html.id_competencia;
+				idComportamientos = data.html.id_comportamientos;
+
 
 				$('#lblMunicipio').html("<b>Municipio</b>: " + data.html.municipio);
-				$('#lblEntidad').html("<b>Entidad</b>: " + data.html.nombreentidad);
 				$('#lblCoportamiento').html("<b>Comportamiento</b>: " + data.html.comportamientos);
 				$('#lblCompetencia').html("<b>Competencia</b>: " + data.html.competencia);
 				$('#lblTipoIntervencion').html("<b>Tipo Intervención</b>: " + data.html.tipo_intervencion);
 				$("#indicadoresChec").html("<b>Indicadores</b>: ");
 				$("#indicadoresChec").append(data.html.indicador);
+				$('#fecha_estado_base').append(data.html.fecha);
+				$('#img_estado_base').attr('src', data.html.img_url);
+
+
+				if (data.html.evolucion[0].img_url) {
+					data.html.evolucion.forEach(function (element, index) {
+						if (index == 0) {
+							$('.carousel-inner').append(`
+								<div class="carousel-item active">
+									<img class="d-block w-100" src="${element.img_url}">
+									<div class="carousel-caption d-none d-md-block">
+										<h5 style="color: #1e7e34">${element.fecha}</h5>
+									</div>
+								</div>
+							`)
+						} else {
+							$('.carousel-inner').append(`
+								<div class="carousel-item">
+									<img class="d-block w-100" src="${element.img_url}" >
+									<div class="carousel-caption d-none d-md-block">
+										<h5 style="color: #1e7e34">${element.fecha}</h5>
+									</div>
+								</div>
+							`)
+						}
+					})
+				} else {
+					$('.carousel-inner').append(`
+						<div class="carousel-item active">
+							<img class="d-block w-100" src="img/default-image.jpg" >
+						</div>
+					`);
+				}
+
+				$('#carouselExampleIndicators').carousel()
 
 			} else {
 				swal(
@@ -111,105 +149,128 @@ function cargarDetalleIntervencion(idIntervencion) {
 /*Consulta las planeaciones por intervencion
 * parametro: idIntervencion
 */
-function cargarPlaneacionesPorIntrevencion(idIntervencion){
+function cargarPlaneacionesPorIntrevencion(idIntervencion) {
 
-	$.post("php/detalle_Intervencion_Coordindora.php",{
-         accion : 'cargarPlaneacionesPorIntrevencion',
-		 idIntervencion:idIntervencion
-              				
-         },
-          function (data) {
-						if(data.error != 1){
-								$.post("php/detalle_Intervencion_Coordindora.php",{
-									accion: 'checkPlaneacionesEjecutadas'
-								},
-								function (ejecutadas){
-									cargarInformacionEnTabla(data);
-									setTimeout(() => {
-										identificarEjecutadas(data, JSON.parse(ejecutadas));
-									}, 1000);
-									
-								})
-								
-							}		
-				},"json");
+	$.post("php/detalle_Intervencion_Coordindora.php", {
+		accion: 'cargarPlaneacionesPorIntrevencion',
+		idIntervencion: idIntervencion
+
+	},
+		function (data) {
+			if (data.error != 1) {
+				$.post("php/detalle_Intervencion_Coordindora.php", {
+					accion: 'checkPlaneacionesEjecutadas'
+				},
+					function (ejecutadas) {
+						cargarInformacionEnTabla(data);
+						setTimeout(() => {
+							identificarEjecutadas(data, JSON.parse(ejecutadas));
+							$('.loader').hide();
+						}, 1000);
+						
+
+					})
+
+			}
+		}, "json");
 }
 
 /*Carga la respuesta de la base de datos en el datatable
 * parametro: data
 */
- function cargarInformacionEnTabla(data){ //alert(data);
-        table = $('#coordinadora_tabla').DataTable({
-            "data": data,
-            columns: [
+function cargarInformacionEnTabla(data) { //alert(data);
+	table = $('#coordinadora_tabla').DataTable({
+		"data": data,
+		columns: [
 			{ title: "Id", className: "idColEjec" },
 			{ title: "Etapa" },
 			{ title: "Estrategia" },
 			{ title: "Táctico" },
 			{ title: "Tema" },
 			{ title: "Fecha" },
-			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" id="ejecucion" class="btn btn-sm btn-success" alt="Ejecución"><span class="fa fa-book"></span></a>' }
-			],
-            "paging":   true,
-            "info":     false,
-            "columnDefs": [
-			{"className": "dt-left", "targets": "_all"}, //alinear texto a la izquierda
-			{"className": "idColEjec", "targets":  0},
+			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" class="ejecucion ejec_btn btn btn-sm btn-success" alt="Ejecución"><span class="ejec fa fa-book"></span></a>' },
+			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Coordinadora.html" id="evaluacion" class="eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' }
+		],
+		"paging": true,
+		"info": false,
+		"columnDefs": [
+			{ "className": "dt-left", "targets": "_all" }, //alinear texto a la izquierda
+			{ "className": "idColEjec", "targets": 0 },
 			{ "width": "13%", "targets": 1 }//se le da ancho al td de estudiante
 			//{ "width": "8%", "targets": 8 }, //se le da ancho al td de total horas
 			//{ "width": "8%", "targets": 9 } //se le da ancho al td de observacion
-			],
-            "scrollY": "300px",
-            "scrollX": true,
-            "scrollCollapse": true,
-            "language": {
-				"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
-                "sSearch": "Filtrar:",
-                "zeroRecords": "Ningún resultado encontrado",
-                "infoEmpty": "No hay registros disponibles",
-                "Search:": "Filtrar"
-            }
-		});	
-	}
-	
-	function identificarEjecutadas(data, ejecutadas){
-		var isEjecutada;
-		data.forEach(function(element, index) {
-			isEjecutada = false;
-			ejecutadas.forEach(ej =>{
-				if(element[0]==ej){
-					isEjecutada = true;
-				}
-			})
-			if(isEjecutada){
-				$($('#coordinadora_tabla tbody').children()[index]).addClass('rowEjecutada');
-				$($('#coordinadora_tabla tbody').children()[index]).find('span').removeClass('fa-book');
-				$($('#coordinadora_tabla tbody').children()[index]).find('span').addClass('fa-check');
-			}
-		});
-	}
-	
-//Evento para ver detalle ejecucion//
-	$(document).on('click', '#ejecucion', function() {  
-			var data = table.row($(this).parents('tr')).data();
-			var iconEjec = $(this).find('span').attr('class')
-			idPlaneacion= data[0];
-			if(data[0]!=""){
-				if(iconEjec !== "fa fa-check"){
-					window.location.href = "ejecucion_Coordinadora.html?idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
-				}/* else{
-					window.location.href = "ejecucion_Coordinadora.html?isEjecutada=1&idPlaneacion="+idPlaneacion+"&idIntervencion="+idIntervencion;
-				} */
-				
-			}
+		],
+		"scrollY": "300px",
+		"scrollX": true,
+		"scrollCollapse": true,
+		"language": {
+			"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+			"sSearch": "Filtrar:",
+			"zeroRecords": "Ningún resultado encontrado",
+			"infoEmpty": "No hay registros disponibles",
+			"Search:": "Filtrar"
+		}
 	});
+}
+
+function identificarEjecutadas(data, ejecutadas) {
+	var isEjecutada;
+	data.forEach(function (element, index) {
+		isEjecutada = false;
+		ejecutadas.forEach(ej => {
+			if (element[0] == ej) {
+				isEjecutada = true;
+			}
+		})
+		if (isEjecutada) {
+			$($('#coordinadora_tabla tbody').children()[index]).addClass('rowEjecutada');
+			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').removeClass('fa-book');
+			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-search');
+
+			//Esta es para el perfil de gestora
+			/* $($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-check');
+			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejec_btn').addClass('disabled'); */
+
+			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejecucion').click(function(){
+				let data = table.row($(this).parents('tr')).data();
+				idPlaneacion = data[0];
+				window.location.href = "ejecucion_Coordinadora.html?isEjecutada=1&idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+			})
+		}else{
+			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejecucion').click(function(){
+				let data = table.row($(this).parents('tr')).data();
+				idPlaneacion = data[0];
+				window.location.href = "ejecucion_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+			})
+		}
+	});
+
+	//Evento para ver detalle ejecucion//
+/* 	$('.ejecucion').click(function () {
+		var data = table.row($(this).parents('tr')).data();
+		var iconEjec = $(this).find('span').attr('class')
+		idPlaneacion = data[0];
+		if (data[0] != "") {
+			if (iconEjec !== "fa fa-check") {
+				window.location.href = "ejecucion_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+			} else {
+				window.location.href = "ejecucion_Coordinadora.html?isEjecutada=1&idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+			}
+
+		}
+	}) */
+}
+
+
+
+
+
+
 
 
 $("#btnNuevaPlaneacion").click(function () {
 
-	// window.location.href = "planeacion_Coordinadora.html?idIntervencion="+idIntervencion; 
-
-	window.location.href = "planeacion_Coordinadora.html?idIntervencion=" + idIntervencion + "&comportamientos=" + comportamientos + "&competencia=" + competencia + "&idComportamientos=" + idComportamientos + "&idCompetencia=" + idCompetencia + "&idEntidad=" + idEntidad;
+	window.location.href = "planeacion_Coordinadora.html?idIntervencion=" + idIntervencion + "&comportamientos=" + comportamientos + "&competencia=" + competencia + "&idComportamientos=" + idComportamientos + "&idCompetencia=" + idCompetencia;
 
 });
 

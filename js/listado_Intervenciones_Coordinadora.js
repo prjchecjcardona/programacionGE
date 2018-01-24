@@ -1,5 +1,7 @@
 $(function () {
 
+    traerNombre();
+
     var table = $('#detalle_intervencion_CHEC').DataTable({
         ajax: {
             url: "php/listado_Intervenciones.php?idZona=" + getZona(),
@@ -91,6 +93,28 @@ function getZona() {
     }
 
     return $.get('zona');
+}
+
+function traerNombre() {
+
+    $.post("php/CapturaVariableSession.php", {
+            accion: 'traerNombre'
+
+
+        },
+        function (data) {
+            if (data != "") {
+                $('#Nombre').html(data);
+            } else {
+                swal(
+                    '', //titulo
+                    'Debes iniciar sesion!',
+                    'error'
+                );
+                window.location.href = "welcome_Coordinadora.html";
+            }
+        }, "json");
+
 }
 
 function listIntervenciones(idZona) {
