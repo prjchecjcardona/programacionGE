@@ -11,11 +11,15 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
+  <link rel="stylesheet" href="css/css-loader.css">
+  <link rel="stylesheet" href="css/loader-double.css">
   <link rel="stylesheet" href="css/styles.css">
 
 </head>
 
 <body>
+  <div class="loader loader-double is-active"></div>
 
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -56,32 +60,33 @@
     <div class="row">
       <!-- Form Name -->
       <legend>Planeación</legend>
-      <div class="col-md-4 col-md-offset-2 card-body customBack">
+      <div class="col-md-5 col-md-offset-2 card-body customBack">
         <div class="form-horizontal" id="formulario">
           <fieldset>
 
             <!-- Fecha de Encuentro -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="Fechainput">Fecha de Encuentro</label>
+              <label class="col-md-12 control-label" for="Fechainput"><span class="red">* </span> Fecha de Encuentro</label>
               <div class="col-md-12">
                 <p>
-                  <input id="Fechainput" type="text" class="datepicker" placeholder=" Selecciona Fecha...">
+                  <input id="fecha_planeacion" type="text" class="datepicker" placeholder=" Selecciona Fecha...">
                 </p>
               </div>
             </div>
 
             <!-- Lugar de encuentro -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="textinputLugarEncuentro">Lugar de Encuentro</label>
+              <label class="col-md-12 control-label" for="textinputLugarEncuentro"><span class="red">* </span> Lugar de Encuentro</label>
               <div class="col-md-12">
-                <input id="textinputLugarEncuentro" name="textinputLugarEncuentro" type="text" placeholder="Digite Lugar de Encuentro" class="form-control input-md">
+                <input id="textinputLugarEncuentro" name="textinputLugarEncuentro" type="text" placeholder="" class="form-control input-md">
 
               </div>
             </div>
 
             <!-- Jornada -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="selectbasicJornada">Jornada</label>
+              <label class="col-md-12 control-label" for="selectbasicJornada">
+                <span class="red">* </span>Jornada</label>
               <div class="col-md-12">
                 <select id="selectbasicJornada" name="selectbasicJornada" class="form-control">
                   <!-- <option value="1">Opción 1</option> -->
@@ -105,21 +110,13 @@
 
             <!-- Poblacion -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="selectbasicPoblacion">Población</label>
+              <label class="col-md-12 control-label" for="selectbasicPoblacion">
+                <span class="red">* </span>Población</label>
               <div class="col-md-12">
                 <select id="selectbasicPoblacion" name="selectbasicPoblacion" class="form-control">
                   <!-- <option value="1">Opción 1</option> -->
                   <!-- <option value="2">Opción 2</option> -->
                 </select>
-              </div>
-            </div>
-
-            <!-- Fichero -->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="textinputFichero">Fichero</label>
-              <div class="col-md-12">
-                <input id="textinputFichero" name="textinputFichero" type="text" placeholder="" class="form-control input-md">
-
               </div>
             </div>
 
@@ -133,7 +130,7 @@
 
             <!-- Multiple Radios (inline) Algun Contacto? -->
             <div class="form-group">
-              <label class="col-md-12 control-label" for="radiosAlgunContacto">¿Cuentas con algún contacto?</label>
+              <label class="col-md-12 control-label" for="radiosAlgunContacto"><span class="red">* </span> ¿Cuentas con algún contacto?</label>
               <div class="col-md-12" id="radiosContacto">
                 <label class="radio-inline" for="radiosAlgunContacto-0" id="radioContacto">
                   <input type="radio" name="radiosAlgunContacto" id="SiContacto" value="1"> Si
@@ -150,7 +147,7 @@
               <span>Añadir Contacto</span>
               <hr>
               <div class="form-group">
-                <label class="col-md-12 control-label" for="textinputNombreContacto">Nombre</label>
+                <label class="col-md-12 control-label" for="textinputNombreContacto"><span class="red">* </span> Nombre</label>
                 <div class="col-md-12">
                   <input id="textinputNombreContacto" name="textinputNombreContacto" type="text" placeholder="" class="form-control input-md">
                 </div>
@@ -158,7 +155,7 @@
 
               <!-- Cargo Contacto -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="textinputCargoContacto">Cargo</label>
+                <label class="col-md-12 control-label" for="textinputCargoContacto"><span class="red">* </span> Cargo</label>
                 <div class="col-md-12">
                   <input id="textinputCargoContacto" name="textinputCargoContacto" type="text" placeholder="" class="form-control input-md">
                 </div>
@@ -166,7 +163,7 @@
 
               <!-- Telefono Contacto -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="textinputTelefonoContacto">Teléfono/Móvil</label>
+                <label class="col-md-12 control-label" for="textinputTelefonoContacto"><span class="red">* </span> Teléfono/Móvil</label>
                 <div class="col-md-12">
                   <input id="textinputTelefonoContacto" name="textinputTelefonoContacto" type="text" placeholder="" class="form-control input-md">
                 </div>
@@ -174,7 +171,7 @@
 
               <!-- Correo Contacto -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="textinputCorreoContacto">Correo</label>
+                <label class="col-md-12 control-label" for="textinputCorreoContacto"><span class="red">* </span> Correo</label>
                 <div class="col-md-12">
                   <input id="textinputCorreoContacto" name="textinputCorreoContacto" type="text" placeholder="" class="form-control input-md">
                 </div>
@@ -204,63 +201,11 @@
                   <div id="spanCompetencia" class="label label-success"></div>
                 </h5>
               </div>
-              <!-- Estrategia -->
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>
-                <div class="col-md-12">
-                  <select id="selectbasicEstrategiare" name="selectbasicEstrategia" class="form-control">
-                    <!-- <option value="1">Opción 1</option> -->
-                    <!-- <option value="2">Opción 2</option> -->
-                  </select>
-                </div>
-              </div>
 
-              <!-- Táctico Planeación -->
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
-                <div class="col-md-12">
-                  <select id="selectbasicTacticore" name="selectbasicTactico" class="form-control">
-                    <option value="0">Selecciona una opción</option>
-
-                  </select>
-                </div>
-              </div>
-
-              <!-- Tema Planeación -->
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
-                <div class="col-md-12">
-                  <select id="selectbasicTemare" name="selectbasicTema" class="form-control">
-                    <!-- <option value="1">Opción 1</option> -->
-                    <!-- <option value="2">Opción 2</option> -->
-                  </select>
-                </div>
-              </div>
-
-              <!-- <legend>Subtema</legend> -->
-              <!-- <div class="checkbox"> -->
-              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-              <!-- </div> -->
-              <!-- <div class="checkbox"> -->
-              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-              <!-- </div> -->
-              <!-- <div class="checkbox"> -->
-              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-              <!-- </div> -->
-              <!-- Indicadores -->
               <legend>Indicadores</legend>
               <div id="indicadoresre">
-                <!-- <div class="checkbox"> -->
-                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-                <!-- </div> -->
-                <!-- <div class="checkbox"> -->
-                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-                <!-- </div> -->
-                <!-- <div class="checkbox"> -->
-                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-                <!-- </div> -->
-
               </div>
+
             </div>
 
             <!-- GESTION DE EDUCATIVA -->
@@ -274,9 +219,87 @@
                   <div id="spanCompetenciag" class="label label-success"></div>
                 </h5>
               </div>
+
+              <!-- INSERCION CAMPO ENTIDAD, CON DIALOGO PARA AÑADIR NUEVA ENTIDAD -->
+
+              <!-- Seleccion Entidades -->
+              <label class="col-md-12 control-label" for="selectbasicEntidad">
+                <span class="red">* </span>Entidad</label>
+              <div class="form-inline">
+                <div class="col-sm-12">
+                  <select id="selectbasicEntidad" name="selectbasicEntidad" class="form-control">
+                  </select>
+                  <button id="btnNuevaEntidad" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
+                </div>
+              </div>
+
+              <!-- Modal Creacion Entidad -->
+              <div id="ex1" class="modal">
+                <!-- Campo Nombre Entidad -->
+
+                <head>
+                  <h2>Añadir nueva Entidad</h2>
+                </head>
+                <hr>
+                <div class="col-md-12">
+                  <label class="col-md-12control-label" for="textinputEntidad">
+                    <span class="red">* </span>Nombre de la Entidad</label>
+                  <input id="textinputEntidadNueva" name="textinputEntidadN" type="text" placeholder="" class="form-control input-md">
+                </div>
+                <!-- Campo Direccion Entidad -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputDireccionEntidad">
+                    <span class="red">* </span>Dirección</label>
+                  <input id="textinputDireccionEntidad" name="textinputDireccionEntidad" type="text" placeholder="" class="form-control input-md">
+                </div>
+                <!-- Campo Telefono Entidad -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputTelefonoEntidad">Teléfono</label>
+                  <input id="textinputTelefonoEntidad" name="textinputTelefonoEntidad" type="text" placeholder="" class="form-control input-md">
+                </div>
+                <!-- Seleccion Tipo de Entidad -->
+                <label class="col-md-12 control-label espaciado" for="textinputTipoEntidad">
+                  <span class="red">* </span>Tipo de Entidad</label>
+                <div class="col-md-12">
+                  <select id="selectbasicTipoEntidad" name="selectbasicTipoEntidad" class="form-control">
+                  </select>
+                </div>
+                <!-- Campo Nodo Entidad -->
+                <div class="col-md-12 espaciado">
+                  <label class="col-md-12control-label" for="textinputNodoEntidad">Nodo</label>
+                  <input id="text_inputNodoEntidad" name="textinputNodoEntidad" type="text" placeholder="" class="form-control input-md">
+                </div>
+                <hr>
+                <span class="red">* </span>
+                <span class=""> Campo Obligatorio </span>
+                <!-- Button (Double) -->
+                <div class="form-group">
+                  <label class="col-md-12 control-label" for="button1id"></label>
+                  <div class="col-md-8">
+                    <a href="#" rel="modal:close" class="btn btn-danger regresarImgCoordinadora">Cancelar</a>
+                    <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarNuevaEntidad();">Guardar</button>
+                    <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+                  </div>
+                </div>
+
+              </div>
+              <!-- Fin creacion entidad -->
+
+              <!-- FIN - INSERCION CAMPO ENTIDAD, CON DIALOGO PARA AÑADIR NUEVA ENTIDAD -->
+
+              <!-- Fichero -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="textinputFichero">Fichero</label>
+                <div class="col-md-12">
+                  <input id="textinputFichero" name="textinputFichero" type="text" placeholder="" class="form-control input-md">
+
+                </div>
+              </div>
+
               <!-- Estrategia -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="selectbasicEstrategia">Estrategia</label>
+                <label class="col-md-12 control-label" for="selectbasicEstrategia">
+                  <span class="red">* </span>Estrategia</label>
                 <div class="col-md-12">
                   <select id="selectbasicEstrategia" name="selectbasicEstrategia" class="form-control">
                     <!-- <option value="1">Opción 1</option> -->
@@ -287,7 +310,8 @@
 
               <!-- Táctico Planeación -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="selectbasicTactico">Táctico</label>
+                <label class="col-md-12 control-label" for="selectbasicTactico">
+                  <span class="red">* </span>Táctico</label>
                 <div class="col-md-12">
                   <select id="selectbasicTactico" name="selectbasicTactico" class="form-control">
                     <option value="0">Selecciona una opción</option>
@@ -298,7 +322,8 @@
 
               <!-- Tema Planeación -->
               <div class="form-group">
-                <label class="col-md-12 control-label" for="selectbasicTema">Tema</label>
+                <label class="col-md-12 control-label" for="selectbasicTema">
+                  <span class="red">* </span>Tema</label>
                 <div class="col-md-12">
                   <select id="selectbasicTema" name="selectbasicTema" class="form-control">
                     <!-- <option value="1">Opción 1</option> -->
@@ -307,36 +332,22 @@
                 </div>
               </div>
 
-              <!-- <legend>Subtema</legend> -->
-              <!-- <div class="checkbox"> -->
-              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-              <!-- </div> -->
-              <!-- <div class="checkbox"> -->
-              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-              <!-- </div> -->
-              <!-- <div class="checkbox"> -->
-              <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-              <!-- </div> -->
-              <!-- Indicadores -->
+
               <legend>Indicadores</legend>
               <div id="indicadoresge">
-                <!-- <div class="checkbox"> -->
-                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-                <!-- </div> -->
-                <!-- <div class="checkbox"> -->
-                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-                <!-- </div> -->
-                <!-- <div class="checkbox"> -->
-                <!-- <label class="grisTexto"><input type="checkbox" value=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label> -->
-                <!-- </div> -->
-
               </div>
             </div>
+
           </fieldset>
+
         </div>
+        <hr>
+        <span class="red">* </span>
+        <span class=""> Campo Obligatorio </span>
+
 
       </div>
-      <div class="col-md-8">
+      <div class="col-md-7">
         <img class="planeacionImg" src="img/SeñoritaEscritorio385pxV1.png">
 
         <div class="boton-dashboard btn-verde posicionBtnBancoHerramientas" id="btnBancoHerramientas" style="height:70px">
@@ -373,6 +384,7 @@
   <script src="js/includes/configuracionDatePicker.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- <script type="text/javascript" src="js/funciones.js"></script>  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
   <script src="js/planeacion_Gestora.js"></script>
 </body>
 

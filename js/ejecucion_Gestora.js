@@ -30,21 +30,21 @@ $(function () {
 	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
 		data: arrayAsistentes,
 		columns: [{
-				data: "numero_documento",
-				title: "Documento"
-			},
-			{
-				data: "nombres",
-				title: "Nombre"
-			},
-			{
-				data: "apellidos",
-				title: "Apellidos"
-			},
-			{
-				data: "movil",
-				title: "Móvil"
-			}
+			data: "numero_documento",
+			title: "Documento"
+		},
+		{
+			data: "nombres",
+			title: "Nombre"
+		},
+		{
+			data: "apellidos",
+			title: "Apellidos"
+		},
+		{
+			data: "movil",
+			title: "Móvil"
+		}
 		],
 		"language": {
 			"sProcessing": "Procesando...",
@@ -79,6 +79,28 @@ $(function () {
 		scrollY: 200,
 	});
 
+	var dateToday = new Date();
+	var dates = $("#textFecha").datepicker({
+		defaultDate: "+1w",
+		dateFormat: "yy-mm-dd",
+		changeMonth: true,
+		changeYear: true,
+		numberOfMonths: 1
+	});
+
+
+	var dateToday = new Date();
+	var dates = $("#FechainputNacimientoAsis").datepicker({
+		defaultDate: "+1w",
+		dateFormat: "yy-mm-dd",
+		changeMonth: true,
+		changeYear: true,
+		numberOfMonths: 1,
+		yearRange: '1900:2018'
+	});
+
+
+
 	bindEvents();
 });
 
@@ -97,6 +119,7 @@ function bindEvents() {
 			contacto = $(this).val();
 
 		}
+
 
 	});
 
@@ -124,7 +147,7 @@ function bindEvents() {
 	})
 }
 
-//Invocacion del archivo File Input para nueva intervencion coordinadora
+//Invocacion del archivo File Input para ejecucion Coordinadora
 function initFileInput() {
 	$('#file_fotograficas').fileinput({
 		language: 'es',
@@ -151,9 +174,8 @@ function initFileInput() {
 function traerNombre() {
 
 	$.post("php/CapturaVariableSession.php", {
-			accion: 'traerNombre'
-
-		},
+		accion: 'traerNombre'
+	},
 		function (data) {
 			if (data != "") {
 				$('#Nombre').html(data);
@@ -172,39 +194,100 @@ function traerNombre() {
 
 function cargarDatosPlaneacion() {
 	//TODO PENDIENTE LLAMADO A BACKEND DE YA EJECUTADAS
-
-	$.post("php/ejecucion_Coordinadora.php", {
+	if (isEjecutada == 1) {
+		$.post("php/ejecucion_Coordinadora.php", {
 			accion: 'cargarDatosPlaneacion',
 			idPlaneacion: idPlaneacion,
-
+			isEjecutada: true
 		},
-		function (data) {
-			if (data.error == 0) {
+			function (data) {
+				if (data.error == 0) {
 
-				$('#fechaInd').html(data.html.fecha);
-				$('#lugarInd').html(data.html.lugar);
-				$('#municipioInd').html(data.html.municipio);
-				$('#comportamientoInd').html(data.html.comportamiento);
-				$('#competenciaInd').html(data.html.competencia);
-				$('#estrategiaInd').html(data.html.estrategia);
-				$('#tacticoInd').html(data.html.tactico);
-				$('#indicadoresInd').html(data.html.indicador);
-			} else {
-				swal(
-					'', //titulo
-					'Debes iniciar sesion!',
-					'error'
-				);
+					$('#fechaInd').html(data.html.fecha);
+					$('#lugarInd').html(data.html.lugar);
+					$('#municipioInd').html(data.html.municipio);
+					$('#comportamientoInd').html(data.html.comportamiento);
+					$('#competenciaInd').html(data.html.competencia);
+					$('#estrategiaInd').html(data.html.estrategia);
+					$('#tacticoInd').html(data.html.tactico);
+					$('#indicadoresInd').html(data.html.indicador);
 
-			}
-		}, "json");
+					//datos de la ejecucion registrada
+					let valor = data.html.datosEjec.horafinalizacion.split(':');
+					$('#textFecha')
+						.val(data.html.datosEjec.fecha)
+						.attr('disabled', 'disabled');
+					$('#selectbasicHoraEje').val(valor[0])
+						.attr('disabled', 'disabled');
+					$('#selectbasicMinEje').val(valor[1])
+						.attr('disabled', 'disabled');
+					$('#textinputAsisNum').val(data.html.datosEjec.numeroasistentes)
+						.attr('disabled', 'disabled');
+					$('input:radio[value=' + data.html.datosEjec.nivel_cumplimiento + ']')[0].checked = true;
+					$('input:radio').attr('disabled', 'disabled');
+					$('#textareaObservaciones').val(data.html.datosEjec.observaciones)
+						.attr('disabled', 'disabled');
+					data.html.datosEjec.detalle_nivel.forEach((element, index) => {
+						$('input:radio[name=detalle_' + String(index + 1) + '][value=' + element + ']')[0].checked = true;
+					});
 
+					var table = $('#ejecucion_coordinadora_asistencia');
+					table.dataTable().fnClearTable();
+					table.dataTable().fnAddData(data.html.datosEjec.asistentes);
+
+					$('.esconder, #button2id').hide();
+					$('#button1id')
+						.html('Atras')
+						.removeClass('btn-danger')
+						.addClass('btn-warning');
+
+				} else {
+					swal(
+						'', //titulo
+						'Debes iniciar sesion!',
+						'error'
+					);
+
+				}
+				$('.loader').hide();
+			}, "json");
+
+	} else {
+		$.post("php/ejecucion_Coordinadora.php", {
+			accion: 'cargarDatosPlaneacion',
+			idPlaneacion: idPlaneacion,
+			isEjecutada: false
+		},
+			function (data) {
+				if (data.error == 0) {
+
+					$('#fechaInd').html(data.html.fecha);
+					$('#lugarInd').html(data.html.lugar);
+					$('#municipioInd').html(data.html.municipio);
+					$('#comportamientoInd').html(data.html.comportamiento);
+					$('#competenciaInd').html(data.html.competencia);
+					$('#estrategiaInd').html(data.html.estrategia);
+					$('#tacticoInd').html(data.html.tactico);
+					$('#indicadoresInd').html(data.html.indicador);
+				} else {
+					swal(
+						'', //titulo
+						'Debes iniciar sesion!',
+						'error'
+					);
+
+				}
+				$('.loader').hide();
+			}, "json");
+	}
 }
-
 
 function guardarEjecucion() {
 
+	$('.loader').show();
+
 	if (!validarInformacion()) {
+		$('.loader').hide();
 		swal(
 			'', //titulo
 			'Debes ingresar todos los datos!',
@@ -221,22 +304,30 @@ function guardarEjecucion() {
 
 		});
 
-		//fin capturar los indicadores
+		//fin capturar detalle nivel cumplimiento
+
+
+		//Verificar si el registro de ejecución no tiene asistentes.
+		if (arrayAsistentes.length == 0) {
+			arrayAsistentes = ["1"];
+		}
+
 
 
 		$.post("php/ejecucion_Coordinadora.php", {
-				accion: 'guardarEjecucion',
-				fecha: $('#textFecha').val(),
-				hora: $('#selectbasicHoraEje').val() + ":" + $('#selectbasicMinEje').val(),
-				asistentes: $('#textinputAsisNum').val(),
-				detalleCumplimiento: list,
-				nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
-				idPlaneacion: idPlaneacion,
-				arrayAsistentes: arrayAsistentes
-			},
+			accion: 'guardarEjecucion',
+			fecha: $('#textFecha').val(),
+			hora: $('#selectbasicHoraEje').val() + ":" + $('#selectbasicMinEje').val(),
+			asistentes: $('#textinputAsisNum').val(),
+			detalleCumplimiento: list,
+			nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
+			observaciones: $('#textareaObservaciones').val(),
+			idPlaneacion: idPlaneacion,
+			arrayAsistentes: arrayAsistentes
+		},
 			function (data) {
 				if (data.error == 1) {
-
+					$('.loader').hide();
 					swal(
 						'', //titulo
 						' No se guardo la ejecución, intententalo nuevamente',
@@ -244,16 +335,16 @@ function guardarEjecucion() {
 					);
 
 				} else {
+					$('.loader').hide();
 					swal(
 						'', //titulo
 						'Guardado Correctamente',
 						'success'
-					);
+					).then(function () {
+						window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+					});
 
-					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
 				}
-
-
 
 			}, "json");
 	}
@@ -264,7 +355,6 @@ function validarInformacion() {
 	//radio
 	cont = 0;
 	$("#detalleNivelCumplimiento input:radio[name^=detalle_]:checked").each(function (e) {
-		// alert("radio"+$( this ).attr('id'));
 
 		cont++;
 	});
@@ -283,6 +373,7 @@ function validarInformacion() {
 	return valido;
 }
 
+
 function cargarTipoCedula() {
 	var url = "php/ejecucion_Coordinadora.php";
 	$.post(url, {
@@ -299,10 +390,13 @@ var arrayAsistentes = [];
 
 function guardarAsistencia() {
 
+	$('.loader').show();
+
 	if ($('#selectbasicTipoDocumento').val() == "" || $('#textinputDocumento').val() == "" ||
 		$('#textinputNombres').val() == "" || $('#textinputApellidos').val() == "" ||
 		$('#textinputRolAsis').val() == "" ||
 		$('#FechainputNacimientoAsis').val() == "") {
+			$('.loader').hide();
 		swal(
 			'Error', //titulo
 			'Debes diligenciar todos los campos',
@@ -331,7 +425,7 @@ function guardarAsistencia() {
 		var table = $('#ejecucion_coordinadora_asistencia');
 		table.dataTable().fnClearTable();
 		table.dataTable().fnAddData(arrayAsistentes);
-
+		$('.loader').hide();
 		swal({
 			position: 'top-right',
 			type: 'success',
@@ -339,6 +433,7 @@ function guardarAsistencia() {
 			showConfirmButton: false,
 			timer: 1500
 		})
+
 
 		$.modal.close();
 		$('#selectbasicTipoDocumento').val("1");
@@ -352,6 +447,7 @@ function guardarAsistencia() {
 		$('#textinputCorreoAsis').val("");
 		$('#textinputRolAsis').val("");
 		$('#FechainputNacimientoAsis').val("");
+
 
 	}
 
@@ -370,3 +466,4 @@ $('#radiosContacto input:radio').click(function () {
 
 
 });
+

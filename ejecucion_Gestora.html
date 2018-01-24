@@ -17,11 +17,14 @@
   <link rel="stylesheet" href="css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
+  <link rel="stylesheet" href="css/css-loader.css">
+  <link rel="stylesheet" href="css/loader-double.css">
   <link rel="stylesheet" href="css/styles.css">
 
 </head>
 
 <body>
+  <div class="loader loader-double is-active"></div>
 
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -152,7 +155,7 @@
         <!-- Fecha de Ejecución -->
         <div class="row">
           <div class="form-inline fecha-ejec-form">
-            <label class="col-md-4 control-label" for="datepicker">Fecha de Ejecución: </label>
+            <label class="col-md-4 control-label" for="datepicker"><span class="red">* </span> Fecha de Ejecución: </label>
             <div class="col-md-6">
               <input type="text" class=datepicker placeholder=" Selecciona Fecha..." id="textFecha">
             </div>
@@ -163,15 +166,15 @@
         <!-- Duración de Ejecución -->
         <div class="row">
           <div class="col-md-4 centrado-vertical">
-            <label class="mr-sm-2">Duración: </label>
+            <label class="mr-sm-2"><span class="red">* </span> Duración: </label>
           </div>
           <div class="col-md-4">
             <select id="selectbasicHoraEje" name="selectbasicHoraEje" class="form-control alargadoTiempoEjecucion">
               <option value="0">0 Horas</option>
-              <option value="2">1 Hora</option>
-              <option value="1">2 Horas</option>
+              <option value="1">1 Hora</option>
+              <option value="2">2 Horas</option>
               <option value="3">3 Horas</option>
-              <option value="3">4 Horas</option>
+              <option value="4">4 Horas</option>
             </select>
           </div>
           <div class="col-md-4">
@@ -180,7 +183,6 @@
               <option value="1">15 Minutos</option>
               <option value="2">30 Minutos</option>
               <option value="3">45 Minutos</option>
-
             </select>
           </div>
         </div>
@@ -189,17 +191,17 @@
         <!-- Label Total de Asistentes -->
         <div class="row">
           <div class="col-md-4 centrado-vertical">
-            <label>Total de Asistentes: </label>
+            <label><span class="red">* </span> Total de Asistentes: </label>
           </div>
           <div class="col-md-4">
-            <input id="textinputAsisNum" name="textinputAsisNum" type="number" placeholder="" class="form-control input-md">
+            <input id="textinputAsisNum" name="textinputAsisNum" type="text" placeholder="" class="form-control input-md">
           </div>
         </div>
 
         <hr>
 
         <div id="nCumplimiento">
-          <span>Nivel de Cumplimiento</span>
+          <span><span class="red">* </span> Nivel de Cumplimiento</span>
           <p>
             <div class="form-check">
               <label class="form-check-label grisTexto">
@@ -219,10 +221,11 @@
         </div>
         <hr>
 
-        <span>Observaciones</span>
+        <span><span class="red">* </span> Observaciones</span>
         <p></p>
-          <textarea class="form-control" id="textareaObservaciones" name="textareaObservaciones"></textarea>
+        <textarea class="form-control" id="textareaObservaciones" name="textareaObservaciones"></textarea>
         <hr>
+
 
         <!-- Nivel de Competencia -->
         <div class="row filaTitulos">
@@ -243,7 +246,7 @@
         <div id="detalleNivelCumplimiento">
           <div class="row">
             <div class="col-md-6">
-              <span class="grisTexto">Participación - Se observa una participación activa de los asistentes</span>
+              <span class="grisTexto"><span class="red">* </span>Participación - Se observa una participación activa de los asistentes</span>
             </div>
             <div class="col-md-2 filaRadio">
               <label class="radio-inline">
@@ -266,7 +269,7 @@
 
           <div class="row">
             <div class="col-md-6">
-              <span class="grisTexto">Logística - Las instalaciones y equipos previamente acordados facilitaron el desarrollo de la actividad</span>
+              <span class="grisTexto"><span class="red">* </span>Logística - Las instalaciones y equipos previamente acordados facilitaron el desarrollo de la actividad</span>
             </div>
             <div class="col-md-2 filaRadio">
               <label class="radio-inline">
@@ -289,7 +292,7 @@
 
           <div class="row">
             <div class="col-md-6">
-              <span class="grisTexto">Cobertura - Se contó con el número de asistentes esperado para la actividad</span>
+              <span class="grisTexto"><span class="red">* </span>Cobertura - Se contó con el número de asistentes esperado para la actividad</span>
             </div>
             <div class="col-md-2 filaRadio">
               <label class="radio-inline">
@@ -312,7 +315,7 @@
 
           <div class="row">
             <div class="col-md-6">
-              <span class="grisTexto">Factores Externos - Ausencia de eventos externos que afectan el desarrollo de la actividad</span>
+              <span class="grisTexto"><span class="red">* </span>Factores Externos - Ausencia de eventos externos que afectan el desarrollo de la actividad</span>
             </div>
             <div class="col-md-2 filaRadio">
               <label class="radio-inline">
@@ -360,7 +363,7 @@
 
         <!-- Tipo de Documento -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="selectbasicTipoDocumento">Tipo de Documento</label>
+          <label class="col-md-12 control-label" for="selectbasicTipoDocumento" ><span class="red">* </span>Tipo de Documento</label>
           <div class="col-md-12">
             <select id="selectbasicTipoDocumento" name="selectbasicTipoDocumento" class="form-control">
 
@@ -370,7 +373,7 @@
 
         <!-- Documento -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="textinputDocumento">Número de Documento</label>
+          <label class="col-md-12 control-label" for="textinputDocumento"><span class="red">* </span>Número de Documento</label>
           <div class="col-md-12">
             <input id="textinputDocumento" name="textinputDocumento" type="text" placeholder="" class="form-control input-md">
           </div>
@@ -378,7 +381,7 @@
 
         <!-- Nombres -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="textinputNombres">Nombres</label>
+          <label class="col-md-12 control-label" for="textinputNombres"><span class="red">* </span>Nombres</label>
           <div class="col-md-12">
             <input id="textinputNombres" name="textinputNombres" type="text" placeholder="" class="form-control input-md">
           </div>
@@ -386,7 +389,7 @@
 
         <!-- Apellidos -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="textinputApellidos">Apellidos</label>
+          <label class="col-md-12 control-label" for="textinputApellidos"><span class="red">* </span>Apellidos</label>
           <div class="col-md-12">
             <input id="textinputApellidos" name="textinputApellidos" type="text" placeholder="" class="form-control input-md">
           </div>
@@ -443,7 +446,7 @@
 
         <!-- Correo Eletrónico -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="textinputCorreoAsis">Correo Electrónico</label>
+          <label class="col-md-12 control-label" for="textinputCorreoAsis"><span class="red">* </span>Correo Electrónico</label>
           <div class="col-md-12">
             <input id="textinputCorreoAsis" name="textinputCorreoAsis" type="email" placeholder="" class="form-control input-md">
 
@@ -452,7 +455,7 @@
 
         <!-- Rol -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="textinputRolAsis">Rol</label>
+          <label class="col-md-12 control-label" for="textinputRolAsis"><span class="red">* </span>Rol</label>
           <div class="col-md-12">
             <input id="textinputRolAsis" name="textinputRolAsis" type="text" placeholder="" class="form-control input-md">
 
@@ -461,10 +464,10 @@
 
         <!-- Fecha de Nacimiento Asistente -->
         <div class="form-group">
-          <label class="col-md-12 control-label" for="FechainputNacimientoAsis">Fecha de Nacimiento</label>
+          <label class="col-md-12 control-label" for="FechainputNacimientoAsis"><span class="red">* </span> Fecha de Nacimiento</label>
           <div class="col-md-12">
             <p>
-              <input id="FechainputNacimientoAsis" name="FechainputNacimientoAsis" type="text" class=datepicker placeholder=" Selecciona Fecha...">
+              <input id="FechainputNacimientoAsis" name="FechainputNacimientoAsis" type="text" class="" placeholder=" Selecciona...">
             </p>
           </div>
         </div>
@@ -495,8 +498,9 @@
           </div>
         </div>
 
-
-
+        <hr>
+        <span class="red">* </span>
+        <span class=""> Campo Obligatorio </span>
         <!-- Button (Double) -->
         <div class="form-group">
           <label class="col-md-12 control-label" for="button1id"></label>
@@ -517,7 +521,7 @@
     <hr>
 
     <!-- Multiple Radios (inline) Algun Contacto? -->
-    <div class="form-group">
+    <div class="form-group esconder">
       <label class="col-md-12 control-label" for="radiosAlgunContacto">¿Cuentas con algún contacto?</label>
       <div class="col-md-12" id="radiosContacto">
         <label class="radio-inline" for="radiosAlgunContacto-0" id="radioContacto">
@@ -530,12 +534,12 @@
     </div>
 
     <!--container PreguntaContacto-->
-    <div class="" id="preguntaContacto" style="displaynone">
+    <div class="" id="preguntaContacto" style="display: none">
       <!-- Nombre Contacto -->
       <span>Añadir Contacto</span>
       <hr>
       <div class="form-group">
-        <label class="col-md-4 control-label" for="textinputNombreContacto">Nombre</label>
+        <label class="col-md-4 control-label" for="textinputNombreContacto"><span class="red">* </span>Nombre</label>
         <div class="col-md-4">
           <input id="textinputNombreContacto" name="textinputNombreContacto" type="text" placeholder="" class="form-control input-md">
         </div>
@@ -543,7 +547,7 @@
 
       <!-- Cargo Contacto -->
       <div class="form-group">
-        <label class="col-md-4 control-label" for="textinputCargoContacto">Cargo</label>
+        <label class="col-md-4 control-label" for="textinputCargoContacto"><span class="red">* </span>Cargo</label>
         <div class="col-md-4">
           <input id="textinputCargoContacto" name="textinputCargoContacto" type="text" placeholder="" class="form-control input-md">
         </div>
@@ -551,7 +555,7 @@
 
       <!-- Telefono Contacto -->
       <div class="form-group">
-        <label class="col-md-4 control-label" for="textinputTelefonoContacto">Teléfono/Móvil</label>
+        <label class="col-md-4 control-label" for="textinputTelefonoContacto"><span class="red">* </span>Teléfono/Móvil</label>
         <div class="col-md-4">
           <input id="textinputTelefonoContacto" name="textinputTelefonoContacto" type="text" placeholder="" class="form-control input-md">
         </div>
@@ -559,38 +563,46 @@
 
       <!-- Correo Contacto -->
       <div class="form-group">
-        <label class="col-md-4 control-label" for="textinputCorreoContacto">Correo</label>
+        <label class="col-md-4 control-label" for="textinputCorreoContacto"><span class="red">* </span>Correo</label>
         <div class="col-md-4">
-          <input id="textinputCorreoContacto" name="textinputCorreoContacto" type="text" placeholder="" class="form-control input-md">
+          <input id="textinputCorreoContacto" name="textinputCorreoContacto" type="email" placeholder="" class="form-control input-md">
         </div>
       </div>
     </div>
     <hr>
-    <div class="form-group">
+
+    <div class="form-group esconder">
       <h4>Adjuntar Evidencias Fotográficas</h4>
-      <form enctype="multipart/form-data">
+      <!-- <form enctype="multipart/form-data">
         <input id="file_fotograficas" name="file_fotograficas[]" type="file" multiple>
       </form>
-      <hr>
+      <hr> -->
+      <a href="https://drive.google.com/drive/folders/1t8qjoFjkbOcSgZvvbyRbo8I4r1jrp1cQ" target="_blank" class="btn btn-warning">Subir archivo</a>
+
     </div>
 
-    <div class="form-group">
+    <div class="form-group esconder">
       <h4>Adjuntar Evidencias de la Asistencia</h4>
-      <form enctype="multipart/form-data">
+      <!-- <form enctype="multipart/form-data">
         <input id="file_asistencias" name="file_asistencias[]" type="file" multiple>
       </form>
-      <hr>
+      <hr> -->
+      <a href="https://drive.google.com/drive/folders/1t8qjoFjkbOcSgZvvbyRbo8I4r1jrp1cQ" target="_blank" class="btn btn-warning">Subir archivo</a>
     </div>
-
+    
+    <span class="red">* </span>
+    <span>Campo Obligatorio</span>
     <!-- Button (Double) -->
     <div class="form-group">
       <label class="col-md-1 control-label" for="button1id"></label>
       <div class="col-md-8">
-        <button id="button1id" name="button1id" class="btn btn-danger">Cancelar</button>
+        <button id="button1id" name="button1id" class="btn btn-danger" onclick="window.location.href='detalle_Intervencion_Coordinadora.html?idIntervencion='+ idIntervencion">Cancelar</button>
         <button id="button2id" name="button2id" class="btn btn-success" onclick="guardarEjecucion();">Guardar</button>
       </div>
     </div>
   </div>
+
+
 
   <footer id="footer">
     <h6 class="text">Gestión Educativa</h6>
@@ -613,6 +625,7 @@
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
   <script src="js/includes/configuracionDatePicker.js"></script>
+  <script src="js/includes/configuracionDatePickerAsistencia.js"></script>
   <script src="js/includes/fileInput/fileinput.js"></script>
   <script src="js/includes/fileInput/sortable.min.js"></script>
   <script src="js/includes/fileInput/theme.min.js"></script>

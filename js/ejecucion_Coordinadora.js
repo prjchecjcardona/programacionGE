@@ -280,8 +280,6 @@ function cargarDatosPlaneacion() {
 				$('.loader').hide();
 			}, "json");
 	}
-
-
 }
 
 function guardarEjecucion() {
