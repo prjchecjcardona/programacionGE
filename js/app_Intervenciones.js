@@ -18,23 +18,6 @@ $(function () {
 
     intervencionesPorZona($.get('id_zona'));
 
-    $('#calendar').fullCalendar({
-        events: {
-            url: 'http://localhost/gestioneducativa/server/testEvents.php',
-            type: 'POST', // Send post data
-            error: function (err) {
-                alert('There was an error while fetching events.');
-                console.log(err)
-            }
-        },
-        eventClick: function (calEvent, jsEvent, view) {
-            $('.modal-title').html(calEvent.title);
-            $('#eventFecha').html(calEvent.start);
-            $('#eventLugar').html(calEvent.lugar);
-            $('#eventDescripcion').html(calEvent.descripcion);
-            $('#eventModal').modal()
-        }
-    })
 })
 
 function traerNombre() {
@@ -67,7 +50,58 @@ function intervencionesPorZona(id_zona) {
     },
         function (data) {
             if (data.error != 1) {
-                $('.interv-container').append(data.html);
+                data.html.forEach((element, index) => {
+                    $('#accordion').append(`
+                    <div class="card">
+                        <div class="card-header" role="tab" id="addIntervencion3">
+                            <h5 class="mb-0">
+                                <a data-toggle="collapse" href="#collapseIntervencion${index}" aria-expanded="true" aria-controls="collapseIntervencion3">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="false"></i>
+                                    ${element.municipio} - ${getIniciales(element.comportamientos)}
+                                </a>
+                            </h5>
+                        </div>
+        
+                        <!-- Formulario Nivel de Intervencion -->
+                        <div id="collapseIntervencion${index}" class="collapse" role="tabpanel" aria-labelledby="addIntervencion${index}" data-parent="#accordion">
+                            <div class="card-body">
+        
+                                <!-- Campo Nivel de Intervencion -->
+                                <div class="col-md-12">
+                                    
+                                        <span>Tipo de Intervención: </span>
+                                        <span class="grisTexto"> ${element.tipo_intervencion}</span>
+                                        <br>
+                                        <span>Comportamiento: </span>
+                                        <span class="grisTexto"> ${element.comportamientos}</span>
+                                        <br>
+                                        <span>Competencia: </span>
+                                        <span class="grisTexto"> ${element.competencia}</span>
+                                        <br>
+        
+                                </div>
+                                <br>
+                                <span>Selecciona la actividad a ejecutar</span>
+                                <!-- Boton Nivel de Intervencion -->
+                                <div id="but-cont${index}" class="botonContenedor espaciado">
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    `);
+
+                    element.planeaciones.forEach(plan => {
+                        $('#but-cont'+index).append(`
+                        <button type="button" class="btn btn-success btn-lg btn-block" onclick="window.location.href='app_Planeaciones.html?id_planeacion=${plan.id_planeacion}'">
+                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                            ${plan.fecha} - ${plan.jornada}
+                        </button>
+                        `);
+                    });
+                });
             }else{
                 swal(
 					'Error',
@@ -86,4 +120,24 @@ function mostrarDetalleIntervencion(idIntervencion) {
 
 function agregarIntervencion(idZona) {
     window.location.href = "nueva_Intervencion_Gestora.html?idZona=" + idZona;
+}
+
+function getIniciales(palabra){
+    switch (palabra) {
+        case 'Uso responsable de energía':
+            return 'U.R.E.';
+            break;
+        case 'Disfrute del servicio de energía como aporte a la calidad de vida':
+            return 'D.S.E.A.C.V';
+            break;
+        case 'Uso de canales vanguardistas':
+            return 'U.C.V.';
+        break;
+        case 'Cultura de pago':
+            return 'C.P.';
+        break;
+    
+        default:
+            break;
+    }
 }
