@@ -118,10 +118,13 @@ function intervencionesPorZona() {
 			if (data.error != 1) {
 
 				$('#intervercionesPorZona').html(data.html);
+			}else{
+				swal(
+					'Error',
+					'No se cargaron los datos intentalo de nuevo',
+					'error'
+				)
 			}
-			// else{
-			// mostrarPopUpError(data.error);
-			// }
 
 
 		}, "json");
