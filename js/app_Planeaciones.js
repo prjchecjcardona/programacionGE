@@ -88,7 +88,7 @@ function navegarIntervenciones(){
 }
 
 function registrarUbicacion(){
-    //$('.loader').show();
+    $('.loader').show();
     idPlaneacion = $.get('id_planeacion');
     if($("#iniciar_ejecucion").hasClass('btn-success')){
         var registro = 'Inicio';
