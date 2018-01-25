@@ -1,8 +1,12 @@
 $(function () {
 
 
-    idZona = getZona();
+    idZona = getZona("id_zona");
     traerNombre();
+
+    
+    
+    /* idZona = $.get("id_zona"); */
 
     var table = $('#detalle_intervencion_CHEC').DataTable({
         ajax: {
@@ -97,6 +101,8 @@ function getZona() {
     return $.get('zona');
 }
 
+
+
 function traerNombre() {
 
     $.post("php/CapturaVariableSession.php", {
@@ -142,6 +148,7 @@ function listIntervenciones(idZona) {
 
 
 function navegar_home() {
-    idZona = $.get("id_zona")
+    idZona = getZona("id_zona")
     window.location.href = "home_Gestora.html?id_zona=" + idZona;
 }
+
