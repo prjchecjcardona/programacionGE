@@ -226,11 +226,11 @@ function identificarEjecutadas(data, ejecutadas) {
 		if (isEjecutada) {
 			$($('#coordinadora_tabla tbody').children()[index]).addClass('rowEjecutada');
 			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').removeClass('fa-book');
-			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-search');
-
+/* 			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-search');
+ */
 			//Esta es para el perfil de gestora
-			/* $($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-check');
-			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejec_btn').addClass('disabled'); */
+			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-check');
+			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejec_btn').addClass('disabled');
 
 			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejecucion').click(function(){
 				let data = table.row($(this).parents('tr')).data();

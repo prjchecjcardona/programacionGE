@@ -1,5 +1,7 @@
 $(function () {
 
+
+    idZona = getZona();
     traerNombre();
 
     var table = $('#detalle_intervencion_CHEC').DataTable({
@@ -11,7 +13,7 @@ $(function () {
             "targets": -1,
             "data": "id_intervenciones",
             "render": function (data, type, row, meta) {
-                return '<a href="detalle_Intervencion_Coordinadora.html?idIntervencion=' + data + '"><i class="fa fa-arrow-right"></i></a>';
+                return '<a href="detalle_Intervencion_Gestora.html?idIntervencion=' + data + '&id_zona=' + idZona + '"><i class="fa fa-arrow-right"></i></a>';
             },
             "className": "dt-body-center"
         }],
@@ -111,7 +113,7 @@ function traerNombre() {
                     'Debes iniciar sesion!',
                     'error'
                 );
-                window.location.href = "welcome_Coordinadora.html";
+                window.location.href = "welcome_Gestora.html";
             }
         }, "json");
 
@@ -136,4 +138,10 @@ function listIntervenciones(idZona) {
                 );
             }
         }, "json");
+}
+
+
+function navegar_home() {
+    idZona = $.get("id_zona")
+    window.location.href = "home_Gestora.html?id_zona=" + idZona;
 }
