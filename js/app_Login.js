@@ -58,7 +58,7 @@ function crearSesion() {
 
 	},
 		function (data) {
-			window.location.href = "app_intervenciones.html?id_zona="+id_zona;
+			window.location.href = "app_Intervenciones.html?id_zona="+id_zona;
 			// $('#Nombre').html(data);
 		}
 		, "json");
