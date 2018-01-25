@@ -11,12 +11,14 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/fullcalendar.min.css">
+    <link rel="stylesheet" href="css/css-loader.css">
+    <link rel="stylesheet" href="css/loader-double.css">
     <link rel="stylesheet" href="css/app_styles.css">
 
 </head>
 
 <body>
-
+    <div class="loader loader-double is-active"></div>
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar">
         <a class="navbar-brand" href="#">
@@ -60,50 +62,39 @@
         <hr>
         <!-- Campo Nivel de Intervencion -->
         <div class="col-md-12">
-            
-            <h5>Municipio - URE</h5>
-            <hr>
             <span>Municipio: </span>
-            <span class="grisTexto"> Manizales</span>
-            <br>
-            <span>Entidad: </span>
-            <span class="grisTexto"> Institución educativa 1</span>
+            <span id="municipio" class="grisTexto"> </span>
+            <br class="esconder">
+            <span class="esconder">Entidad: </span>
+            <span id="entidad" class="grisTexto esconder"></span>
             <br>
             <span>Tipo de Intervención: </span>
-            <span class="grisTexto"> Sostenimiento</span>
+            <span id="tipo" class="grisTexto"> </span>
             <br>
             <span>Comportamiento: </span>
-            <span class="grisTexto"> Disfrute del servicio de energía como aporte a la calidad de vida</span>
+            <span id="comportamiento" class="grisTexto"></span>
         </div>
 
         <div class="col-md-12">
             <hr>
             <span>Fecha: </span>
-            <span class="grisTexto"> 2018-02-19</span>
+            <span id="fecha" class="grisTexto"> </span>
             <br>
             <span>Jornada: </span>
-            <span class="grisTexto"> Mañana</span>
+            <span id="jornada" class="grisTexto"> </span>
             <br>
-<!--             <span>Población: </span>
-            <span class="grisTexto"> Jovenes</span>
-            <br>
- -->            <span>Fichero: </span>
-            <span class="grisTexto"> 10.10</span>
-            <br>
-<!--             <span>Etapa: </span>
-            <span class="grisTexto"> Gestión de Redes</span>
-            <br>
- -->            <span>Estrategía: </span>
-            <span class="grisTexto"> Otros</span>
+
+            <span>Estrategía: </span>
+            <span id="estrategia" class="grisTexto"> </span>
             <br>
             <span>Táctico: </span>
-            <span class="grisTexto"> Gestión de Redes</span>
+            <span id="tactico" class="grisTexto"></span>
             <hr>
         </div>
 
         <button type="button" class="btn btn-success btn-lg btn-block" id="iniciar_ejecucion">
             <i class="fa fa-map-marker" aria-hidden="true"></i> Iniciar Ejecución de Actividad</button>
-        <button type="button" class="btn btn-info btn-lg btn-block" onclick="window.location.href='app_Intervenciones.html'">
+        <button type="button" class="btn btn-info btn-lg btn-block" onclick="navegarIntervenciones()">
             <i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Atrás</button>
 
 

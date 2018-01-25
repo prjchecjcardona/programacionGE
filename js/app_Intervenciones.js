@@ -44,8 +44,8 @@ function traerNombre() {
 
 function intervencionesPorZona(id_zona) {
 
-    $.post("php/home_Gestora.php", {
-        accion: 'app_intervencionesPorZona',
+    $.post("php/app_gestora.php", {
+        accion: 'intervencionesPorZona',
         id_zona: id_zona
     },
         function (data) {
@@ -95,7 +95,7 @@ function intervencionesPorZona(id_zona) {
 
                     element.planeaciones.forEach(plan => {
                         $('#but-cont'+index).append(`
-                        <button type="button" class="btn btn-success btn-lg btn-block" onclick="window.location.href='app_Planeaciones.html?id_planeacion=${plan.id_planeacion}'">
+                        <button type="button" class="btn btn-success btn-lg btn-block" onclick="window.location.href='app_Planeaciones.html?id_planeacion=${plan.id_planeacion}&id_zona=${id_zona}'">
                             <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                             ${plan.fecha} - ${plan.jornada}
                         </button>
@@ -114,13 +114,8 @@ function intervencionesPorZona(id_zona) {
         }, "json");
 }
 
-function mostrarDetalleIntervencion(idIntervencion) {
-    window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion;
-}
 
-function agregarIntervencion(idZona) {
-    window.location.href = "nueva_Intervencion_Gestora.html?idZona=" + idZona;
-}
+
 
 function getIniciales(palabra){
     switch (palabra) {
