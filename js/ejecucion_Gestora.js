@@ -21,6 +21,8 @@ $(function () {
 		}
 	}
 
+	idZona = $.get("id_zona");
+
 	idPlaneacion = $.get("idPlaneacion");
 	idIntervencion = $.get("idIntervencion");
 	isEjecutada = $.get("isEjecutada");
@@ -341,7 +343,7 @@ function guardarEjecucion() {
 						'Guardado Correctamente',
 						'success'
 					).then(function () {
-						window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+						window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 					});
 
 				}
@@ -467,3 +469,7 @@ $('#radiosContacto input:radio').click(function () {
 
 });
 
+function navegar_home() {
+	idZona = $.get("id_zona")
+	window.location.href = "home_Gestora.html?id_zona=" + idZona;
+}

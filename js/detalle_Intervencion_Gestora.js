@@ -190,7 +190,7 @@ function cargarInformacionEnTabla(data) { //alert(data);
 			{ title: "Tema" },
 			{ title: "Fecha" },
 			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" class="ejecucion ejec_btn btn btn-sm btn-success" alt="Ejecución"><span class="ejec fa fa-book"></span></a>' },
-			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Coordinadora.html" id="evaluacion" class="eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' }
+			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Gestora.html" id="evaluacion" class="eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' }
 		],
 		"paging": true,
 		"info": false,
@@ -235,31 +235,17 @@ function identificarEjecutadas(data, ejecutadas) {
 			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejecucion').click(function(){
 				let data = table.row($(this).parents('tr')).data();
 				idPlaneacion = data[0];
-				window.location.href = "ejecucion_Coordinadora.html?isEjecutada=1&idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+				window.location.href = "ejecucion_Gestora.html?isEjecutada=1&idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 			})
 		}else{
 			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejecucion').click(function(){
 				let data = table.row($(this).parents('tr')).data();
 				idPlaneacion = data[0];
-				window.location.href = "ejecucion_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+				window.location.href = "ejecucion_Gestora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 			})
 		}
 	});
 
-	//Evento para ver detalle ejecucion//
-/* 	$('.ejecucion').click(function () {
-		var data = table.row($(this).parents('tr')).data();
-		var iconEjec = $(this).find('span').attr('class')
-		idPlaneacion = data[0];
-		if (data[0] != "") {
-			if (iconEjec !== "fa fa-check") {
-				window.location.href = "ejecucion_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
-			} else {
-				window.location.href = "ejecucion_Coordinadora.html?isEjecutada=1&idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
-			}
-
-		}
-	}) */
 }
 
 
