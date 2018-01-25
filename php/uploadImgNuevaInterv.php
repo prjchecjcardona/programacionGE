@@ -13,7 +13,8 @@ $data = array();
 
 if(isset($_FILES['archivo'])){
     //MODIFICAR ESTA RUTA SI ES NECESARIO AL SUBIR A AMBIENTE DE PRODUCCIÓN
-    $dir_subida = dirname(__DIR__)."\archivos\\";
+    $dir_subida = dirname(__DIR__).'/archivos'.'/';
+    //var_dump($dir_subida);
     $fichero_subido = $dir_subida .'intervBaseid_'.$idIntervencion.'_'.basename($_FILES['archivo']['name']);
 
     //Se asigna la siguiente ruta relativa para almacenar en BD y recuperar desde ella en el front sin problemas (local)

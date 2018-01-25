@@ -101,6 +101,22 @@ $(function () {
 		yearRange: '1900:2018'
 	});
 
+	$('#file_fotograficas').fileinput({
+		language: 'es',
+		'theme': 'fa',
+		uploadUrl: 'php/uploadEvidencias.php',
+		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp', 'mp4', 'avi', 'mpeg4', 'mkv', 'mov', 'pdf', 'docx', 'flv', 'mpeg', 'xlsx'],
+		maxFileCount: 1
+	});
+
+	$('#file_asistencias').fileinput({
+		language: 'es',
+		'theme': 'fa',
+		uploadUrl: 'php/uploadAsistencia.php',
+		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp'],
+		maxFileCount: 1
+	});
+
 
 
 	bindEvents();
