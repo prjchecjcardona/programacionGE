@@ -55,8 +55,8 @@ function intervencionesPorZona($id_zona){
 								
 							$data['html'].='</div>';
 							$data['html'].='<div class="card-actions">';
-							  $data['html'].='<a href="#" class="card-link">Ver más</a>';
-							  $data['html'].='<a id="'.$datos['id_zona'].'" class="card-link float-right" onclick="agregarIntervencion('.$datos['id_zona'].');"><i class="fa fa-plus-circle fa-2x"></i></a>';
+							$data['html'].='<a href="listado_Intervenciones_Gestora.html?zona='.$datos['id_zona'].'" class="card-link">Ver más</a>';
+							$data['html'].='<a id="'.$datos['id_zona'].'" class="card-link float-right" onclick="agregarIntervencion('.$datos['id_zona'].');"><i class="fa fa-plus-circle fa-2x"></i></a>';
 							$data['html'].='</div>';
 						  $data['html'].='</div>';
 						$data['html'].='</div>';
