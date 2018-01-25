@@ -21,12 +21,12 @@ $(function () {
     intervencionesPorZona(idZona);
 
     $('#calendar').fullCalendar({
-/*         events: {
-            url: 'http://localhost/gestioneducativa/server/testEvents.php',
-            type: 'POST', // Send post data
+        events: {
+            url: 'php/calendarEvents.php',
+            type: 'POST', // Send post data,
+            data: {id_zona: idZona},
             error: function (err) {
                 alert('There was an error while fetching events.');
-              /*   console.log(err)
             }
         },
         eventClick: function (calEvent, jsEvent, view) {
@@ -34,8 +34,14 @@ $(function () {
             $('#eventFecha').html(calEvent.start);
             $('#eventLugar').html(calEvent.lugar);
             $('#eventDescripcion').html(calEvent.descripcion);
-            $('#eventModal').modal()
-        } */
+            $("#calendarEvent").modal({
+                fadeDuration: 500,
+                fadeDelay: 0.50,
+                escapeClose: false,
+                clickClose: false,
+                showClose: false
+            });
+        }
     })
 })
 
