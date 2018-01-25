@@ -57,12 +57,13 @@ function app_intervencionesPorZona($idZona)
 					'planeaciones' => array()
 				);
 
-				$sql="SELECT pl.id_planeacion, pl.fecha, jor.jornada
+				$sql="SELECT pl.id_planeacion, pl.fecha, jor.jornada, reg.id_registro, reg.tipo_registro
 				FROM planeacion pl
 				JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
 				JOIN jornada jor ON jor.id_jornada = pl.id_jornada
-				WHERE plxint.intervenciones_id_intervenciones = ".$value['id_intervenciones']."
-				GROUP BY pl.id_planeacion, fecha, jornada ORDER BY pl.fecha DESC";
+				LEFT OUTER JOIN registro_ubicacion reg ON reg.id_planeacion = pl.id_planeacion
+				WHERE plxint.intervenciones_id_intervenciones = ".$value['id_intervenciones']." AND (reg.id_registro IS NULL OR reg.id_planeacion IN (SELECT id_planeacion FROM (SELECT count(reg.id_planeacion), reg.id_planeacion FROM registro_ubicacion reg GROUP BY reg.id_planeacion HAVING count(reg.id_planeacion) < 2) as SUB1))
+				GROUP BY pl.id_planeacion, pl.fecha, jornada, reg.id_registro, reg.tipo_registro ORDER BY pl.fecha DESC";
 
 				if($rs = $con->query($sql)){
 					if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
@@ -93,7 +94,7 @@ function detallesPlaneacion($id_planeacion){
     include "conexion.php";
     $data=array('error'=> 0, 'mensaje'=> '', 'html'=>array());
     
-    $sql= "SELECT mun.municipio, ent.nombreentidad, tipoint.tipo_intervencion, compor.comportamientos, pl.fecha, jor.jornada, estra.nombreestrategia, tac.nombretactico
+    $sql= "SELECT mun.municipio, ent.nombreentidad, tipoint.tipo_intervencion, compor.comportamientos, pl.fecha, jor.jornada, estra.nombreestrategia, tac.nombretactico, reg.tipo_registro
     FROM planeacion pl
     JOIN planeaciones_por_intervencion ppi ON ppi.planeacion_id_planeacion = pl.id_planeacion
     JOIN intervenciones inte ON inte.id_intervenciones = ppi.intervenciones_id_intervenciones
@@ -110,6 +111,7 @@ function detallesPlaneacion($id_planeacion){
     JOIN tactico_por_planeacion tpp ON tpp.planeacion_id_planeacion = pl.id_planeacion
     JOIN tactico tac ON tac.id_tactico = tpp.tactico_id_tactico
     JOIN estrategias estra ON estra.id_estrategia = tac.id_estrategia
+	LEFT OUTER JOIN registro_ubicacion reg ON reg.id_planeacion = pl.id_planeacion
     WHERE pl.id_planeacion = $id_planeacion";
 
     if($rs = $con->query($sql)){

@@ -69,6 +69,12 @@ function cargarInfoPlaneacion(idPlaneacion){
             }else{
                 $('.esconder').hide();
             }
+            if(data.html.tipo_registro){
+                $("#iniciar_ejecucion")
+                            .removeClass("btn-success")
+                            .addClass("btn-danger")
+                            .html('<i class="fa fa-map-marker" aria-hidden="true"></i> Finalizar Ejecución de Actividad');
+            }
 
 
         } else {
