@@ -22,8 +22,9 @@ $(function () {
 
     $('#calendar').fullCalendar({
         events: {
-            url: 'php/testEvents.php',
-            type: 'POST', // Send post data
+            url: 'php/calendarEvents.php',
+            type: 'POST', // Send post data,
+            data: {id_zona: idZona},
             error: function (err) {
                 alert('There was an error while fetching events.');
             }
