@@ -41,6 +41,8 @@ $(document).ready(function () {
 		}
 	}
 
+	idZona = $.get("id_zona");
+
 	var dateToday = new Date();
 	var dates = $("#fecha_planeacion").datepicker({
 		defaultDate: "+1w",
@@ -77,7 +79,7 @@ $(document).ready(function () {
 			clickClose: false,
 			showClose: false
 		});
-		$('.imagenCoordinadora').removeClass('imagenCoordinadora')
+		$('.imagenGestora').removeClass('imagenGestora')
 
 	})
 
@@ -102,7 +104,7 @@ function traerNombre() {
 					'Debes iniciar sesion!',
 					'error'
 				);
-				window.location.href = "welcome_Coordinadora.html";
+				window.location.href = "welcome_Gestora.html";
 			}
 		}, "json");
 
@@ -374,11 +376,10 @@ function validarInformacion() {
 	return valido;
 }
 
-$("#buttonCancelar").click(function () {
+/* $("#buttonCancelar").click(function () {
+	window.location.href = "home_Gestora.html?id_zona=" + idZona;
+}); */
 
-	window.location.href = "home_Coordinadora.html";
-
-});
 
 function seleccionarEtapa(idEtapadb) {
 
@@ -438,7 +439,7 @@ function guardarGestionRedes() {
 					'Guardado Correctamente',
 					'success'
 				).then(function () {
-					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+					window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 				});
 
 			} else {
@@ -481,7 +482,7 @@ function guardarGestionEducativa() {
 					'Guardado Correctamente',
 					'success'
 				).then(function () {
-					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+					window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 				});
 
 			} else {
@@ -530,10 +531,11 @@ function consultarIndicadoresGE() {
 }
 
 $("#buttonCancelar").click(function () {
-
-	window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+	window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 
 });
+
+
 
 /*guardar una nueva entidad
  * parametro: 
@@ -541,7 +543,7 @@ $("#buttonCancelar").click(function () {
 function guardarNuevaEntidad() {
 
 	$('.loader').show();
-	
+
 	let idIntervencion = $.get("idIntervencion");
 	let nombreEntidad = $('#textinputEntidadNueva').val();
 	let direccion = $('#textinputDireccionEntidad').val();
@@ -587,4 +589,9 @@ function guardarNuevaEntidad() {
 			'error'
 		)
 	}
+}
+
+function navegar_home() {
+	idZona = $.get("id_zona")
+	window.location.href = "home_Gestora.html?id_zona=" + idZona;
 }

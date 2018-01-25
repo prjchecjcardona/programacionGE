@@ -16,15 +16,17 @@ $(function () {
         }
     }
 
-    intervencionesPorZona($.get('id_zona'));
+    idZona = $.get("id_zona");
+
+    intervencionesPorZona(idZona);
 
     $('#calendar').fullCalendar({
-        events: {
+/*         events: {
             url: 'http://localhost/gestioneducativa/server/testEvents.php',
             type: 'POST', // Send post data
             error: function (err) {
                 alert('There was an error while fetching events.');
-                console.log(err)
+              /*   console.log(err)
             }
         },
         eventClick: function (calEvent, jsEvent, view) {
@@ -33,17 +35,17 @@ $(function () {
             $('#eventLugar').html(calEvent.lugar);
             $('#eventDescripcion').html(calEvent.descripcion);
             $('#eventModal').modal()
-        }
+        } */
     })
 })
 
 function traerNombre() {
 
     $.post("php/CapturaVariableSession.php", {
-        accion: 'traerNombre'
+            accion: 'traerNombre'
 
 
-    },
+        },
         function (data) {
             if (data != "") {
                 $('#Nombre').html(data);
@@ -62,28 +64,35 @@ function traerNombre() {
 function intervencionesPorZona(id_zona) {
 
     $.post("php/home_Gestora.php", {
-        accion: 'intervencionesPorZona',
-        id_zona: id_zona
-    },
+            accion: 'intervencionesPorZona',
+            id_zona: id_zona
+        },
         function (data) {
             if (data.error != 1) {
                 $('.interv-container').append(data.html);
-            }else{
+            } else {
                 swal(
-					'Error',
-					'No se cargaron los datos intentalo de nuevo',
-					'error'
-				)
+                    'Error',
+                    'No se cargaron los datos intentalo de nuevo',
+                    'error'
+                )
             }
 
-
+            $('.loader').hide();
         }, "json");
 }
 
 function mostrarDetalleIntervencion(idIntervencion) {
-    window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion;
+    idZona = $.get("id_zona")
+    window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 }
 
-function agregarIntervencion(idZona) {
-    window.location.href = "nueva_Intervencion_Gestora.html?idZona=" + idZona;
+function agregarIntervencion() {
+    idZona = $.get("id_zona")
+    window.location.href = "nueva_Intervencion_Gestora.html?id_zona=" + idZona;
+}
+
+function navegar_home(){
+    idZona = $.get("id_zona")
+    window.location.href = "home_Gestora.html?id_zona=" + idZona;
 }
