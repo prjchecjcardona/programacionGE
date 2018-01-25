@@ -24,23 +24,21 @@ $(function () {
         events: {
             url: 'php/calendarEvents.php',
             type: 'POST', // Send post data,
-            data: {id_zona: idZona},
+            data: { id_zona: idZona },
             error: function (err) {
                 alert('There was an error while fetching events.');
             }
         },
         eventClick: function (calEvent, jsEvent, view) {
+            var year = calEvent.start._d.getFullYear() + "";
+            var month = (calEvent.start._d.getMonth() + 1) + "";
+            var day = calEvent.start._d.getDate() + "";
+            var dateFormat = year + "-" + month + "-" + day;
             $('.modal-title').html(calEvent.title);
-            $('#eventFecha').html(calEvent.start);
+            $('#eventFecha').html(dateFormat);
             $('#eventLugar').html(calEvent.lugar);
             $('#eventDescripcion').html(calEvent.descripcion);
-            $("#calendarEvent").modal({
-                fadeDuration: 500,
-                fadeDelay: 0.50,
-                escapeClose: false,
-                clickClose: false,
-                showClose: false
-            });
+            $('#eventModal').modal()
         }
     })
 })
@@ -48,10 +46,10 @@ $(function () {
 function traerNombre() {
 
     $.post("php/CapturaVariableSession.php", {
-            accion: 'traerNombre'
+        accion: 'traerNombre'
 
 
-        },
+    },
         function (data) {
             if (data != "") {
                 $('#Nombre').html(data);
@@ -70,9 +68,9 @@ function traerNombre() {
 function intervencionesPorZona(id_zona) {
 
     $.post("php/home_Gestora.php", {
-            accion: 'intervencionesPorZona',
-            id_zona: id_zona
-        },
+        accion: 'intervencionesPorZona',
+        id_zona: id_zona
+    },
         function (data) {
             if (data.error != 1) {
                 $('.interv-container').append(data.html);
@@ -98,7 +96,7 @@ function agregarIntervencion() {
     window.location.href = "nueva_Intervencion_Gestora.html?id_zona=" + idZona;
 }
 
-function navegar_home(){
+function navegar_home() {
     idZona = $.get("id_zona")
     window.location.href = "home_Gestora.html?id_zona=" + idZona;
 }

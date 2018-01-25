@@ -93,7 +93,7 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 			LEFT OUTER JOIN veredas ver ON ver.id_veredas = inter.id_vereda
 			JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
 			WHERE pxz.zonas_id_zona = ".$idZona."
-			GROUP BY id_intervenciones, municipio, comportamientos, inter.fecha ORDER BY inter.fecha DESC LIMIT 5";
+			GROUP BY id_intervenciones, municipio, comportamientos, inter.fecha ORDER BY inter.fecha DESC LIMIT 4";
 
 	$resultados_zona = $con->query($intervencion_por_zona);
 	if(!$resultados_zona)
