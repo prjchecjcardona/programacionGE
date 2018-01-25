@@ -10,6 +10,7 @@
   <title>Inicio</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
   <link rel="stylesheet" href="css/fullcalendar.min.css">
   <link rel="stylesheet" href="css/css-loader.css">
   <link rel="stylesheet" href="css/loader-double.css">
@@ -73,6 +74,35 @@
       </div>
 
 
+      <!-- Modal creacion Vereda -->
+      <div id="calendarEvent" class="modal">
+
+        <head>
+          <h2>Evento</h2>
+          <h5 class="modal-title"></h5>
+        </head>
+        <hr>
+        <!-- Campo Vereda -->
+        <div class="col-md-12 espaciado">
+          <b>Fecha:</b>
+          <span id="eventFecha"></span> 
+        </div>
+
+        <!-- Campo Latitud Vereda -->
+        <div class="col-md-12 espaciado">
+          <b>Lugar:</b>
+                  <span id="eventLugar"></span>
+        </div>
+        <!-- Campo Longitud Vereda -->
+        <div class="col-md-12 espaciado">
+          <span id="eventDescripcion"></span>
+        </div>
+        <hr>
+        
+
+
+      </div>
+
       <!-- /.modal -->
     </div>
   </div>
@@ -91,6 +121,7 @@
   <script src='js/includes/fullcalendar/fullcalendar.min.js'></script>
   <script src='js/includes/fullcalendar/es.js'></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
   <script src="js/includes/bootstrap.min.js"></script>
   <script src="js/ValidarSesion.js"></script>
   <script src="js/home_Gestora.js"></script>

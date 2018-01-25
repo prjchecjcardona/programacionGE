@@ -34,7 +34,13 @@ $(function () {
             $('#eventFecha').html(calEvent.start);
             $('#eventLugar').html(calEvent.lugar);
             $('#eventDescripcion').html(calEvent.descripcion);
-            $('#eventModal').modal()
+            $("#calendarEvent").modal({
+                fadeDuration: 500,
+                fadeDelay: 0.50,
+                escapeClose: false,
+                clickClose: false,
+                showClose: false
+            });
         }
     })
 })
