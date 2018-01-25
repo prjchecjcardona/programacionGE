@@ -58,7 +58,7 @@ function crearSesion() {
 
 	},
 		function (data) {
-			window.location.href = "home_Gestora.html?id_zona="+id_zona;
+			window.location.href = "home_Gestora.html?id_zona=" + id_zona;
 			// $('#Nombre').html(data);
 		}
 		, "json");

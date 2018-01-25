@@ -9,9 +9,27 @@ $(document).ready(function () {
 	traerNombre();
 	nuevaentidad = "";
 
+	/*Extrae los parametros que llegan en la url
+	 * parametro: 
+	 */
+	$.get = function (key) {
+		key = key.replace(/[\[]/, '\\[');
+		key = key.replace(/[\]]/, '\\]');
+		var pattern = "[\\?&]" + key + "=([^&#]*)";
+		var regex = new RegExp(pattern);
+		var url = unescape(window.location.href);
+		var results = regex.exec(url);
+		if (results === null) {
+			return null;
+		} else {
+			return results[1];
+		}
+	}
+
+	idZona = $.get("id_zona");
 
 	$("#buttonCancelar").click(function () {
-		window.location.href = "home_Gestora.html";
+		window.location.href = "home_Gestora.html?id_zona=" + idZona;
 	});
 
 
@@ -75,30 +93,10 @@ $(document).ready(function () {
 	})
 
 	$('.regresarImgGestora').click(function () {
-		$('.regresoImgCoordinadora').addClass('.imagenGestora')
+		$('.regresoImgGestora').addClass('.imagenGestora')
 	})
 
 
-
-	/*Extrae los parametros que llegan en la url
-	 * parametro: 
-	 */
-	$.get = function (key) {
-		key = key.replace(/[\[]/, '\\[');
-		key = key.replace(/[\]]/, '\\]');
-		var pattern = "[\\?&]" + key + "=([^&#]*)";
-		var regex = new RegExp(pattern);
-		var url = unescape(window.location.href);
-		var results = regex.exec(url);
-		if (results === null) {
-			return null;
-		} else {
-			return results[1];
-		}
-	}
-
-
-	idZona = $.get("idZona");
 	initFileInput();
 	cargarZonasPorId(idZona);
 	cargarPorMunicipiosPorIdZona(idZona);
@@ -375,7 +373,7 @@ function guardarIntervencion() {
 							'Guardado Correctamente',
 							'success'
 						).then(function () {
-							window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + data.idIntervencion;
+							window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + data.idIntervencion + "&id_zona=" + idZona;
 						});
 					});
 					$('#upload_files_input').fileinput('upload');
@@ -554,4 +552,10 @@ function guardarNuevaVereda() {
 			'error'
 		)
 	}
+}
+
+
+function navegar_home() {
+	idZona = $.get("id_zona")
+	window.location.href = "home_Gestora.html?id_zona=" + idZona;
 }

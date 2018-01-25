@@ -78,7 +78,7 @@ function traerNombre() {
  */
 function cargarDetalleIntervencion(idIntervencion) {
 
-	$.post("php/detalle_Intervencion_Coordindora.php", {
+	$.post("php/detalle_Intervencion_Coordinadora.php", {
 		accion: 'cargarDetalleIntervencion',
 		idIntervencion: idIntervencion
 
@@ -151,14 +151,14 @@ function cargarDetalleIntervencion(idIntervencion) {
 */
 function cargarPlaneacionesPorIntrevencion(idIntervencion) {
 
-	$.post("php/detalle_Intervencion_Coordindora.php", {
+	$.post("php/detalle_Intervencion_Coordinadora.php", {
 		accion: 'cargarPlaneacionesPorIntrevencion',
 		idIntervencion: idIntervencion
 
 	},
 		function (data) {
 			if (data.error != 1) {
-				$.post("php/detalle_Intervencion_Coordindora.php", {
+				$.post("php/detalle_Intervencion_Coordinadora.php", {
 					accion: 'checkPlaneacionesEjecutadas'
 				},
 					function (ejecutadas) {

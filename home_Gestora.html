@@ -11,10 +11,13 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/fullcalendar.min.css">
+  <link rel="stylesheet" href="css/css-loader.css">
+  <link rel="stylesheet" href="css/loader-double.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
+  <div class="loader loader-double is-active"></div>
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <a class="navbar-brand" href="#">
@@ -34,7 +37,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link link-1" id="nav_home" href="home_Gestora.html" data-toggle="tooltip" data-placement="bottom" title="Menú Principal">
+          <a class="nav-link link-1" id="nav_home" data-toggle="tooltip" data-placement="bottom" title="Menú Principal" onclick="navegar_home()">
             <i class="fa fa-home fa-2x"></i>
           </a>
           <a class="nav-link link-1" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank" data-toggle="tooltip"
@@ -59,7 +62,7 @@
           <h3>Intervenciones</h3>
         </div>
 
-        <button type="button" class="btn btn-success" id="Nueva_Intervencion" onclick="window.location.href='nueva_Intervencion_Gestora.html'">
+        <button type="button" class="btn btn-success" id="Nueva_Intervencion" onclick="agregarIntervencion()">
           <i class="fa fa-plus"></i>
           Nueva intervención
         </button>
@@ -118,6 +121,7 @@
   <script src='js/includes/moment.min.js'></script>
   <script src='js/includes/fullcalendar/fullcalendar.min.js'></script>
   <script src='js/includes/fullcalendar/es.js'></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="js/includes/bootstrap.min.js"></script>
   <script src="js/ValidarSesion.js"></script>
   <script src="js/home_Gestora.js"></script>
