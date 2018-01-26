@@ -942,6 +942,68 @@ li.paginate_button.page-item a {
 
 }
 
+
+@media (max-width:480px) {
+    .posicioningreso {
+        justify-content: center;
+        position: relative;
+        right: 0;
+        bottom: 0;
+    }
+    .imgwelcome {
+        margin-top: 35%;
+        margin-left: 14%;
+    }
+    .centrarHijos {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    #menuSaludo ul {
+        margin: 0;
+        width: 100%
+    }
+    #menuSaludo ul span {
+        font-size: 15px;
+    }
+    #menuSaludo ul a {
+        font-size: 13px;
+    }
+    .img-fluid.logo-min {
+        width: 18%;
+    }
+    .img-fluid.umanizales {
+        width: 25%;
+    }
+    .botones-container {
+        flex-wrap: wrap;
+        margin-right: 50px;
+    }
+    .botones-container h4 {
+        order: 2;
+        margin-top: 20px;
+        font-size: 20px;
+        margin-bottom: 0px;
+    }
+    .sub-cont-botones {
+        order: 1;
+    }
+
+    .posicion_logos {
+        position: fixed;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        margin-left: -60px;
+        margin-top: 50px;
+    }
+
+    img.imagen_checum {
+        width: 55%;
+    }
+
+}
+
 @media (min-width:600px) and (max-width:992px) {
     .posicioningreso {
         position: relative;

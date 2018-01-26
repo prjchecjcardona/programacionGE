@@ -105,16 +105,14 @@ $(function () {
 		language: 'es',
 		'theme': 'fa',
 		uploadUrl: 'php/uploadEvidencias.php',
-		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp', 'mp4', 'avi', 'mpeg4', 'mkv', 'mov', 'pdf', 'docx', 'flv', 'mpeg', 'xlsx'],
-		maxFileCount: 1
+		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp', 'mp4', 'avi', 'mpeg4', 'mkv', 'mov', 'pdf', 'docx', 'flv', 'mpeg', 'xlsx']
 	});
 
 	$('#file_asistencias').fileinput({
 		language: 'es',
 		'theme': 'fa',
 		uploadUrl: 'php/uploadAsistencia.php',
-		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp'],
-		maxFileCount: 1
+		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp', 'pdf', 'xlsx', 'xls', 'doc', 'docx']
 	});
 
 
