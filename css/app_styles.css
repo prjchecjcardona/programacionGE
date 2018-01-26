@@ -942,8 +942,7 @@ li.paginate_button.page-item a {
 
 }
 
-
-@media (max-width:480px) {
+@media (max-width:320px) {
     .posicioningreso {
         justify-content: center;
         position: relative;
@@ -951,9 +950,11 @@ li.paginate_button.page-item a {
         bottom: 0;
     }
     .imgwelcome {
-        margin-top: 35%;
+        margin-top: 5%;
         margin-left: 14%;
     }
+
+
     .centrarHijos {
         display: flex;
         justify-content: center;
@@ -1000,9 +1001,34 @@ li.paginate_button.page-item a {
 
     img.imagen_checum {
         width: 55%;
+        margin-right: -6px;
+    }
+    a.navbar-brand {
+        width: 50%;
+        font-size: 1.2em;
+        color: white !important;
     }
 
+    button.btn.btn-lg.btn-block.btn-danger{
+        font-size: 1.1em;
+    }
+
+    button.btn.btn-success.btn-lg.btn-block{
+        font-size: 1.1em;
+    }
+
+    li.nav-item.active{
+        margin-top: 10px;
+    }
+
+    .tamañoLetra{
+        font-size: 160%;
+    }
 }
+
+
+
+
 
 @media (min-width:600px) and (max-width:992px) {
     .posicioningreso {
