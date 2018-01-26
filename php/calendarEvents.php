@@ -16,15 +16,15 @@ if(isset($_POST['id_zona'])){
     JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
     JOIN zonas zon ON zon.id_zona = mun.id_zona
     LEFT OUTER JOIN registro_ubicacion reg ON reg.id_planeacion = pl.id_planeacion
-    JOIN tactico_por_planeacion tpp ON tpp.planeacion_id_planeacion = pl.id_planeacion
-    JOIN tactico tac ON tac.id_tactico = tpp.tactico_id_tactico
-    JOIN estrategias est ON est.id_estrategia = tac.id_estrategia
-    JOIN subtemas_por_planeacion spp ON spp.planeacion_id_planeacion = pl.id_planeacion
-    JOIN subtemas sub ON sub.id_subtema = spp.subtemas_id_subtema
-    JOIN temas tem ON tem.id_temas = sub.id_temas
-    JOIN competencias_por_comportamiento cpc ON cpc.competencias_id_competencia = tem.compe_por_compo_compe_id_compe AND cpc.comportamientos_id_comportamientos = tem.compe_por_compo_compo_id_compo
-    JOIN comportamientos compor ON compor.id_comportamientos = cpc.comportamientos_id_comportamientos
-    JOIN competencias compe ON compe.id_competencia = cpc.competencias_id_competencia
+    LEFT OUTER JOIN tactico_por_planeacion tpp ON tpp.planeacion_id_planeacion = pl.id_planeacion
+    LEFT OUTER JOIN tactico tac ON tac.id_tactico = tpp.tactico_id_tactico
+    LEFT OUTER JOIN estrategias est ON est.id_estrategia = tac.id_estrategia
+    LEFT OUTER JOIN subtemas_por_planeacion spp ON spp.planeacion_id_planeacion = pl.id_planeacion
+    LEFT OUTER JOIN subtemas sub ON sub.id_subtema = spp.subtemas_id_subtema
+    LEFT OUTER JOIN temas tem ON tem.id_temas = sub.id_temas
+    LEFT OUTER JOIN competencias_por_comportamiento cpc ON cpc.competencias_id_competencia = tem.compe_por_compo_compe_id_compe AND cpc.comportamientos_id_comportamientos = tem.compe_por_compo_compo_id_compo
+    LEFT OUTER JOIN comportamientos compor ON compor.id_comportamientos = cpc.comportamientos_id_comportamientos
+    LEFT OUTER JOIN competencias compe ON compe.id_competencia = cpc.competencias_id_competencia
     LEFT OUTER JOIN entidades ent ON ent.id_entidad = pl.id_entidad
     WHERE zon.id_zona = $idZona
     GROUP BY pl.fecha, jornada, municipio, id_registro, nombreentidad, nombreestrategia, nombretactico, comportamientos, competencia, temas
