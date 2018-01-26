@@ -348,7 +348,7 @@ $('#buttonGuardarPlaneacion').click(function () {
 });
 
 function validarInformacion() {
-	console.log(idEtapa);
+	
 
 	var valido = true;
 	//select
@@ -374,9 +374,14 @@ function validarInformacion() {
 		valido = false;
 	}
 
-	if ($("#indicadoresre input:checkbox:checked").length == 0){
-		valido = false;
-	}
+	if (idEtapa == 2) {
+		if ($("#indicadoresre input:checkbox:checked").length == 0){
+			valido = false;
+		}
+	} //gestion educativa
+
+
+	
 
 	return valido;
 }
