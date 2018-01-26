@@ -81,6 +81,10 @@ $(document).ready(function () {
 
 	})
 
+	$('#descargarBH').click(function(){
+		
+	})
+
 });
 
 /*Consulta el nombre de la persona que inicio sesión
@@ -371,6 +375,12 @@ function validarInformacion() {
 		$("#buttonGuardarPlaneacion").removeAttr('disabled')
 		valido = false;
 	}
+
+
+	if ($("#indicadoresre input:checkbox:checked").length == 0){
+		valido = false;
+	}
+
 	return valido;
 }
 

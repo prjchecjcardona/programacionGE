@@ -549,6 +549,12 @@ div.card-actions {
     width: 150px;
     text-align: center;
 }
+.descargarBancoBtn{
+    position: fixed;
+    margin-left: 40%;
+    margin-top: 285px;
+    text-align: center;
+}
 
 .posicionGrupoBotones {
     margin-left: 14px;

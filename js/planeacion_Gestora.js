@@ -373,6 +373,11 @@ function validarInformacion() {
 		$("#buttonGuardarPlaneacion").removeAttr('disabled')
 		valido = false;
 	}
+
+	if ($("#indicadoresre input:checkbox:checked").length == 0){
+		valido = false;
+	}
+
 	return valido;
 }
 

@@ -409,11 +409,11 @@ function guardarIntervencion($idZona,$barrio, $vereda, $ubicacion, $idTipoInterv
 			//Determinar si la intervencion es de un barrio o una vereda
 			if($ubicacion == 1){ //rural
 				$sql = "INSERT INTO intervenciones (id_intervenciones, id_vereda, operadores_id_operadores, personas_por_zona_id_personas_por_zonacol, tipo_intervencion_id_tipo_intervencion, fecha)
-				VALUES (nextval('sec_intervenciones'),'".$vereda."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE); 
+				VALUES (nextval('sec_intervenciones'),'".$vereda."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE AT TIME ZONE 'CDT'); 
 			  ";
 			}else{  //urbano
 				$sql = "INSERT INTO intervenciones (id_intervenciones, id_barrio, operadores_id_operadores, personas_por_zona_id_personas_por_zonacol, tipo_intervencion_id_tipo_intervencion, fecha)
-			VALUES (nextval('sec_intervenciones'),'".$barrio."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE); 
+			VALUES (nextval('sec_intervenciones'),'".$barrio."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE AT TIME ZONE 'CDT'); 
 			  ";
 			}
 			  

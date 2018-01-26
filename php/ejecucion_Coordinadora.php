@@ -68,8 +68,8 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada){
 	JOIN tactico_por_planeacion tacxpl ON tacxpl.planeacion_id_planeacion = pl.id_planeacion
 	JOIN tactico tac ON tac. id_tactico = tacxpl.tactico_id_tactico
 	JOIN estrategias est ON est.id_estrategia = tac.id_estrategia
-	JOIN indicadores_por_planeacion indxpl ON indxpl.planeacion_id_planeacion = pl.id_planeacion
-	JOIN indicadores_ge ind ON ind.id_indicador = indxpl.indicadores_id_indicador
+	LEFT OUTER JOIN indicadores_por_planeacion indxpl ON indxpl.planeacion_id_planeacion = pl.id_planeacion
+	LEFT OUTER JOIN indicadores_ge ind ON ind.id_indicador = indxpl.indicadores_id_indicador
 	LEFT OUTER JOIN indicadores_chec_por_intervenciones icpi ON icpi.intervenciones_id_intervenciones = int.id_intervenciones
 	LEFT OUTER JOIN indicadores_chec ic ON ic.id_indicadores_chec = icpi.indicadores_chec_id_indicadores_chec
 	LEFT OUTER JOIN comportamientos comport ON comport.id_comportamientos = ic.comportamientos_id_comportamientos

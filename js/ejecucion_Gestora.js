@@ -1,7 +1,6 @@
 //Invocacion del archivo File Input Ejecucion Coordinadora
 $(function () {
 	traerNombre();
-	initFileInput();
 	cargarTipoCedula();
 
 	/*Extrae los parametros que llegan en la url
@@ -105,15 +104,23 @@ $(function () {
 		language: 'es',
 		'theme': 'fa',
 		uploadUrl: 'php/uploadEvidencias.php',
+		showUpload: false,
 		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp', 'mp4', 'avi', 'mpeg4', 'mkv', 'mov', 'pdf', 'docx', 'flv', 'mpeg', 'xlsx']
 	});
 
 	$('#file_asistencias').fileinput({
 		language: 'es',
 		'theme': 'fa',
-		uploadUrl: 'php/uploadAsistencia.php',
+		uploadUrl: 'php/uploadAsistencias.php',
+		showUpload: false,
 		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp', 'pdf', 'xlsx', 'xls', 'doc', 'docx']
 	});
+
+	$('#file_fotograficas, #file_asistencias').on('fileloaded', function(event, file, previewId, index, reader) {
+		$('div.file-footer-buttons').hide();
+	});
+
+
 
 
 
@@ -161,26 +168,6 @@ function bindEvents() {
 	$('#buttonEnviar').click(function () {
 		guardarAsistencia();
 	})
-}
-
-//Invocacion del archivo File Input para ejecucion Coordinadora
-function initFileInput() {
-	$('#file_fotograficas').fileinput({
-		language: 'es',
-		'theme': 'fa',
-		uploadUrl: '#',
-		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
-		]
-	});
-	$('#file_asistencias').fileinput({
-		language: 'es',
-		'theme': 'fa',
-		uploadUrl: '#',
-		allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx',
-			'xlsx', 'xls', 'ppt', 'pptx', 'mp4', 'avi', 'mov', 'mpeg4'
-		]
-	});
 }
 
 
@@ -342,6 +329,7 @@ function guardarEjecucion() {
 			arrayAsistentes: arrayAsistentes
 		},
 			function (data) {
+				
 				if (data.error == 1) {
 					$('.loader').hide();
 					swal(
@@ -351,14 +339,20 @@ function guardarEjecucion() {
 					);
 
 				} else {
-					$('.loader').hide();
-					swal(
-						'', //titulo
-						'Guardado Correctamente',
-						'success'
-					).then(function () {
-						window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
-					});
+					$('#file_fotograficas').on('filebatchuploadcomplete', function (event, files, extra) {
+						$('#file_asistencias').fileinput('upload');
+					})
+					$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
+						$('.loader').hide();
+						swal(
+							'', //titulo
+							'Guardado Correctamente',
+							'success'
+						).then(function () {
+							window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
+						});
+					})
+					$('#file_fotograficas').fileinput('upload');
 
 				}
 
@@ -385,6 +379,12 @@ function validarInformacion() {
 			valido = false;
 		}
 	});
+
+	var filesEvidencias = $('#file_fotograficas').fileinput('getFileStack');
+	var filesAsistencia = $('#file_asistencias').fileinput('getFileStack');
+	if(filesAsistencia.length == 0 || filesEvidencias.length == 0 ){
+		valido = false;
+	}
 
 	return valido;
 }

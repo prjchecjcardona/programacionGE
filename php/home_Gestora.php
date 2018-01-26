@@ -13,6 +13,7 @@ if(isset($_POST["accion"]) && isset($_POST["id_zona"]))
 	{
 		intervencionesPorZona($_POST["id_zona"]);
 	}
+	
 
 }
 
@@ -118,6 +119,8 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 	
 	return $intervencion;
 }
+
+
 
 
 ?>

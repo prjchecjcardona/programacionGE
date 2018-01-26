@@ -475,7 +475,7 @@ function getRecurso() {
   <h3>Juegos</h3>
   <hr>
   <div class="list-group">
-  <a class="list-group-item list-group-item-action">Aún no se cargan juegos en el módulo.<button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+  <a class="list-group-item list-group-item-action" href="bh/recursos/aprendiendo_con_energia.zip">Aprendiendo con energía<span class="glyphicon glyphicon-download-alt"></span></a>
   </div> 
 </div>
 </div>`;

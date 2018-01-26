@@ -1,3 +1,4 @@
+
 <?php
 ini_set('memory_limit', '4024M');
 set_time_limit(0);
@@ -10,6 +11,10 @@ if(isset($_POST["accion"]))
 	if($_POST["accion"]=="intervencionesPorZona")
 	{
 		intervencionesPorZona();
+	}
+	if($_POST["accion"]=="getUbicaciones")
+	{
+		getUbicaciones();
 	}
 
 }
@@ -113,6 +118,45 @@ function traerIntervencionGestora($idZona,$idPersonasPorZona)
 
 
 	return $intervencion;
+}
+function getUbicaciones(){
+
+	include('conexion.php');
+	$data = array('error'=>0,'mensaje'=>'','html'=>array());
+	$sql="SELECT DISTINCT ON (per.nombres) reg.latitud, reg.longitud, per.nombres, per.apellidos, zon.zonas, reg.fecha, reg.hora, reg.tipo_registro
+	FROM registro_ubicacion reg
+	JOIN planeacion pl ON reg.id_planeacion = pl.id_planeacion
+	JOIN planeaciones_por_intervencion ppi ON ppi.planeacion_id_planeacion = pl.id_planeacion
+	JOIN intervenciones inter ON inter.id_intervenciones = ppi.intervenciones_id_intervenciones
+	JOIN personas_por_zona ppz ON ppz.id_personas_por_zonacol = inter.personas_por_zona_id_personas_por_zonacol
+	JOIN personas per ON per.numeroidentificacion = ppz.personas_numeroidentificacion
+	JOIN zonas zon ON zon.id_zona = ppz.zonas_id_zona
+	ORDER BY per.nombres, reg.fecha DESC, reg.hora DESC";
+
+	if ($rs = $con->query($sql)) {
+		if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+			foreach ($filas as $key => $value) {
+				$data['html'][$key] = array(
+					'latitud' => $value['latitud'],
+					'longitud' => $value['longitud'],
+					'nombres' => $value['nombres'],
+					'apellidos' => $value['apellidos'],
+					'zonas' => $value['zonas'],
+					'fecha' => $value['fecha'],
+					'hora' => $value['hora'],
+					'tipo_registro' => $value['tipo_registro']);
+			}
+		}else{
+			$data['mensaje'] = "Aún no hay datos para mostrar en el mapa";
+            $data['error'] = 1;
+		}
+	}else{
+		$data['mensaje'] = "No se realizo la consulta";
+        $data['error'] = 1;
+	}
+
+	echo json_encode($data);
+
 }
 
 
