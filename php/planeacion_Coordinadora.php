@@ -701,7 +701,7 @@ function guardarNuevaEntidad($idIntervencion, $nombreEntidad, $direccion, $telef
 				if(is_null($barrio)){
 					$sql="INSERT INTO public.entidades(
 						id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
-						VALUES ((SELECT MAX(id_entidad)+1 FROM entidades),
+						VALUES (nextval('sec_entidades'),
 								'".$nombreEntidad."',
 								null,
 								".$vereda.",
