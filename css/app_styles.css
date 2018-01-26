@@ -996,7 +996,7 @@ li.paginate_button.page-item a {
         align-items: flex-end;
         justify-content: flex-end;
         margin-left: -60px;
-        margin-top: 50px;
+        margin-top: 10px;
     }
 
     img.imagen_checum {
