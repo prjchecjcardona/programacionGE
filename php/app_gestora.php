@@ -74,8 +74,8 @@ function app_intervencionesPorZona($idZona)
 				}
 			}
 		}else{
-			$data['mensaje']="No se realizo la consulta";
-			$data['error']=1;
+			/* $data['mensaje']="No se realizo la consulta";
+			$data['error']=1; */
 		}
 	}else{
 		$data['mensaje']="No se realizo la consulta";
