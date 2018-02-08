@@ -307,7 +307,18 @@ function guardarEjecucion() {
 
 		});
 
-		//fin capturar detalle nivel cumplimiento
+		//Verificar si se ingresa contacto
+		if ($('input:radio[name=radiosAlgunContacto]:checked').val() == 1) {
+			nombreContacto = $('#textinputNombreContacto').val();
+			cargoContacto = $('#textinputCargoContacto').val();
+			telefonoContacto = $('#textinputTelefonoContacto').val();
+			correoContacto = $('#inputCorreoContacto').val();
+		} else {
+			nombreContacto = "";
+			cargoContacto = "";
+			telefonoContacto = "";
+			correoContacto = "";
+		}
 
 
 		//Verificar si el registro de ejecución no tiene asistentes.
@@ -326,7 +337,13 @@ function guardarEjecucion() {
 			nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
 			observaciones: $('#textareaObservaciones').val(),
 			idPlaneacion: idPlaneacion,
-			arrayAsistentes: arrayAsistentes
+			idIntervencion: idIntervencion,
+			arrayAsistentes: arrayAsistentes,
+			nombreContacto: nombreContacto,
+			cargoContacto: cargoContacto,
+			telefonoContacto: telefonoContacto,
+			correoContacto: correoContacto,
+			contacto: $('input:radio[name=radiosAlgunContacto]:checked').val()
 		},
 			function (data) {
 				
@@ -365,7 +382,6 @@ function validarInformacion() {
 	//radio
 	cont = 0;
 	$("#detalleNivelCumplimiento input:radio[name^=detalle_]:checked").each(function (e) {
-
 		cont++;
 	});
 	if (cont == 4) {
@@ -385,6 +401,17 @@ function validarInformacion() {
 	if(filesAsistencia.length == 0 || filesEvidencias.length == 0 ){
 		valido = false;
 	}
+
+	//Verificar si se ingresa contacto
+	if ($('input:radio[name=radiosAlgunContacto]:checked').val() == 1) {
+		nombreContacto = $('#textinputNombreContacto').val();
+		cargoContacto = $('#textinputCargoContacto').val();
+		telefonoContacto = $('#textinputTelefonoContacto').val();
+
+		if(nombreContacto == "" || cargoContacto == "" || telefonoContacto == "" ){
+			valido = false;
+		}
+	} 
 
 	return valido;
 }
@@ -410,7 +437,6 @@ function guardarAsistencia() {
 
 	if ($('#selectbasicTipoDocumento').val() == "" || $('#textinputDocumento').val() == "" ||
 		$('#textinputNombres').val() == "" || $('#textinputApellidos').val() == "" ||
-		$('#textinputRolAsis').val() == "" ||
 		$('#FechainputNacimientoAsis').val() == "") {
 			$('.loader').hide();
 		swal(

@@ -281,12 +281,12 @@ $('#buttonGuardarPlaneacion').click(function () {
 	} else {
 
 
-		//fin capturar los indicadores
+		//Verificar si se ingresa contacto
 		if ($('input:radio[name=radiosAlgunContacto]:checked').val() == 1) {
 			nombreContacto = $('#textinputNombreContacto').val();
 			cargoContacto = $('#textinputCargoContacto').val();
 			telefonoContacto = $('#textinputTelefonoContacto').val();
-			correoContacto = $('#textinputCorreoContacto').val();
+			correoContacto = $('#CorreoContacto').val();
 		} else {
 			nombreContacto = "";
 			cargoContacto = "";
@@ -349,7 +349,6 @@ $('#buttonGuardarPlaneacion').click(function () {
 
 function validarInformacion() {
 	
-
 	var valido = true;
 	//select
 	$("select[id^=selectbasic]").each(function (e) {
@@ -380,8 +379,16 @@ function validarInformacion() {
 		}
 	} //gestion educativa
 
+	//Verificar si se ingresa contacto
+	if ($('input:radio[name=radiosAlgunContacto]:checked').val() == 1) {
+		nombreContacto = $('#textinputNombreContacto').val();
+		cargoContacto = $('#textinputCargoContacto').val();
+		telefonoContacto = $('#textinputTelefonoContacto').val();
 
-	
+		if(nombreContacto == "" || cargoContacto == "" || telefonoContacto == "" ){
+			valido = false;
+		}
+	} 
 
 	return valido;
 }

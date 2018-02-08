@@ -11,7 +11,7 @@ if (isset($_POST["accion"])) {
         cargarDatosPlaneacion($_POST["idPlaneacion"], $_POST["isEjecutada"]);
     }
     if ($_POST["accion"] == "guardarEjecucion") {
-        guardarEjecucion($_POST["fecha"], $_POST["hora"], $_POST["asistentes"], $_POST["detalleCumplimiento"], $_POST["nCumplimiento"], $_POST["idPlaneacion"], $_POST["arrayAsistentes"], $_POST["observaciones"]);
+        guardarEjecucion($_POST["fecha"], $_POST["hora"], $_POST["asistentes"], $_POST["detalleCumplimiento"], $_POST["nCumplimiento"], $_POST["idPlaneacion"], $_POST["idIntervencion"], $_POST["arrayAsistentes"], $_POST["observaciones"], $_POST['nombreContacto'],$_POST['cargoContacto'],$_POST['telefonoContacto'],$_POST['correoContacto'], $_POST['contacto']);
     }
     if ($_POST["accion"] == "cargarTipoCedula") {
         cargarTipoCedula();
@@ -151,12 +151,49 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada){
     echo json_encode($data);
 }
 
-function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $arrayAsistentes, $observaciones)
+function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $idIntervencion, $arrayAsistentes, $observaciones, $nombreContacto,$cargoContacto,$telefonoContacto,$correoContacto, $contacto)
 {
     include 'conexion.php';
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
 
     if ($con) {
+
+        //Guardar contacto
+ 		if ($contacto == 1){
+            $sql = "SELECT id_entidad FROM planeacion WHERE id_planeacion = $idPlaneacion";
+            if ($rs = $con->query($sql)) {
+                if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+                    if(is_null($filas[0]['id_entidad'])){
+                         //Cuando entidad es nulo, se añade el contacto a un registro general del municipio correspondiente.
+                        $sql = "INSERT INTO contactos (id_contacto, nombrecontacto, cargo,telefono,correo,confirmado,entidades_id_entidad)
+                        VALUES (nextval('sec_contactos'),'".$nombreContacto."', '".$cargoContacto."', '".$telefonoContacto."', '".$correoContacto."', '0',(
+                            SELECT mun.id_municipio
+                            FROM intervenciones inte
+                            LEFT OUTER JOIN barrios bar ON bar.id_barrio = inte.id_barrio
+                            LEFT OUTER JOIN veredas ver ON ver.id_veredas = inte.id_vereda
+                            LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
+                            JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
+                            WHERE inte.id_intervenciones = $idIntervencion
+                        )); 
+                            ";
+                    }else{
+                        $idEntidad = $filas[0]['id_entidad'];
+                        $sql = "INSERT INTO contactos (id_contacto, nombrecontacto, cargo,telefono,correo,confirmado,entidades_id_entidad)
+                        VALUES (nextval('sec_contactos'),'".$nombreContacto."', '".$cargoContacto."', '".$telefonoContacto."', '".$correoContacto."', '0','".$idEntidad."'); 
+                            ";   
+                    }
+                }
+            }
+                   
+           if ($rs = $con->query($sql)) {
+           }
+           else
+           {
+               print_r($con->errorInfo());
+               $data['mensaje']="No se realizo el insert de contacto";
+               $data['error']=1;
+           }
+       }
 
         //Insertar en ejecucion
         $sql = "INSERT INTO ejecucion (id_ejecucion, nivelcumplimiento,fecha,horafinalizacion,numeroasistentes,observaciones)

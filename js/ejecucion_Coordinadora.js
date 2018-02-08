@@ -152,6 +152,8 @@ function bindEvents() {
 	});
 
 
+
+
 	$('#btnnueva_asistencia_coordinadora').click(function () {
 		$("#ex5").modal({
 			fadeDuration: 500,
@@ -194,8 +196,11 @@ function traerNombre() {
 
 
 function cargarDatosPlaneacion() {
-	//TODO PENDIENTE LLAMADO A BACKEND DE YA EJECUTADAS
+	//Verifica si la ejecucion ya ha sido registrada para únicamente mostra los datos
 	if (isEjecutada == 1) {
+
+		$('#btnnueva_asistencia_coordinadora').hide();
+
 		$.post("php/ejecucion_Coordinadora.php", {
 			accion: 'cargarDatosPlaneacion',
 			idPlaneacion: idPlaneacion,
@@ -255,7 +260,7 @@ function cargarDatosPlaneacion() {
 				}
 				$('.loader').hide();
 			}, "json");
-
+	//Ejecuta cuando no ha sido ejecutada la ejcucion y habilita el form para diligenciarlo
 	} else {
 		$.post("php/ejecucion_Coordinadora.php", {
 			accion: 'cargarDatosPlaneacion',
@@ -308,7 +313,18 @@ function guardarEjecucion() {
 
 		});
 
-		//fin capturar detalle nivel cumplimiento
+		//Verificar si se ingresa contacto
+		if ($('input:radio[name=radiosAlgunContacto]:checked').val() == 1) {
+			nombreContacto = $('#textinputNombreContacto').val();
+			cargoContacto = $('#textinputCargoContacto').val();
+			telefonoContacto = $('#textinputTelefonoContacto').val();
+			correoContacto = $('#inputCorreoContacto').val();
+		} else {
+			nombreContacto = "";
+			cargoContacto = "";
+			telefonoContacto = "";
+			correoContacto = "";
+		}
 
 
 		//Verificar si el registro de ejecución no tiene asistentes.
@@ -327,7 +343,13 @@ function guardarEjecucion() {
 			nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
 			observaciones: $('#textareaObservaciones').val(),
 			idPlaneacion: idPlaneacion,
-			arrayAsistentes: arrayAsistentes
+			idIntervencion: idIntervencion,
+			arrayAsistentes: arrayAsistentes,
+			nombreContacto: nombreContacto,
+			cargoContacto: cargoContacto,
+			telefonoContacto: telefonoContacto,
+			correoContacto: correoContacto,
+			contacto: $('input:radio[name=radiosAlgunContacto]:checked').val()
 		},
 			function (data) {
 
@@ -388,6 +410,18 @@ function validarInformacion() {
 		valido = false;
 	}
 
+	//Verificar si se ingresa contacto
+	if ($('input:radio[name=radiosAlgunContacto]:checked').val() == 1) {
+		nombreContacto = $('#textinputNombreContacto').val();
+		cargoContacto = $('#textinputCargoContacto').val();
+		telefonoContacto = $('#textinputTelefonoContacto').val();
+		correoContacto = $('#inputCorreoContacto').val();
+
+		if(nombreContacto == "" || cargoContacto == "" || telefonoContacto == "" ){
+			valido = false;
+		}
+	} 
+
 	return valido;
 }
 
@@ -412,7 +446,6 @@ function guardarAsistencia() {
 
 	if ($('#selectbasicTipoDocumento').val() == "" || $('#textinputDocumento').val() == "" ||
 		$('#textinputNombres').val() == "" || $('#textinputApellidos').val() == "" ||
-		$('#textinputRolAsis').val() == "" ||
 		$('#FechainputNacimientoAsis').val() == "") {
 			$('.loader').hide();
 		swal(

@@ -356,23 +356,37 @@ function guardarPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$cor
 	
 	if( $con )
  	{
+		//Guardar contacto
  		if ($contacto == 1){
-		//guardarContacto traer el id entidad de la intervencion
-						$sql = "INSERT INTO contactos (id_contacto, nombrecontacto, cargo,telefono,correo,confirmado,entidades_id_entidad)
-							VALUES (nextval('sec_contactos'),'".$nombreContacto."', '".$cargoContacto."', '".$telefonoContacto."', '".$correoContacto."', '0','".$idEntidad."'); 
-							  ";
-							  
-								if ($rs = $con->query($sql)) {
-									
-									 
-								}
-								else
-								{
-									print_r($con->errorInfo());
-									$data['mensaje']="No se realizo el insert de contacto";
-									$data['error']=1;
-								}
-		
+			 //Verificar si identidad es nulo (Gestion de redes)
+			 if($idEntidad == ''){
+				 //Cuando entidad es nulo, se añade el contacto a un registro general del municipio correspondiente.
+				$sql = "INSERT INTO contactos (id_contacto, nombrecontacto, cargo,telefono,correo,confirmado,entidades_id_entidad)
+				VALUES (nextval('sec_contactos'),'".$nombreContacto."', '".$cargoContacto."', '".$telefonoContacto."', '".$correoContacto."', '0',(
+					SELECT mun.id_municipio
+					FROM intervenciones inte
+					LEFT OUTER JOIN barrios bar ON bar.id_barrio = inte.id_barrio
+					LEFT OUTER JOIN veredas ver ON ver.id_veredas = inte.id_vereda
+					LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
+					JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
+					WHERE inte.id_intervenciones = $idIntervencion
+				)); 
+					";
+			 }else{
+				$sql = "INSERT INTO contactos (id_contacto, nombrecontacto, cargo,telefono,correo,confirmado,entidades_id_entidad)
+				VALUES (nextval('sec_contactos'),'".$nombreContacto."', '".$cargoContacto."', '".$telefonoContacto."', '".$correoContacto."', '0','".$idEntidad."'); 
+					";
+			 }
+			
+					
+			if ($rs = $con->query($sql)) {
+			}
+			else
+			{
+				print_r($con->errorInfo());
+				$data['mensaje']="No se realizo el insert de contacto";
+				$data['error']=1;
+			}
 		}
 
 		if($idEntidad == ""){
