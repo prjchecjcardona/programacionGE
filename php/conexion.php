@@ -15,8 +15,11 @@ $uid = "ymuglgckigeyxm";
 $pwd = "8a86f637e663ed9f778e1ec74e3da85d6f6aec7ce57dbbd2cf3c5c82afa3380a";
 $host = "ec2-184-73-201-79.compute-1.amazonaws.com";
 
+//pgsql:host=$host;port=5432;dbname=$database;user=$uid;password=$pwd
+//pgsql:host=$host; port=5432;dbname = $database", $uid, $pwd
+
 //establecer la conexión
-$con = new PDO( "pgsql:host=$host; port=5432;dbname = $database", $uid, $pwd);
+$con = new PDO( "pgsql:host=$host;port=5432;dbname=$database;user=$uid;password=$pwd");
 if( $con ) {
 	
 }else{
