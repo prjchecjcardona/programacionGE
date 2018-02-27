@@ -13,7 +13,7 @@ $host = "ec2-54-197-233-123.compute-1.amazonaws.com";
 $database = "gestjjlg_gestion_educativa";
 $uid = "gestjjlg_usr_gestion";
 $pwd = "r!Hh7XNv22E(";
-$host = "127.0.0.1:5432";
+$host = "localhost";
 
 
 //pgsql:host=$host;port=5432;dbname=$database;user=$uid;password=$pwd
