@@ -10,10 +10,11 @@ $pwd = "300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1";
 $host = "ec2-54-197-233-123.compute-1.amazonaws.com";
  */
 //PRODUCCION
-$database = "d7jmsqb0pb9n11";
-$uid = "ymuglgckigeyxm";
-$pwd = "8a86f637e663ed9f778e1ec74e3da85d6f6aec7ce57dbbd2cf3c5c82afa3380a";
-$host = "ec2-184-73-201-79.compute-1.amazonaws.com";
+$database = "gestjjlg_gestion_educativa";
+$uid = "gestjjlg_usr_gestion";
+$pwd = "r!Hh7XNv22E(";
+$host = "127.0.0.1:5432";
+
 
 //pgsql:host=$host;port=5432;dbname=$database;user=$uid;password=$pwd
 //pgsql:host=$host; port=5432;dbname = $database", $uid, $pwd
