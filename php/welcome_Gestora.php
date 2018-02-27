@@ -37,7 +37,7 @@ function traerNombreGestora(){
 			}
 			else
 			{
-				print_r($con->getPDO()->errorInfo());
+				print_r($con->errorInfo());
 				$data['mensaje']="No se realizo la consulta";
 				$data['error']=1;
 			}
