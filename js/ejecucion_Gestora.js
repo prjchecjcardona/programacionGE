@@ -441,7 +441,7 @@ function guardarAsistencia() {
 
 	$('.loader').show();
 
-	if ($('#selectbasicTipoDocumento').val() == "" || $('#textinputDocumento').val() == "" ||
+	if ($('#selectbasicTipoDocumento').val() == "" || $('#inputDocumento').val() == "" ||
 		$('#textinputNombres').val() == "" || $('#textinputApellidos').val() == "" ||
 		$('#FechainputNacimientoAsis').val() == "") {
 			$('.loader').hide();
@@ -453,7 +453,7 @@ function guardarAsistencia() {
 	} else {
 		var datos_formulario = {
 			tipo_documento: $('#selectbasicTipoDocumento').val(),
-			numero_documento: $('#textinputDocumento').val(),
+			numero_documento: $('#inputDocumento').val(),
 			nombres: $('#textinputNombres').val(),
 			apellidos: $('#textinputApellidos').val(),
 			genero: $('input[name="radiosSexo"]:checked').val(),
@@ -485,7 +485,7 @@ function guardarAsistencia() {
 
 		$.modal.close();
 		$('#selectbasicTipoDocumento').val("1");
-		$('#textinputDocumento').val("");
+		$('#inputDocumento').val("");
 		$('#textinputNombres').val("");
 		$('#textinputApellidos').val("");
 		$('#textinputCuentaCHEC').val("");
