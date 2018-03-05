@@ -20,6 +20,7 @@ $(function () {
 		}
 	}
 
+
 	idPlaneacion = $.get("idPlaneacion");
 	idIntervencion = $.get("idIntervencion");
 	isEjecutada = $.get("isEjecutada");
@@ -28,10 +29,7 @@ $(function () {
 
 	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
 		data: arrayAsistentes,
-		columns: [{
-			data: "numero_documento",
-			title: "Documento"
-		},
+		columns: [
 		{
 			data: "nombres",
 			title: "Nombre"
@@ -89,14 +87,7 @@ $(function () {
 
 
 	var dateToday = new Date();
-	var dates = $("#FechainputNacimientoAsis").datepicker({
-		defaultDate: "+1w",
-		dateFormat: "yy-mm-dd",
-		changeMonth: true,
-		changeYear: true,
-		numberOfMonths: 1,
-		yearRange: '1900:2018'
-	});
+
 
 	$('#file_fotograficas').fileinput({
 		language: 'es',
@@ -363,20 +354,37 @@ function guardarEjecucion() {
 					);
 
 				} else {
-					$('#file_fotograficas').on('filebatchuploadcomplete', function (event, files, extra) {
+					let filesEvidencias = $('#file_fotograficas').fileinput('getFileStack');
+					let filesAsistencia = $('#file_asistencias').fileinput('getFileStack');
+					console.log(filesEvidencias);
+					if(filesEvidencias.length == 0 ){
+						$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
+							$('.loader').hide();
+							swal(
+								'', //titulo
+								'Guardado Correctamente',
+								'success'
+							).then(function () {
+								window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+							});
+						})
 						$('#file_asistencias').fileinput('upload');
-					})
-					$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
-						$('.loader').hide();
-						swal(
-							'', //titulo
-							'Guardado Correctamente',
-							'success'
-						).then(function () {
-							window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
-						});
-					})
-					$('#file_fotograficas').fileinput('upload');
+					}else{
+						$('#file_fotograficas').on('filebatchuploadcomplete', function (event, files, extra) {
+							$('#file_asistencias').fileinput('upload');
+						})
+						$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
+							$('.loader').hide();
+							swal(
+								'', //titulo
+								'Guardado Correctamente',
+								'success'
+							).then(function () {
+								window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion
+							});
+						})
+						$('#file_fotograficas').fileinput('upload');
+					}
 
 				}
 
@@ -406,7 +414,7 @@ function validarInformacion() {
 
 	var filesEvidencias = $('#file_fotograficas').fileinput('getFileStack');
 	var filesAsistencia = $('#file_asistencias').fileinput('getFileStack');
-	if(filesAsistencia.length == 0 || filesEvidencias.length == 0 ){
+	if(/*filesAsistencia.length == 0 ||*/ filesEvidencias.length == 0 ){
 		valido = false;
 	}
 
@@ -420,7 +428,12 @@ function validarInformacion() {
 		if(nombreContacto == "" || cargoContacto == "" || telefonoContacto == "" ){
 			valido = false;
 		}
-	} 
+	}else{
+		valido = true;
+	}
+	if(isNaN($('#textinputAsisNum').val())){
+		valido= false;
+	}
 
 	return valido;
 }
@@ -444,9 +457,7 @@ function guardarAsistencia() {
 
 	$('.loader').show();
 
-	if ($('#selectbasicTipoDocumento').val() == "" || $('#textinputDocumento').val() == "" ||
-		$('#textinputNombres').val() == "" || $('#textinputApellidos').val() == "" ||
-		$('#FechainputNacimientoAsis').val() == "") {
+	if ($('#textinputNombres').val() == "" || $('#textinputApellidos').val() == "") {
 			$('.loader').hide();
 		swal(
 			'Error', //titulo
@@ -455,10 +466,10 @@ function guardarAsistencia() {
 		);
 	} else {
 		var datos_formulario = {
-			tipo_documento: $('#selectbasicTipoDocumento').val(),
-			numero_documento: $('#textinputDocumento').val(),
 			nombres: $('#textinputNombres').val(),
 			apellidos: $('#textinputApellidos').val(),
+			tipo_documento: $('#selectbasicTipoDocumento').val(),
+			numero_documento: $('#inputDocumento').val(),
 			genero: $('input[name="radiosSexo"]:checked').val(),
 			cuenta_CHEC: $('#textinputCuentaCHEC').val(),
 			telefono: $('#textinputTelefonoAsis').val(),
@@ -488,7 +499,7 @@ function guardarAsistencia() {
 
 		$.modal.close();
 		$('#selectbasicTipoDocumento').val("1");
-		$('#textinputDocumento').val("");
+		$('#inputDocumento').val("");
 		$('#textinputNombres').val("");
 		$('#textinputApellidos').val("");
 		$('#textinputCuentaCHEC').val("");
@@ -499,7 +510,7 @@ function guardarAsistencia() {
 		$('#textinputRolAsis').val("");
 		$('#FechainputNacimientoAsis').val("");
 
-
+		console.log(arrayAsistentes)
 	}
 
 }

@@ -30,10 +30,7 @@ $(function () {
 
 	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
 		data: arrayAsistentes,
-		columns: [{
-			data: "numero_documento",
-			title: "Documento"
-		},
+		columns: [
 		{
 			data: "nombres",
 			title: "Nombre"
@@ -91,14 +88,7 @@ $(function () {
 
 
 	var dateToday = new Date();
-	var dates = $("#FechainputNacimientoAsis").datepicker({
-		defaultDate: "+1w",
-		dateFormat: "yy-mm-dd",
-		changeMonth: true,
-		changeYear: true,
-		numberOfMonths: 1,
-		yearRange: '1900:2018'
-	});
+
 
 	$('#file_fotograficas').fileinput({
 		language: 'es',
@@ -356,20 +346,36 @@ function guardarEjecucion() {
 					);
 
 				} else {
-					$('#file_fotograficas').on('filebatchuploadcomplete', function (event, files, extra) {
+					var filesEvidencias = $('#file_fotograficas').fileinput('getFileStack');
+					var filesAsistencia = $('#file_asistencias').fileinput('getFileStack');
+					if(filesEvidencias.length == 0 ){
+						$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
+							$('.loader').hide();
+							swal(
+								'', //titulo
+								'Guardado Correctamente',
+								'success'
+							).then(function () {
+								window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+							});
+						})
 						$('#file_asistencias').fileinput('upload');
-					})
-					$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
-						$('.loader').hide();
-						swal(
-							'', //titulo
-							'Guardado Correctamente',
-							'success'
-						).then(function () {
-							window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
-						});
-					})
-					$('#file_fotograficas').fileinput('upload');
+					}else{
+						$('#file_fotograficas').on('filebatchuploadcomplete', function (event, files, extra) {
+							$('#file_asistencias').fileinput('upload');
+						})
+						$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
+							$('.loader').hide();
+							swal(
+								'', //titulo
+								'Guardado Correctamente',
+								'success'
+							).then(function () {
+								window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
+							});
+						})
+						$('#file_asistencias').fileinput('upload');
+					}
 
 				}
 
