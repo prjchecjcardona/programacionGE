@@ -107,7 +107,8 @@ function cargarPlaneacionesPorIntrevencion($idIntrevencion){
 			LEFT OUTER JOIN temas tem ON sub.id_temas = tem.id_temas
 			JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
 			WHERE plxint.intervenciones_id_intervenciones = ".$idIntrevencion."
-			GROUP BY pl.id_planeacion, etapaproceso, nombreestrategia, nombretactico, temas, fecha"; //consulta
+			GROUP BY pl.id_planeacion, etapaproceso, nombreestrategia, nombretactico, temas, fecha
+			ORDER BY pl.id_planeacion"; //consulta
 			
 
 	  		
