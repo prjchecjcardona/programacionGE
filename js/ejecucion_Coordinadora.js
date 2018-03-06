@@ -142,10 +142,14 @@ function bindEvents() {
 
 	});
 
-
+	$('body').keypress(function(event){
+		if (event.keyCode === 10 || event.keyCode === 13) 
+			event.preventDefault();
+	});
 
 
 	$('#btnnueva_asistencia_coordinadora').click(function () {
+
 		$("#ex5").modal({
 			fadeDuration: 500,
 			fadeDelay: 0.50,
@@ -529,3 +533,19 @@ $('#radiosContacto input:radio').click(function () {
 
 });
 
+function confirmGuardar(){
+	swal({
+		title: "¿Estás seguro?",
+		text: "Confirma para guardar toda la información",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	  })
+	  .then((willDelete) => {
+		if (willDelete) {
+		  guardarEjecucion();
+		} else {
+		  
+		}
+	  });
+}
