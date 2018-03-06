@@ -396,6 +396,19 @@ function validarInformacion() {
 	var valido = true;
 	//radio
 	cont = 0;
+	//Verificar si se ingresa contacto
+	if ($('input:radio[name=radiosAlgunContacto]:checked').val() == 1) {
+		nombreContacto = $('#textinputNombreContacto').val();
+		cargoContacto = $('#textinputCargoContacto').val();
+		telefonoContacto = $('#textinputTelefonoContacto').val();
+		correoContacto = $('#inputCorreoContacto').val();
+
+		if(nombreContacto == "" || cargoContacto == "" || telefonoContacto == "" ){
+			valido = false;
+		}
+	}else{
+		valido = true;
+	}
 	$("#detalleNivelCumplimiento input:radio[name^=detalle_]:checked").each(function (e) {
 
 		cont++;
@@ -418,19 +431,6 @@ function validarInformacion() {
 		valido = false;
 	}
 
-	//Verificar si se ingresa contacto
-	if ($('input:radio[name=radiosAlgunContacto]:checked').val() == 1) {
-		nombreContacto = $('#textinputNombreContacto').val();
-		cargoContacto = $('#textinputCargoContacto').val();
-		telefonoContacto = $('#textinputTelefonoContacto').val();
-		correoContacto = $('#inputCorreoContacto').val();
-
-		if(nombreContacto == "" || cargoContacto == "" || telefonoContacto == "" ){
-			valido = false;
-		}
-	}else{
-		valido = true;
-	}
 	if(isNaN($('#textinputAsisNum').val())){
 		valido= false;
 	}
