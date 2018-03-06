@@ -427,7 +427,7 @@ function validarInformacion() {
 
 	var filesEvidencias = $('#file_fotograficas').fileinput('getFileStack');
 	var filesAsistencia = $('#file_asistencias').fileinput('getFileStack');
-	if(/*filesAsistencia.length == 0 ||*/ filesEvidencias.length == 0 ){
+	if(filesAsistencia.length == 0 /* || filesEvidencias.length == 0  */){
 		valido = false;
 	}
 
