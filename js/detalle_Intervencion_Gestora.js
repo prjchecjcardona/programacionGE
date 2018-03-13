@@ -190,6 +190,7 @@ function cargarInformacionEnTabla(data) { //alert(data);
 			{ title: "Tema" },
 			{ title: "Fecha" },
 			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" class="ejecucion ejec_btn btn btn-sm btn-success" alt="Ejecución"><span class="ejec fa fa-book"></span></a>' },
+			{ title: "Registrar Asistencia", data: null, className: "dt-center", defaultContent: '<a href="#" class="asistencia ejec_btn btn btn-sm btn-success" alt="Asistencia"><span class="ejec fa fa-calendar-check-o"></span></a>' },
 			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Gestora.html" id="evaluacion" class="eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' }
 		],
 		"paging": true,
