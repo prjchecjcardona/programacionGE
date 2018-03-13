@@ -131,8 +131,7 @@ function getIniciales(palabra){
         case 'Cultura de pago':
             return 'C.P.';
         break;
-    
         default:
-            break;
+            return 'Todos';
     }
 }
