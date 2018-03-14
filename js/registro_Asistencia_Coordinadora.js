@@ -22,7 +22,6 @@ $(function () {
 
 
 	idPlaneacion = $.get("idPlaneacion");
-	idIntervencion = $.get("idIntervencion");
 	isEjecutada = $.get("isEjecutada");
 	nCumplimiento = "";
 	cargarDatosPlaneacion();
@@ -100,76 +99,16 @@ $(function () {
 
 	var dateToday = new Date();
 
-
-	$('#file_fotograficas').fileinput({
-		language: 'es',
-		'theme': 'fa',
-		uploadUrl: 'php/uploadEvidencias.php',
-		showUpload: false,
-		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp', 'mp4', 'avi', 'mpeg4', 'mkv', 'mov', 'pdf', 'docx', 'flv', 'mpeg', 'xlsx']
-	});
-
-	$('#file_asistencias').fileinput({
-		language: 'es',
-		'theme': 'fa',
-		uploadUrl: 'php/uploadAsistencias.php',
-		showUpload: false,
-		allowedFileExtensions: ['jpg', 'png', 'jpeg', 'bmp', 'pdf', 'xlsx', 'xls', 'doc', 'docx']
-	});
-
-	$('#file_fotograficas, #file_asistencias').on('fileloaded', function(event, file, previewId, index, reader) {
-		$('div.file-footer-buttons').hide();
-	});
-
-
-
-
 	bindEvents();
 });
 
 
 function bindEvents() {
-	/*Dependiendo si seleccionan si cuenta con algun contacto
-	 * parametro: 
-	 */
-	$('#radiosAlgunContacto input:radio').click(function () {
-
-		//si contacto 
-		if ($(this).val() == 'siContacto') {
-
-			contacto = $(this).val();
-		} else {
-			contacto = $(this).val();
-
-		}
-
-
-	});
-
-	/*el detalle cumplimiento
-	 * parametro: 
-	 */
-	$('#detalleNivelCumplimiento input:radio').click(function () {
-
-
-	});
 
 	$('body').keypress(function(event){
 		if (event.keyCode === 10 || event.keyCode === 13) 
 			event.preventDefault();
 	});
-
-
-/* 	$('#btnnueva_asistencia_coordinadora').click(function () {
-
-		$("#ex5").modal({
-			fadeDuration: 500,
-			fadeDelay: 0.50,
-			escapeClose: false,
-			clickClose: false,
-			showClose: false
-		});
-	}) */
 
 	$('#buttonEnviar').click(function () {
 		guardarAsistencia();
@@ -205,8 +144,6 @@ function traerNombre() {
 function cargarDatosPlaneacion() {
 	//Verifica si la ejecucion ya ha sido registrada para únicamente mostra los datos
 	if (isEjecutada == 1) {
-
-		$('#btnnueva_asistencia_coordinadora').hide();
 
 		$.post("php/ejecucion_Coordinadora.php", {
 			accion: 'cargarDatosPlaneacion',
@@ -269,8 +206,8 @@ function cargarDatosPlaneacion() {
 			}, "json");
 	//Ejecuta cuando no ha sido ejecutada la ejcucion y habilita el form para diligenciarlo
 	} else {
-		$.post("php/ejecucion_Coordinadora.php", {
-			accion: 'cargarDatosPlaneacion',
+		$.post("php/registro_Asistencia.php", {
+			accion: 'getEjecucionId',
 			idPlaneacion: idPlaneacion,
 			isEjecutada: false
 		},
