@@ -360,7 +360,6 @@ function guardarEjecucion() {
 				} else {
 					let filesEvidencias = $('#file_fotograficas').fileinput('getFileStack');
 					let filesAsistencia = $('#file_asistencias').fileinput('getFileStack');
-					console.log(filesEvidencias);
 					if(filesEvidencias.length == 0 ){
 						$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
 							$('.loader').hide();
