@@ -189,8 +189,8 @@ function cargarInformacionEnTabla(data) { //alert(data);
 			{ title: "Tema" },
 			{ title: "Fecha" },
 			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" class="ejecucion ejec_btn btn btn-sm btn-success" alt="Ejecución"><span class="ejec fa fa-book"></span></a>' },
-			{ title: "Registrar Asistencia", data: null, className: "dt-center", defaultContent: '<a href="#" class="asistencia ejec_btn btn btn-sm btn-success" alt="Asistencia"><span class="ejec fa fa-calendar-check-o"></span></a>' },
-			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Coordinadora.html" id="evaluacion" class="eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' }
+			{ title: "Registrar Asistencia", data: null, className: "dt-center", defaultContent: '<a href="#" class="disabled asistencia ejec_btn btn btn-sm btn-success" alt="Asistencia"><span class="ejec fa fa-calendar-check-o"></span></a>' },
+			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Coordinadora.html" id="evaluacion" class="evaluacion disabled eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' }
 		],
 		"paging": true,
 		"info": false,
@@ -237,6 +237,8 @@ function identificarEjecutadas(data, ejecutadas) {
 				idPlaneacion = data[0];
 				window.location.href = "ejecucion_Coordinadora.html?isEjecutada=1&idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
 			})
+			$($('#coordinadora_tabla tbody').children()[index]).find('a.asistencia').removeClass('disabled');
+			$($('#coordinadora_tabla tbody').children()[index]).find('a.evaluacion').removeClass('disabled');
 		}else{
 			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejecucion').click(function(){
 				let data = table.row($(this).parents('tr')).data();
@@ -244,6 +246,11 @@ function identificarEjecutadas(data, ejecutadas) {
 				window.location.href = "ejecucion_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
 			})
 		}
+		$($('#coordinadora_tabla tbody').children()[index]).find('a.asistencia').click(function(){
+			let data = table.row($(this).parents('tr')).data();
+			idPlaneacion = data[0];
+			window.location.href = "registro_Asistencia_Coordinadora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion;
+		})
 	});
 
 	//Evento para ver detalle ejecucion//

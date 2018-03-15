@@ -24,8 +24,8 @@
 </head>
 
 <body>
-    <!--   <div class="loader loader-double is-active"></div>
- -->
+    <div class="loader loader-double is-active"></div>
+
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <a class="navbar-brand" href="#">
@@ -45,7 +45,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link link-1" id="nav_home" href="home_Gestora.html" data-toggle="tooltip" data-placement="bottom" title="Menú Principal">
+                    <a class="nav-link link-1" href="" id="nav_home" data-toggle="tooltip" data-placement="bottom" title="Menú Principal" onclick="navegar_home()">
                         <i class="fa fa-home fa-2x"></i>
                     </a>
                     <a class="nav-link link-1" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank" data-toggle="tooltip"
@@ -60,7 +60,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container wider">
         <h2>Listado de Asistencia</h2>
         <table id="ejecucion_coordinadora_asistencia" class="display">
         </table>
@@ -97,7 +97,7 @@
                     <label class="col-md-10 control-label" for="textinputNombres">
                         <span class="red">* </span>Nombres</label>
                     <div class="col-md-10">
-                        <input id="textinputNombres" name="textinputNombres" type="text" placeholder="" class="form-control input-md">
+                        <input id="textinputNombres" name="textinputNombres" type="text" placeholder="" class="obligatorio form-control input-md">
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@
                     <label class="col-md-10 control-label" for="textinputApellidos">
                         <span class="red">* </span>Apellidos</label>
                     <div class="col-md-10">
-                        <input id="textinputApellidos" name="textinputApellidos" type="text" placeholder="" class="form-control input-md">
+                        <input id="textinputApellidos" name="textinputApellidos" type="text" placeholder="" class="obligatorio form-control input-md">
                     </div>
                 </div>
 
@@ -147,9 +147,9 @@
                 <div class="form-group">
                     <label class="col-md-10 control-label" for="button1id"></label>
                     <div class="col-md-10">
-                        <a href="#" rel="modal:close" class="btn btn-danger">Cancelar</a>
+                        <button id="buttonCancelar" class="btn btn-warning">Atrás</button>
                         <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Envia">Guardar</button>
-                        <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+                        
                     </div>
                 </div>
             </div>
