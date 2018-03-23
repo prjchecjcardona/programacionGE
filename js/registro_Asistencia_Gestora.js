@@ -171,6 +171,7 @@ function cargarAsistenciaRegistrada(idEjecucion) {
 					table.dataTable().fnAddData(asistentes);
 				}
 				$("html, body").animate({ scrollTop: 0 }, "slow");
+				clearFields();
 				$('.loader').hide();
 			} else {
 				$('.loader').hide();
@@ -267,26 +268,24 @@ function guardarAsistencia() {
 		
 	}
 
-
-	
-	/* var table = $('#ejecucion_coordinadora_asistencia');
-	table.dataTable().fnClearTable();
-	table.dataTable().fnAddData(arrayAsistentes);
-	$('.loader').hide();
-	swal({
-		position: 'top-right',
-		type: 'success',
-		title: 'Información guardada',
-		showConfirmButton: false,
-		timer: 1500
-	}) */
-
-
 }
 
 function navegar_home(){
 	idZona = $.get("id_zona")
 	window.location.href = "home_Gestora.html?id_zona=" + idZona;
+}
+function clearFields() {
+	$('#textinputNombres').val("");
+	$('#textinputApellidos').val("");
+	$('#selectbasicTipoDocumento').val("");
+	$('#inputDocumento').val("");
+	$('#textinputCuentaCHEC').val("");
+	$('#textinputTelefonoAsis').val("");
+	$('#textinputMovilAsis').val("");
+	$('#textinputDireccionAsis').val("");
+	$('#textinputCorreoAsis').val("");
+	$('#textinputRolAsis').val("");
+	$('#FechainputNacimientoAsis').val("");
 }
 
 
