@@ -3,12 +3,7 @@ $(document).ready(function () {
 	traerNombre();
 	intervencionesPorZona();
 
-	$("#btnInformes").click(function () {
-
-		window.location.href = "dashboard_Coordinadora.html";
-
-	});
-
+	
 });
 
 function getUbicaciones() {
@@ -62,6 +57,13 @@ function iniciarMapa(data) {
 			draggable: false
 		});
 	});
+
+	$("#btnInformes").click(function () {
+
+		window.location.href = "dashboard_Coordinadora.html";
+
+	});
+
 }
 
 

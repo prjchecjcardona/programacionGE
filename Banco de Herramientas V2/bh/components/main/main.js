@@ -419,8 +419,11 @@ function getRecurso() {
       <a href="#4" data-toggle="tab">Presentaciones</a>
     </li>
     <li>
-    <a href="#5" data-toggle="tab">Juegos</a>
-  </li>
+      <a href="#5" data-toggle="tab">Juegos</a>
+    </li>
+    <li>
+      <a href="#6" data-toggle="tab">Manuales</a>
+    </li>
   </ul>
 
   <div class="tab-content ">
@@ -477,6 +480,26 @@ function getRecurso() {
   <div class="list-group">
   <a class="list-group-item list-group-item-action" href="bh/recursos/aprendiendo_con_energia.zip">Aprendiendo con energía<span class="glyphicon glyphicon-download-alt"></span></a>
   </div> 
+</div>
+</div>
+
+<div class="tab-pane" id="6">
+<div class="col-xs-12">
+  <hr>
+  <h3>Manuales</h3>
+  <hr>
+  <div class="form-group">
+          <label for="tema" class="ontrol-label">Tema</label>
+          <select class="form-control" id="tema">
+            <option value="1" data-tag="1">Todos</option>
+          </select>
+  </div>
+
+  <div class="col-xs-8 ficheros-area">
+      <div class="fich-title">
+        <h3>Ficheros encontrados</h3>
+      </div>   
+  </div>   
 </div>
 </div>`;
 }
