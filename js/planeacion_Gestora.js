@@ -50,7 +50,6 @@ $(document).ready(function () {
 		changeMonth: true,
 		changeYear: true,
 		numberOfMonths: 1,
-		minDate: dateToday,
 		onSelect: function (selectedDate) {
 			var option = this.id == "from" ? "minDate" : "maxDate",
 				instance = $(this).data("datepicker"),
@@ -161,7 +160,6 @@ function cargarPoblacion() {
  * parametro: 
  */
 function cargarEstrategias() {
-
 	$.post("php/planeacion_Coordinadora.php", {
 			accion: 'cargarEstrategias'
 
@@ -235,17 +233,21 @@ function cargarTacticos(idEstrategia, idSelEstrategia) {
 /*Consulta las etapas
  * parametro: 
  */
-function cargarEtapas() {
 
+function cargarEtapas() {
 	$.post("php/planeacion_Coordinadora.php", {
 			accion: 'cargarEtapas'
-
-
 		},
 		function (data) {
-			if (data != "") {
+			if (data != "") {			
 				$('#etapas').html(data.html);
+				if(idComportamientos == 5){
+					$('#btnGestion_3').hide();
+				}else{
+					$('#btnGestion_2').hide();
+				}				
 			}
+			
 			$('#btnGestion_1').hide(); //se oculta reconocimiento
 		}, "json");
 }

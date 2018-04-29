@@ -27,31 +27,30 @@ $(function () {
 	arrayAsistentes = [];
 	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
 		data: arrayAsistentes,
+		columnDefs: [{
+			"targets": -2,
+            "render": function (data, type, row) {
+                return '<a onclick="eliminarAsistente('+data.id_asistente+')" class="elim_btn btn btn-sm btn-danger" alt="Eliminar"><span class="eval fa fa-close"></span></a>';
+            },            
+            "className": "dt-body-center"
+		},
+		{
+			"targets": -1,
+            "render": function (data, type, row) {
+                return '<a href="#" onclick="cargarAsistenteFormulario('+data.id_asistente+')" class="edit_btn btn btn-sm btn-success" alt="Editar"><span class="eval fa fa-edit"></span></a>';
+            },            
+            "className": "dt-body-center"
+		},
+		],
 		columns: [
-			{
-				data: "nombres",
-				title: "Nombre"
-			},
-			{
-				data: "apellidos",
-				title: "Apellidos"
-			},
-			{
-				data: "celular",
-				title: "Móvil"
-			},
-			{
-				data: "correoelectronico",
-				title: "Correo Electrónico"
-			},
-			{
-				data: "rol",
-				title: "Rol"
-			},
-			{
-				data: "fecha_nacimiento",
-				title: "Edad"
-			},
+			{data: "nombres", title: "Nombre"},
+			{data: "apellidos", title: "Apellidos"},
+			{data: "celular", title: "Móvil"},
+			{data: "correoelectronico", title: "Correo Electrónico"},
+			{data: "rol", title: "Rol"},
+			{data: "fecha_nacimiento", title: "Edad", width: "5%"},
+			{data: null, width: "3%", title: "Eliminar"},
+			{data: null, width: "3%", title: "Editar"}			
 		],
 		"language": {
 			"sProcessing": "Procesando...",
@@ -113,8 +112,8 @@ function bindEvents() {
 function traerNombre() {
 
 	$.post("php/CapturaVariableSession.php", {
-		accion: 'traerNombre'
-	},
+			accion: 'traerNombre'
+		},
 		function (data) {
 			if (data != "") {
 				$('#Nombre').html(data);
@@ -134,9 +133,9 @@ function traerNombre() {
 function cargarIdEjecucion() {
 
 	$.post("php/registro_Asistencia.php", {
-		accion: 'cargarIdEjecucion',
-		idPlaneacion: idPlaneacion
-	},
+			accion: 'cargarIdEjecucion',
+			idPlaneacion: idPlaneacion
+		},
 		function (data) {
 			if (data.error == 0) {
 				idEjecucion = data.html;
@@ -157,9 +156,9 @@ function cargarIdEjecucion() {
 function cargarAsistenciaRegistrada(idEjecucion) {
 
 	$.post("php/registro_Asistencia.php", {
-		accion: 'cargarAsistenciaRegistrada',
-		idEjecucion: idEjecucion
-	},
+			accion: 'cargarAsistenciaRegistrada',
+			idEjecucion: idEjecucion
+		},
 		function (data) {
 			if (data.error == 0) {
 				asistentes = data.html;
@@ -169,7 +168,9 @@ function cargarAsistenciaRegistrada(idEjecucion) {
 					table.dataTable().fnClearTable();
 					table.dataTable().fnAddData(asistentes);
 				}
-				$("html, body").animate({ scrollTop: 0 }, "slow");
+				$("html, body").animate({
+					scrollTop: 0
+				}, "slow");
 				clearFields();
 				$('.loader').hide();
 			} else {
@@ -296,4 +297,21 @@ function clearFields() {
 	$('#textinputCorreoAsis').val("");
 	$('#textinputRolAsis').val("");
 	$('#FechainputNacimientoAsis').val("");
+}
+
+function eliminarAsistente(id_asistente){
+	var url = "php/registro_Asistencia.php";
+	$.post(url, {accion: 'eliminarAsistente', id_asistente : id_asistente},
+	function(data){
+		if(data.error != 1){
+			swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});
+			cargarAsistenciaRegistrada(idEjecucion);			
+		}else{
+			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
+		}
+	}, 'json');	
+}
+
+function cargarAsistenteFormulario(idAsistente){
+	swal("Muy pronto!", "Estamos haciendo unos cambios antes de actualizar", "warning");
 }

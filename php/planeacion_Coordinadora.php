@@ -176,8 +176,7 @@ function cargarEtapas(){
 	include "conexion.php";
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
 	$sql = "SELECT id_etapaproceso, etapaproceso
-			FROM etapaproceso
-			";
+			FROM etapaproceso";
 
 			$array=array();
 			if ($rs = $con->query($sql)) {
@@ -240,7 +239,7 @@ function cargarEntidadPorVereda($idVereda){
  		//Datos de la zona que se selecciono 
     	$sql = "SELECT e.id_entidad,e.nombreentidad,t.id_tipoentidad,t.tipoentidad
 				FROM entidades as e,tipoentidad as t
-				WHERE veredas_id_veredas= '".$idVereda."'
+					WHERE veredas_id_veredas= '".$idVereda."'
 				AND e.id_tipoentidad = t.id_tipoentidad
 			  ";
 			  

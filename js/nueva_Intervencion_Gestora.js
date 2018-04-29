@@ -364,8 +364,8 @@ function guardarIntervencion() {
 					);
 
 				} else {
-
-					$('#upload_files_input').on('filebatchuploadcomplete', function (event, files, extra) {
+					var filesIntervencion = $('#upload_files_input').fileinput('getFileStack');
+					if(filesIntervencion == 0){
 						swal(
 							'', //titulo
 							'Guardado Correctamente',
@@ -373,9 +373,18 @@ function guardarIntervencion() {
 						).then(function () {
 							window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + data.idIntervencion + "&id_zona=" + idZona;
 						});
-					});
-					$('#upload_files_input').fileinput('upload');
-
+					}else{
+						$('#upload_files_input').on('filebatchuploadcomplete', function (event, files, extra) {
+							swal(
+								'', //titulo
+								'Guardado Correctamente',
+								'success'
+							).then(function () {
+								window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + data.idIntervencion + "&id_zona=" + idZona;
+							});
+						});
+						$('#upload_files_input').fileinput('upload');
+					}
 				}
 			}, "json");
 	}
@@ -389,8 +398,6 @@ function validarInformacion() {
 			valido = false;
 		}
 	});
-
-
 	return valido;
 }
 

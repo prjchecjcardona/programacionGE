@@ -13,26 +13,38 @@ $(function () {
             url: "php/listado_Intervenciones.php?idZona=" + getZona(),
             dataSrc: "content"
         },
-        columnDefs: [{
-            "targets": -1,
+        columnDefs: [
+        {
+            "targets": -3,
             "data": "id_intervenciones",
             "render": function (data, type, row, meta) {
                 return '<a href="detalle_Intervencion_Gestora.html?idIntervencion=' + data + '&id_zona=' + idZona + '"><i class="fa fa-arrow-right"></i></a>';
+            },        
+            "className": "dt-body-center"
+        },
+        {
+            "targets": -2,
+            "data": "id_intervenciones",
+            "render": function (data, type, row, meta) {
+                return '<a onclick="editarIntervencion('+data+')" class="edit-btn btn btn-sm btn-success" alt="Editar"><span class="eval fa fa-edit"></span></a>';
             },
             "className": "dt-body-center"
+        },
+        {
+            "targets": -1,
+            "data": "id_intervenciones",
+            "render": function (data, type, row, meta) {
+                return '<a onclick="eliminarIntervencion('+data+')" class="elim_btn btn btn-sm btn-danger" alt="Eliminar"><span class="eval fa fa-close"></span></a>';
+            },            
+            "className": "dt-body-center"
         }],
-        columns: [{
-                data: 'municipio'
-            },
-            {
-                data: 'comportamientos'
-            },
-            {
-                data: 'tipo_intervencion'
-            },
-            {
-                data: 'fecha'
-            },
+        columns: [
+            {data: 'municipio'},
+            {data: 'comportamientos'},
+            {data: 'tipo_intervencion'},
+            {data: 'fecha'},
+            null,
+            null,
             null
         ],
         "language": {
@@ -146,9 +158,30 @@ function listIntervenciones(idZona) {
         }, "json");
 }
 
+function eliminarIntervencion(idIntervencion){
+    
+	var url = "php/registro_Asistencia.php";
+	$.post(url, {accion: 'eliminarIntervencion', idIntervencion : idIntervencion},
+	function(data){
+		if(data.error != 1){
+            swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});	
+            var reload = setInterval(reloadpage, 3000);
+		}else{
+			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
+		}
+	}, 'json');	
+}
+
+function editarIntervencion(idIntervencion){
+    swal("Muy pronto!", "Estamos haciendo unos cambios antes de actualizar", "warning");
+}
 
 function navegar_home() {
     idZona = getZona("id_zona")
     window.location.href = "home_Gestora.html?id_zona=" + idZona;
+}
+
+function reloadpage(){
+    location.reload();
 }
 

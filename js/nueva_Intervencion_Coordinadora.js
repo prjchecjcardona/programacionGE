@@ -369,7 +369,8 @@ function guardarIntervencion() {
 
 				} else {
 
-					$('#upload_files_input').on('filebatchuploadcomplete', function (event, files, extra) {
+					var filesIntervencion = $('#upload_files_input').fileinput('getFileStack');
+					if (filesIntervencion == 0) {
 						swal(
 							'', //titulo
 							'Guardado Correctamente',
@@ -377,8 +378,18 @@ function guardarIntervencion() {
 						).then(function () {
 							window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + data.idIntervencion;
 						});
-					});
-					$('#upload_files_input').fileinput('upload');
+					} else {
+						$('#upload_files_input').on('filebatchuploadcomplete', function (event, files, extra) {
+							swal(
+								'', //titulo
+								'Guardado Correctamente',
+								'success'
+							).then(function () {
+								window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + data.idIntervencion;
+							});
+						});
+						$('#upload_files_input').fileinput('upload');
+					}
 
 				}
 			}, "json");

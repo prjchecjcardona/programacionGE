@@ -3,7 +3,6 @@
 
 if(isset($_POST["accion"]))
 {		
- 	
 	if($_POST["accion"]=="cargarDetalleIntervencion")
 	{
 		cargarDetalleIntervencion($_POST['idIntervencion']);
@@ -16,8 +15,10 @@ if(isset($_POST["accion"]))
 	{
 		checkPlaneacionesEjecutadas();
 	}
-	
-	
+	if($_POST["accion"]=="eliminarPlaneacion")
+	{
+		eliminarPlaneacion($_POST['idPlaneacion']);
+	}
 }
 
 function cargarDetalleIntervencion($idIntervencion){
@@ -96,42 +97,40 @@ function cargarPlaneacionesPorIntrevencion($idIntrevencion){
 	include "conexion.php";
 	$resultado = array();
     $registro = array();
-	$sql = "SELECT pl.id_planeacion, ep.etapaproceso, est.nombreestrategia, tact.nombretactico, tem.temas, pl.fecha
-			FROM planeacion pl
-			JOIN etapaproceso ep ON pl.etapaproceso_id_etapaproceso = ep.id_etapaproceso
-			JOIN tactico_por_planeacion tactxpl ON pl.id_planeacion = tactxpl.planeacion_id_planeacion
-			JOIN tactico tact ON tact.id_tactico = tactxpl.tactico_id_tactico
-			JOIN estrategias est ON tact.id_estrategia = est.id_estrategia
-			LEFT OUTER JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
-			LEFT OUTER JOIN subtemas sub ON subxpl.subtemas_id_subtema = sub.id_subtema
-			LEFT OUTER JOIN temas tem ON sub.id_temas = tem.id_temas
-			JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
-			WHERE plxint.intervenciones_id_intervenciones = ".$idIntrevencion."
-			GROUP BY pl.id_planeacion, etapaproceso, nombreestrategia, nombretactico, temas, fecha
-			ORDER BY pl.id_planeacion"; //consulta
-			
-
-	  		
-			$array=array();
-			if ($rs = $con->query($sql)) {
-				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					foreach ($filas as $fila) {
-						foreach ($fila as $key => $value) {
-							array_push($registro, $value);
-						}
-						array_push($resultado, $registro);
-						$registro = array();
-					}
-					
+	$sql = 
+	"SELECT pl.id_planeacion, ep.etapaproceso, est.nombreestrategia, tact.nombretactico, tem.temas, pl.fecha
+	FROM planeacion pl
+	JOIN etapaproceso ep ON pl.etapaproceso_id_etapaproceso = ep.id_etapaproceso
+	JOIN tactico_por_planeacion tactxpl ON pl.id_planeacion = tactxpl.planeacion_id_planeacion
+	JOIN tactico tact ON tact.id_tactico = tactxpl.tactico_id_tactico
+	JOIN estrategias est ON tact.id_estrategia = est.id_estrategia
+	LEFT OUTER JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
+	LEFT OUTER JOIN subtemas sub ON subxpl.subtemas_id_subtema = sub.id_subtema
+	LEFT OUTER JOIN temas tem ON sub.id_temas = tem.id_temas
+	JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
+	LEFT OUTER JOIN ejecuciones_por_planeacion epp ON epp.id_planeaciones_por_intervencion = plxint.id_planeaciones_por_intervencion
+	WHERE plxint.intervenciones_id_intervenciones = ".$idIntrevencion."
+	GROUP BY pl.id_planeacion, etapaproceso, nombreestrategia, nombretactico, temas, fecha
+	ORDER BY pl.id_planeacion"; //consulta
+				  		
+	$array=array();
+	if ($rs = $con->query($sql)) {
+		if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+			foreach ($filas as $fila) {
+				foreach ($fila as $key => $value) {
+					array_push($registro, $value);
 				}
-			}
-			else
-			{
-				// print_r($con->getPDO()->errorInfo());
-				$resultado =0;
+				array_push($resultado, $registro);
+				$registro = array();
 			}
 			
-		  echo json_encode($resultado);
+		}
+	}
+	else
+	{
+		$resultado =0;
+	}
+	echo json_encode($resultado);
 }
 
 function checkPlaneacionesEjecutadas(){
@@ -156,4 +155,46 @@ function checkPlaneacionesEjecutadas(){
 		  echo json_encode($resultado);
 }
 
+function eliminarPlaneacion($idPlaneacion){
+	include 'conexion.php';
+	$con2 = pg_connect("host=ec2-54-197-233-123.compute-1.amazonaws.com port=5432 
+	dbname=d4asqdqb9dlt9p user=ntafkvnrqqlbig password=300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1");
+	$data = array('error' => 0, 'mensaje' => '', 'html' => '');
+
+	if($con2){
+		$sqlejec = "SELECT epa.ejecucion_id_ejecucion
+		FROM ejecuciones_por_planeacion epa
+		JOIN planeaciones_por_intervencion ppi ON ppi.id_planeaciones_por_intervencion = epa.id_planeaciones_por_intervencion
+		JOIN planeacion pln ON ppi.planeacion_id_planeacion = pln.id_planeacion
+		WHERE pln.id_planeacion = $idPlaneacion";
+
+		$sql = "DELETE FROM ejecucion_asistentes WHERE id_ejecucion IN ($sqlejec); 	
+		DELETE FROM asistentes WHERE id_asistente NOT IN (SELECT id_asistente FROM ejecucion_asistentes);
+		DELETE FROM detallenivelcumplimiento_por_ejecucion WHERE ejecucion_id_ejecucion IN ($sqlejec);
+		DELETE FROM ejecucion_adjuntos WHERE id_ejecucion IN ($sqlejec);
+		DELETE FROM adjuntos WHERE id_adjunto NOT IN (SELECT id_adjunto FROM ejecucion_adjuntos);
+		DELETE FROM ejecuciones_por_planeacion WHERE ejecucion_id_ejecucion IN ($sqlejec);
+		DELETE FROM ejecucion WHERE id_ejecucion IN ($sqlejec);
+		DELETE FROM indicadores_por_planeacion WHERE planeacion_id_planeacion = $idPlaneacion;
+		DELETE FROM tactico_por_planeacion WHERE planeacion_id_planeacion = $idPlaneacion;
+		DELETE FROM subtemas_por_planeacion WHERE planeacion_id_planeacion = $idPlaneacion;
+		DELETE FROM registro_ubicacion WHERE id_planeacion = $idPlaneacion;
+		DELETE FROM planeaciones_por_intervencion WHERE planeacion_id_planeacion = $idPlaneacion;
+		DELETE FROM planeacion WHERE id_planeacion = $idPlaneacion;";
+
+		if($rs = pg_query($con2, $sql) == TRUE){
+			$data['mensaje'] = 'La planeación se ha eliminado exitosamente';
+		}else{
+			print_r(pg_result_error($rs));
+			$data['mensaje'] = 'No se pudo eliminar la planeacion';
+			$data['error'] = 1;
+		}
+		echo json_encode($data);
+		pg_close($con2);
+	}
+
+}
+
+
 ?>
+

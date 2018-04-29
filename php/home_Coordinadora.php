@@ -52,8 +52,7 @@ function intervencionesPorZona(){
 								if (count($llamarIntervecion)>0){
 									foreach($llamarIntervecion as $datosGestora)
 									{
-											
-											$data['html'].='<button id="intervencion_'.$datosGestora['id_intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_intervenciones'].')">'.$datosGestora['municipio'].'-'.$datosGestora['comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';
+										$data['html'].='<button id="intervencion_'.$datosGestora['id_intervenciones'].'" class="list-group-item list-group-item-action" onclick="mostrarDetalleIntervencion('.$datosGestora['id_intervenciones'].')">'.$datosGestora['municipio'].'-'.$datosGestora['comportamientos'].' <span class="float-right badge badge-primary">1</span></button>';
 									}
 								}
 								

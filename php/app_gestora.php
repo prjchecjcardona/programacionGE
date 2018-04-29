@@ -35,14 +35,16 @@ function app_intervencionesPorZona($idZona)
 			JOIN indicadores_chec_por_intervenciones indxinter ON indxinter.intervenciones_id_intervenciones = inter.id_intervenciones
 			JOIN indicadores_chec ind ON ind.id_indicadores_chec = indxinter.indicadores_chec_id_indicadores_chec
 			JOIN comportamientos compor ON compor.id_comportamientos = ind.comportamientos_id_comportamientos
+			LEFT OUTER JOIN planeaciones_por_intervencion ppi ON ppi.intervenciones_id_intervenciones = inter.id_intervenciones
+			LEFT OUTER JOIN planeacion plan ON ppi.planeacion_id_planeacion = plan.id_planeacion
 			LEFT OUTER JOIN barrios bar ON bar.id_barrio = inter.id_barrio
 			LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
 			LEFT OUTER JOIN veredas ver ON ver.id_veredas = inter.id_vereda
 			JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
-			JOIN tipo_intervencion ti ON ti.id_tipo_intervencion = inter.tipo_intervencion_id_tipo_intervencion
-			JOIN competencias_por_comportamiento cxc ON cxc.comportamientos_id_comportamientos = compor.id_comportamientos
-			JOIN competencias compe ON compe.id_competencia = cxc.competencias_id_competencia
-			WHERE pxz.zonas_id_zona = $idZona
+			LEFT OUTER JOIN tipo_intervencion ti ON ti.id_tipo_intervencion = inter.tipo_intervencion_id_tipo_intervencion
+			LEFT OUTER JOIN competencias_por_comportamiento cxc ON cxc.comportamientos_id_comportamientos = compor.id_comportamientos
+			LEFT OUTER JOIN competencias compe ON compe.id_competencia = cxc.competencias_id_competencia
+			WHERE pxz.zonas_id_zona = $idZona AND plan.fecha = current_date
 			GROUP BY id_intervenciones, municipio, comportamientos, inter.fecha, ti.tipo_intervencion, compe.competencia, inter.fecha ORDER BY inter.fecha DESC";
 
 	if($rs = $con->query($sql)){
@@ -62,7 +64,7 @@ function app_intervencionesPorZona($idZona)
 				JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
 				JOIN jornada jor ON jor.id_jornada = pl.id_jornada
 				LEFT OUTER JOIN registro_ubicacion reg ON reg.id_planeacion = pl.id_planeacion
-				WHERE plxint.intervenciones_id_intervenciones = ".$value['id_intervenciones']." AND (reg.id_registro IS NULL OR reg.id_planeacion IN (SELECT id_planeacion FROM (SELECT count(reg.id_planeacion), reg.id_planeacion FROM registro_ubicacion reg GROUP BY reg.id_planeacion HAVING count(reg.id_planeacion) < 2) as SUB1))
+				WHERE pl.fecha = current_date AND plxint.intervenciones_id_intervenciones = ".$value['id_intervenciones']." AND (reg.id_registro IS NULL OR reg.id_planeacion IN (SELECT id_planeacion FROM (SELECT count(reg.id_planeacion), reg.id_planeacion FROM registro_ubicacion reg GROUP BY reg.id_planeacion HAVING count(reg.id_planeacion) < 2) as SUB1))
 				GROUP BY pl.id_planeacion, pl.fecha, jornada, reg.id_registro, reg.tipo_registro ORDER BY pl.fecha DESC";
 
 				if($rs = $con->query($sql)){
@@ -91,7 +93,7 @@ function app_intervencionesPorZona($idZona)
 
 
 function detallesPlaneacion($id_planeacion){
-    include "conexion.php";
+	include "conexion.php";
     $data=array('error'=> 0, 'mensaje'=> '', 'html'=>array());
     
     $sql= "SELECT mun.municipio, ent.nombreentidad, tipoint.tipo_intervencion, compor.comportamientos, pl.fecha, jor.jornada, estra.nombreestrategia, tac.nombretactico, reg.tipo_registro

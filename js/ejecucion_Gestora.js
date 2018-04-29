@@ -10,7 +10,7 @@ $(function () {
 		key = key.replace(/[\[]/, '\\[');
 		key = key.replace(/[\]]/, '\\]');
 		var pattern = "[\\?&]" + key + "=([^&#]*)";
-		var regex = new RegExp(pattern);
+		var regex = new RegExp(pattern);	
 		var url = unescape(window.location.href);
 		var results = regex.exec(url);
 		if (results === null) {
@@ -351,26 +351,11 @@ function guardarEjecucion() {
 					);
 
 				} else {
+					// Valida la existencia de archivos para subir
 					var filesEvidencias = $('#file_fotograficas').fileinput('getFileStack');
 					var filesAsistencia = $('#file_asistencias').fileinput('getFileStack');
-					if(filesEvidencias.length == 0 ){
-						$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
-							$('.loader').hide();
-							swal(
-								'', //titulo
-								'Guardado Correctamente',
-								'success'
-							).then(function () {
-								window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
-							});
-						})
-						$('#file_asistencias').fileinput('upload');
-					}else{
-						$('#file_fotograficas').on('filebatchuploadcomplete', function (event, files, extra) {
-							$('#file_asistencias').fileinput('upload');
-						})
-						$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
-							$('.loader').hide();
+					if(filesEvidencias.length == 0 && filesAsistencia.length == 0){
+						$('.loader').hide();
 							swal(
 								'', //titulo
 								'Guardado Correctamente',
@@ -378,12 +363,51 @@ function guardarEjecucion() {
 							).then(function () {
 								window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 							});
-						})
-						$('#file_asistencias').fileinput('upload');
+					}else{
+						if(filesAsistencia.length == 0 ){
+							$('#file_fotograficas').on('filebatchuploadcomplete', function (event, files, extra) {
+								$('.loader').hide();
+								swal(
+									'', //titulo
+									'Guardado Correctamente',
+									'success'
+								).then(function () {
+									window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
+								});
+							})
+							$('#file_fotograficas').fileinput('upload');
+						}else{
+							if(filesEvidencias.length == 0 ){
+								$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
+									$('.loader').hide();
+									swal(
+										'', //titulo
+										'Guardado Correctamente',
+										'success'
+									).then(function () {
+										window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
+									});
+								})
+								$('#file_asistencias').fileinput('upload');
+							}else{
+								$('#file_fotograficas').on('filebatchuploadcomplete', function (event, files, extra) {
+									$('#file_asistencias').fileinput('upload');
+								})
+								$('#file_asistencias').on('filebatchuploadcomplete', function (event, files, extra) {
+									$('.loader').hide();
+									swal(
+										'', //titulo
+										'Guardado Correctamente',
+										'success'
+									).then(function () {
+										window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
+									});
+								})
+								$('#file_asistencias').fileinput('upload');
+							}
+						}
 					}
-
 				}
-
 			}, "json");
 	}
 }
@@ -421,9 +445,9 @@ function validarInformacion() {
 
 	var filesEvidencias = $('#file_fotograficas').fileinput('getFileStack');
 	var filesAsistencia = $('#file_asistencias').fileinput('getFileStack');
-	if(filesAsistencia.length == 0/*  || filesEvidencias.length == 0 */ ){
+	/* if(filesAsistencia.length == 0/*  || filesEvidencias.length == 0){
 		valido = false;
-	}
+	} */
 
 
 	return valido;

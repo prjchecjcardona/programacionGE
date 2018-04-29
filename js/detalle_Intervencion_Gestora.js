@@ -1,7 +1,6 @@
 $(function () {
 	traerNombre();
 
-
 	/*Extrae los parametros que llegan en la url
 	 * parametro: 
 	 */
@@ -68,7 +67,7 @@ function traerNombre() {
 					'Debes iniciar sesion!',
 					'error'
 				);
-				window.location.href = "welcome_Coordinadora.html";
+				window.location.href = "welcome_Gestora.html";
 			}
 		}, "json");
 
@@ -182,14 +181,16 @@ function cargarPlaneacionesPorIntrevencion(idIntervencion) {
 function cargarInformacionEnTabla(data) { //alert(data);
 	table = $('#coordinadora_tabla').DataTable({
 		"data": data,
+		
 		columns: [
 			{ title: "Id", className: "idColEjec" },
-			{ title: "Etapa" },
+			{ title: "Etapa"	},
 			{ title: "Estrategia" },
 			{ title: "Táctico" },
 			{ title: "Tema" },
 			{ title: "Fecha" },
 			{ title: "Registrar Ejecución", data: null, className: "dt-center", defaultContent: '<a href="#" class="ejecucion ejec_btn btn btn-sm btn-success" alt="Ejecución"><span class="ejec fa fa-book"></span></a>' },
+			{ title: "Opciones", data: null, className: "dt-center", defaultContent: dropdown_button},
 			{ title: "Registrar Asistencia", data: null, className: "dt-center", defaultContent: '<a href="#" class="disabled asistencia ejec_btn btn btn-sm btn-success" alt="Asistencia"><span class="ejec fa fa-calendar-check-o"></span></a>' },
 			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Gestora.html" id="evaluacion" class="evaluacion disabled eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' }
 		],
@@ -202,7 +203,7 @@ function cargarInformacionEnTabla(data) { //alert(data);
 			//{ "width": "8%", "targets": 8 }, //se le da ancho al td de total horas
 			//{ "width": "8%", "targets": 9 } //se le da ancho al td de observacion
 		],
-		"scrollY": "300px",
+		"scrollY": "500px",
 		"scrollX": true,
 		"scrollCollapse": true,
 		"language": {
@@ -252,25 +253,84 @@ function identificarEjecutadas(data, ejecutadas) {
 			idPlaneacion = data[0];
 			window.location.href = "registro_Asistencia_Gestora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 		})
+		$($('#coordinadora_tabla tbody').children()[index]).find('button.elplan').click(function(){
+			let data = table.row($(this).parents('tr')).data();
+			idPlaneacion = data[0];
+			eliminarPlaneacion(idPlaneacion);
+		})
+		$($('#coordinadora_tabla tbody').children()[index]).find('button.elejec').click(function(){
+			let data = table.row($(this).parents('tr')).data();
+			idPlaneacion = data[0];
+			eliminarEjecucion(idPlaneacion);
+		})
 		
 	});
 
 }
 
-
-
-
-
-
-
-
 $("#btnNuevaPlaneacion").click(function () {
-
-	window.location.href = "planeacion_Gestora.html?idIntervencion=" + idIntervencion + "&comportamientos=" + comportamientos + "&competencia=" + competencia + "&idComportamientos=" + idComportamientos + "&idCompetencia=" + idCompetencia + "&id_zona=" + idZona;
-
+	window.location.href = "planeacion_Gestora.html?idIntervencion=" + idIntervencion + "&comportamientos=" 
+	+ comportamientos + "&competencia=" + competencia + "&idComportamientos=" + idComportamientos 
+	+ "&idCompetencia=" + idCompetencia + "&id_zona=" + idZona;
 });
 
 function navegar_home(){
     idZona = $.get("id_zona")
     window.location.href = "home_Gestora.html?id_zona=" + idZona;
 }
+
+// Dropdown button defined for being called by table
+var dropdown_button = 
+'<div class="dropdown">'
+ +'<button class="btn btn-secondary dropdown-toggle btn-success" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="ejec fa fa-gears"></span>&nbsp; Seleccione</button>'
+  +'<div class="dropdown-menu" aria-labelledby="dropdownMenu2">'
+   + '<button class="elplan dropdown-item" type="button"><span class="plan fa fa-close"></span>&nbsp; Planeación</button>'
+    +'<button onclick="editarPlaneacion()" class="dropdown-item" type="button"><span class="plan fa fa-edit"></span>&nbsp; Planeación</button>'
+	+'<button class="elejec dropdown-item" type="button"><span class="ejecu fa fa-close"></span>&nbsp; Ejecución</button>'
+	+'<button onclick="editarEjecucion()" class="dropdown-item" type="button"><span class="ejecu fa fa-edit"></span>&nbsp; Ejecución</button>'
+  +'</div>'
++'</div>';
+   
+
+function eliminarPlaneacion(idPlaneacion){
+	var url = "php/detalle_Intervencion_Coordinadora.php";
+	$.post(url, {accion: 'eliminarPlaneacion', idPlaneacion : idPlaneacion},
+	function (data){
+		if(data.error != 1){
+			swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});
+			var reload = setInterval(reloadpage, 3000);
+		}else{
+			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
+		}
+	}, 'json'); 
+}
+
+// Se elimina la ejecucion no por id ejecucion sino por id planeacion
+function eliminarEjecucion(idPlaneacion){
+	var url = "php/ejecucion_Coordinadora.php";
+	$.post(url, {accion: 'eliminarEjecucion', idPlaneacion : idPlaneacion},
+	function(data){
+		if(data.error != 1){
+			swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});
+			var reload = setInterval(reloadpage, 3000);
+		}else{
+			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
+		}
+	}, 'json');
+}
+
+function editarPlaneacion(){
+	swal("Muy pronto!", "Estamos haciendo unos cambios antes de actualizar", "warning");
+}
+
+function editarEjecucion(){
+	swal("Muy pronto!", "Estamos haciendo unos cambios antes de actualizar", "warning");
+}
+
+function reloadpage(){
+	location.reload();
+}
+
+
+
+

@@ -4,17 +4,28 @@ include 'conexion.php';
 
 if (isset($_POST["accion"])) {
 
-    if ($_POST["accion"] == "cargarCompetencia") {
+    if ($_POST["accion"] == "cargarCompetencia") 
+    {
         cargarCompetencia();
     }
-    if ($_POST["accion"] == "cargarDatosPlaneacion") {
+    if ($_POST["accion"] == "cargarDatosPlaneacion") 
+    {
         cargarDatosPlaneacion($_POST["idPlaneacion"], $_POST["isEjecutada"]);
     }
-    if ($_POST["accion"] == "guardarEjecucion") {
-        guardarEjecucion($_POST["fecha"], $_POST["hora"], $_POST["asistentes"], $_POST["detalleCumplimiento"], $_POST["nCumplimiento"], $_POST["idPlaneacion"], $_POST["idIntervencion"], $_POST["arrayAsistentes"], $_POST["observaciones"], $_POST['nombreContacto'],$_POST['cargoContacto'],$_POST['telefonoContacto'],$_POST['correoContacto'], $_POST['contacto']);
+    if ($_POST["accion"] == "guardarEjecucion") 
+    {
+        guardarEjecucion($_POST["fecha"], $_POST["hora"], $_POST["asistentes"], $_POST["detalleCumplimiento"], 
+        $_POST["nCumplimiento"], $_POST["idPlaneacion"], $_POST["idIntervencion"], $_POST["arrayAsistentes"], 
+        $_POST["observaciones"], $_POST['nombreContacto'],$_POST['cargoContacto'],$_POST['telefonoContacto'],$_POST['correoContacto'], 
+        $_POST['contacto']);
     }
-    if ($_POST["accion"] == "cargarTipoCedula") {
+    if ($_POST["accion"] == "cargarTipoCedula") 
+    {
         cargarTipoCedula();
+    }
+    if ($_POST["accion"] == "eliminarEjecucion") 
+    {
+        eliminarEjecucion($_POST['idPlaneacion']);
     }
 
 }
@@ -323,5 +334,38 @@ function cargarTipoCedula(){
     }
 
     echo json_encode($data);
+}
+
+function eliminarEjecucion($idPlaneacion){
+	include 'conexion.php';
+	$con2 = pg_connect("host=ec2-54-197-233-123.compute-1.amazonaws.com port=5432 
+	dbname=d4asqdqb9dlt9p user=ntafkvnrqqlbig password=300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1");
+	$data = array('error' => 0, 'mensaje' => '', 'html' => '');
+	
+	if($con2){
+        $sqlplan = "SELECT ep.ejecucion_id_ejecucion 
+        FROM ejecuciones_por_planeacion ep
+        JOIN planeaciones_por_intervencion ppi ON ep.id_planeaciones_por_intervencion = ppi.id_planeaciones_por_intervencion
+        WHERE ppi.planeacion_id_planeacion = $idPlaneacion";
+
+		$sql = "DELETE FROM ejecucion_asistentes WHERE id_ejecucion IN ($sqlplan);
+        DELETE FROM asistentes WHERE id_asistente NOT IN (SELECT id_asistente FROM ejecucion_asistentes);
+        DELETE FROM detallenivelcumplimiento_por_ejecucion WHERE ejecucion_id_ejecucion IN ($sqlplan);
+        DELETE FROM ejecucion_adjuntos WHERE id_ejecucion IN ($sqlplan);
+        DELETE FROM adjuntos WHERE id_adjunto NOT IN (SELECT id_adjunto FROM ejecucion_adjuntos);
+        DELETE FROM ejecuciones_por_planeacion WHERE ejecucion_id_ejecucion IN ($sqlplan);
+        DELETE FROM ejecucion WHERE id_ejecucion NOT IN (SELECT ejecucion_id_ejecucion FROM ejecuciones_por_planeacion);";
+
+		if($rs = pg_query($con2, $sql) == TRUE){
+			$data['mensaje'] = 'La ejecucion eliminada exitosamente';
+		}else{
+			print_r(pg_result_error($rs));
+			$data['mensaje'] = 'No se pudo eliminar la ejecucion';
+			$data['error'] = 1;
+		}
+		echo json_encode($data);
+		pg_close($con2);
+	}
+
 }
 

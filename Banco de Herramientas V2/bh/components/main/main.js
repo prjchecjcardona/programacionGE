@@ -450,15 +450,50 @@ function getRecurso() {
     </div>
   </div>
 
-    <div class="tab-pane" id="3">
-    <div class="col-xs-12">
+  <div class="tab-pane" id="3">
+    <div class="row">
+      
       <hr>
       <h3>Imagenes</h3>
       <hr>
-      <div class="list-group">
-      <a class="list-group-item list-group-item-action">Aún no se cargan imágenes en el módulo.<button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
-      </div> 
+      <div class="col-md-12 imagenes">
+        <div class="container">
+          <div class="list-group">     
+            <div class="fich-found">
+              <div class="file-group" id="first">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"><a></a></span>
+                <span class="file-text" id="16">
+                  IMG1
+                </span>
+              </div>
+
+              <div class="file-group" id="first">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"><a></a></span>
+                <span class="file-text" id="17">
+                  IMG2
+                </span>
+              </div>
+
+              <div class="file-group" id="first">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"><a></a></span>
+                <span class="file-text" id="18">
+                  IMG3
+                </span>
+              </div>
+
+              <div class="file-group" id="first">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"><a></a></span>
+                <span class="file-text" id="19">
+                  IMG4
+                </span>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+      <button type="button" class="btn btn-link">Regresar</button>
     </div>
+    
   </div>
 
   <div class="tab-pane" id="4">
@@ -484,22 +519,41 @@ function getRecurso() {
 </div>
 
 <div class="tab-pane" id="6">
-<div class="col-xs-12">
-  <hr>
-  <h3>Manuales</h3>
-  <hr>
-  <div class="form-group">
-          <label for="tema" class="ontrol-label">Tema</label>
-          <select class="form-control" id="tema">
-            <option value="1" data-tag="1">Todos</option>
-          </select>
-  </div>
+  <div class="row">
+    <div class="col-xs-12">
+    <hr>
+      <h3>Manuales</h3>
+    <hr>
+    <h3>
+    <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#despliegue_manuales" aria-expanded="false" aria-controls="despliegue_manuales">
+      Los Cuida Mundos
+    </button>
+    <hr>
+    </h3>
+      <div class="collapse" id="despliegue_manuales">
+        <div class="col-md-12 imagenes">
+          <div class="container">
+            <div class="list-group">     
+              <div class="fich-found">
+                <div class="file-group" id="first">
+                  <span class="glyphicon glyphicon-file" aria-hidden="true"><a></a></span>
+                  <span class="file-text" id="20">
+                    El Capitan
+                  </span>
+                </div>
 
-  <div class="col-xs-8 ficheros-area">
-      <div class="fich-title">
-        <h3>Ficheros encontrados</h3>
-      </div>   
-  </div>   
-</div>
+                <div class="file-group" id="first">
+                  <span class="glyphicon glyphicon-file" aria-hidden="true"><a></a></span>
+                  <span class="file-text" id="21">
+                    Felix
+                  </span>
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>     
+  </div>
 </div>`;
 }

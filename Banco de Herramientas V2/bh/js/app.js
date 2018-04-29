@@ -357,6 +357,36 @@ function recursoSelected(selection, unSelected) {
     e.preventDefault()
     $(this).tab('show')
   })
+  $('span#16').on('click', function(){
+    $('.imagenes')
+             .empty()
+             .html('<embed src="bh/ficheros/bh1.pdf" width="100%" height="1000px" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+  });
+  $('span#17').on('click', function(){
+    $('.imagenes')
+             .empty()
+             .html('<embed src="bh/ficheros/bh2.pdf" width="100%" height="1000px" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+  });
+  $('span#18').on('click', function(){
+    $('.imagenes')
+             .empty()
+             .html('<embed src="bh/ficheros/bh3.pdf" width="100%" height="1000px" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+  });
+  $('span#19').on('click', function(){
+    $('.imagenes')
+             .empty()
+             .html('<embed src="bh/ficheros/bh4.pdf" width="100%" height="1000px" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+  });
+  $('span#20').on('click', function(){
+    $('.imagenes')
+             .empty()
+             .html('<embed src="bh/ficheros/cuida_mundos/capitan.pdf" width="100%" height="700px" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+  });
+  $('span#21').on('click', function(){
+    $('.imagenes')
+             .empty()
+             .html('<embed src="bh/ficheros/cuida_mundos/felix.pdf" width="100%" height="700px" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+  });
 }
 
 

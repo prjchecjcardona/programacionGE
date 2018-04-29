@@ -28,31 +28,30 @@ $(function () {
 	arrayAsistentes = [];
 	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
 		data: arrayAsistentes,
+		columnDefs: [{
+			"targets": -2,
+            "render": function (data, type, row) {
+                return '<a onclick="eliminarAsistente('+data.id_asistente+')" class="elim_btn btn btn-sm btn-danger" alt="Eliminar"><span class="eval fa fa-close"></span></a>';
+            },            
+            "className": "dt-body-center"
+		},
+		{
+			"targets": -1,
+            "render": function (data, type, row) {
+                return '<a href="#" onclick="cargarAsistenteFormulario('+data.id_asistente+')" class="edit_btn btn btn-sm btn-success" alt="Editar"><span class="eval fa fa-edit"></span></a>';
+            },            
+            "className": "dt-body-center"
+		},
+		],
 		columns: [
-			{
-				data: "nombres",
-				title: "Nombre"
-			},
-			{
-				data: "apellidos",
-				title: "Apellidos"
-			},
-			{
-				data: "celular",
-				title: "Móvil"
-			},
-			{
-				data: "correoelectronico",
-				title: "Correo Electrónico"
-			},
-			{
-				data: "rol",
-				title: "Rol"
-			},
-			{
-				data: "fecha_nacimiento",
-				title: "Edad"
-			},
+			{data: "nombres", title: "Nombre"},
+			{data: "apellidos", title: "Apellidos"},
+			{data: "celular", title: "Móvil"},
+			{data: "correoelectronico", title: "Correo Electrónico"},
+			{data: "rol", title: "Rol"},
+			{data: "fecha_nacimiento", title: "Edad", width: "5%"},
+			{data: null, width: "3%", title: "Eliminar"},
+			{data: null, width: "3%", title: "Editar"}			
 		],
 		"language": {
 			"sProcessing": "Procesando...",
@@ -102,9 +101,9 @@ function bindEvents() {
 		guardarAsistencia();
 	})
 
-	$('#buttonCancelar').click(function(){
-		
-		window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion +"&idZona="+idZona;
+	$('#buttonCancelar').click(function () {
+
+		window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&idZona=" + idZona;
 	})
 }
 
@@ -114,8 +113,8 @@ function bindEvents() {
 function traerNombre() {
 
 	$.post("php/CapturaVariableSession.php", {
-		accion: 'traerNombre'
-	},
+			accion: 'traerNombre'
+		},
 		function (data) {
 			if (data != "") {
 				$('#Nombre').html(data);
@@ -135,9 +134,9 @@ function traerNombre() {
 function cargarIdEjecucion() {
 
 	$.post("php/registro_Asistencia.php", {
-		accion: 'cargarIdEjecucion',
-		idPlaneacion: idPlaneacion
-	},
+			accion: 'cargarIdEjecucion',
+			idPlaneacion: idPlaneacion
+		},
 		function (data) {
 			if (data.error == 0) {
 				idEjecucion = data.html;
@@ -158,19 +157,21 @@ function cargarIdEjecucion() {
 function cargarAsistenciaRegistrada(idEjecucion) {
 
 	$.post("php/registro_Asistencia.php", {
-		accion: 'cargarAsistenciaRegistrada',
-		idEjecucion: idEjecucion
-	},
+			accion: 'cargarAsistenciaRegistrada',
+			idEjecucion: idEjecucion
+		},
 		function (data) {
 			if (data.error == 0) {
 				asistentes = data.html;
 				//actualizar la tabla con los registros obtenidos de BD
-				if(data.html){
+				if (data.html) {
 					var table = $('#ejecucion_coordinadora_asistencia');
 					table.dataTable().fnClearTable();
 					table.dataTable().fnAddData(asistentes);
 				}
-				$("html, body").animate({ scrollTop: 0 }, "slow");
+				$("html, body").animate({
+					scrollTop: 0
+				}, "slow");
 				clearFields();
 				$('.loader').hide();
 			} else {
@@ -218,7 +219,7 @@ function guardarAsistencia() {
 
 	if (validarInformacion()) {
 		$('.loader').show();
-	
+
 		var datos_formulario = {
 			nombres: $('#textinputNombres').val(),
 			apellidos: $('#textinputApellidos').val(),
@@ -236,22 +237,22 @@ function guardarAsistencia() {
 			sesiones: $('input[name="radiosSesionesForma"]:checked').val()
 		};
 
-		if(datos_formulario.cuenta_CHEC==""){
+		if (datos_formulario.cuenta_CHEC == "") {
 			datos_formulario.cuenta_CHEC = -1;
 		}
-		if(datos_formulario.edad==""){
+		if (datos_formulario.edad == "") {
 			datos_formulario.edad = -1;
 		}
-	
+
 		var url = "php/registro_Asistencia.php";
 		$.post(url, {
 			accion: 'guardarAsistente',
 			datos: datos_formulario,
 			idEjecucion: idEjecucion
 		}, function (response) {
-			if(response.error!=1){
+			if (response.error != 1) {
 				cargarAsistenciaRegistrada(idEjecucion);
-			}else{
+			} else {
 				swal(
 					'', //titulo
 					'Error en el registro, inténtalo de nuevo',
@@ -259,21 +260,22 @@ function guardarAsistencia() {
 				);
 			}
 		}, 'json');
-	} else { 
+	} else {
 		swal(
 			'', //titulo
 			'Debes ingresar todos los datos',
 			'error'
 		);
-		
+
 	}
 
 }
 
-function navegar_home(){
-	idZona = $.get("id_zona")
+function navegar_home() {
+	idZona = $.get("id_zona");
 	window.location.href = "home_Gestora.html?id_zona=" + idZona;
 }
+
 function clearFields() {
 	$('#textinputNombres').val("");
 	$('#textinputApellidos').val("");
@@ -288,4 +290,38 @@ function clearFields() {
 	$('#FechainputNacimientoAsis').val("");
 }
 
+function eliminarAsistente(id_asistente){
+	var url = "php/registro_Asistencia.php";
+	$.post(url, {accion: 'eliminarAsistente', id_asistente : id_asistente},
+	function(data){
+		if(data.error != 1){
+			swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});
+			cargarAsistenciaRegistrada(idEjecucion);			
+		}else{
+			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
+		}
+	}, 'json');	
+}
 
+function cargarAsistenteFormulario(idAsistente){
+	swal("Muy pronto!", "Estamos haciendo unos cambios antes de actualizar", "warning");
+	/* var url = "php/registro_Asistencia.php";
+	$.post(url, {accion: 'cargarAsistenteFormulario', idAsistente : idAsistente},
+	function(data){
+		if(data.error != 1){
+			$('#textinputNombres').val(data.html.nombres);
+			$('#textinputApellidos').val(data.apellidos);
+			$('#selectbasicTipoDocumento').val(data.tipo_documento);
+			$('#inputDocumento').val(data.numero_documento);
+			$('#textinputCuentaCHEC').val(data.cuenta_CHEC);
+			$('#textinputTelefonoAsis').val(data.telefono);
+			$('#textinputMovilAsis').val(data.movil);
+			$('#textinputDireccionAsis').val(data.direccion);
+			$('#textinputCorreoAsis').val(data.correo_electronico);
+			$('#textinputRolAsis').val(data.rol);
+			$('#FechainputNacimientoAsis').val(data.edad);
+		}else{
+			
+		}
+	}, 'json'); */
+}

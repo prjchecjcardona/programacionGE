@@ -4,7 +4,7 @@ include('conexion.php');
 $data = array('error'=>0,'mensaje'=>'','content'=>'');
 
 if( isset($_GET['idZona']) )
- {
+{
 	$idZona = $_GET['idZona'];
 	$sql= "SELECT inter.id_intervenciones, mun.municipio, compor.comportamientos, tipoint.tipo_intervencion, inter.fecha
 			FROM intervenciones inter
@@ -22,7 +22,7 @@ if( isset($_GET['idZona']) )
 	$resultados_zona = $con->query($sql);
 	if(!$resultados_zona)
 	{
-		$data['error']=1;
+		$data['error']=1; 
 	  	$data['mensaje']="Execute query error, because: ". print_r($con->errorInfo(),true);
 	}
 	$contador=0;
@@ -38,16 +38,11 @@ if( isset($_GET['idZona']) )
 		$contador++;
 	}
 
-}else{
+}else{	
 	$data['error']=1;
 	$data['mensaje']="Error en el envío de datos";
 }
-	
-	
 	echo json_encode($data);
-
-
-
 
 
 ?>

@@ -48,7 +48,6 @@ $(document).ready(function () {
 		changeMonth: true,
 		changeYear: true,
 		numberOfMonths: 1,
-		minDate: dateToday,
 		onSelect: function (selectedDate) {
 			var option = this.id == "from" ? "minDate" : "maxDate",
 				instance = $(this).data("datepicker"),
@@ -238,18 +237,21 @@ function cargarTacticos(idEstrategia, idSelEstrategia) {
  * parametro: 
  */
 function cargarEtapas() {
-
 	$.post("php/planeacion_Coordinadora.php", {
 			accion: 'cargarEtapas'
-
-
-		},
-		function (data) {
-			if (data != "") {
-				$('#etapas').html(data.html);
-			}
+	},
+	function (data) {
+		if (data != "") {			
+			$('#etapas').html(data.html);
+			if(idComportamientos == 5){
+				$('#btnGestion_3').hide();
+			}else{
+				$('#btnGestion_2').hide();
+			}				
+		}
+			
 			$('#btnGestion_1').hide(); //se oculta reconocimiento
-		}, "json");
+	}, "json");
 }
 
 /*Dependiendo si seleccionan si cuenta con algun contacto

@@ -10,6 +10,10 @@
     position: relative;
 }
 
+.eval.fa.fa-close {
+    color: white !important;
+}
+
 .sk-fading-circle .sk-circle {
     width: 100%;
     height: 100%;
@@ -277,7 +281,7 @@ div.container-fluid {
     color: rgb(0, 120, 43);
 }
 
-.container.wider{
+.container.wider {
     max-width: 90%;
 }
 
@@ -553,7 +557,8 @@ div.card-actions {
     width: 150px;
     text-align: center;
 }
-.descargarBancoBtn{
+
+.descargarBancoBtn {
     position: fixed;
     margin-left: 40%;
     margin-top: 285px;
@@ -816,10 +821,11 @@ li.paginate_button.page-item a {
 }
 
 .carousel-control-next-icon {
-    background-image : url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231e7e34' viewBox='0 0 8 8'%3E%3Cpath d='M1.5 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231e7e34' viewBox='0 0 8 8'%3E%3Cpath d='M1.5 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
 }
+
 .carousel-control-prev-icon {
-    background-image : url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231e7e34' viewBox='0 0 8 8'%3E%3Cpath d='M4 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231e7e34' viewBox='0 0 8 8'%3E%3Cpath d='M4 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
 }
 
 /* Para la aparicion de elementos */
@@ -832,7 +838,7 @@ li.paginate_button.page-item a {
     animation-fill-mode: both;
 }
 
-.red{
+.red {
     color: red !important;
 }
 
@@ -858,7 +864,6 @@ li.paginate_button.page-item a {
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
 }
-
 
 /* para la aparicion de paginas */
 
@@ -952,3 +957,68 @@ li.paginate_button.page-item a {
 }
 
 @media (min-width:1200px) {}
+
+/* .dropdown-menu.show{
+    display: inline-flex !important;
+} */
+
+.dropdown-item .fa.fa-close {
+    color: red;
+}
+
+.dropdown-item .fa.fa-edit {
+    color: green;
+}
+
+.btn.btn-success:hover {
+    color: #141313;
+    background-color: #2d910b;
+    border-color: #25da4e;
+}
+
+.btn-danger:hover {
+    color: #000 !important;
+    background-color: #f52e41;
+    border-color: #ff6c7b;
+}
+
+.btn {
+    margin: 3px;
+    cursor: pointer;
+}
+
+td.dt-left {
+    height: 150px;
+}
+
+button.dropdown-item {
+    margin-left: 0px;
+    border-left-width: 0px;
+    border-left-style: solid;
+    width: 106.4% !important;
+    height: 24px !important;
+    padding: 0%;
+    cursor: pointer;
+}
+
+div.dropdown-menu.show {
+    position: absolute;
+    transform: translate3d(3px, 41px, 0px);
+    top: 0px;
+    left: 0px;
+    will-change: transform;
+    padding-left: 0px !important;
+    padding-right: 10px !important;
+}
+
+span.plan{
+    margin-left: 20px !important;
+}
+
+span.ejecu{
+    margin-left: 20px !important;
+}
+
+.eval.fa.fa-edit{
+    color: white !important;
+}

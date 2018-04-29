@@ -104,9 +104,9 @@ function intervencionesPorZona(id_zona) {
                 });
             }else{
                 swal(
-					'Error',
-					'No se cargaron los datos intentalo de nuevo',
-					'error'
+					'No intervenciones',
+					'No hay actividades planeadas para el dia de hoy!',
+					'warning'
 				)
             }
 
@@ -119,11 +119,8 @@ function intervencionesPorZona(id_zona) {
 
 function getIniciales(palabra){
     switch (palabra) {
-        case 'Uso responsable de energía':
-            return 'U.R.E.';
-            break;
-        case 'Disfrute del servicio de energía como aporte a la calidad de vida':
-            return 'D.S.E.A.C.V';
+        case 'Uso responsable y disfrute del servicio de energía':
+            return 'U.R.D.S.E';
             break;
         case 'Uso de canales vanguardistas':
             return 'U.C.V.';
