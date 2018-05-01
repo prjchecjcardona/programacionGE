@@ -296,7 +296,8 @@ function eliminarAsistente(id_asistente){
 	function(data){
 		if(data.error != 1){
 			swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});
-			cargarAsistenciaRegistrada(idEjecucion);			
+			var reload = setInterval(reloadpage, 3000);
+						
 		}else{
 			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
 		}
@@ -324,4 +325,8 @@ function cargarAsistenteFormulario(idAsistente){
 			
 		}
 	}, 'json'); */
+}
+
+function reloadpage(){
+    location.reload();
 }

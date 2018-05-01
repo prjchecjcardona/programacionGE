@@ -90,8 +90,7 @@ function cargarAsistenteFormulario($idAsistente){
 function eliminarAsistente($id_asistente){
     //Establecer una segunda conexion por pg_connect para la ejecucion de multiples SQL's simultaneamente
     include "conexion.php";
-    $con2 = pg_connect("host=ec2-54-197-233-123.compute-1.amazonaws.com port=5432 
-    dbname=d4asqdqb9dlt9p user=ntafkvnrqqlbig password=300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1");
+    $con2 = pg_connect("host=$host port=5432 dbname=$database user=$uid password=$pwd");
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
     if($con2){
         $sql = "DELETE FROM ejecucion_asistentes WHERE id_asistente = $id_asistente;";
@@ -176,8 +175,7 @@ function editarAsistente($idAsistente){
 
 function eliminarIntervencion($idIntervencion){
 	include "conexion.php";
-	$con2 = pg_connect("host=ec2-54-197-233-123.compute-1.amazonaws.com port=5432 
-	dbname=d4asqdqb9dlt9p user=ntafkvnrqqlbig password=300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1");
+	$con2 = pg_connect("host=$host port=5432 dbname=$database user=$uid password=$pwd");
 	$data = array('error' => 0, 'mensaje' => '', 'html' => '');
 	if($con2){
 		$sqlejec = "SELECT epa.ejecucion_id_ejecucion

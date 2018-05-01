@@ -305,7 +305,7 @@ function eliminarAsistente(id_asistente){
 	function(data){
 		if(data.error != 1){
 			swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});
-			cargarAsistenciaRegistrada(idEjecucion);			
+			var reload = setInterval(reloadpage, 3000);			
 		}else{
 			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
 		}
@@ -314,4 +314,8 @@ function eliminarAsistente(id_asistente){
 
 function cargarAsistenteFormulario(idAsistente){
 	swal("Muy pronto!", "Estamos haciendo unos cambios antes de actualizar", "warning");
+}
+
+function reloadpage(){
+    location.reload();
 }
