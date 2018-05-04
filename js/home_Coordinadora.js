@@ -2,30 +2,56 @@ $(document).ready(function () {
 
 	traerNombre();
 	intervencionesPorZona();
-
 	
+	
+
 });
+
+function getCalendar(){
+	$('#calendar').fullCalendar({
+        events: {
+            url: 'php/calendarEventsCoordinadora.php',
+            type: 'POST', // Send post data,
+            error: function (err) {
+                alert('There was an error while fetching events.');
+            }
+        },
+        eventClick: function (calEvent, jsEvent, view) {
+            var year = calEvent.start._d.getFullYear() + "";
+            var month = (calEvent.start._d.getMonth() + 1) + "";
+            var day = calEvent.start._d.getDate() + "";
+            var dateFormat = year + "-" + month + "-" + day;
+            $('.modal-title').html(calEvent.title);
+            $('#eventFecha').html(dateFormat);
+            $('#eventLugar').html(calEvent.lugar);
+            $('#eventDescripcion').html(calEvent.descripcion);
+			$('#eventHora').html(calEvent.hora);
+			$('#eventGestor').html(calEvent.gestor);
+            $('#eventModal').modal()
+        }
+    })	
+}
 
 function getUbicaciones() {
 	$.post("php/home_Coordinadora.php", {
 		accion: 'getUbicaciones'
 	},
-	function (data) {
-		if (data.error != 1) {
-			iniciarMapa(data.html);
-		} else {
-			map = new google.maps.Map(document.getElementById('map'), {
-				zoom: 10,
-				center: new google.maps.LatLng(5.067774, -75.517053),
-				mapTypeId: 'roadmap'
-			});
-			swal(
-				'Error', //titulo
-				data.mensaje,
-				'error'
-			);
-		}
-	}, "json");
+		function (data) {
+			if (data.error != 1) {
+				iniciarMapa(data.html);
+			} else {
+				map = new google.maps.Map(document.getElementById('map'), {
+					zoom: 10,
+					center: new google.maps.LatLng(5.067774, -75.517053),
+					mapTypeId: 'roadmap'
+				});
+				swal(
+					'Error', //titulo
+					data.mensaje,
+					'error'
+				);
+			}
+		}, "json");
 }
 
 //Inicializacion del mapa con punto de Referencia.
@@ -44,7 +70,7 @@ function iniciarMapa(data) {
 	data.forEach((element, index) => {
 		features.push({
 			position: new google.maps.LatLng(element.latitud, element.longitud),
-			type: 'gestor'+index
+			type: 'gestor' + index
 		})
 	});
 
@@ -52,7 +78,7 @@ function iniciarMapa(data) {
 	features.forEach(function (feature) {
 		var marker = new google.maps.Marker({
 			position: feature.position,
-			icon: iconBase+'003-girl-6.png',
+			icon: iconBase + '003-girl-6.png',
 			map: map,
 			draggable: false
 		});
@@ -66,24 +92,13 @@ function iniciarMapa(data) {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
 function traerNombre() {
 
 	$.post("php/CapturaVariableSession.php", {
-			accion: 'traerNombre'
+		accion: 'traerNombre'
 
 
-		},
+	},
 		function (data) {
 			if (data != "") {
 				$('#Nombre').html(data);
@@ -102,14 +117,14 @@ function traerNombre() {
 function intervencionesPorZona() {
 
 	$.post("php/home_Coordinadora.php", {
-			accion: 'intervencionesPorZona'
+		accion: 'intervencionesPorZona'
 
-		},
+	},
 		function (data) {
 			if (data.error != 1) {
 
 				$('#intervercionesPorZona').html(data.html);
-			}else{
+			} else {
 				swal(
 					'Error',
 					'No se cargaron los datos intentalo de nuevo',
@@ -128,3 +143,17 @@ function mostrarDetalleIntervencion(idIntervencion) {
 function agregarIntervencion(idZona) {
 	window.location.href = "nueva_Intervencion_Coordinadora.html?idZona=" + idZona;
 }
+
+$('#nav-home-tab').on('click', function (e) {
+	e.preventDefault()
+	$(this).tab('show')
+})
+
+$('#nav-profile').on('click', function (e) {
+	e.preventDefault()
+	$(this).tab('show')
+})
+
+$( "#nav-profile-tab" ).click(function() {
+	getCalendar();
+  });
