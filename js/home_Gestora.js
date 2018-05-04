@@ -38,6 +38,7 @@ $(function () {
             $('#eventFecha').html(dateFormat);
             $('#eventLugar').html(calEvent.lugar);
             $('#eventDescripcion').html(calEvent.descripcion);
+            $('#eventHora').html(calEvent.hora);
             $('#eventModal').modal()
         }
     })

@@ -1,11 +1,9 @@
 <?php
-include('conexion.php');
-$data = array();
 
-if(isset($_POST['id_zona'])){
-    $idZona = $_POST['id_zona'];
+    include('conexion.php');
+    $data = array();
 
-    $sql = "SELECT pl.fecha, jor.jornada, mun.municipio, reg.id_registro, reg.tipo_registro, reg.hora::time, 
+    $sql = "SELECT pl.fecha, jor.jornada, mun.municipio, reg.id_registro, reg.tipo_registro, reg.hora::time(0), 
     ent.nombreentidad, est.nombreestrategia, tac.nombretactico, compor.comportamientos, compe.competencia, tem.temas, 
     ppz.id_personas_por_zonacol, per.nombres, per.apellidos
     FROM planeacion pl
@@ -31,7 +29,6 @@ if(isset($_POST['id_zona'])){
     LEFT OUTER JOIN comportamientos compor ON compor.id_comportamientos = cpc.comportamientos_id_comportamientos
     LEFT OUTER JOIN competencias compe ON compe.id_competencia = cpc.competencias_id_competencia
     LEFT OUTER JOIN entidades ent ON ent.id_entidad = pl.id_entidad
-    WHERE zon.id_zona = $idZona
     GROUP BY pl.fecha, nombres, apellidos, jornada, municipio, id_registro, tipo_registro, hora, nombreentidad, nombreestrategia, nombretactico, comportamientos, competencia, temas, id_personas_por_zonacol
     ORDER BY pl.fecha DESC";
 
@@ -78,12 +75,14 @@ if(isset($_POST['id_zona'])){
                 }
 
                 $hora = $value['hora'];
+                $gestor = $value['nombres'].' '.$value['apellidos'];
 
                 $title = $value['tipo_registro'].' : '.$value['jornada'].' - '.$value['municipio'];
 
                 $data[$key] = array(
                     'id' => $key,
-                    'title' => $title,
+                    'title' => $title
+                    ,
                     'allDay' => $allDay,
                     'start' => $start,
                     'end' => $end,
@@ -92,6 +91,7 @@ if(isset($_POST['id_zona'])){
                     'textColor' => "white",
                     'lugar' => $lugar,
                     'hora' => $hora,
+                    'gestor' => $gestor,
                     'descripcion' => $value['nombreestrategia'].': '.$value['nombretactico'].'<br>'.$value['comportamientos'].'<br>'.$value['competencia'].': '.$value['temas']
                 );
             }
@@ -102,13 +102,7 @@ if(isset($_POST['id_zona'])){
 		$data['error']=1;
     }
 
-
-
-}
-
 echo json_encode($data);
-
-
 
 
 ?>
