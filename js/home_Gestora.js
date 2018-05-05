@@ -52,7 +52,7 @@ function traerNombre() {
 
     },
         function (data) {
-            if (data != "") {
+            if (data !=- "") {
                 $('#Nombre').html(data);
             } else {
                 swal(
