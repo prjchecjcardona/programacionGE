@@ -365,7 +365,7 @@ function guardarIntervencion() {
 
 				} else {
 					var filesIntervencion = $('#upload_files_input').fileinput('getFileStack');
-					if(filesIntervencion == 0){
+					if (filesIntervencion == 0) {
 						swal(
 							'', //titulo
 							'Guardado Correctamente',
@@ -373,7 +373,7 @@ function guardarIntervencion() {
 						).then(function () {
 							window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + data.idIntervencion + "&id_zona=" + idZona;
 						});
-					}else{
+					} else {
 						$('#upload_files_input').on('filebatchuploadcomplete', function (event, files, extra) {
 							swal(
 								'', //titulo
@@ -517,7 +517,7 @@ function guardarNuevaVereda() {
 
 	let nombreVereda = $('#textinputVereda').val();
 	let latitud = $('#textinputVeredaLan').val();
-	let longitud = $('#textinputVeredaLon').val();
+	let longitud = $('#textinpu	tVeredaLon').val();
 	let municipio = $('#selectbasicMunicipio').val();
 	let url = "php/nueva_Intervencion_Coordinadora.php";
 	if (nombreVereda != "") {

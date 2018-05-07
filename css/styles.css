@@ -397,8 +397,11 @@ div.card-actions {
     align-items: center;
     border-radius: 10px;
     color: #fff;
-    margin-left: 2em;
     cursor: pointer;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 40%;
 }
 
 .boton-evaluacion {
@@ -1041,4 +1044,28 @@ div.coord.fc.fc-unthemed.fc-ltr{
 .modal.fade.show{
     overflow-x: hidden;
     overflow-y: hidden;
+}
+
+#nav-contact .col-md-12{
+    display: flex;
+    height: 41em;
+}
+
+#div-informes{
+    background-color: #9CC12B;
+    border-radius: 10px;
+    margin-right: 10px;
+    position: relative;
+}
+
+#div-configuracion{
+    background-color: #8B8D8E;
+    border-radius: 10px;
+    margin-left: 10px;
+    position: relative;
+}
+
+#dropdown-config{
+    position: relative;
+    top: 50%;
 }
