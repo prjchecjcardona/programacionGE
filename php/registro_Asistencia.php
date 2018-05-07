@@ -104,7 +104,7 @@ function eliminarAsistente($id_asistente){
         }
     }
     echo json_encode($data);
-    
+    pg_close($con2);
 }
 
 function guardarAsistente($datos, $idEjecucion)
@@ -149,6 +149,16 @@ function guardarAsistente($datos, $idEjecucion)
 
         echo json_encode($data);
     }
+}
+
+function actualizarAsistente($datos, $idAsistente){
+    include 'conexion.php';
+    sql = "UPDATE asistentes
+    SET tipo_documento_id_tipo_documento=" . $datos['tipo_documento'] . ", numerodocumento=" . $datos['numero_documento'] . ", nombres=" . $datos['nombres'] . ",
+     apellidos=" . $datos['apellidos'] . ", genero=" . $datos['genero'] . ", telefonofijo=" . $datos['telefono'] . ", celular=" . $datos['movil'] . ", 
+     direccion=" . $datos['direccion'] . ", correoelectronico=" . $datos['correo_electronico'] . ", rol=" . $datos['rol'] . ",
+     manejodatos=" . $datos['manejo_datos'] . ", sesionesformacion=" . $datos['sesiones'] . ", fecha_nacimiento=" . $datos['edad'] . ", cuentachec=" . $datos['cuenta_CHEC'] . "
+	WHERE id_asistente = $idAsistente;";
 }
 
 function cargarTipoCedula(){
