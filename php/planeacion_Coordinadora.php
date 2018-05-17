@@ -52,6 +52,10 @@ if(isset($_POST["accion"]))
 	{
 		cargarTipoEntidad();
 	}
+	if($_POST["accion"]=="cargarEntidadesTotales")
+	{
+		cargarEntidadesTotales();
+	}
 	if($_POST["accion"]=="guardarNuevaEntidad")
 	{
 		guardarNuevaEntidad($_POST["idIntervencion"], $_POST["nombreEntidad"], $_POST["direccion"], $_POST["telefono"], $_POST["tipo_entidad"], $_POST["nodo"]);
@@ -252,7 +256,7 @@ function cargarEntidadPorVereda($idVereda){
 							$data['html'].= '<option value="'.$filas[$i]['id_entidad'].'">'.$filas[$i]['nombreentidad'].'</option>';
 					 }
 					 
-					 $data['tipo']= '<option value="0">Selecciona tu opción</option>';
+					 $data['tipo']= '<option value="0" class="disabled">Selecciona tu opción</option>';
 					
 						for ($i=0;$i<count($filas);$i++){
 							$data['tipo'].= '<option value="'.$filas[$i]['id_tipoentidad'].'">'.$filas[$i]['tipoentidad'].'</option>';
@@ -327,12 +331,6 @@ function cargarEntidadesPorBarrio($idBarrio){
 							$data['html'].= '<option value="'.$filas[$i]['id_entidad'].'">'.$filas[$i]['nombreentidad'].'</option>';
 					 }
 					
-					$data['tipo']= '<option value="0">Selecciona tu opción</option>';
-					
-						for ($i=0;$i<count($filas);$i++){
-							$data['tipo'].= '<option value="'.$filas[$i]['id_tipoentidad'].'">'.$filas[$i]['tipoentidad'].'</option>';
-					 }
-					
 				}
 			}
 			else
@@ -347,6 +345,31 @@ function cargarEntidadesPorBarrio($idBarrio){
 	}
 }
 
+function cargarEntidadesTotales(){
+	include('conexion.php');
+	$data = array('error'=>0, 'mensaje'=>'', 'html'=>'');
+
+	if($con){
+		$sql= "SELECT id_entidad, nombreentidad 
+		FROM entidades";
+		
+		if($rs = $con->query($sql)){
+			if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+				$data['html'] = '<option value="0">Selecciona tu opción</option>';
+
+				for($i=0; $i<count($filas); $i++){
+					$data['html'].='<option value="'.$filas[$i]['id_entidad'].'">'.$filas[$i]['nombreentidad'].'</option>';
+				}
+			}
+		}
+		else{
+			print_r($con->errorInfo());
+			$data['mensaje']="No se realizo la consulta de entidades";
+			$data['error']=1;
+		}
+		echo json_encode($data);
+	}
+}
 
 function guardarPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$correoContacto,$fecha,$lugar,$jornada,$comunidad,$poblacion,$observaciones,$idIntervencion,$idEtapa,$idEntidad,$contacto){
 

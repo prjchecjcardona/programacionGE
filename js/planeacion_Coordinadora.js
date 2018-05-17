@@ -6,6 +6,8 @@ $(document).ready(function () {
 	cargarEstrategias();
 	cargarEtapas();
 	cargarTipoEntidad();
+	cargarEntidadesTotales();
+	
 
 	$("#planeacion2").hide();
 	$("#planeacion3").hide();
@@ -67,6 +69,7 @@ $(document).ready(function () {
 	$("#spanComportamiento,#spanComportamientog").html(comportamientos);
 	$("#spanCompetencia, #spanCompetenciag").html(competencia);
 	cargarEntidades(idIntervencion);
+	
 
 	$('#btnNuevaEntidad').click(function () {
 		$("#ex1").modal({
@@ -188,6 +191,17 @@ function cargarEntidades(idIntervencion) {
 			$('#selectbasicEntidad').html(data.html);
 			$('.loader').hide();
 		}, "json");
+}
+
+function cargarEntidadesTotales(){
+	$.post("php/planeacion_Coordinadora.php", {
+		accion: 'cargarEntidadesTotales'
+	},
+	function(data){
+		if(data.error != 1){
+			$('#selectbasicEntidad1').html(data.html);
+		}
+	}, "json");
 }
 
 /*Dependiendo de la estrategia seleccionada se llena el tactico
@@ -598,6 +612,7 @@ function guardarNuevaEntidad() {
 					).then(function () {
 						$.modal.close();
 						cargarEntidades(idIntervencion);
+						cargarEntidadesTotales();
 					});
 				}
 			}, "json");

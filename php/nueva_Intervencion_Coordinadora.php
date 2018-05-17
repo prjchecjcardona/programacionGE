@@ -116,7 +116,7 @@ function cargarMunicipiosPorIdZona($idZona){
 						// $array[] = $fila; 
 						for ($i=0;$i<count($filas);$i++){
 							$data['html'].= '<option value="'.$filas[$i]['id_municipio'].'">'.$filas[$i]['municipio'].'</option>';
-					 }
+					}
 					
 					
 					
