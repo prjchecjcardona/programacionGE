@@ -194,7 +194,7 @@ function cargarInformacionEnTabla(data) { //alert(data);
 			{ title: "Registrar Asistencia", data: null, className: "dt-center", defaultContent: '<a href="#" class="disabled asistencia ejec_btn btn btn-sm btn-success" alt="Asistencia"><span class="ejec fa fa-calendar-check-o"></span></a>' },
 			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Gestora.html" id="evaluacion" class="evaluacion disabled eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' }
 		],
-		"paging": true,
+		"paging": false,
 		"info": false,
 		"columnDefs": [
 			{ "className": "dt-left", "targets": "_all" }, //alinear texto a la izquierda
@@ -235,7 +235,7 @@ function identificarEjecutadas(data, ejecutadas) {
 			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejec_btn').addClass('disabled');
 
 			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejecucion').click(function(){
-				let data = table.row($(this).parents('tr')).data();
+				let data = table.row($(this).parents('tr')).data();	
 				idPlaneacion = data[0];
 				window.location.href = "ejecucion_Gestora.html?isEjecutada=1&idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 			})
