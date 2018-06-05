@@ -1,6 +1,7 @@
 $(function () {
 	traerNombre();
 	cargarTipoCedula();
+	$('#buttonActualizar').hide();
 
 	/*Extrae los parametros que llegan en la url
 	 * parametro: 
@@ -37,7 +38,7 @@ $(function () {
 		{
 			"targets": -1,
             "render": function (data, type, row) {
-                return '<a href="#" onclick="cargarAsistenteFormulario('+data.id_asistente+')" class="edit_btn btn btn-sm btn-success" alt="Editar"><span class="eval fa fa-edit"></span></a>';
+                return '<a onclick="cargarAsistenteFormulario('+data.id_asistente+')" class="edit_btn btn btn-sm btn-success" alt="Editar"><span class="eval fa fa-edit"></span></a>';
             },            
             "className": "dt-body-center"
 		},
@@ -98,6 +99,10 @@ function bindEvents() {
 
 	$('#buttonEnviar').click(function () {
 		guardarAsistencia();
+	})
+
+	$('#buttonActualizar').click(function () {
+		actualizarAsistente();
 	})
 
 	$('#buttonCancelar').click(function () {
@@ -312,8 +317,89 @@ function eliminarAsistente(id_asistente){
 	}, 'json');	
 }
 
+function actualizarAsistente() {
+
+	if (validarInformacion()) {
+		$('.loader').show();
+
+		var datos_formulario = {
+			id_asistente: $('#id_asistente').val(),
+			nombres: $('#textinputNombres').val(),
+			apellidos: $('#textinputApellidos').val(),
+			tipo_documento: $('#selectbasicTipoDocumento').val(),
+			numero_documento: $('#inputDocumento').val(),
+			genero: $('input[name="radiosSexo"]:checked').val(),
+			cuenta_CHEC: $('#textinputCuentaCHEC').val(),
+			telefono: $('#textinputTelefonoAsis').val(),
+			movil: $('#textinputMovilAsis').val(),
+			direccion: $('#textinputDireccionAsis').val(),
+			correo_electronico: $('#textinputCorreoAsis').val(),
+			rol: $('#textinputRolAsis').val(),
+			edad: $('#FechainputNacimientoAsis').val(),
+			manejo_datos: $('input[name="radiosManejoDatos"]:checked').val(),
+			sesiones: $('input[name="radiosSesionesForma"]:checked').val()
+		};
+
+		if (datos_formulario.cuenta_CHEC == "") {
+			datos_formulario.cuenta_CHEC = -1;
+		}
+		if (datos_formulario.edad == "") {
+			datos_formulario.edad = -1;
+		}
+
+		var url = "php/registro_Asistencia.php";
+		$.post(url, {
+			accion: 'actualizarAsistente',
+			datos: datos_formulario,
+			idEjecucion: idEjecucion
+		}, function (response) {
+			if (response.error != 1) {
+				cargarAsistenciaRegistrada(idEjecucion);
+				$('#buttonEnviar').show();
+				$('#buttonActualizar').hide();
+			} else {
+				swal(
+					'', //titulo
+					'Error en el registro, inténtalo de nuevo',
+					'error'
+				);
+			}
+		}, 'json');
+	} else {
+		swal(
+			'', //titulo
+			'Debes ingresar todos los datos',
+			'error'
+		);
+	}
+}
+
 function cargarAsistenteFormulario(idAsistente){
-	swal("Muy pronto!", "Estamos haciendo unos cambios antes de actualizar", "warning");
+	var url = "php/registro_Asistencia.php";
+	$.post(url, {accion: 'cargarAsistenteFormulario', idAsistente : idAsistente},
+	function(data){
+		
+		if(data.error != 1){
+			$('#buttonEnviar').hide();
+			$('#id_asistente').val(data.html[0]['id_asistente']);
+			$('#buttonActualizar').show();
+			$('#textinputNombres').val(data.html[0]['nombres']);
+			$('#textinputApellidos').val(data.html[0]['apellidos']);
+			$('#selectbasicTipoDocumento').val(data.html[0]['tipo_documento_id_tipo_documento']);
+			$('#inputDocumento').val(data.html[0]['numerodocumento']);
+			$('#textinputCuentaCHEC').val(data.html[0]['cuentachec']);
+			$('#textinputTelefonoAsis').val(data.html[0]['telefonofijo']);
+			$('#textinputMovilAsis').val(data.html[0]['celular']);
+			$('#textinputDireccionAsis').val(data.html[0]['direccion']);
+			$('#textinputCorreoAsis').val(data.html[0]['correoelectronico']);
+			$('#textinputRolAsis').val(data.html[0]['rol']);
+			$('#FechainputNacimientoAsis').val(data.html[0]['fecha_nacimiento']);
+			$('input[name="radiosManejoDatos"]').val(data.html[0]['manejodatos']);
+			$('input[name="radiosSesionesForma"]').val(data.html[0]['sesionesformacion']);
+		}else{
+			
+		}
+	}, 'json');
 }
 
 function reloadpage(){

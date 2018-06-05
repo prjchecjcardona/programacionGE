@@ -25,6 +25,9 @@ if (isset($_POST["accion"])) {
     if ($_POST["accion"] == "cargarAsistenteFormulario"){
         cargarAsistenteFormulario($_POST["idAsistente"]);
     }
+    if ($_POST["accion"] == "actualizarAsistente"){
+      actualizarAsistente($_POST["datos"]);
+    }
 
 }
 
@@ -69,6 +72,7 @@ function cargarAsistenciaRegistrada($idEjecucion){
     echo json_encode($data);
 }
 
+/* Cargar los datos de un usuario ya creado en el formulario para editar */
 function cargarAsistenteFormulario($idAsistente){
     include "conexion.php";
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
@@ -144,21 +148,35 @@ function guardarAsistente($datos, $idEjecucion)
         $data['mensaje'] = "No se realizo el registro de asistente";
         $data['error'] = 1;
         }
-    
-
-
         echo json_encode($data);
     }
 }
 
-function actualizarAsistente($datos, $idAsistente){
+
+function actualizarAsistente($datos)
+{
     include 'conexion.php';
-    sql = "UPDATE asistentes
-    SET tipo_documento_id_tipo_documento=" . $datos['tipo_documento'] . ", numerodocumento=" . $datos['numero_documento'] . ", nombres=" . $datos['nombres'] . ",
-     apellidos=" . $datos['apellidos'] . ", genero=" . $datos['genero'] . ", telefonofijo=" . $datos['telefono'] . ", celular=" . $datos['movil'] . ", 
-     direccion=" . $datos['direccion'] . ", correoelectronico=" . $datos['correo_electronico'] . ", rol=" . $datos['rol'] . ",
-     manejodatos=" . $datos['manejo_datos'] . ", sesionesformacion=" . $datos['sesiones'] . ", fecha_nacimiento=" . $datos['edad'] . ", cuentachec=" . $datos['cuenta_CHEC'] . "
-	WHERE id_asistente = $idAsistente;";
+    $data = array('error' => 0, 'mensaje' => '', 'html' => '');
+
+    if ($con) {
+
+        $sql = "UPDATE asistentes
+        SET tipo_documento_id_tipo_documento = ".$datos['tipo_documento'].", numerodocumento = '" . $datos['numero_documento'] . "', 
+        nombres = '".$datos['nombres']."', apellidos = '".$datos['apellidos']."', genero = '".$datos['genero']."', 
+        cuentachec = ".$datos['cuenta_CHEC'].", telefonofijo = ".$datos['telefono'].", celular = '". $datos['movil']."', 
+        direccion = '".$datos['direccion'] . "', correoelectronico = '".$datos['correo_electronico']."', rol = '".$datos['rol']."', 
+        fecha_nacimiento = '".$datos['edad']."', manejodatos = ".$datos['manejo_datos'].", sesionesformacion = ".$datos['sesiones']."
+        WHERE id_asistente = ".$datos['id_asistente'].";";
+
+        if ($rs = $con->query($sql)) {
+          $data['mensaje'] = "Actualizado Existosamente";
+        }else{
+          print_r($con->errorInfo());
+          $data['mensaje'] = "No se realizo el registro de asistente";
+          $data['error'] = 1;
+        }
+        echo json_encode($data);
+    }
 }
 
 function cargarTipoCedula(){
@@ -176,11 +194,6 @@ function cargarTipoCedula(){
 
     echo json_encode($data);
     pg_close($con2);
-}
-
-function editarAsistente($idAsistente){
-    include "conexion.php";
-
 }
 
 function eliminarIntervencion($idIntervencion){
