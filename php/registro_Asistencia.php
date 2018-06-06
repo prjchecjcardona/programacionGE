@@ -163,7 +163,7 @@ function actualizarAsistente($datos)
         $sql = "UPDATE asistentes
         SET tipo_documento_id_tipo_documento = ".$datos['tipo_documento'].", numerodocumento = '" . $datos['numero_documento'] . "', 
         nombres = '".$datos['nombres']."', apellidos = '".$datos['apellidos']."', genero = '".$datos['genero']."', 
-        cuentachec = ".$datos['cuenta_CHEC'].", telefonofijo = ".$datos['telefono'].", celular = '". $datos['movil']."', 
+        cuentachec = ".$datos['cuenta_CHEC'].", telefonofijo = '".$datos['telefono']."', celular = '". $datos['movil']."', 
         direccion = '".$datos['direccion'] . "', correoelectronico = '".$datos['correo_electronico']."', rol = '".$datos['rol']."', 
         fecha_nacimiento = '".$datos['edad']."', manejodatos = ".$datos['manejo_datos'].", sesionesformacion = ".$datos['sesiones']."
         WHERE id_asistente = ".$datos['id_asistente'].";";

@@ -60,6 +60,13 @@ if(isset($_POST["accion"]))
 	{
 		guardarNuevaEntidad($_POST["idIntervencion"], $_POST["nombreEntidad"], $_POST["direccion"], $_POST["telefono"], $_POST["tipo_entidad"], $_POST["nodo"]);
 	}
+	if($_POST["accion"] == "cargarPlaneacionFormulario")
+	{
+		cargarPlaneacionFormulario($_POST["id_planeacion"]);
+	}
+	if($_POST["accion"] == "actualizarPlaneacion"){
+		actualizarPlaneacion($_POST["datos"], $_POST["id_planeacion"]);
+	}
 	
 }
 
@@ -780,5 +787,44 @@ function guardarNuevaEntidad($idIntervencion, $nombreEntidad, $direccion, $telef
 	echo json_encode($data);
 }
 
+function cargarPlaneacionFormulario($id_planeacion){
+	include("conexion.php");
+	$data = array('error' => 0, 'mensaje' => '', 'html' => '');
+	$sql = "SELECT * FROM planeacion WHERE id_planeacion = $id_planeacion";
+
+	$array = array();
+	if ($rs = $con->query($sql)) {
+			if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+					$data['html']=$filas;
+			}
+	} else {
+			print_r($con->errorInfo());
+			$data['mensaje'] = "No se realizo la consulta";
+			$data['error'] = 1;
+	}
+	echo json_encode($data);
+}
+
+function actualizarPlaneacion($datos, $id_planeacion){
+	include("conexion.php");
+	$data = array('error'=>0, 'mensaje'=>'', 'html'=>'');
+
+		$sql = "UPDATE planeacion
+		SET fecha='".$datos['fecha']."', lugarencuentro='".$datos['lugar_encuentro']."', id_jornada=".$datos['jornada'].", 
+		comunidadespecial=".$datos['comunidad'].", id_tipopoblacion=".$datos['poblacion'].", 
+		observaciones='".$datos['observaciones']."'
+		WHERE id_planeacion = $id_planeacion; ";
+
+		if($rs = $con->query($sql)){
+			$data['mensaje'] = "Actualizado exitosamente";
+		}else{
+			print_r($con->errorInfo());
+			$data['mensaje'] = "Error al actualizar";
+			$data['error'] = 1;
+		}
+
+		echo json_encode($data);
+
+}
 
 ?>

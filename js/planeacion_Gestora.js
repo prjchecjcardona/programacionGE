@@ -1,29 +1,5 @@
 $(document).ready(function () {
 
-	traerNombre();
-	cargarJornadas();
-	cargarPoblacion();
-	cargarEstrategias();
-	cargarEtapas();
-	cargarTipoEntidad();
-
-	$("#planeacion2").hide();
-	$("#planeacion3").hide();
-	idEtapa = "";
-	idPlaneacion = "";
-	contacto = "";
-	nombreContacto = "";
-	cargoContacto = "";
-	telefonoContacto = "";
-	correoContacto = "";
-
-	$("#btnBancoHerramientas").click(function () {
-
-		// window.location.href = "Banco de Herramientas V2/index.html";
-		window.open("Banco de Herramientas V2/index.html", '_blank');
-
-	});
-
 	/*Extrae los parametros que llegan en la url
 	 * parametro: 
 	 */
@@ -41,7 +17,35 @@ $(document).ready(function () {
 		}
 	}
 
+	/* Get values from url */
 	idZona = $.get("id_zona");
+	id_planeacion = $.get("id_planeacion");
+	traerNombre();
+	cargarJornadas();
+	cargarPoblacion();
+	cargarEstrategias();
+	cargarTipoEntidad();
+	if(id_planeacion == null){
+		cargarEtapas();
+	}
+	
+
+	$("#planeacion2").hide();
+	$("#planeacion3").hide();
+	idEtapa = "";
+	idPlaneacion = "";
+	contacto = "";
+	nombreContacto = "";
+	cargoContacto = "";
+	telefonoContacto = "";
+	correoContacto = "";
+
+	$("#btnBancoHerramientas").click(function () {
+
+		// window.location.href = "Banco de Herramientas V2/index.html";
+		window.open("Banco de Herramientas V2/index.html", '_blank');
+
+	});
 
 	var dateToday = new Date();
 	var dates = $("#fecha_planeacion").datepicker({
@@ -81,6 +85,16 @@ $(document).ready(function () {
 		$('.imagenGestora').removeClass('imagenGestora')
 
 	})
+
+	/* Set first radio to checked */
+	$("#radiosComunidadEspecial-0").prop("checked", true);
+
+/* Verifies if the page is update o create if one of the values of the url exists */
+if(id_planeacion != null){
+	document.getElementById("buttonGuardarPlaneacion").style.display = "none";
+	document.getElementById("buttonActualizar").style.display = "inline";
+	setTimeout(cargarPlaneacionFormulario(id_planeacion), 5000);
+	}
 
 });
 
@@ -233,7 +247,6 @@ function cargarTacticos(idEstrategia, idSelEstrategia) {
 /*Consulta las etapas
  * parametro: 
  */
-
 function cargarEtapas() {
 	$.post("php/planeacion_Coordinadora.php", {
 			accion: 'cargarEtapas'
@@ -613,4 +626,53 @@ function guardarNuevaEntidad() {
 function navegar_home() {
 	idZona = $.get("id_zona")
 	window.location.href = "home_Gestora.html?id_zona=" + idZona;
+}
+
+function actualizarPlaneacion(){
+	$('.loader').show();
+	var datos = {
+			fecha : $("#fecha_planeacion").val(),
+			lugar_encuentro : $("#textinputLugarEncuentro").val(),
+			jornada : $("#selectbasicJornada").val(),
+			comunidad : $('#comunidad input:radio[name=radiosComunidadEspecial]:checked').val(),
+			poblacion : $("#selectbasicPoblacion").val(),
+			observaciones : $("#textareaObservaciones").val()
+	};
+
+	var url = "php/planeacion_Coordinadora.php";
+	$.post(url, {accion: "actualizarPlaneacion", datos : datos, id_planeacion : id_planeacion},
+	function(data){
+		if(data.error != 1){
+			$('.loader').hide();
+			swal('Exito!', data.mensaje, 'success').then(function(){
+				window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
+			});
+		}else{
+			$('.loader').hide();
+			swal('Error', 'Hubo un error al actualizar', 'error');
+		}
+	}, 'json');
+}
+
+function cargarPlaneacionFormulario(id_planeacion){
+	$(".loader").show();
+	var url = "php/planeacion_Coordinadora.php";
+	$.post(url, {accion: 'cargarPlaneacionFormulario', id_planeacion : id_planeacion},
+	function(data){
+		if(data.error != 1){
+			$("#fecha_planeacion").val(data.html[0]['fecha']);
+			$("#textinputLugarEncuentro").val(data.html[0]['lugarencuentro']);
+			$("#selectbasicJornada").val(data.html[0]['id_jornada']);
+			if(data.html[0]['comunidadespecial'] == 1){
+			}else{
+				$("#radiosComunidadEspecial-1").prop("checked", true);
+			}
+			$("#selectbasicPoblacion").val(data.html[0]['id_tipopoblacion']);
+			$("#textareaObservaciones").val(data.html[0]['observaciones']);
+		}
+		else{
+
+		}
+	}, 'json');
+	$(".loader").hide();
 }

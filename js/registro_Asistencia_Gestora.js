@@ -30,29 +30,55 @@ $(function () {
 	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
 		data: arrayAsistentes,
 		columnDefs: [{
-			"targets": -2,
-            "render": function (data, type, row) {
-                return '<a onclick="eliminarAsistente('+data.id_asistente+')" class="elim_btn btn btn-sm btn-danger" alt="Eliminar"><span class="eval fa fa-close"></span></a>';
-            },            
-            "className": "dt-body-center"
-		},
-		{
-			"targets": -1,
-            "render": function (data, type, row) {
-                return '<a onclick="cargarAsistenteFormulario('+data.id_asistente+')" class="edit_btn btn btn-sm btn-success" alt="Editar"><span class="eval fa fa-edit"></span></a>';
-            },            
-            "className": "dt-body-center"
-		},
+				"targets": -2,
+				"render": function (data, type, row) {
+					return '<a onclick="eliminarAsistente(' + data.id_asistente + ')" class="elim_btn btn btn-sm btn-danger" alt="Eliminar"><span class="eval fa fa-close"></span></a>';
+				},
+				"className": "dt-body-center"
+			},
+			{
+				"targets": -1,
+				"render": function (data, type, row) {
+					return '<a onclick="cargarAsistenteFormulario(' + data.id_asistente + ')" class="edit_btn btn btn-sm btn-success" alt="Editar"><span class="eval fa fa-edit"></span></a>';
+				},
+				"className": "dt-body-center"
+			},
 		],
-		columns: [
-			{data: "nombres", title: "Nombre"},
-			{data: "apellidos", title: "Apellidos"},
-			{data: "celular", title: "Móvil"},
-			{data: "correoelectronico", title: "Correo Electrónico"},
-			{data: "rol", title: "Rol"},
-			{data: "fecha_nacimiento", title: "Edad", width: "5%"},
-			{data: null, width: "3%", title: "Eliminar"},
-			{data: null, width: "3%", title: "Editar"}			
+		columns: [{
+				data: "nombres",
+				title: "Nombre"
+			},
+			{
+				data: "apellidos",
+				title: "Apellidos"
+			},
+			{
+				data: "celular",
+				title: "Móvil"
+			},
+			{
+				data: "correoelectronico",
+				title: "Correo Electrónico"
+			},
+			{
+				data: "rol",
+				title: "Rol"
+			},
+			{
+				data: "fecha_nacimiento",
+				title: "Edad",
+				width: "5%"
+			},
+			{
+				data: null,
+				width: "3%",
+				title: "Eliminar"
+			},
+			{
+				data: null,
+				width: "3%",
+				title: "Editar"
+			}
 		],
 		"language": {
 			"sProcessing": "Procesando...",
@@ -295,18 +321,40 @@ function clearFields() {
 	$('#FechainputNacimientoAsis').val("");
 }
 
-function eliminarAsistente(id_asistente){
-	var url = "php/registro_Asistencia.php";
-	$.post(url, {accion: 'eliminarAsistente', id_asistente : id_asistente},
-	function(data){
-		if(data.error != 1){
-			swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});
-			var reload = setInterval(reloadpage, 3000);
-						
-		}else{
-			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
+function eliminarAsistente(id_asistente) {
+	swal("Vas a eliminar un asistente", "¿Estas seguro?", "warning", {
+		buttons: {
+			cancel: "cancelar",
+			confirm: "Si"
+		},
+		dangerMode: true
+	}).then((eliminar) => {
+		if (eliminar) {
+			var url = "php/registro_Asistencia.php";
+			$.post(url, {
+					accion: 'eliminarAsistente',
+					id_asistente: id_asistente,
+					idEjecucion: idEjecucion
+				},
+				function (data) {
+					if (data.error != 1) {
+						swal({
+							title: "Exítoso!",
+							text: data.mensaje,
+							icon: "success"
+						}).then(function(){
+							cargarAsistenciaRegistrada(idEjecucion);
+						})
+					} else {
+						swal({
+							title: "Hay un problema",
+							text: data.mensaje,
+							icon: "error"
+						});
+					}
+				}, 'json');
 		}
-	}, 'json');	
+	});
 }
 
 function actualizarAsistente() {
@@ -366,34 +414,37 @@ function actualizarAsistente() {
 	}
 }
 
-function cargarAsistenteFormulario(idAsistente){
+function cargarAsistenteFormulario(idAsistente) {
 	var url = "php/registro_Asistencia.php";
-	$.post(url, {accion: 'cargarAsistenteFormulario', idAsistente : idAsistente},
-	function(data){
-		
-		if(data.error != 1){
-			$('#buttonEnviar').hide();
-			$('#id_asistente').val(data.html[0]['id_asistente']);
-			$('#buttonActualizar').show();
-			$('#textinputNombres').val(data.html[0]['nombres']);
-			$('#textinputApellidos').val(data.html[0]['apellidos']);
-			$('#selectbasicTipoDocumento').val(data.html[0]['tipo_documento_id_tipo_documento']);
-			$('#inputDocumento').val(data.html[0]['numerodocumento']);
-			$('#textinputCuentaCHEC').val(data.html[0]['cuentachec']);
-			$('#textinputTelefonoAsis').val(data.html[0]['telefonofijo']);
-			$('#textinputMovilAsis').val(data.html[0]['celular']);
-			$('#textinputDireccionAsis').val(data.html[0]['direccion']);
-			$('#textinputCorreoAsis').val(data.html[0]['correoelectronico']);
-			$('#textinputRolAsis').val(data.html[0]['rol']);
-			$('#FechainputNacimientoAsis').val(data.html[0]['fecha_nacimiento']);
-			$('input[name="radiosManejoDatos"]').val(data.html[0]['manejodatos']);
-			$('input[name="radiosSesionesForma"]').val(data.html[0]['sesionesformacion']);
-		}else{
-			
-		}
-	}, 'json');
+	$.post(url, {
+			accion: 'cargarAsistenteFormulario',
+			idAsistente: idAsistente
+		},
+		function (data) {
+
+			if (data.error != 1) {
+				$('#buttonEnviar').hide();
+				$('#id_asistente').val(data.html[0]['id_asistente']);
+				$('#buttonActualizar').show();
+				$('#textinputNombres').val(data.html[0]['nombres']);
+				$('#textinputApellidos').val(data.html[0]['apellidos']);
+				$('#selectbasicTipoDocumento').val(data.html[0]['tipo_documento_id_tipo_documento']);
+				$('#inputDocumento').val(data.html[0]['numerodocumento']);
+				$('#textinputCuentaCHEC').val(data.html[0]['cuentachec']);
+				$('#textinputTelefonoAsis').val(data.html[0]['telefonofijo']);
+				$('#textinputMovilAsis').val(data.html[0]['celular']);
+				$('#textinputDireccionAsis').val(data.html[0]['direccion']);
+				$('#textinputCorreoAsis').val(data.html[0]['correoelectronico']);
+				$('#textinputRolAsis').val(data.html[0]['rol']);
+				$('#FechainputNacimientoAsis').val(data.html[0]['fecha_nacimiento']);
+				$('input[name="radiosManejoDatos"]').val(data.html[0]['manejodatos']);
+				$('input[name="radiosSesionesForma"]').val(data.html[0]['sesionesformacion']);
+			} else {
+
+			}
+		}, 'json');
 }
 
-function reloadpage(){
-    location.reload();
+function reloadpage() {
+	location.reload();
 }

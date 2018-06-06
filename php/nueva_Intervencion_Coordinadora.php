@@ -20,10 +20,10 @@ if(isset($_POST["accion"]))
 	{
 		cargarBarriosPorComuna($_POST["idComuna"]);
 	}
-	if($_POST["accion"]=="cargarEntidadesPorBarrio")
+	/* if($_POST["accion"]=="cargarEntidadesPorBarrio")
 	{
 		cargarEntidadesPorBarrio($_POST["idBarrio"]);
-	}
+	} */
 	if($_POST["accion"]=="cargarEntidadPorVereda")
 	{
 		cargarEntidadPorVereda($_POST["idVereda"]);

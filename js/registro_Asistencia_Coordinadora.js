@@ -31,27 +31,53 @@ $(function () {
 		columnDefs: [{
 			"targets": -2,
             "render": function (data, type, row) {
-                return '<a onclick="eliminarAsistente('+data.id_asistente+')" class="elim_btn btn btn-sm btn-danger" alt="Eliminar"><span class="eval fa fa-close"></span></a>';
+					return '<a onclick="eliminarAsistente(' + data.id_asistente + ')" class="elim_btn btn btn-sm btn-danger" alt="Eliminar"><span class="eval fa fa-close"></span></a>';
             },            
             "className": "dt-body-center"
 		},
 		{
 			"targets": -1,
             "render": function (data, type, row) {
-                return '<a onclick="cargarAsistenteFormulario('+data.id_asistente+')" class="edit_btn btn btn-sm btn-success" alt="Editar"><span class="eval fa fa-edit"></span></a>';
+					return '<a onclick="cargarAsistenteFormulario(' + data.id_asistente + ')" class="edit_btn btn btn-sm btn-success" alt="Editar"><span class="eval fa fa-edit"></span></a>';
             },            
             "className": "dt-body-center"
 		},
 		],
-		columns: [
-			{data: "nombres", title: "Nombre"},
-			{data: "apellidos", title: "Apellidos"},
-			{data: "celular", title: "Móvil"},
-			{data: "correoelectronico", title: "Correo Electrónico"},
-			{data: "rol", title: "Rol"},
-			{data: "fecha_nacimiento", title: "Edad", width: "5%"},
-			{data: null, width: "3%", title: "Eliminar"},
-			{data: null, width: "3%", title: "Editar"}			
+		columns: [{
+				data: "nombres",
+				title: "Nombre"
+			},
+			{
+				data: "apellidos",
+				title: "Apellidos"
+			},
+			{
+				data: "celular",
+				title: "Móvil"
+			},
+			{
+				data: "correoelectronico",
+				title: "Correo Electrónico"
+			},
+			{
+				data: "rol",
+				title: "Rol"
+			},
+			{
+				data: "fecha_nacimiento",
+				title: "Edad",
+				width: "5%"
+			},
+			{
+				data: null,
+				width: "3%",
+				title: "Eliminar"
+			},
+			{
+				data: null,
+				width: "3%",
+				title: "Editar"
+			}
 		],
 		"language": {
 			"sProcessing": "Procesando...",
@@ -304,17 +330,40 @@ function clearFields() {
 	$('#FechainputNacimientoAsis').val("");
 }
 
-function eliminarAsistente(id_asistente){
+function eliminarAsistente(id_asistente) {
+	swal("Vas a eliminar un asistente", "¿Estas seguro?", "warning", {
+		buttons: {
+			cancel: "Cancelar",
+			confirm: "Si"
+		},
+		dangerMode: true
+	}).then((eliminar) => {
+		if (eliminar) {
 	var url = "php/registro_Asistencia.php";
-	$.post(url, {accion: 'eliminarAsistente', id_asistente : id_asistente},
-	function(data){
-		if(data.error != 1){
-			swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});
-			var reload = setInterval(reloadpage, 3000);			
-		}else{
-			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
+			$.post(url, {
+					accion: 'eliminarAsistente',
+					id_asistente: id_asistente,
+					idEjecucion: idEjecucion
+				},
+				function (data) {
+					if (data.error != 1) {
+						swal({
+							title: "Exítoso!",
+							text: data.mensaje,
+							icon: "success"
+						}).then(function(){
+							cargarAsistenciaRegistrada(idEjecucion);
+						})
+					} else {
+						swal({
+							title: "Hay un problema",
+							text: data.mensaje,
+							icon: "error"
+						});
 		}
 	}, 'json');	
+}
+	});
 }
 
 function actualizarAsistente() {
@@ -374,12 +423,15 @@ function actualizarAsistente() {
 	}
 }
 
-function cargarAsistenteFormulario(idAsistente){
+function cargarAsistenteFormulario(idAsistente) {
 	var url = "php/registro_Asistencia.php";
-	$.post(url, {accion: 'cargarAsistenteFormulario', idAsistente : idAsistente},
-	function(data){
+	$.post(url, {
+			accion: 'cargarAsistenteFormulario',
+			idAsistente: idAsistente
+		},
+		function (data) {
 		
-		if(data.error != 1){
+			if (data.error != 1) {
 			$('#buttonEnviar').hide();
 			$('#id_asistente').val(data.html[0]['id_asistente']);
 			$('#buttonActualizar').show();
@@ -396,12 +448,12 @@ function cargarAsistenteFormulario(idAsistente){
 			$('#FechainputNacimientoAsis').val(data.html[0]['fecha_nacimiento']);
 			$('input[name="radiosManejoDatos"]').val(data.html[0]['manejodatos']);
 			$('input[name="radiosSesionesForma"]').val(data.html[0]['sesionesformacion']);
-		}else{
+			} else {
 			
 		}
 	}, 'json');
 }
 
-function reloadpage(){
+function reloadpage() {
     location.reload();
 }

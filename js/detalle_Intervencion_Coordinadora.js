@@ -262,6 +262,15 @@ function identificarEjecutadas(data, ejecutadas) {
 			idPlaneacion = data[0];
 			eliminarEjecucion(idPlaneacion);
 		})
+		$($('#coordinadora_tabla tbody').children()[index]).find('button.edplan').click(function(){
+			let data = table.row($(this).parents('tr')).data();
+			idPlaneacion = data[0];
+			cargarPlaneacionFormulario(idPlaneacion);
+		})
+		$($('#coordinadora_tabla tbody').children()[index]).find('button.edejec').click(function(){
+			let data = table.row($(this).parents('tr')).data();
+			idPlaneacion = data[0];
+		})
 	});
 
 	//Evento para ver detalle ejecucion//
@@ -299,42 +308,80 @@ var dropdown_button =
  +'<button class="btn btn-secondary dropdown-toggle btn-success" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="ejec fa fa-gears"></span>&nbsp; Seleccione</button>'
   +'<div class="dropdown-menu" aria-labelledby="dropdownMenu2">'
    + '<button class="elplan dropdown-item" type="button"><span class="plan fa fa-close"></span>&nbsp; Planeación</button>'
-    +'<button onclick="editarPlaneacion()" class="dropdown-item" type="button"><span class="plan fa fa-edit"></span>&nbsp; Planeación</button>'
+    +'<button class="edplan dropdown-item" type="button"><span class="plan fa fa-edit"></span>&nbsp; Planeación</button>'
 	+'<button class="elejec dropdown-item" type="button"><span class="ejecu fa fa-close"></span>&nbsp; Ejecución</button>'
-	+'<button onclick="editarEjecucion()" class="dropdown-item" type="button"><span class="ejecu fa fa-edit"></span>&nbsp; Ejecución</button>'
+	+'<button class="edejec dropdown-item" type="button"><span class="ejecu fa fa-edit"></span>&nbsp; Ejecución</button>'
   +'</div>'
 +'</div>';
    
 
-function eliminarPlaneacion(idPlaneacion){
-	var url = "php/detalle_Intervencion_Coordinadora.php";
-	$.post(url, {accion: 'eliminarPlaneacion', idPlaneacion : idPlaneacion},
-	function (data){
-		if(data.error != 1){
-			swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});
-			var reload = setInterval(reloadpage, 3000);
-		}else{
-			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
-		}
-	}, 'json'); 
+function eliminarPlaneacion(idPlaneacion) {
+	swal('Eliminarás una planeación', '¿Estas seguro?', 'warning', {
+		buttons: {cancel: "Cancelar", confirm: "Si"}, dangerMode: true
+	}).then((willDelete) => {	
+		if(willDelete){
+			var url = "php/detalle_Intervencion_Coordinadora.php";
+			$.post(url, {
+				accion: 'eliminarPlaneacion',
+				idPlaneacion: idPlaneacion
+			},
+			function (data) {
+				if (data.error != 1) {
+					swal({
+						title: "Exítoso!",
+						text: data.mensaje,
+						icon: "success",
+					}).then(function(){
+						location.reload();
+					});
+				} else {
+					swal({
+						title: "Hay un problema",
+						text: data.mensaje,
+						icon: "error"
+					});
+				}
+			}, 'json');
+		}		
+	});
 }
 
 // Se elimina la ejecucion no por id ejecucion sino por id planeacion
-function eliminarEjecucion(idPlaneacion){
-	var url = "php/ejecucion_Coordinadora.php";
-	$.post(url, {accion: 'eliminarEjecucion', idPlaneacion : idPlaneacion},
-	function(data){
-		if(data.error != 1){
-			swal( {title: "Exítoso!", text: data.mensaje, icon: "success"});
-			var reload = setInterval(reloadpage, 3000);
-		}else{
-			swal({title: "Hay un problema", text: data.mensaje, icon: "error"});
+function eliminarEjecucion(idPlaneacion) {
+	swal('Eliminarás una ejecución', '¿Estas seguro?', 'warning', {
+		buttons: {cancel: "Cancelar", confirm: "Si"}, dangerMode: true
+	}).then((willDelete) => {	
+		if(willDelete){
+			var url = "php/ejecucion_Coordinadora.php";
+			$.post(url, {
+				accion: 'eliminarEjecucion',
+				idPlaneacion: idPlaneacion
+			},
+			function (data) {
+				if (data.error != 1) {
+					swal({
+						title: "Exítoso!",
+						text: data.mensaje,
+						icon: "success"
+					}).then(function(){
+						location.reload();
+					});
+				} else {
+					swal({
+						title: "Hay un problema",
+						text: data.mensaje,
+						icon: "error"
+					});
+				}
+			}, 'json');
 		}
-	}, 'json');
+	});
 }
 
-function editarPlaneacion(){
-	swal("Muy pronto!", "Estamos haciendo unos cambios antes de actualizar", "warning");
+function cargarPlaneacionFormulario(idPlaneacion){
+	window.location.href = "planeacion_Coordinadora.html?idIntervencion=" + idIntervencion + "&comportamientos=" 
+	+ comportamientos + "&competencia=" + competencia + "&idComportamientos=" + idComportamientos 
+	+ "&idCompetencia=" + idCompetencia + "&id_planeacion=" + idPlaneacion;
 }
 
 function editarEjecucion(){

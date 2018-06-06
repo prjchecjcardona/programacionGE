@@ -1,13 +1,34 @@
 $(document).ready(function () {
 
+	/*Extrae los parametros que llegan en la url
+	 * parametro: 
+	 */
+	$.get = function (key) {
+		key = key.replace(/[\[]/, '\\[');
+		key = key.replace(/[\]]/, '\\]');
+		var pattern = "[\\?&]" + key + "=([^&#]*)";
+		var regex = new RegExp(pattern);
+		var url = unescape(window.location.href);
+		var results = regex.exec(url);
+		if (results === null) {
+			return null;
+		} else {
+			return results[1];
+		}
+	}
+
+	/* Get values from url */
+	idZona = $.get("id_zona");
+	id_planeacion = $.get("id_planeacion");
 	traerNombre();
 	cargarJornadas();
 	cargarPoblacion();
 	cargarEstrategias();
-	cargarEtapas();
 	cargarTipoEntidad();
 	cargarEntidadesTotales();
-	
+	if(id_planeacion == null){
+		cargarEtapas();
+	}
 
 	$("#planeacion2").hide();
 	$("#planeacion3").hide();
@@ -87,7 +108,21 @@ $(document).ready(function () {
 		
 	})
 
+	/* Set first radio to checked */
+	$("#radiosComunidadEspecial-0").prop("checked", true);
+
+/* Verifies if the page is update o create if one of the values of the url exists */
+if(id_planeacion != null){
+	document.getElementById("buttonGuardarPlaneacion").style.display = "none";
+	document.getElementById("buttonActualizar").style.display = "inline";
+	cargar();
+	}
+
 });
+
+function cargar(){
+	setTimeout(cargarPlaneacionFormulario(id_planeacion), 10000);
+}
 
 /*Consulta el nombre de la persona que inicio sesión
  * parametro: 
@@ -410,12 +445,6 @@ function validarInformacion() {
 	return valido;
 }
 
-$("#buttonCancelar").click(function () {
-
-	window.location.href = "home_Coordinadora.html";
-
-});
-
 function seleccionarEtapa(idEtapadb) {
 
 	idEtapa = idEtapadb;
@@ -624,4 +653,52 @@ function guardarNuevaEntidad() {
 			'error'
 		)
 	}
+}
+
+function actualizarPlaneacion(){
+	$('.loader').show();
+	var datos = {
+			fecha : $("#fecha_planeacion").val(),
+			lugar_encuentro : $("#textinputLugarEncuentro").val(),
+			jornada : $("#selectbasicJornada").val(),
+			comunidad : $('#comunidad input:radio[name=radiosComunidadEspecial]:checked').val(),
+			poblacion : $("#selectbasicPoblacion").val(),
+			observaciones : $("#textareaObservaciones").val()
+	};
+
+	var url = "php/planeacion_Coordinadora.php";
+	$.post(url, {accion: "actualizarPlaneacion", datos : datos, id_planeacion : id_planeacion},
+	function(data){
+		if(data.error != 1){
+			$('.loader').hide();
+			swal('Exito!', data.mensaje, 'success').then(function(){
+				window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion
+			});
+		}else{
+			$('.loader').hide();
+			swal('Error', 'Hubo un error al actualizar', 'error');
+		}
+	}, 'json');
+}
+
+function cargarPlaneacionFormulario(id_planeacion){
+	$(".loader").show();
+	var url = "php/planeacion_Coordinadora.php";
+	$.post(url, {accion: 'cargarPlaneacionFormulario', id_planeacion : id_planeacion},
+	function(data){
+		if(data.error != 1){
+			$("#fecha_planeacion").val(data.html[0]['fecha']);
+			$("#textinputLugarEncuentro").val(data.html[0]['lugarencuentro']);
+			$("#selectbasicJornada").val(data.html[0]['id_jornada']);
+			if(data.html[0]['comunidadespecial'] == 1){
+			}else{
+				$("#radiosComunidadEspecial-1").prop("checked", true);
+			}
+			$("#selectbasicPoblacion").val(data.html[0]['id_tipopoblacion']);
+			$("#textareaObservaciones").val(data.html[0]['observaciones']);
+		}
+		else{
+
+		}
+	}, 'json');
 }
