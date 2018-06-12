@@ -22,7 +22,11 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"]=="guardarPlaneacion")
 	{
-		guardarPlaneacion($_POST['nombreContacto'],$_POST['cargoContacto'],$_POST['telefonoContacto'],$_POST['correoContacto'],$_POST['fecha'],$_POST['lugar'],$_POST['jornada'],$_POST['comunidad'],$_POST['poblacion'],$_POST['observaciones'],$_POST['idIntervencion'],$_POST['idEtapa'],$_POST['idEntidad'],$_POST['contacto']);
+		guardarPlaneacion($_POST['nombreContacto'],$_POST['cargoContacto'],
+		$_POST['telefonoContacto'],$_POST['correoContacto'],$_POST['fecha'],
+		$_POST['lugar'],$_POST['jornada'],$_POST['comunidad'],$_POST['poblacion'],
+		$_POST['observaciones'],$_POST['idIntervencion'],$_POST['idEtapa'],
+		$_POST['idEntidad'],$_POST['contacto']);
 	}
 	if($_POST["accion"]=="cargarEtapas")
 	{
@@ -66,6 +70,14 @@ if(isset($_POST["accion"]))
 	}
 	if($_POST["accion"] == "actualizarPlaneacion"){
 		actualizarPlaneacion($_POST["datos"], $_POST["id_planeacion"]);
+	}
+	if($_POST["accion"] == "cargarGestionEducativa")
+	{
+		cargarGestionEducativa($_POST["id_planeacion"]);
+	}
+	if($_POST["accion"]=="actualizarGestionEducativa")
+	{
+		actualizarGestionEducativa($_POST['id_planeacion'],$_POST['idTema'],$_POST['indicadores'],$_POST['tactico']);
 	}
 	
 }
@@ -434,21 +446,19 @@ function guardarPlaneacion($nombreContacto,$cargoContacto,$telefonoContacto,$cor
 				
 					
 					 //obtener el ultimo id insertado
-					$sql = "SELECT MAX(id_planeacion) as id_planeacion FROM planeacion 
-						";
+					$sql = "SELECT MAX(id_planeacion) as id_planeacion FROM planeacion";
 					  
 					if ($rs = $con->query($sql)) {
 							if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-								
 								$idPlaneacion=$filas[0]['id_planeacion'];
 								
-								if($idPlaneacion!=""){
+								if($idPlaneacion != ""){
 								
 								// SE INSERTA EN planeaciones_por_intervencion								
 								
-									$sql = "INSERT INTO planeaciones_por_intervencion (id_planeaciones_por_intervencion, planeacion_id_planeacion,intervenciones_id_intervenciones)
-									VALUES (nextval('sec_planeaciones_por_intervencion'),'".$idPlaneacion."', '".$idIntervencion."'); 
-									  ";
+									$sql = "INSERT INTO planeaciones_por_intervencion (id_planeaciones_por_intervencion, planeacion_id_planeacion,
+									intervenciones_id_intervenciones)
+									VALUES (nextval('sec_planeaciones_por_intervencion'),'".$idPlaneacion."', '".$idIntervencion."'); ";
 									  
 									if ($rs = $con->query($sql)) 
 									{
@@ -546,33 +556,41 @@ function guardarGestionEducativa($idPlaneacion,$idTema,$indicadores,$tactico){
 	if( $con )
  	{
 		//consultar subtemas por temas
-		$sql = "SELECT id_subtema, subtemas
-				FROM subtemas
-				WHERE id_temas = '".$idTema."'";
+		$sql = "SELECT temas, id_subtema, subtemas
+		FROM temas as tem
+		LEFT JOIN subtemas as sub ON sub.id_temas = tem.id_temas
+		WHERE tem.id_temas = '".$idTema."'";
 
 			$array=array();
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
-					for ($i=0;$i<count($filas);$i++){
-						// $array[] = $fila;  
-
-						//Insertar la subtemas_por_planeacion
-						$sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtema, planeacion_id_planeacion)
-							VALUES (nextval('sec_subtemas_por_planeacion'),'".$filas[$i]['id_subtema']."', '".$idPlaneacion."'); 
-							  ";
-							  
-								if ($rs = $con->query($sql)) {
-									
-									 
+					if($filas[0]['id_subtema'] == null){
+						$sql = "INSERT INTO subtemas(id_subtema, subtemas, id_temas)
+							VALUES (nextval('sec_subtemas'), '".$filas[0]['temas']."', ".$idTema.");";
+						if($rs = $con->query($sql)){
+							$sql = "SELECT id_subtema FROM subtemas WHERE id_temas = '".$idTema."'";
+							if($rs = $con->query($sql)){
+								if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+									for ($i=0;$i<count($filas);$i++){
+										//Insertar la subtemas_por_planeacion
+										$sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtema, planeacion_id_planeacion)
+										VALUES (nextval('sec_subtemas_por_planeacion'),'".$filas[$i]['id_subtema']."', '".$idPlaneacion."');";
+												
+										if ($rs = $con->query($sql)) {
+				
+										}
+										else{
+											print_r($con->errorInfo());
+											$data['mensaje']="No se realizo el insert subtemas_por_planeacion";
+											$data['error']=1;
+										}			
+									}
 								}
-								else
-								{
-									print_r($con->errorInfo());
-									$data['mensaje']="No se realizo el insert subtemas_por_planeacion";
-									$data['error']=1;
-								}
-						
+							}						
+						}else{
+							$data['error'] = 1;
+							$data['mensaje'] = "No se pudo realizar el insert de subtemas";
+						}
 					}
 				}
 			}
@@ -582,20 +600,16 @@ function guardarGestionEducativa($idPlaneacion,$idTema,$indicadores,$tactico){
 				$data['mensaje']="No se realizo la consulta";
 				$data['error']=1;
 			}
-		
-		
-		
+
 				//se recorren los indicadores
 				foreach($indicadores as $idIndicador)
 						{
 							//Insertar la indicadores_por_planeacion
 							$sql = "INSERT INTO indicadores_por_planeacion (indicadores_id_indicador, planeacion_id_planeacion)
-							VALUES ('".$idIndicador."', '".$idPlaneacion."'); 
-							  ";
+							VALUES ('".$idIndicador."', '".$idPlaneacion."');";
 							  
 								if ($rs = $con->query($sql)) {
-									
-									 
+
 								}
 								else
 								{
@@ -608,23 +622,16 @@ function guardarGestionEducativa($idPlaneacion,$idTema,$indicadores,$tactico){
 
 		//Insertar la tactico_por_planeacion
     	$sql = "INSERT INTO tactico_por_planeacion (tactico_id_tactico, planeacion_id_planeacion)
-			VALUES ('".$tactico."', '".$idPlaneacion."'); 
-			  ";
+			VALUES ('".$tactico."', '".$idPlaneacion."');";
 			  
 			if ($rs = $con->query($sql)) {
-					
-					 
-				}
-				else
-				{
+
+			}else{
 					print_r($con->errorInfo());
 					$data['mensaje']="No se realizo el insert tactico_por_planeacion";
 					$data['error']=1;
-				}
-					
-			
-		  echo json_encode($data);
-		
+			}
+		echo json_encode($data);		
 	}
 } 
 
@@ -688,7 +695,7 @@ function consultarIndicadoresGE(){
 						for ($i=0;$i<count($filas);$i++){
 							// $data['html'].= '<option value="'.$filas[$i]['id_temas'].'">'.$filas[$i]['temas'].'</option>';
 							$data['html'].= '<div class="checkbox">
-					<label class="grisTexto"><input type="checkbox" value="'.$filas[$i]['id_indicador'].'"> '.$filas[$i]['nombreindicador'].'</label>
+					<label class="grisTexto"><input id="indicador'.$filas[$i]['id_indicador'].'" type="checkbox" value="'.$filas[$i]['id_indicador'].'"> '.$filas[$i]['nombreindicador'].'</label>
 				  </div>';
 					 }
 					 
@@ -805,6 +812,39 @@ function cargarPlaneacionFormulario($id_planeacion){
 	echo json_encode($data);
 }
 
+function cargarGestionEducativa($id_planeacion){
+	include('conexion.php');
+	$data = array('error'=>0, 'mensaje'=>'', 'html'=>'');
+	if($con){
+		$sql = "SELECT DISTINCT id_entidad, tact.id_tactico, estr.id_estrategia, tem.id_temas, ipp.indicadores_id_indicador
+		FROM planeacion as pl
+		JOIN tactico_por_planeacion as tpp ON pl.id_planeacion = tpp.planeacion_id_planeacion
+		JOIN tactico as tact ON tpp.tactico_id_tactico = tact.id_tactico
+		JOIN estrategias estr ON tact.id_estrategia = estr.id_estrategia
+		LEFT JOIN subtemas_por_planeacion as spp ON spp.planeacion_id_planeacion = pl.id_planeacion
+		LEFT JOIN subtemas as sub ON sub.id_subtema = spp.subtemas_id_subtema
+		LEFT JOIN temas as tem ON tem.id_temas = sub.id_temas
+		JOIN indicadores_por_planeacion as ipp ON ipp.planeacion_id_planeacion = pl.id_planeacion
+		WHERE pl.id_planeacion = $id_planeacion;";
+
+		if($rs = $con->query($sql)){
+			if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+				$cantfilas = count($filas);
+				for($i=0;$i < $cantfilas;$i++){
+					$data['html'] = $filas;
+					$data['html'][0]['indicadores_id_indicador'] = array($data['html'][0]['indicadores_id_indicador']);
+					array_push($data['html'][0]['indicadores_id_indicador'], $filas[$i]['indicadores_id_indicador']);
+				}
+			}else{
+				print_r($con->errorInfo());
+				$data['mensaje'] = "No se realizo la consulta";
+				$data['error'] = 1;
+			}
+		}		
+	}
+	echo json_encode($data);
+}
+
 function actualizarPlaneacion($datos, $id_planeacion){
 	include("conexion.php");
 	$data = array('error'=>0, 'mensaje'=>'', 'html'=>'');
@@ -827,4 +867,130 @@ function actualizarPlaneacion($datos, $id_planeacion){
 
 }
 
-?>
+function actualizarGestionEducativa($id_planeacion,$idTema,$indicadores,$tactico){
+
+	include('conexion.php');
+	$data = array('error'=>0,'mensaje'=>'','html'=>'');
+	
+	if( $con )
+ 	{
+		//consultar subtemas por temas
+		$sql = "SELECT temas, id_subtema, subtemas
+		FROM temas as tem
+		LEFT JOIN subtemas as sub ON sub.id_temas = tem.id_temas
+		WHERE tem.id_temas = '".$idTema."'";
+
+			$array=array();
+			if ($rs = $con->query($sql)) {
+				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+					$cantfilas = count($filas);
+					if($filas[0]['id_subtema'] == null){
+						$sql = "INSERT INTO subtemas(id_subtema, subtemas, id_temas)
+							VALUES (nextval('sec_subtemas'), '".$filas[0]['temas']."', ".$idTema.");";
+						if($rs = $con->query($sql)){
+							$sql = "SELECT * FROM subtemas WHERE id_temas = '".$idTema."'";
+							if($rs = $con->query($sql)){
+								if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+								}
+							}						
+						}else{
+							$data['error'] = 1;
+							$data['mensaje'] = "No se pudo realizar el insert de subtemas";
+						}
+					}					
+						$sql = "SELECT *
+						FROM subtemas_por_planeacion
+						WHERE planeacion_id_planeacion = '".$id_planeacion."'";
+						if($rs = $con -> query($sql)){
+							$filassub = $rs->fetchAll(PDO::FETCH_ASSOC);
+							$cantrowsub = count($filassub);
+							if($cantrowsub >= 1){
+								for ($i=0;$i < $cantfilas;$i++){
+									$sql = "UPDATE subtemas_por_planeacion 
+									SET subtemas_id_subtema = '".$filas[$i]['id_subtema']."'
+									WHERE planeacion_id_planeacion = '".$id_planeacion."'";					
+									if ($rs = $con->query($sql)) {
+									
+									}else{
+										print_r($con->errorInfo());
+										$data['mensaje']="No se realizo el update subtemas_por_planeacion";
+										$data['error']=1;
+									}
+								}
+							}else{
+									$sql = "SELECT temas, id_subtema, subtemas
+									FROM temas as tem
+									LEFT JOIN subtemas as sub ON sub.id_temas = tem.id_temas
+									WHERE tem.id_temas = '".$idTema."'";
+									if($rs = $con->query($sql)){
+										$filas = $rs->fetchAll(PDO::FETCH_ASSOC);
+										if($filas){
+											$sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtema, planeacion_id_planeacion)
+											VALUES (nextval('sec_subtemas_por_planeacion'),'".$filas[0]['id_subtema']."', '".$id_planeacion."');";
+											if ($rs = $con->query($sql)) {
+
+											}else{
+												print_r($con->errorInfo());
+												$data['mensaje']="No se realizo el insert subtemas_por_planeacion";
+												$data['error']=1;
+											}
+										}
+									}
+							}
+						}							
+				}
+			}
+			else
+			{
+				print_r($conexion->errorInfo());
+				$data['mensaje']="No se realizo la consulta";
+				$data['error']=1;
+			}
+				//se recorren los indicadores
+				foreach($indicadores as $idIndicador)
+						{
+							//Insertar la indicadores_por_planeacion
+							$sql = "SELECT indicadores_id_indicador
+							FROM indicadores_por_planeacion
+							WHERE indicadores_id_indicador = '".$idIndicador."' 
+							AND planeacion_id_planeacion = '".$id_planeacion."'";						
+								if ($rs = $con->query($sql)) {
+									$filas = $rs->fetchAll(PDO::FETCH_ASSOC);
+									$cantfilas = count($filas);
+									if($cantfilas >= 1){
+									}else{
+										$sql = "INSERT INTO indicadores_por_planeacion (indicadores_id_indicador, planeacion_id_planeacion)
+										VALUES ('".$idIndicador."', '".$id_planeacion."');";
+										if($rs = $con->query($sql)){
+
+										}
+										else{
+											print_r($con->errorInfo());
+											$data['mensaje']="No se realizo el insert indicadores_por_planeacion";
+											$data['error']=1;
+										}
+									}
+								}
+								else
+								{
+									print_r($con->errorInfo());
+									$data['mensaje']="No se realizo el update indicadores_por_planeacion";
+									$data['error']=1;
+								}
+						}
+		//Insertar la tactico_por_planeacion
+    	$sql = "UPDATE public.tactico_por_planeacion
+			SET tactico_id_tactico='".$tactico."'
+			WHERE planeacion_id_planeacion = '".$id_planeacion."';";
+			if ($rs = $con->query($sql)) {
+					
+				}
+				else
+				{
+					print_r($con->errorInfo());
+					$data['mensaje']="No se realizo el update tactico_por_planeacion";
+					$data['error']=1;
+				}
+		echo json_encode($data);
+	}
+}
