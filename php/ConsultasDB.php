@@ -5,14 +5,13 @@ $TipoConsulta=$_GET["consulta"];
 switch ($TipoConsulta) {
 	case '1':
 		# code...
-			if( $con )
-		 	{
+			if( $con ){
 		    	$sql = "SELECT * FROM zonas";
 		  		$result = $con->query($sql);
 
 			  // Parse returned data, and displays them
 			  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-			       echo '<option value="'.$row['id_Zona'].'">'.$row['zonas'].'</option>';
+			    echo '<option value="'.$row['id_Zona'].'">'.$row['zonas'].'</option>';
 			  }
 
 			  $conn = null;        // Disconnect
@@ -29,7 +28,7 @@ switch ($TipoConsulta) {
 
 		  // Parse returned data, and displays them
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-		       echo '<option value="'.$row['Id_Municipio'].'">'.$row['Municipio'].'</option>';
+		  	echo '<option value="'.$row['Id_Municipio'].'">'.$row['Municipio'].'</option>';
 		  }		  
 		}
 		break;
@@ -43,7 +42,7 @@ switch ($TipoConsulta) {
 
 		  // Parse returned data, and displays them
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-		       echo '<option value="'.$row['Id_Comuna'].'">'.$row['Comuna'].'</option>';
+		    echo '<option value="'.$row['Id_Comuna'].'">'.$row['Comuna'].'</option>';
 		  }
 		  //consulta de las veredas segun el municipio
 		  $sql = "SELECT * FROM veredas where Id_Municipio = '".$id_municipio."'";
@@ -51,12 +50,12 @@ switch ($TipoConsulta) {
 
 		  // Parse returned data, and displays them
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-		       echo '<option value="'.$row['Id_Comuna'].'">'.$row['Comuna'].'</option>';
+		    echo '<option value="'.$row['Id_Comuna'].'">'.$row['Comuna'].'</option>';
 		  }		  
 		}
-	 	break;
-	 case '4':
-
+		break;
+		
+		case '4':
 		$id_municipio=$_GET["Id_Municipio"];
 		if( $con ) {
 	    	$sql = "SELECT * FROM veredas where Id_Municipio = '".$id_municipio."'";
@@ -64,12 +63,12 @@ switch ($TipoConsulta) {
 
 		  // Parse returned data, and displays them
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-		       echo '<option value="'.$row['Id_Veredas'].'">'.$row['Vereda'].'</option>';
+		  	echo '<option value="'.$row['Id_Veredas'].'">'.$row['Vereda'].'</option>';
 		  }		  
 		}
 		break;
-	case '5':
-
+		
+		case '5':
 		$id_comuna=$_GET["Id_Comuna"];
 		if( $con ) {
 	    	$sql = "SELECT * FROM barrios where Id_Comuna = '".$id_comuna."'";
@@ -77,12 +76,12 @@ switch ($TipoConsulta) {
 
 		  // Parse returned data, and displays them
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-		       echo '<option value="'.$row['Id_Barrio'].'">'.$row['Barrio'].'</option>';
+		    echo '<option value="'.$row['Id_Barrio'].'">'.$row['Barrio'].'</option>';
 		  }		  
 		}
 		break;
-	case '6':
 
+		case '6':
 		$id_barrio=$_GET["barrio"];
 		$id_vereda=$_GET["vereda"];		
 		//$nombrentidad=$_GET['keyword'];
@@ -287,7 +286,7 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 
 		  // Parse returned data, and displays them
 		  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-		       echo '<option value="'.$row['Id_Municipio'].'">'.$row['Municipio'].'</option>';
+				echo '<option value="'.$row['Id_Municipio'].'">'.$row['Municipio'].'</option>';
 		  }
 		  
 		}
@@ -310,7 +309,7 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 		  echo json_encode($arr);		  
 		}
 		break;
-	case '18':
+	/* case '18':
 		// if( $con ) {
 	    	// $sql = "SELECT NumeroIdentificacion, Nombres, Apellidos FROM personas where Id_Cargo= '2'";
 	  		// $result = $con->query($sql);
@@ -322,7 +321,8 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 		  // }
 		  //echo json_encode($arr);		  
 		}
-		break;
+		break; */
+
 	case '19':
 		if( $con ) {
 	    	$sql = "SELECT NumeroIdentificacion, Nombres, Apellidos FROM personas where Id_Cargo= '4'";
@@ -355,5 +355,4 @@ while ($str=$gsent->fetch(PDO::FETCH_ASSOC))
 		# code...
 		break;
 }
-
 ?>

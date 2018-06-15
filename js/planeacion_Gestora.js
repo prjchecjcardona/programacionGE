@@ -219,7 +219,7 @@ $("#selectbasicEstrategia,#selectbasicEstrategiare").change(function () {
 /*Consulta las tacticos
  * parametro: 
  */
-function cargarTacticos(idEstrategia, idSelEstrategia, callback) {
+function cargarTacticos(idEstrategia, idSelEstrategia) {
 
 	var tactico = "";
 	if (idSelEstrategia == "selectbasicEstrategia") {
@@ -240,7 +240,8 @@ function cargarTacticos(idEstrategia, idSelEstrategia, callback) {
 			}
 
 		}, "json");
-	callback(cargarIndicadoresTacticos(id_planeacion));
+
+		cargarIndicadoresTacticos()
 }
 
 /*Consulta las etapas
@@ -416,7 +417,9 @@ function seleccionarEtapa(idEtapadb) {
 
 	consultarTemas();
 	consultarIndicadoresGE();
-	cargarGestionEducativa();
+	if(id_planeacion != null){
+		cargarGestionEducativa();
+	}
 
 
 	if (idEtapa == 1) {
@@ -691,7 +694,6 @@ function cargarPlaneacionFormulario() {
 }
 
 function cargarGestionEducativa() {
-
 	var url = "php/planeacion_Coordinadora.php";
 	$.post(url, {
 			accion: 'cargarGestionEducativa',
@@ -744,7 +746,7 @@ function actualizarGestionEducativa() {
 		}, "json");
 }
 
-function cargarIndicadoresTacticos($id_planeacion) {
+function cargarIndicadoresTacticos() {
 
 	var url = "php/planeacion_Coordinadora.php";
 	$.post(url, {

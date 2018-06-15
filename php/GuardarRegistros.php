@@ -9,7 +9,7 @@ if (isset($_POST['accion']) and $_POST['accion'] == 'guardarIntervencion')
 
     header("Location: ../nueva_Intervencion_Coordinadora.html");
 
-	 "IntervencionCoordinadora":			
+	 "IntervencionCoordinadora" ;		
 			$Id_Zona = $_POST["selectbasicZona"];
 			$Id_Municipio = $_POST["selectbasicMunicipio"];
 			$Id_Territorio = $_POST["radiosMunicipio"];
@@ -26,14 +26,10 @@ if (isset($_POST['accion']) and $_POST['accion'] == 'guardarIntervencion')
 			$Id_TipoIntervencion = $_POST["selectbasicTipoInvervencion"];
 			$Cantidad_Indicador = $_POST["cant_indicador"];
 			$id_entidad = $_POST["id_Entidades"];
-			for($i=1;$i<=$Cantidad_Indicador;$i++)
-			{
-				if(isset($_POST["Indicador".$i]))
-				{
-				 	$id_indicador = $_POST["Indicador".$i];
-
-				}
-				
+			for($i=1;$i<=$Cantidad_Indicador;$i++){
+				if(isset($_POST["Indicador".$i])){
+					$id_indicador = $_POST["Indicador".$i];
+				}	
 			}
 			if($id_entidad==0)//no encontró una entidad en la base de datos, se recogen los datos de direccion y telefono
 			{

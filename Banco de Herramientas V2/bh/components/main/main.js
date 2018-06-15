@@ -68,9 +68,8 @@ function getHerramientas() {
           <select class="form-control" id="comp">
             <option value="1">Todos</option>
             <option value="2">Confianza - Uso de Canales vanguardistas</option>
-            <option value="3">Respeto - Cultura de pago</option>
-            <option value="4">Preservación - Uso responsable de energía</option>
-            <option value="5">Cuidado - Disfrute del servicio de energía como aporte a a la calidad de vida</option>
+            <option value="3">Responsabilidad - Cultura de pago</option>
+            <option value="4">Preservación - Uso responsable y Disfrute del servicio de energía</option>
           </select>
         </div>
         
@@ -89,7 +88,7 @@ function getHerramientas() {
           <label for="tema" class="ontrol-label">Tema</label>
           <select class="form-control" id="tema">
             <option value="1" data-tag="1">Todos</option>
-            <option value="2" data-tag="4">Ahorro de energía</option>
+            <option value="2" data-tag="4">Uso responsable de energía</option>
             <option value="3" data-tag="3">Alumbrado Público</option>
             <option value="4" data-tag="5">Calidad de vida a través del servicio de energía eléctrica</option>
             <option value="5" data-tag="5">Ciudadania</option>
@@ -103,7 +102,20 @@ function getHerramientas() {
             <option value="13" data-tag="3">Interpretación de la factura</option>
             <option value="14" data-tag="4">Prevencion de riesgo eléctrico</option>
             <option value="15" data-tag="2">Servicio en línea</option>
-            <option value="16" data-tag="5">Territorios sostenibles</option>
+            <option value="16" data-tag="5">Estrategias de uso responsable de energía</option>
+            <option value="17" data-tag="4">Uso responsable de energía - Cuidamundo</option>
+            <option value="18" data-tag="4">COD_FICH - Estrategias ecologicas</option>
+            <option value="19" data-tag="4">COD_FICH - Estrategias ecologicas_Propone</option>
+            <option value="20" data-tag="4">COD_FICH - Estrategias ecologicas_Cuidamundo</option>
+            <option value="21" data-tag="4">COD_FICH - Clasificación de residuos cuidamundos</option>
+            <option value="22" data-tag="4">COD_FICH - Prevención de riesgo eléctrico</option>
+            <option value="23" data-tag="4">COD_FICH - Estrategias ecológicas</option>
+            <option value="24" data-tag="4">COD_FICH - Estrategias de uso responsable_4_2018</option>
+            <option value="25" data-tag="4">COD_FICH - Estrategias de uso responsable de energía</option>
+            <option value="26" data-tag="4">COD_FICH - Estrategias de uso responsable de energía</option>
+            <option value="27" data-tag="4">COD_FICH - Calidad de vida a través del disfrute del servicio</option>
+            <option value="28" data-tag="4">COD_FICH - Estrategias ecológicas</option>
+            <option value="29" data-tag="4">COD_FICH - Calidad de vida a través del disfrute del servicio</option>
           </select>
         </div>
         <span><a href="javascript:void(0);" onClick="recargar();">Limpiar Filtro</a></span> 
@@ -166,7 +178,7 @@ function getHerramientas() {
         <div class="file-group" id="third">
           <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           <span class="file-text" id="8">
-            Ahorro de energía
+            Uso responsable de la energía
           </span>
         </div>    
 
@@ -191,31 +203,129 @@ function getHerramientas() {
           </span>
         </div>
 
-        <div class="file-group" id="fourth">
+        <div class="file-group" id="third">
           <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           <span class="file-text" id="12">
             Cuidado de lo público
           </span>
         </div>
 
-         <div class="file-group" id="fourth">
+         <div class="file-group" id="third">
           <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           <span class="file-text" id="13">
             Calidad de vida a través del servicio de energía eléctrica
           </span>
         </div>
 
-        <div class="file-group" id="fourth">
+        <div class="file-group" id="third">
           <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           <span class="file-text" id="14">
             Ciudadania
           </span>
         </div>
 
-         <div class="file-group" id="fourth">
+         <div class="file-group" id="third">
           <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           <span class="file-text" id="15">
             Territorios sostenibles
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="16">
+          COD_FICH - Estrategias de uso responsable de energía
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="17">
+          COD_FICH - Uso responsable de la energía - Cuidamundo
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="18">
+          COD_FICH - Estrategias ecologicas
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="19">
+          COD_FICH - Estrategias ecologicas_Propone
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="20">
+          COD_FICH - Estrategias ecologicas_Cuidamundo
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="21">
+          COD_FICH - Clasificación de residuos cuidamundos
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="22">
+          COD_FICH - Prevención de riesgo eléctrico
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="23">
+          COD_FICH - Estrategias ecológicas
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="24">
+          COD_FICH - Estrategias de uso responsable_4_2018
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="25">
+          COD_FICH - Estrategias de uso responsable de energía
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="26">
+          COD_FICH - Estrategias de uso responsable de energía
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="27">
+          COD_FICH - Calidad de vida a través del disfrute del servicio
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="28">
+          COD_FICH - Estrategias ecológicas
+          </span>
+        </div>
+
+        <div class="file-group" id="third">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          <span class="file-text" id="29">
+          COD_FICH - Calidad de vida a través del disfrute del servicio
           </span>
         </div>
       </div>
@@ -502,7 +612,14 @@ function getRecurso() {
     <h3>Presentaciones</h3>
     <hr>
     <div class="list-group">
-    <a class="list-group-item list-group-item-action">Aún no se cargan presentaciones en el módulo.<button type="button" class="btn btn-primary btn-sm disabled"> Descargar</button></a>
+    <a class="list-group-item list-group-item-action" href="bh/recursos/presentaciones/Prevención Riesgo Electrico.pdf" target="_blank">
+      <div class="file-group" id="first">
+        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+        <span class="file-text" >
+          Prevención Riesgo Electrico
+        </span>
+      </div>
+    <button id="19" type="button" class="btn btn-primary btn-sm">Descargar</button></a>
     </div>
   </div>
 </div>

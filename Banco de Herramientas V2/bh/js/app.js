@@ -320,7 +320,76 @@ $('span#15').on('click', function(){
               .empty()
               .html('<embed src="bh/ficheros/4-Cuidado-Territorios_sostenibles.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
 });
-        
+$('span#16').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado Fichero Estartegias uso responsable de energía.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#17').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_ Fichero ahorro de energia-cuidamundos.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#18').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_ Fichero Estrategias ecológicas huella de CO2.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#19').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_ Fichero estrategias ecologicas.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#20').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_ Fichero estrategias ecologicas-propone.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#21').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_Fichero Clasificación de residuos cuidamundos.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#22').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_FicheroPrevención de riesgo eléctrico.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#23').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_Fichero Estrategias ecológicas..pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#24').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_Fichero Estrategias de uso responsable_4_2018.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#25').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_Fichero Estrategias de uso responsable de energía...pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#26').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_Fichero Estrategias de uso responsable de energía..pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#27').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_Fichero Calidad de vida a través del disfrute del servicio..pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#28').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_Fichero Estrategias ecológicas.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
+$('span#29').on('click', function(){
+  $('.ficheros-area')
+           .empty()
+           .html('<embed src="bh/ficheros/nueva_cod/Codificado_Fichero Calidad de vida a través del disfrute del servicio.pdf" width="100%" height="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+});
 }
 
 function generalidadesSelected(selection, unSelected) {
@@ -375,7 +444,7 @@ function recursoSelected(selection, unSelected) {
   $('span#19').on('click', function(){
     $('.imagenes')
              .empty()
-             .html('<embed src="bh/ficheros/bh4.pdf" width="100%" height="1000px" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
+             .html('<embed src="bh/ficheros/bh4.pdf" target="_blank" width="100%" height="1000px" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">')
   });
   $('span#20').on('click', function(){
     $('.imagenes')
