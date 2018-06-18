@@ -143,8 +143,8 @@ function cargarTacticos()
     include "conexion.php";
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
     $sql = "SELECT id_tactico, nombretactico
-			FROM tactico
-			WHERE id_estrategia = " . $_POST["idEstrategia"] . "";
+            FROM tactico
+            WHERE id_estrategia = " . $_POST["idEstrategia"] . "";
 
     $array = array();
     if ($rs = $con->query($sql)) {
@@ -170,7 +170,7 @@ function cargarEtapas()
     include "conexion.php";
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
     $sql = "SELECT id_etapaproceso, etapaproceso
-			FROM etapaproceso";
+            FROM etapaproceso";
 
     $array = array();
     if ($rs = $con->query($sql)) {
@@ -226,10 +226,10 @@ function cargarEntidadPorVereda($idVereda)
     if ($con) {
         //Datos de la zona que se selecciono
         $sql = "SELECT e.id_entidad,e.nombreentidad,t.id_tipoentidad,t.tipoentidad
-				FROM entidades as e,tipoentidad as t
-					WHERE veredas_id_veredas= '" . $idVereda . "'
-				AND e.id_tipoentidad = t.id_tipoentidad
-			  ";
+                FROM entidades as e,tipoentidad as t
+                    WHERE veredas_id_veredas= '" . $idVereda . "'
+                AND e.id_tipoentidad = t.id_tipoentidad
+              ";
 
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
@@ -293,10 +293,10 @@ function cargarEntidadesPorBarrio($idBarrio)
     if ($con) {
         //Datos de la zona que se selecciono
         $sql = "SELECT e.id_entidad,e.nombreentidad,t.id_tipoentidad,t.tipoentidad
-				FROM entidades as e,tipoentidad as t
-				WHERE id_barrio= '" . $idBarrio . "'
-				AND e.id_tipoentidad = t.id_tipoentidad
-			  ";
+                FROM entidades as e,tipoentidad as t
+                WHERE id_barrio= '" . $idBarrio . "'
+                AND e.id_tipoentidad = t.id_tipoentidad
+              ";
 
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
@@ -325,7 +325,7 @@ function cargarEntidadesTotales()
 
     if ($con) {
         $sql = "SELECT id_entidad, nombreentidad
-		FROM entidades";
+        FROM entidades";
 
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
@@ -357,20 +357,20 @@ function guardarPlaneacion($nombreContacto, $cargoContacto, $telefonoContacto, $
             if ($idEntidad == '') {
                 //Cuando entidad es nulo, se añade el contacto a un registro general del municipio correspondiente.
                 $sql = "INSERT INTO contactos (id_contacto, nombrecontacto, cargo,telefono,correo,confirmado,entidades_id_entidad)
-				VALUES (nextval('sec_contactos'),'" . $nombreContacto . "', '" . $cargoContacto . "', '" . $telefonoContacto . "', '" . $correoContacto . "', '0',(
-					SELECT mun.id_municipio
-					FROM intervenciones inte
-					LEFT OUTER JOIN barrios bar ON bar.id_barrio = inte.id_barrio
-					LEFT OUTER JOIN veredas ver ON ver.id_veredas = inte.id_vereda
-					LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
-					JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
-					WHERE inte.id_intervenciones = $idIntervencion
-				));
-					";
+                VALUES (nextval('sec_contactos'),'" . $nombreContacto . "', '" . $cargoContacto . "', '" . $telefonoContacto . "', '" . $correoContacto . "', '0',(
+                    SELECT mun.id_municipio
+                    FROM intervenciones inte
+                    LEFT OUTER JOIN barrios bar ON bar.id_barrio = inte.id_barrio
+                    LEFT OUTER JOIN veredas ver ON ver.id_veredas = inte.id_vereda
+                    LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
+                    JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
+                    WHERE inte.id_intervenciones = $idIntervencion
+                ));
+                    ";
             } else {
                 $sql = "INSERT INTO contactos (id_contacto, nombrecontacto, cargo,telefono,correo,confirmado,entidades_id_entidad)
-				VALUES (nextval('sec_contactos'),'" . $nombreContacto . "', '" . $cargoContacto . "', '" . $telefonoContacto . "', '" . $correoContacto . "', '0','" . $idEntidad . "');
-					";
+                VALUES (nextval('sec_contactos'),'" . $nombreContacto . "', '" . $cargoContacto . "', '" . $telefonoContacto . "', '" . $correoContacto . "', '0','" . $idEntidad . "');
+                    ";
             }
 
             if ($rs = $con->query($sql)) {
@@ -384,12 +384,12 @@ function guardarPlaneacion($nombreContacto, $cargoContacto, $telefonoContacto, $
         if ($idEntidad == "") {
             //Insertar la planeacion
             $sql = "INSERT INTO planeacion (id_planeacion, etapaproceso_id_etapaproceso, fecha, lugarencuentro, id_jornada, comunidadespecial,id_tipopoblacion,observaciones)
-				VALUES (nextval('sec_planeacion'),'" . $idEtapa . "', '" . $fecha . "', '" . $lugar . "', '" . $jornada . "', '" . $comunidad . "', '" . $poblacion . "', '" . $observaciones . "');
-				  ";
+                VALUES (nextval('sec_planeacion'),'" . $idEtapa . "', '" . $fecha . "', '" . $lugar . "', '" . $jornada . "', '" . $comunidad . "', '" . $poblacion . "', '" . $observaciones . "');
+                  ";
         } else {
             $sql = "INSERT INTO planeacion (id_planeacion, etapaproceso_id_etapaproceso, fecha, lugarencuentro, id_jornada, comunidadespecial,id_tipopoblacion,observaciones, id_entidad)
-				VALUES (nextval('sec_planeacion'),'" . $idEtapa . "', '" . $fecha . "', '" . $lugar . "', '" . $jornada . "', '" . $comunidad . "', '" . $poblacion . "', '" . $observaciones . "', '" . $idEntidad . "');
-				  ";
+                VALUES (nextval('sec_planeacion'),'" . $idEtapa . "', '" . $fecha . "', '" . $lugar . "', '" . $jornada . "', '" . $comunidad . "', '" . $poblacion . "', '" . $observaciones . "', '" . $idEntidad . "');
+                  ";
 
         }
 
@@ -407,8 +407,8 @@ function guardarPlaneacion($nombreContacto, $cargoContacto, $telefonoContacto, $
                         // SE INSERTA EN planeaciones_por_intervencion
 
                         $sql = "INSERT INTO planeaciones_por_intervencion (id_planeaciones_por_intervencion, planeacion_id_planeacion,
-									intervenciones_id_intervenciones)
-									VALUES (nextval('sec_planeaciones_por_intervencion'),'" . $idPlaneacion . "', '" . $idIntervencion . "'); ";
+                                    intervenciones_id_intervenciones)
+                                    VALUES (nextval('sec_planeaciones_por_intervencion'),'" . $idPlaneacion . "', '" . $idIntervencion . "'); ";
 
                         if ($rs = $con->query($sql)) {
                             $data['mensaje'] = "Guardado Exitosamente";
@@ -453,8 +453,8 @@ function guardarGestionRedes($idPlaneacion, $indicadores)
         foreach ($indicadores as $idIndicador) {
             //Insertar la indicadores_por_planeacion
             $sql = "INSERT INTO indicadores_por_planeacion (indicadores_id_indicador, planeacion_id_planeacion)
-			VALUES ('" . $idIndicador . "', '" . $idPlaneacion . "');
-				";
+            VALUES ('" . $idIndicador . "', '" . $idPlaneacion . "');
+                ";
 
             if ($rs = $con->query($sql)) {
 
@@ -467,8 +467,8 @@ function guardarGestionRedes($idPlaneacion, $indicadores)
 
         //Insertar la tactico_por_planeacion
         $sql = "INSERT INTO tactico_por_planeacion (tactico_id_tactico, planeacion_id_planeacion)
-			VALUES (25, '" . $idPlaneacion . "');
-			  ";
+            VALUES (25, '" . $idPlaneacion . "');
+              ";
 
         if ($rs = $con->query($sql)) {
 
@@ -491,42 +491,42 @@ function guardarGestionEducativa($idPlaneacion, $idTema, $indicadores, $tactico)
     if ($con) {
         //consultar subtemas por temas
         $sql = "SELECT temas, id_subtema, subtemas
-				FROM temas as tem
-				LEFT JOIN subtemas as sub ON sub.id_temas = tem.id_temas
-				WHERE tem.id_temas = '" . $idTema . "'";
+                FROM temas as tem
+                LEFT JOIN subtemas as sub ON sub.id_temas = tem.id_temas
+                WHERE tem.id_temas = '" . $idTema . "'";
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-							//Verificar si existe un subtema relacionado con tema, sino insertar subtema con el nombre del tema
+                //Verificar si existe un subtema relacionado con tema, sino insertar subtema con el nombre del tema
                 if ($filas[0]['id_subtema'] == null) {
                     $sql = "INSERT INTO subtemas(id_subtema, subtemas, id_temas)
-										VALUES (nextval('sec_subtemas'), '" . $filas[0]['temas'] . "', " . $idTema . ");";
+                                        VALUES (nextval('sec_subtemas'), '" . $filas[0]['temas'] . "', " . $idTema . ");";
                     if ($rs = $con->query($sql)) {
-                        
+
                     } else {
                         print_r($con->errorInfo());
                         $data['error'] = 1;
                         $data['mensaje'] = "No se pudo realizar el insert de subtemas";
                     }
-								}
-								//Si existe subtema, Ya vot
-								$sql = "SELECT id_subtema FROM subtemas WHERE id_temas = ".$idTema."; ";
-								if ($rs = $con->query($sql)) {
-									if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-											for ($i = 0; $i < count($filas); $i++) {
-													//Insertar la subtemas_por_planeacion
-													$sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtema, planeacion_id_planeacion)
-													VALUES (nextval('sec_subtemas_por_planeacion'),'" . $filas[$i]['id_subtema'] . "', '" . $idPlaneacion . "');";
+                }
+                //Si existe subtema, lo inserta en subtemas
+                $sql = "SELECT id_subtema FROM subtemas WHERE id_temas = " . $idTema . "; ";
+                if ($rs = $con->query($sql)) {
+                    if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+                        for ($i = 0; $i < count($filas); $i++) {
+                            //Insertar la subtemas_por_planeacion
+                            $sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtema, planeacion_id_planeacion)
+                                                    VALUES (nextval('sec_subtemas_por_planeacion'),'" . $filas[$i]['id_subtema'] . "', '" . $idPlaneacion . "');";
 
-													if ($rs = $con->query($sql)) {
+                            if ($rs = $con->query($sql)) {
 
-													} else {
-															print_r($con->errorInfo());
-															$data['mensaje'] = "No se realizo el insert subtemas_por_planeacion";
-															$data['error'] = 1;
-													}
-											}
-									}
-							}
+                            } else {
+                                print_r($con->errorInfo());
+                                $data['mensaje'] = "No se realizo el insert subtemas_por_planeacion";
+                                $data['error'] = 1;
+                            }
+                        }
+                    }
+                }
             }
         } else {
             print_r($conexion->errorInfo());
@@ -538,7 +538,7 @@ function guardarGestionEducativa($idPlaneacion, $idTema, $indicadores, $tactico)
         foreach ($indicadores as $idIndicador) {
             //Insertar la indicadores_por_planeacion
             $sql = "INSERT INTO indicadores_por_planeacion (indicadores_id_indicador, planeacion_id_planeacion)
-							VALUES ('" . $idIndicador . "', '" . $idPlaneacion . "');";
+                            VALUES ('" . $idIndicador . "', '" . $idPlaneacion . "');";
 
             if ($rs = $con->query($sql)) {
 
@@ -552,7 +552,7 @@ function guardarGestionEducativa($idPlaneacion, $idTema, $indicadores, $tactico)
 
         //Insertar la tactico_por_planeacion
         $sql = "INSERT INTO tactico_por_planeacion (tactico_id_tactico, planeacion_id_planeacion)
-			VALUES ('" . $tactico . "', '" . $idPlaneacion . "');";
+            VALUES ('" . $tactico . "', '" . $idPlaneacion . "');";
 
         if ($rs = $con->query($sql)) {
 
@@ -574,10 +574,10 @@ function consultarTemas($idComportamientos, $idCompetencia)
     if ($con) {
         //Datos de la indicador
         $sql = "SELECT id_temas,temas
-				from temas
-				WHERE compe_por_compo_compe_id_compe = '" . $idCompetencia . "'
-				AND compe_por_compo_compo_id_compo = '" . $idComportamientos . "'
-			  ";
+                from temas
+                WHERE compe_por_compo_compe_id_compe = '" . $idCompetencia . "'
+                AND compe_por_compo_compo_id_compo = '" . $idComportamientos . "'
+              ";
 
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
@@ -609,8 +609,8 @@ function consultarIndicadoresGE()
     if ($con) {
         //Datos de la indicador
         $sql = "SELECT id_indicador,nombreindicador
-				from indicadores_ge WHERE tipo=1
-			  ";
+                from indicadores_ge WHERE tipo=1
+              ";
 
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
@@ -620,8 +620,8 @@ function consultarIndicadoresGE()
                 for ($i = 0; $i < count($filas); $i++) {
                     // $data['html'].= '<option value="'.$filas[$i]['id_temas'].'">'.$filas[$i]['temas'].'</option>';
                     $data['html'] .= '<div class="checkbox">
-					<label class="grisTexto"><input id="indicador' . $filas[$i]['id_indicador'] . '" type="checkbox" value="' . $filas[$i]['id_indicador'] . '"> ' . $filas[$i]['nombreindicador'] . '</label>
-				  </div>';
+                    <label class="grisTexto"><input id="indicador' . $filas[$i]['id_indicador'] . '" type="checkbox" value="' . $filas[$i]['id_indicador'] . '"> ' . $filas[$i]['nombreindicador'] . '</label>
+                  </div>';
                 }
 
             }
@@ -632,16 +632,16 @@ function consultarIndicadoresGE()
         }
 
         $sql = "SELECT id_indicador,nombreindicador
-				from indicadores_ge WHERE tipo=0
-			  ";
+                from indicadores_ge WHERE tipo=0
+              ";
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
 
                 $data['indGr'] = "";
                 for ($i = 0; $i < count($filas); $i++) {
                     $data['indGr'] .= '<div class="checkbox">
-					<label class="grisTexto"><input type="checkbox" value="' . $filas[$i]['id_indicador'] . '"> ' . $filas[$i]['nombreindicador'] . '</label>
-				  </div>';
+                    <label class="grisTexto"><input type="checkbox" value="' . $filas[$i]['id_indicador'] . '"> ' . $filas[$i]['nombreindicador'] . '</label>
+                  </div>';
                 }
 
             }
@@ -669,26 +669,26 @@ function guardarNuevaEntidad($idIntervencion, $nombreEntidad, $direccion, $telef
                 $vereda = $filas[0]['id_vereda'];
                 if (is_null($barrio)) {
                     $sql = "INSERT INTO public.entidades(
-						id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
-						VALUES (nextval('sec_entidades'),
-								'" . $nombreEntidad . "',
-								null,
-								" . $vereda . ",
-								'" . $direccion . "',
-								'" . $telefono . "',
-								" . $tipo_entidad . ",
-								'" . $nodo . "');";
+                        id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
+                        VALUES (nextval('sec_entidades'),
+                                '" . $nombreEntidad . "',
+                                null,
+                                " . $vereda . ",
+                                '" . $direccion . "',
+                                '" . $telefono . "',
+                                " . $tipo_entidad . ",
+                                '" . $nodo . "');";
                 } else {
                     $sql = "INSERT INTO public.entidades(
-						id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
-						VALUES (nextval('sec_entidades'),
-								'" . $nombreEntidad . "',
-								" . $barrio . ",
-								null,
-								'" . $direccion . "',
-								'" . $telefono . "',
-								" . $tipo_entidad . ",
-								'" . $nodo . "');";
+                        id_entidad, nombreentidad, id_barrio, veredas_id_veredas, direccion, telefono, id_tipoentidad, nodo)
+                        VALUES (nextval('sec_entidades'),
+                                '" . $nombreEntidad . "',
+                                " . $barrio . ",
+                                null,
+                                '" . $direccion . "',
+                                '" . $telefono . "',
+                                " . $tipo_entidad . ",
+                                '" . $nodo . "');";
                 }
             }
         } else {
@@ -733,15 +733,15 @@ function cargarGestionEducativa($id_planeacion)
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
     if ($con) {
         $sql = "SELECT DISTINCT id_entidad, tact.id_tactico, estr.id_estrategia, tem.id_temas, ipp.indicadores_id_indicador
-		FROM planeacion as pl
-		JOIN tactico_por_planeacion as tpp ON pl.id_planeacion = tpp.planeacion_id_planeacion
-		JOIN tactico as tact ON tpp.tactico_id_tactico = tact.id_tactico
-		JOIN estrategias estr ON tact.id_estrategia = estr.id_estrategia
-		LEFT JOIN subtemas_por_planeacion as spp ON spp.planeacion_id_planeacion = pl.id_planeacion
-		LEFT JOIN subtemas as sub ON sub.id_subtema = spp.subtemas_id_subtema
-		LEFT JOIN temas as tem ON tem.id_temas = sub.id_temas
-		JOIN indicadores_por_planeacion as ipp ON ipp.planeacion_id_planeacion = pl.id_planeacion
-		WHERE pl.id_planeacion = $id_planeacion;";
+        FROM planeacion as pl
+        JOIN tactico_por_planeacion as tpp ON pl.id_planeacion = tpp.planeacion_id_planeacion
+        JOIN tactico as tact ON tpp.tactico_id_tactico = tact.id_tactico
+        JOIN estrategias estr ON tact.id_estrategia = estr.id_estrategia
+        LEFT JOIN subtemas_por_planeacion as spp ON spp.planeacion_id_planeacion = pl.id_planeacion
+        LEFT JOIN subtemas as sub ON sub.id_subtema = spp.subtemas_id_subtema
+        LEFT JOIN temas as tem ON tem.id_temas = sub.id_temas
+        JOIN indicadores_por_planeacion as ipp ON ipp.planeacion_id_planeacion = pl.id_planeacion
+        WHERE pl.id_planeacion = $id_planeacion;";
 
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
@@ -767,10 +767,10 @@ function actualizarPlaneacion($datos, $id_planeacion)
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
 
     $sql = "UPDATE planeacion
-		SET fecha='" . $datos['fecha'] . "', lugarencuentro='" . $datos['lugar_encuentro'] . "', id_jornada=" . $datos['jornada'] . ",
-		comunidadespecial=" . $datos['comunidad'] . ", id_tipopoblacion=" . $datos['poblacion'] . ",
-		observaciones='" . $datos['observaciones'] . "'
-		WHERE id_planeacion = $id_planeacion; ";
+        SET fecha='" . $datos['fecha'] . "', lugarencuentro='" . $datos['lugar_encuentro'] . "', id_jornada=" . $datos['jornada'] . ",
+        comunidadespecial=" . $datos['comunidad'] . ", id_tipopoblacion=" . $datos['poblacion'] . ",
+        observaciones='" . $datos['observaciones'] . "'
+        WHERE id_planeacion = $id_planeacion; ";
 
     if ($rs = $con->query($sql)) {
         $data['mensaje'] = "Actualizado exitosamente";
@@ -793,9 +793,9 @@ function actualizarGestionEducativa($id_planeacion, $idTema, $indicadores, $tact
     if ($con) {
         //consultar subtemas por temas
         $sql = "SELECT temas, id_subtema, subtemas
-		FROM temas as tem
-		LEFT JOIN subtemas as sub ON sub.id_temas = tem.id_temas
-		WHERE tem.id_temas = '" . $idTema . "'";
+        FROM temas as tem
+        LEFT JOIN subtemas as sub ON sub.id_temas = tem.id_temas
+        WHERE tem.id_temas = '" . $idTema . "'";
 
         $array = array();
         if ($rs = $con->query($sql)) {
@@ -803,7 +803,7 @@ function actualizarGestionEducativa($id_planeacion, $idTema, $indicadores, $tact
                 $cantfilas = count($filas);
                 if ($filas[0]['id_subtema'] == null) {
                     $sql = "INSERT INTO subtemas(id_subtema, subtemas, id_temas)
-							VALUES (nextval('sec_subtemas'), '" . $filas[0]['temas'] . "', " . $idTema . ");";
+                            VALUES (nextval('sec_subtemas'), '" . $filas[0]['temas'] . "', " . $idTema . ");";
                     if ($rs = $con->query($sql)) {
                         $sql = "SELECT * FROM subtemas WHERE id_temas = '" . $idTema . "'";
                         if ($rs = $con->query($sql)) {
@@ -816,16 +816,16 @@ function actualizarGestionEducativa($id_planeacion, $idTema, $indicadores, $tact
                     }
                 }
                 $sql = "SELECT *
-						FROM subtemas_por_planeacion
-						WHERE planeacion_id_planeacion = '" . $id_planeacion . "'";
+                        FROM subtemas_por_planeacion
+                        WHERE planeacion_id_planeacion = '" . $id_planeacion . "'";
                 if ($rs = $con->query($sql)) {
                     $filassub = $rs->fetchAll(PDO::FETCH_ASSOC);
                     $cantrowsub = count($filassub);
                     if ($cantrowsub >= 1) {
                         for ($i = 0; $i < $cantfilas; $i++) {
                             $sql = "UPDATE subtemas_por_planeacion
-									SET subtemas_id_subtema = '" . $filas[$i]['id_subtema'] . "'
-									WHERE planeacion_id_planeacion = '" . $id_planeacion . "'";
+                                    SET subtemas_id_subtema = '" . $filas[$i]['id_subtema'] . "'
+                                    WHERE planeacion_id_planeacion = '" . $id_planeacion . "'";
                             if ($rs = $con->query($sql)) {
 
                             } else {
@@ -836,14 +836,14 @@ function actualizarGestionEducativa($id_planeacion, $idTema, $indicadores, $tact
                         }
                     } else {
                         $sql = "SELECT temas, id_subtema, subtemas
-									FROM temas as tem
-									LEFT JOIN subtemas as sub ON sub.id_temas = tem.id_temas
-									WHERE tem.id_temas = '" . $idTema . "'";
+                                    FROM temas as tem
+                                    LEFT JOIN subtemas as sub ON sub.id_temas = tem.id_temas
+                                    WHERE tem.id_temas = '" . $idTema . "'";
                         if ($rs = $con->query($sql)) {
                             $filas = $rs->fetchAll(PDO::FETCH_ASSOC);
                             if ($filas) {
                                 $sql = "INSERT INTO subtemas_por_planeacion (id_subtemas_por_planeacion, subtemas_id_subtema, planeacion_id_planeacion)
-											VALUES (nextval('sec_subtemas_por_planeacion'),'" . $filas[0]['id_subtema'] . "', '" . $id_planeacion . "');";
+                                            VALUES (nextval('sec_subtemas_por_planeacion'),'" . $filas[0]['id_subtema'] . "', '" . $id_planeacion . "');";
                                 if ($rs = $con->query($sql)) {
 
                                 } else {
@@ -865,16 +865,16 @@ function actualizarGestionEducativa($id_planeacion, $idTema, $indicadores, $tact
         foreach ($indicadores as $idIndicador) {
             //Insertar la indicadores_por_planeacion
             $sql = "SELECT indicadores_id_indicador
-							FROM indicadores_por_planeacion
-							WHERE indicadores_id_indicador = '" . $idIndicador . "'
-							AND planeacion_id_planeacion = '" . $id_planeacion . "'";
+                            FROM indicadores_por_planeacion
+                            WHERE indicadores_id_indicador = '" . $idIndicador . "'
+                            AND planeacion_id_planeacion = '" . $id_planeacion . "'";
             if ($rs = $con->query($sql)) {
                 $filas = $rs->fetchAll(PDO::FETCH_ASSOC);
                 $cantfilas = count($filas);
                 if ($cantfilas >= 1) {
                 } else {
                     $sql = "INSERT INTO indicadores_por_planeacion (indicadores_id_indicador, planeacion_id_planeacion)
-										VALUES ('" . $idIndicador . "', '" . $id_planeacion . "');";
+                                        VALUES ('" . $idIndicador . "', '" . $id_planeacion . "');";
                     if ($rs = $con->query($sql)) {
 
                     } else {
@@ -891,8 +891,8 @@ function actualizarGestionEducativa($id_planeacion, $idTema, $indicadores, $tact
         }
         //Insertar la tactico_por_planeacion
         $sql = "UPDATE public.tactico_por_planeacion
-			SET tactico_id_tactico='" . $tactico . "'
-			WHERE planeacion_id_planeacion = '" . $id_planeacion . "';";
+            SET tactico_id_tactico='" . $tactico . "'
+            WHERE planeacion_id_planeacion = '" . $id_planeacion . "';";
         if ($rs = $con->query($sql)) {
 
         } else {

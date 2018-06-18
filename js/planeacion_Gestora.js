@@ -241,7 +241,7 @@ function cargarTacticos(idEstrategia, idSelEstrategia) {
 
 		}, "json");
 
-		cargarIndicadoresTacticos()
+		cargarIndicadoresTacticos();
 }
 
 /*Consulta las etapas

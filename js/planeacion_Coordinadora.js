@@ -26,9 +26,7 @@ $(document).ready(function () {
 	cargarEstrategias();
 	cargarTipoEntidad();
 	cargarEntidadesTotales();
-	if(id_planeacion == null){
-		cargarEtapas();
-	}
+	cargarEtapas();
 
 	$("#planeacion2").hide();
 	$("#planeacion3").hide();
@@ -280,6 +278,8 @@ function cargarTacticos(idEstrategia, idSelEstrategia) {
 			}
 
 		}, "json");
+
+		cargarIndicadoresTacticos();	
 }
 
 /*Consulta las etapas
@@ -448,10 +448,12 @@ function validarInformacion() {
 function seleccionarEtapa(idEtapadb) {
 
 	idEtapa = idEtapadb;
-	console.log(idEtapa);
 
 	consultarTemas();
 	consultarIndicadoresGE();
+	if(id_planeacion != null){
+		cargarGestionEducativa();
+	}
 
 	if (idEtapa == 1) {
 
@@ -655,50 +657,143 @@ function guardarNuevaEntidad() {
 	}
 }
 
-function actualizarPlaneacion(){
+function actualizarPlaneacion() {
 	$('.loader').show();
-	var datos = {
-			fecha : $("#fecha_planeacion").val(),
-			lugar_encuentro : $("#textinputLugarEncuentro").val(),
-			jornada : $("#selectbasicJornada").val(),
-			comunidad : $('#comunidad input:radio[name=radiosComunidadEspecial]:checked').val(),
-			poblacion : $("#selectbasicPoblacion").val(),
-			observaciones : $("#textareaObservaciones").val()
-	};
 
-	var url = "php/planeacion_Coordinadora.php";
-	$.post(url, {accion: "actualizarPlaneacion", datos : datos, id_planeacion : id_planeacion},
-	function(data){
-		if(data.error != 1){
-			$('.loader').hide();
-			swal('Exito!', data.mensaje, 'success').then(function(){
-				window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion
-			});
-		}else{
-			$('.loader').hide();
-			swal('Error', 'Hubo un error al actualizar', 'error');
-		}
-	}, 'json');
+	if (!validarInformacion()) {
+		$('.loader').hide();
+		swal(
+			'', //titulo
+			'Debes ingresar todos los datos!',
+			'error'
+		);
+	} else {
+		var datos = {
+			fecha: $("#fecha_planeacion").val(),
+			lugar_encuentro: $("#textinputLugarEncuentro").val(),
+			jornada: $("#selectbasicJornada").val(),
+			comunidad: $('#comunidad input:radio[name=radiosComunidadEspecial]:checked').val(),
+			poblacion: $("#selectbasicPoblacion").val(),
+			observaciones: $("#textareaObservaciones").val()
+		};
+
+		var url = "php/planeacion_Coordinadora.php";
+		$.post(url, {
+				accion: "actualizarPlaneacion",
+				datos: datos,
+				id_planeacion: id_planeacion
+			},
+			function (data) {
+				if (data.error != 1) {
+					//gestion de redes
+					if (idEtapa == 2) {
+						actualizarGestionRedes();
+					} //gestion educativa
+					else if (idEtapa == 3) {
+						actualizarGestionEducativa();
+					}
+				} else {
+					/* $('.loader').hide(); */
+					swal('Error', 'Hubo un error al actualizar', 'error');
+				}
+			}, 'json');
+	}
 }
 
-function cargarPlaneacionFormulario(id_planeacion){
-	$(".loader").show();
+function cargarPlaneacionFormulario() {
 	var url = "php/planeacion_Coordinadora.php";
-	$.post(url, {accion: 'cargarPlaneacionFormulario', id_planeacion : id_planeacion},
-	function(data){
-		if(data.error != 1){
-			$("#fecha_planeacion").val(data.html[0]['fecha']);
-			$("#textinputLugarEncuentro").val(data.html[0]['lugarencuentro']);
-			$("#selectbasicJornada").val(data.html[0]['id_jornada']);
-			if(data.html[0]['comunidadespecial'] == 1){
-			}else{
-				$("#radiosComunidadEspecial-1").prop("checked", true);
-			}
-			$("#selectbasicPoblacion").val(data.html[0]['id_tipopoblacion']);
-			$("#textareaObservaciones").val(data.html[0]['observaciones']);
-		}
-		else{
+	$.post(url, {
+			accion: 'cargarPlaneacionFormulario',
+			id_planeacion: id_planeacion
+		},
+		function (data) {
+			if (data.error != 1) {
+				$("#fecha_planeacion").val(data.html[0]['fecha']);
+				$("#textinputLugarEncuentro").val(data.html[0]['lugarencuentro']);
+				$("#selectbasicJornada").val(data.html[0]['id_jornada']);
+				if (data.html[0]['comunidadespecial'] == 1) {} else {
+					$("#radiosComunidadEspecial-1").prop("checked", true);
+				}
+				$("#selectbasicPoblacion").val(data.html[0]['id_tipopoblacion']);
+				$("#textareaObservaciones").val(data.html[0]['observaciones']);
+			} else {
 
-		}
-	}, 'json');
+			}
+		}, 'json');
+}
+
+function cargarGestionEducativa() {
+	var url = "php/planeacion_Coordinadora.php";
+	$.post(url, {
+			accion: 'cargarGestionEducativa',
+			id_planeacion: id_planeacion
+		},
+		function (data) {
+			if (data.error != 1) {
+				$("#selectbasicEntidad").val(data.html[0]['id_entidad']);
+				$("#selectbasicEstrategia").val(data.html[0]['id_estrategia']);
+				var idEstrategia = $('#selectbasicEstrategia').val();
+				if (idEstrategia != 0) {
+					cargarTacticos(idEstrategia, "selectbasicEstrategia");
+				}
+			} else {
+				swal("Error", "Error cargando datos", "error");
+			}
+		}, 'json')
+}
+
+function actualizarGestionEducativa() {
+	//capturar indicadores
+	var list = new Array();
+	$("#indicadoresge input:checkbox:checked").each(function () {
+		/* alert("El checkbox con valor " + $(this).val() + " está seleccionado"); */
+		list.push($(this).val());
+	});
+
+	$.post("php/planeacion_Coordinadora.php", {
+			accion: 'actualizarGestionEducativa',
+			id_planeacion: id_planeacion,
+			idTema: $("#selectbasicTema").val(),
+			indicadores: list,
+			tactico: $("#selectbasicTactico").val()
+
+		},
+		function (data) {
+			if (data.error != 1) {
+				$('.loader').hide();
+				swal('Exito!', "Planeación actualizada", 'success').then(function () {
+					window.location.href = "detalle_Intervencion_Coordinadora.html?idIntervencion=" + idIntervencion;
+				});
+
+			} else {
+				swal(
+					'', //titulo
+					'No se actualizó la planeación, intentelo nuevamente',
+					'error'
+				);
+			}
+		}, "json");
+}
+
+function cargarIndicadoresTacticos() {
+
+	var url = "php/planeacion_Coordinadora.php";
+	$.post(url, {
+			accion: 'cargarGestionEducativa',
+			id_planeacion: id_planeacion
+		},
+		function (data) {
+			if (data.error != 1) {
+				$("#selectbasicTactico").val(data.html[0]['id_tactico']);
+				$("#selectbasicTema").val(data.html[0]['id_temas']);
+				var indicador_length = data.html[0]['indicadores_id_indicador'].length;
+				for (var i = 0; i < indicador_length; i++) {
+					if (data.html[0]['indicadores_id_indicador'][i] == document.getElementById("indicador" + (i + 1)).value) {
+						document.getElementById("indicador" + (i + 1)).checked = true;
+					}
+				}
+			} else {
+				swal("Error", "Error cargando datos", "error");
+			}
+		}, 'json')
 }
