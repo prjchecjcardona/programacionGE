@@ -1,20 +1,65 @@
+html {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+#opaco{
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 500px;
+  
+  position: relative;
+  z-index: 2;
+}
+
 body{
+  background-color: #92c849;
+  z-index: -10;
+  position: relative;
+}
+
+#content {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
   align-items: center;
+  height: 50em;
+  width: 100%;
+  z-index: 10;
 }
 
-#welcome{
-  margin-top: 1%;
+#welcome {
+  margin-top: 3em;
   display: flex;
-  background-color: grey;
-  width: 20%;
+  width: 40%;
   flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  -webkit-box-shadow: 0px 0px 7px -1px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: 0px 0px 7px -1px rgba(0, 0, 0, 0.45);
+  box-shadow: 0px 0px 7px -1px rgba(0, 0, 0, 0.45);
+  border-radius: 5px;
+  height: auto;
+  min-height: 300px;
+  background-color: white;
 }
 
-#welcome_text{
-  
+a.welcome{
+  width: 50%;
+  margin-bottom: 1%;
+  align-self: center;
+  background-color: white;
+  color: green;
+  font-weight: 700;
+  border-width: 2px;
+}
+
+h3 {
+  font-family: 'Cabin', sans-serif;
+  color: rgb(139, 141, 142);
+  font-size: xx-large;
+  text-transform: capitalize;
+  align-self: center;
+  margin-bottom: 2em;
 }
