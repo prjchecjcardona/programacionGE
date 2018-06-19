@@ -4,6 +4,7 @@ $(document).ready(function(){
 })
 
 function getwelcome(){
+    document.getElementById('welcome').setAttribute('style', 'display:flex');
     $('#welcome').addClass('animated bounceInLeft');
 }
 
