@@ -1,0 +1,20 @@
+body{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#welcome{
+  margin-top: 1%;
+  display: flex;
+  background-color: grey;
+  width: 20%;
+  flex-direction: column;
+}
+
+#welcome_text{
+  
+}
