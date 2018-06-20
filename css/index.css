@@ -29,8 +29,8 @@ body{
 }
 
 #welcome {
-  margin-top: 3em;
   display: flex;
+  margin-top: 3em;
   min-width: 30%;
   flex-direction: column;
   justify-content: center;
@@ -58,7 +58,6 @@ h3 {
   font-family: 'Cabin', sans-serif;
   color: rgb(139, 141, 142);
   font-size: xx-large;
-  text-transform: capitalize;
   align-self: center;
   margin-bottom: 2em;
 }
