@@ -39,7 +39,7 @@ $(function () {
             $('#eventLugar').html(calEvent.lugar);
             $('#eventDescripcion').html(calEvent.descripcion);
             $('#eventHora').html(calEvent.hora);
-            $('#eventModal').modal()
+            $('#eventModal').modal();
         }
     })
 })
@@ -80,7 +80,7 @@ function intervencionesPorZona(id_zona) {
                     'Error',
                     'No se cargaron los datos intentalo de nuevo',
                     'error'
-                )
+                );
             }
 
             $('.loader').hide();
@@ -88,16 +88,16 @@ function intervencionesPorZona(id_zona) {
 }
 
 function mostrarDetalleIntervencion(idIntervencion) {
-    idZona = $.get("id_zona")
+    idZona = $.get("id_zona");
     window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
 }
 
 function agregarIntervencion() {
-    idZona = $.get("id_zona")
+    idZona = $.get("id_zona");
     window.location.href = "nueva_Intervencion_Gestora.html?id_zona=" + idZona;
 }
 
 function navegar_home() {
-    idZona = $.get("id_zona")
+    idZona = $.get("id_zona");
     window.location.href = "home_Gestora.html?id_zona=" + idZona;
 }

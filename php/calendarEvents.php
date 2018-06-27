@@ -5,35 +5,33 @@ $data = array();
 if(isset($_POST['id_zona'])){
     $idZona = $_POST['id_zona'];
 
-    $sql = "SELECT pl.fecha, jor.jornada, mun.municipio, reg.id_registro, reg.tipo_registro, reg.hora::time, 
-    ent.nombreentidad, est.nombreestrategia, tac.nombretactico, compor.comportamientos, compe.competencia, tem.temas, 
-    ppz.id_personas_por_zonacol, per.nombres, per.apellidos
-    FROM planeacion pl
-    JOIN jornada jor ON jor.id_jornada = pl.id_jornada
+    $sql = "SELECT pl.lugarencuentro, mun.municipio, ent.nombreentidad,ru.id_registro, ru.latitud, ru.longitud, ru.fecha, ru.hora::time(0), ru.tipo_registro, jor.jornada,pl.id_planeacion, tct.nombretactico, etg.nombreestrategia, COUNT(spp.subtemas_id_subtema), temas, compo.comportamientos, compe.competencia, zna.id_zona, zna.zonas, (psna.nombres || ' ' || psna.apellidos) as nombre
+    FROM planeacion pl 
+    LEFT JOIN registro_ubicacion ru ON ru.id_planeacion = pl.id_planeacion
+    LEFT JOIN jornada jor ON jor.id_jornada = pl.id_jornada
+    LEFT JOIN entidades ent ON ent.id_entidad = pl.id_entidad
+    LEFT JOIN tactico_por_planeacion tpp ON tpp.planeacion_id_planeacion = pl.id_planeacion
+    LEFT JOIN tactico tct ON tct.id_tactico = tpp.tactico_id_tactico
+    LEFT JOIN estrategias etg ON etg.id_estrategia = tct.id_estrategia
+    LEfT JOIN subtemas_por_planeacion spp ON spp.planeacion_id_planeacion = pl.id_planeacion
+    LEFT JOIN subtemas sbt ON sbt.id_subtema = spp.subtemas_id_subtema
+    LEFT JOIN temas tm ON tm.id_temas = sbt.id_temas
+    LEFT JOIN competencias_por_comportamiento AS cpc ON cpc.competencias_id_competencia = tm.compe_por_compo_compe_id_compe
+    AND cpc.comportamientos_id_comportamientos = tm.compe_por_compo_compo_id_compo
+    LEFT JOIN comportamientos compo ON compo.id_comportamientos = cpc.comportamientos_id_comportamientos
+    LEFT JOIN competencias compe ON compe.id_competencia = cpc.competencias_id_competencia
     JOIN planeaciones_por_intervencion ppi ON ppi.planeacion_id_planeacion = pl.id_planeacion
-    JOIN intervenciones inte ON inte.id_intervenciones = ppi.intervenciones_id_intervenciones
-    JOIN personas_por_zona ppz ON inte.personas_por_zona_id_personas_por_zonacol = ppz.id_personas_por_zonacol
-    JOIN personas per ON ppz.personas_numeroidentificacion = per.numeroidentificacion
-    LEFT OUTER JOIN barrios bar ON bar.id_barrio = inte.id_barrio
-    LEFT OUTER JOIN veredas ver ON ver.id_veredas = inte.id_vereda
+    JOIN intervenciones itv ON itv.id_intervenciones = ppi.intervenciones_id_intervenciones
+    JOIN personas_por_zona ppz ON ppz.id_personas_por_zonacol = itv.personas_por_zona_id_personas_por_zonacol
+    JOIN zonas zna ON zna.id_zona = ppz.zonas_id_zona
+    JOIN personas psna ON psna.numeroidentificacion = ppz.personas_numeroidentificacion
+    LEFT OUTER JOIN barrios bar ON bar.id_barrio = itv.id_barrio
+    LEFT OUTER JOIN veredas ver ON ver.id_veredas = itv.id_vereda
     LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
-    JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
-    JOIN zonas zon ON zon.id_zona = mun.id_zona
-    LEFT OUTER JOIN registro_ubicacion reg ON reg.id_planeacion = pl.id_planeacion
-    LEFT OUTER JOIN tactico_por_planeacion tpp ON tpp.planeacion_id_planeacion = pl.id_planeacion
-    LEFT OUTER JOIN tactico tac ON tac.id_tactico = tpp.tactico_id_tactico
-    LEFT OUTER JOIN estrategias est ON est.id_estrategia = tac.id_estrategia
-    LEFT OUTER JOIN subtemas_por_planeacion spp ON spp.planeacion_id_planeacion = pl.id_planeacion
-    LEFT OUTER JOIN subtemas sub ON sub.id_subtema = spp.subtemas_id_subtema
-    LEFT OUTER JOIN temas tem ON tem.id_temas = sub.id_temas
-    LEFT OUTER JOIN competencias_por_comportamiento cpc ON cpc.competencias_id_competencia = tem.compe_por_compo_compe_id_compe 
-    AND cpc.comportamientos_id_comportamientos = tem.compe_por_compo_compo_id_compo
-    LEFT OUTER JOIN comportamientos compor ON compor.id_comportamientos = cpc.comportamientos_id_comportamientos
-    LEFT OUTER JOIN competencias compe ON compe.id_competencia = cpc.competencias_id_competencia
-    LEFT OUTER JOIN entidades ent ON ent.id_entidad = pl.id_entidad
-    WHERE zon.id_zona = $idZona
-    GROUP BY pl.fecha, nombres, apellidos, jornada, municipio, id_registro, tipo_registro, hora, nombreentidad, nombreestrategia, nombretactico, comportamientos, competencia, temas, id_personas_por_zonacol
-    ORDER BY pl.fecha DESC";
+    LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
+    WHERE zna.id_zona = $idZona
+    GROUP BY pl.id_planeacion,ru.id_registro, ru.latitud, ru.longitud, ru.fecha, ru.hora, ru.tipo_registro, jor.jornada,pl.id_planeacion, tct.nombretactico, etg.nombreestrategia, tm.temas, compo.comportamientos, compe.competencia, zna.zonas, zna.id_zona, nombre, pl.lugarencuentro, mun.municipio, ent.nombreentidad
+    ORDER BY pl.id_planeacion";
 
     if ($rs = $con->query($sql)) {
         if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {

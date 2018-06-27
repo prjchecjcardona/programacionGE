@@ -5,7 +5,8 @@ $(document).ready(function() {
   // CALENDAR
 
   $("#calendar").fullCalendar({
-    events: {
+    defaultView: 'listWeek',
+      events: {
       url: "php/calendarEventsCoordinadora.php",
       type: "POST", // Send post data,
       error: function(err) {
