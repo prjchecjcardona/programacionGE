@@ -137,8 +137,8 @@ function guardarUbicacion($latitud, $longitud, $idPlaneacion, $tipo){
         nextval('sec_registro_ubicacion'),
         $latitud,
         $longitud,
-        CURRENT_DATE AT TIME ZONE 'CDT',
-        CURRENT_TIME AT TIME ZONE 'CDT',
+        CURRENT_DATE AT TIME ZONE 'GMT-5',
+        CURRENT_TIME AT TIME ZONE 'GMT-5',
         '$tipo',
         $idPlaneacion);";
     if($rs = $con->query($sql)){

@@ -35,13 +35,15 @@ function intervencionesPorZona()
                     $array[] = $fila;
                 }
                 $data['html'] = "";
+                $i=0;
                 foreach ($array as $datos) {
+                    $i++;
                     $data['html'] .= '<div class="card">';
                     $data['html'] .= '<div class="card-body">';
-                    $data['html'] .= '<h4 class="card-title">' . $datos['zonas'] . '</h4>';
-                    $data['html'] .= '<h6 class="card-subtitle mb-2 text-muted">' . $datos['nombres'] . '</h6>';
+                    $data['html'] .= '<h4 class="card-title">' . $datos['zonas'] . ' // Zona '.$datos['id_zona'].'</h4>';
+                    $data['html'] .= '<h6 class="card-subtitle mb-2 text-muted">' . $datos['nombres'] . '</h6> <span id="gestor'.$i.'" class="dot"></span>';
                     $data['html'] .= '<div class="list-group">';
-
+                    
                     // traerIntervencionGestora();
                     $llamarIntervecion = traerIntervencionGestora($datos['id_zona'], $datos['id_personas_por_zonacol']);
                     if (count($llamarIntervecion) > 0) {
@@ -64,7 +66,7 @@ function intervencionesPorZona()
 
             }
         } else {
-            print_r($conexion->getPDO()->errorInfo());
+            print_r($conexion->getPDO()-a>errorInfo());
             $data['mensaje'] = "No se realizo la consulta gestoras por zona";
             $data['error'] = 1;
         }
@@ -113,28 +115,71 @@ function getUbicaciones()
 
     include 'conexion.php';
     $data = array('error' => 0, 'mensaje' => '', 'html' => array());
-    $sql = "SELECT DISTINCT ON (per.nombres) reg.latitud, reg.longitud, per.nombres, per.apellidos, zon.zonas, reg.fecha, reg.hora, reg.tipo_registro
-	FROM registro_ubicacion reg
-	JOIN planeacion pl ON reg.id_planeacion = pl.id_planeacion
-	JOIN planeaciones_por_intervencion ppi ON ppi.planeacion_id_planeacion = pl.id_planeacion
-	JOIN intervenciones inter ON inter.id_intervenciones = ppi.intervenciones_id_intervenciones
-	JOIN personas_por_zona ppz ON ppz.id_personas_por_zonacol = inter.personas_por_zona_id_personas_por_zonacol
-	JOIN personas per ON per.numeroidentificacion = ppz.personas_numeroidentificacion
-	JOIN zonas zon ON zon.id_zona = ppz.zonas_id_zona
-	ORDER BY per.nombres, reg.fecha DESC, reg.hora DESC";
+    $sql = "SELECT DISTINCT ON (psna.nombres) pl.lugarencuentro, mun.municipio, ent.nombreentidad,ru.latitud, 
+    ru.longitud, pl.fecha, ru.hora::time(0), ru.tipo_registro, jor.jornada,
+    tct.nombretactico, etg.nombreestrategia, COUNT(spp.subtemas_id_subtema), 
+    temas, compo.comportamientos, compe.competencia, (psna.nombres || ' ' || psna.apellidos) as nombre, psna.foto_url
+    FROM registro_ubicacion ru
+    LEFT JOIN planeacion pl ON ru.id_planeacion = pl.id_planeacion
+    LEFT JOIN jornada jor ON jor.id_jornada = pl.id_jornada
+    LEFT JOIN entidades ent ON ent.id_entidad = pl.id_entidad
+    LEFT JOIN tactico_por_planeacion tpp ON tpp.planeacion_id_planeacion = pl.id_planeacion
+    LEFT JOIN tactico tct ON tct.id_tactico = tpp.tactico_id_tactico
+    LEFT JOIN estrategias etg ON etg.id_estrategia = tct.id_estrategia
+    LEfT JOIN subtemas_por_planeacion spp ON spp.planeacion_id_planeacion = pl.id_planeacion
+    LEFT JOIN subtemas sbt ON sbt.id_subtema = spp.subtemas_id_subtema
+    LEFT JOIN temas tm ON tm.id_temas = sbt.id_temas
+    LEFT JOIN competencias_por_comportamiento AS cpc ON cpc.competencias_id_competencia = tm.compe_por_compo_compe_id_compe
+    AND cpc.comportamientos_id_comportamientos = tm.compe_por_compo_compo_id_compo
+    LEFT JOIN comportamientos compo ON compo.id_comportamientos = cpc.comportamientos_id_comportamientos
+    LEFT JOIN competencias compe ON compe.id_competencia = cpc.competencias_id_competencia
+    JOIN planeaciones_por_intervencion ppi ON ppi.planeacion_id_planeacion = pl.id_planeacion
+    JOIN intervenciones itv ON itv.id_intervenciones = ppi.intervenciones_id_intervenciones
+    JOIN personas_por_zona ppz ON ppz.id_personas_por_zonacol = itv.personas_por_zona_id_personas_por_zonacol
+    JOIN zonas zna ON zna.id_zona = ppz.zonas_id_zona
+    JOIN personas psna ON psna.numeroidentificacion = ppz.personas_numeroidentificacion
+    LEFT OUTER JOIN barrios bar ON bar.id_barrio = itv.id_barrio
+    LEFT OUTER JOIN veredas ver ON ver.id_veredas = itv.id_vereda
+    LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
+    LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
+    GROUP BY pl.id_planeacion,ru.id_registro, ru.latitud, ru.longitud, pl.fecha, ru.hora, ru.tipo_registro, 
+    jor.jornada,pl.id_planeacion, tct.nombretactico, etg.nombreestrategia, 
+    tm.temas, compo.comportamientos, compe.competencia, zna.zonas, zna.id_zona, pl.lugarencuentro, mun.municipio, 
+    ent.nombreentidad, psna.nombres, psna.apellidos, psna.foto_url, ru.fecha
+    ORDER BY psna.nombres, ru.fecha DESC, ru.hora DESC";
 
     if ($rs = $con->query($sql)) {
         if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
             foreach ($filas as $key => $value) {
+                if($value['tipo_registro'] == 'Inicio'){
+                    $value['tipo_registro'] = 'Iniciado';
+                }else{
+                    $value['tipo_registro'] = 'Finalizado';
+                }
+
+                if($value['fecha'] == date("Y-m-d")){
+                    $value['fecha'] = 'Hoy';   
+                }else{
+                    $diff = date_diff(date_create($value['fecha']), date_create(date("Y-m-d")));
+                    $value['fecha'] = $diff->format("Desde el " .$value['fecha'] . " (Hace %a días) " );
+                }
+
                 $data['html'][$key] = array(
                     'latitud' => $value['latitud'],
                     'longitud' => $value['longitud'],
-                    'nombres' => $value['nombres'],
-                    'apellidos' => $value['apellidos'],
-                    'zonas' => $value['zonas'],
+                    'nombre' => $value['nombre'],
                     'fecha' => $value['fecha'],
                     'hora' => $value['hora'],
-                    'tipo_registro' => $value['tipo_registro']);
+                    'municipio' => $value['municipio'],
+                    'tipo_registro' => $value['tipo_registro'],
+                    'entidad' => $value['nombreentidad'],
+                    'tactico' => $value['nombretactico'],
+                    'competencia' => $value['competencia'],
+                    'comportamiento' => $value['comportamientos'],
+                    'tema' => $value['temas'],
+                    'estrategia' => $value['nombreestrategia'],
+                    'icon' => $value['foto_url']);
+                    
             }
         } else {
             $data['mensaje'] = "Aún no hay datos para mostrar en el mapa";
