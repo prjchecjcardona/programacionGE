@@ -28,7 +28,21 @@ body{
   min-height: 100%;
 }
 
-#welcome {
+#welcome2 {
+  display: flex;
+  margin-top: 3em;
+  min-width: 30%;
+  flex-direction: column;
+  justify-content: center;
+  -webkit-box-shadow: 0px 0px 7px -1px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: 0px 0px 7px -1px rgba(0, 0, 0, 0.45);
+  box-shadow: 0px 0px 7px -1px rgba(0, 0, 0, 0.45);
+  border-radius: 5px;
+  min-height: 50%;
+  background-color: white;
+}
+
+#welcome1 {
   display: flex;
   margin-top: 3em;
   min-width: 30%;
@@ -68,9 +82,13 @@ h3 {
   }
 
   
-  #welcome {
+  #welcome2, #welcome1 {
     min-width: 80%;
     min-height: 70%;
+  }
+
+  #welcome1 h3{
+    font-size: 1.75rem;
   }
 
   #welcome_img{
