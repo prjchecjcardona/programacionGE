@@ -91,7 +91,7 @@ if ($rs = $con->query($sql)) {
             $zona = $value['id_zona'];
             $hora = $value['hora'];
             $gestor = $value['nombre'];
-            $title = $value['tipo_registro'] . ' : ' . $value['jornada'] . ' - ' . $value['municipio'];
+            $title = $gestor . ' (' . strtoupper($value['zonas']). ') - ' . $value['tipo_registro'] . ' : ' . $value['jornada'] . ' - ' . $value['municipio'];
 
             $data[$key] = array(
                 'id' => $key,

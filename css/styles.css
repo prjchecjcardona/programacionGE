@@ -1081,19 +1081,15 @@ div.coord.fc.fc-unthemed.fc-ltr{
 #gestor1{
     background-color: rgb(77, 233, 133);
 }
-
 #gestor2{
-    background-color: rgb(176, 53, 222);
-}
-
-#gestor3{
     background-color: rgb(231, 122, 104);
 }
-
-#gestor4{
+#gestor3{
     background-color: rgb(227, 227, 39);
 }
-
+#gestor4{
+    background-color: rgb(176, 53, 222);
+}
 #gestor5{
     background-color: #349bfb;
 }

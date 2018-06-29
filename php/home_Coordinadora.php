@@ -35,13 +35,11 @@ function intervencionesPorZona()
                     $array[] = $fila;
                 }
                 $data['html'] = "";
-                $i=0;
                 foreach ($array as $datos) {
-                    $i++;
                     $data['html'] .= '<div class="card">';
                     $data['html'] .= '<div class="card-body">';
                     $data['html'] .= '<h4 class="card-title">' . $datos['zonas'] . ' // Zona '.$datos['id_zona'].'</h4>';
-                    $data['html'] .= '<h6 class="card-subtitle mb-2 text-muted">' . $datos['nombres'] . '</h6> <span id="gestor'.$i.'" class="dot"></span>';
+                    $data['html'] .= '<h6 class="card-subtitle mb-2 text-muted">' . $datos['nombres'] . '</h6> <span id="gestor'.$datos['id_zona'].'" class="dot"></span>';
                     $data['html'] .= '<div class="list-group">';
                     
                     // traerIntervencionGestora();
@@ -162,6 +160,13 @@ function getUbicaciones()
                 }else{
                     $diff = date_diff(date_create($value['fecha']), date_create(date("Y-m-d")));
                     $value['fecha'] = $diff->format("Desde el " .$value['fecha'] . " (Hace %a días) " );
+                }
+
+                if($value['competencia'] == null){
+                    $value['competencia'] = "";
+                    $value['temas'] = "Pendiente";
+                    $value['nombreentidad'] = "Pendiente";
+                    $value['comportamientos'] = ' ';
                 }
 
                 $data['html'][$key] = array(

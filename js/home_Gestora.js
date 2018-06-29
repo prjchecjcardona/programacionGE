@@ -21,6 +21,7 @@ $(function () {
     intervencionesPorZona(idZona);
 
     $('#calendar').fullCalendar({
+        defaultView: 'listWeek',
         events: {
             url: 'php/calendarEvents.php',
             type: 'POST', // Send post data,
@@ -41,8 +42,8 @@ $(function () {
             $('#eventHora').html(calEvent.hora);
             $('#eventModal').modal();
         }
-    })
-})
+    });
+});
 
 function traerNombre() {
 

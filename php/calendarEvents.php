@@ -1,12 +1,12 @@
 <?php
-include('conexion.php');
+include 'conexion.php';
 $data = array();
 
-if(isset($_POST['id_zona'])){
+if (isset($_POST['id_zona'])) {
     $idZona = $_POST['id_zona'];
 
-    $sql = "SELECT pl.lugarencuentro, mun.municipio, ent.nombreentidad,ru.id_registro, ru.latitud, ru.longitud, ru.fecha, ru.hora::time(0), ru.tipo_registro, jor.jornada,pl.id_planeacion, tct.nombretactico, etg.nombreestrategia, COUNT(spp.subtemas_id_subtema), temas, compo.comportamientos, compe.competencia, zna.id_zona, zna.zonas, (psna.nombres || ' ' || psna.apellidos) as nombre
-    FROM planeacion pl 
+    $sql = "SELECT pl.lugarencuentro, mun.municipio, ent.nombreentidad,ru.id_registro, ru.latitud, ru.longitud, pl.fecha, ru.hora::time(0), ru.tipo_registro, jor.jornada,pl.id_planeacion, tct.nombretactico, etg.nombreestrategia, COUNT(spp.subtemas_id_subtema), temas, compo.comportamientos, compe.competencia, zna.id_zona, zna.zonas, (psna.nombres || ' ' || psna.apellidos) as nombre
+    FROM planeacion pl
     LEFT JOIN registro_ubicacion ru ON ru.id_planeacion = pl.id_planeacion
     LEFT JOIN jornada jor ON jor.id_jornada = pl.id_jornada
     LEFT JOIN entidades ent ON ent.id_entidad = pl.id_entidad
@@ -30,54 +30,65 @@ if(isset($_POST['id_zona'])){
     LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
     LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
     WHERE zna.id_zona = $idZona
-    GROUP BY pl.id_planeacion,ru.id_registro, ru.latitud, ru.longitud, ru.fecha, ru.hora, ru.tipo_registro, jor.jornada,pl.id_planeacion, tct.nombretactico, etg.nombreestrategia, tm.temas, compo.comportamientos, compe.competencia, zna.zonas, zna.id_zona, nombre, pl.lugarencuentro, mun.municipio, ent.nombreentidad
+    GROUP BY pl.id_planeacion,ru.id_registro, ru.latitud, ru.longitud, pl.fecha, ru.hora, ru.tipo_registro, jor.jornada,pl.id_planeacion, tct.nombretactico, etg.nombreestrategia, tm.temas, compo.comportamientos, compe.competencia, zna.zonas, zna.id_zona, nombre, pl.lugarencuentro, mun.municipio, ent.nombreentidad
     ORDER BY pl.id_planeacion";
 
     if ($rs = $con->query($sql)) {
         if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
             foreach ($filas as $key => $value) {
-                $allDay=false;
+                $allDay = false;
                 switch ($value['jornada']) {
                     case 'Mañana':
-                        $start=$value['fecha']."T08:00:00-05:00";
-                        $end=$value['fecha']."T12:00:00-05:00";
+                        $start = $value['fecha'] . "T08:00:00-05:00";
+                        $end = $value['fecha'] . "T12:00:00-05:00";
                         break;
                     case 'Tarde':
-                        $start=$value['fecha']."T14:00:00-05:00";
-                        $end=$value['fecha']."T18:00:00-05:00";
+                        $start = $value['fecha'] . "T14:00:00-05:00";
+                        $end = $value['fecha'] . "T18:00:00-05:00";
                         break;
                     case 'Noche':
-                        $start=$value['fecha']."T18:00:00-05:00";
-                        $end=$value['fecha']."T22:00:00-05:00";
-                        break; 
+                        $start = $value['fecha'] . "T18:00:00-05:00";
+                        $end = $value['fecha'] . "T22:00:00-05:00";
+                        break;
                     case 'Todo el día':
-                        $allDay = true;
-                        $start=$value['fecha']."T08:00:00-05:00";
-                        $end=$value['fecha']."T18:00:00-05:00";
-                        break;   
+                        $start = $value['fecha'] . "T08:00:00-05:00";
+                        $end = $value['fecha'] . "T18:00:00-05:00";
+                        break;
                     default:
                         break;
                 }
 
-                if(is_null($value['id_registro'])){
-                    $color = "rgb(156, 193, 43)";
-                }else {
-                    if(($value['tipo_registro']) == 'Inicio'){
-                        $color = "rgb(204, 0, 0)";
-                    }else{
-                        $color = "rgb(139, 141, 142)";
-                    }    
+                switch ($value['id_zona']) {
+                    case 4:
+                        $color = "rgb(176, 53, 222)";
+                        break;
+                    case 5:
+                        $color = "rgb(52, 155, 251)";
+                        break;
+                    case 1:
+                        $color = "rgb(77, 233, 133)";
+                        break;
+                    case 2:
+                        $color = "rgb(231, 122, 104)";
+                        break;
+                    case 3:
+                        $color = "rgb(227, 227, 39)";
+                        break;
                 }
 
-                if(is_null($value['nombreentidad'])){
+                if(is_null($value['tipo_registro'])) {
+                  $value['tipo_registro'] = 'Planeado';
+                }
+
+                if (is_null($value['nombreentidad'])) {
                     $lugar = $value['municipio'];
-                }else {
-                    $lugar = $value['municipio'].' : '.$value['nombreentidad'];
+                } else {
+                    $lugar = $value['municipio'] . ' : ' . $value['nombreentidad'];
                 }
 
                 $hora = $value['hora'];
 
-                $title = $value['tipo_registro'].' : '.$value['jornada'].' - '.$value['municipio'];
+                $title = $value['tipo_registro'] . ' : ' . $value['jornada'] . ' - ' . $value['municipio'];
 
                 $data[$key] = array(
                     'id' => $key,
@@ -90,23 +101,18 @@ if(isset($_POST['id_zona'])){
                     'textColor' => "white",
                     'lugar' => $lugar,
                     'hora' => $hora,
-                    'descripcion' => $value['nombreestrategia'].': '.$value['nombretactico'].'<br>'.$value['comportamientos'].'<br>'.$value['competencia'].': '.$value['temas']
+                    'descripcion' => $value['nombreestrategia'] . ': ' . $value['nombretactico'] . '<br>' . $value['comportamientos'] . '<br>' . $value['competencia'] . ': ' . $value['temas'],
                 );
             }
-        }else{
-			$data['error']=1;
+        } else {
+            print_r($con->errorInfo());
+            $data['error'] = 1;
         }
-    }else{
-		$data['error']=1;
+    } else {
+        print_r($con->errorInfo());
+        $data['error'] = 1;
     }
-
-
 
 }
 
 echo json_encode($data);
-
-
-
-
-?>

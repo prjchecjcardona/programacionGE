@@ -42,7 +42,7 @@ function intervencionesPorZona($id_zona){
 						$data['html'].='<div class="card">';
 						  $data['html'].='<div class="card-body">';
 							$data['html'].='<h4 class="card-title">'.$datos['zonas'].'</h4>';
-							$data['html'].='<h6 class="card-subtitle mb-2 text-muted">'.$datos['nombres'].'</h6>';
+							$data['html'].= '<h6 class="card-subtitle mb-2 text-muted">' . $datos['nombres'] . '</h6> <span id="gestor'.$datos['id_zona'].'" class="dot"></span>';
 							$data['html'].='<div class="list-group">';
 							$llamarIntervencion=traerIntervencionGestora($datos['id_zona'],$datos['id_personas_por_zonacol']);
 								
