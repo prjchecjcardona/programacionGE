@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
     crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/animate.css">
   <link rel="stylesheet" href="css/index.css">
   <title>Gestión Educativa</title>
@@ -22,16 +23,21 @@
 
     <div id="welcome1" style="display: none">
       <h3>Que quieres hacer?</h3>
-      <button onclick="outwelcome1()" type="button" class="btn btn-success welcome">Iniciar Sesión</button> 
-      <button onclick=window.location.href="app_Login.html" type="button" class="btn btn-success welcome">Usar GeoApp</button> 
+      <button onclick="outwelcome1()" type="button" class="btn btn-success welcome">Iniciar Sesión</button>
+      <button onclick=window.location.href="app_Login.html" type="button" class="btn btn-success welcome">Usar GeoApp</button>
+      <button data-toggle="tooltip" data-placement="bottom" title="Banco de Herramientas" onclick=window.location.href="Banco de Herramientas V2/index.html"
+        type="button" class="btn btn-success welcome">
+        <i class="fa fa-cube fa-2x"></i>
+      </button>
     </div>
 
     <div id="welcome2" style="display: none">
       <h3>Elige tu Rol</h3>
-      <button onclick=window.location.href="welcome_Coordinadora.html" type="button" class="btn btn-success welcome">Coordinadora</button> 
-      <button onclick=window.location.href="welcome_Coordinadora.html" type="button" class="btn btn-success welcome">Interventora</button> 
+      <button onclick=window.location.href="welcome_Coordinadora.html" type="button" class="btn btn-success welcome">Coordinadora</button>
+      <button onclick=window.location.href="welcome_Coordinadora.html" type="button" class="btn btn-success welcome">Interventora</button>
       <button onclick=window.location.href="welcome_Gestora.html" type="button" class="btn btn-success welcome">Gestor</button>
     </div>
+
   </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
