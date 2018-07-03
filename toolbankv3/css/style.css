@@ -1,0 +1,16 @@
+nav {
+  display: flex;
+  background-color: #9cc129;
+  border-radius: 0px !important;
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.65);
+  -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.65);
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.65);
+  justify-content: center;
+}
+
+#nav-img{
+  width: 3%;
+  align-self: center;
+  margin: 1em;
+  display: block;
+}
