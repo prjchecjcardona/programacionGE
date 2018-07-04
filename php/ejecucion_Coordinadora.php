@@ -22,6 +22,9 @@ if (isset($_POST["accion"])) {
     if ($_POST["accion"] == "eliminarEjecucion") {
         eliminarEjecucion($_POST['idPlaneacion']);
     }
+    if ($_POST["accion"] == "getTipopoblacion") {
+        getTipopoblacion();
+    }
 
 }
 
@@ -353,4 +356,26 @@ function eliminarEjecucion($idPlaneacion)
         pg_close($con2);
     }
 
+}
+
+function getTipopoblacion()
+{
+    include "conexion.php";
+
+    $data = array('error' => 0, 'mensaje' => '', 'html' => '');
+
+    if ($con) {
+        $sql = "SELECT tipopoblacion FROM tipopoblacion";
+
+        if ($rs = $con->query($sql)) {
+            if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+                $data['html'] = $filas;
+            }
+        } else {
+            print_r($con->errorInfo());
+            $data['mensaje'] = "Hubo un error al conseguir datos en la consulta";
+            $data['error'] = 1;
+        }
+    }
+    echo json_encode($data);
 }
