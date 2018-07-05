@@ -365,7 +365,7 @@ function getTipopoblacion()
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
 
     if ($con) {
-        $sql = "SELECT tipopoblacion FROM tipopoblacion";
+        $sql = "SELECT id_tipopoblacion, tipopoblacion FROM tipopoblacion";
 
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {

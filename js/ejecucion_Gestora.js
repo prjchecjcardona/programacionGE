@@ -27,7 +27,45 @@ $(function() {
   idIntervencion = $.get("idIntervencion");
   isEjecutada = $.get("isEjecutada");
   nCumplimiento = "";
-  cargarDatosPlaneacion();
+	cargarDatosPlaneacion();
+	
+  listatipo = [];
+  var table_asistentes = $("#tabla-asistente").dataTable({
+		ajax:{
+			url: 'php/ejecucion_Coordinadora.php',
+			
+		},
+    data: listatipo,
+    columnDefs: [
+      {
+        targets: -1,
+        render: function(data, type, row) {
+          return '<input type="number" class="input_cant" id="inputcantidad' + data.id_tipopoblacion + '" value=0 min=0>';
+				}
+      }
+    ],
+    columns: [
+      {
+        data: "tipopoblacion",
+        title: "Tipo de Población"
+      },
+      {
+        data: null,
+        title: "Cantidad"
+      }
+		],
+		searching: false,
+    paging: false,
+    ordering: false,
+		select: false,
+		"initComplete": function(settings, listatipo) {
+			alert('Data cargado');
+		/* 	$(".input_cant").change(function() {
+				getTotalAsistentes();
+			}); */
+		}
+	});
+	
 
   var table = $("#ejecucion_coordinadora_asistencia").DataTable({
     data: arrayAsistentes,
@@ -638,22 +676,46 @@ function getTipopoblacion() {
   var url = "php/ejecucion_Coordinadora.php";
 
   $.post(url, { accion: "getTipopoblacion" }, function(data) {
-    var arrayData = JSON.parse(data);
-    i = 0;
-    arrayData.html.forEach(element => {
-      $("#tabla-asistentes tbody").append(
-        '<tr style="color: black">' +
-          '	<td id="tipo' + i++ + '">' +element.tipopoblacion + "</td>" +
-          '	<td><input class="input_cant" id="inputcantidad' + i++ + '" value=0></td>' +
-        '</tr>'
-      );
-    });
-    $("#tabla-asistentes tbody").append(
-      "<tr>" +
-        "	<td>Total</td>" +
-        '	<td id="total"><span>0</span></td>' +
-        "</tr>"
-    );
-  });
+		asistentes = data.html;
+		if(data.html){
+			var table_asistentes = $('#tabla-asistente');
+			table_asistentes.dataTable().fnAddData(asistentes);
+		}
+	}, "json");
 }
+
 // If value of td tabla-asistente changes
+
+function getTotalAsistentes() {
+  var asist = 0;
+  for (var i = 1; i < 4; i++) {
+    if ($("#inputcantidad" + i).val() == "") {
+      $("#inputcantidad" + i).val(0);
+    }
+  }
+  asist +=
+    parseInt($("#inputcantidad1").val()) +
+    parseInt($("#inputcantidad2").val()) +
+    parseInt($("#inputcantidad3").val());
+
+  $("#total").text(asist);
+}
+
+// If value of table genero changes
+
+$(".input-genero").change(function() {
+  getTotalAsistentesGenero();
+});
+
+function getTotalAsistentesGenero() {
+  var asist = 0;
+  for (var i = 1; i < 3; i++) {
+    if ($("#inputgenero" + i).val() == "") {
+      $("#inputgenero" + i).val(0);
+    }
+  }
+  asist +=
+    parseInt($("#inputgenero1").val()) + parseInt($("#inputgenero2").val());
+
+  $("#total-genero").text(asist);
+}

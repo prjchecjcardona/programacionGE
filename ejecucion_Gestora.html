@@ -198,13 +198,37 @@
             <span class="red">* </span> Total de Asistentes: </label>
         </div>
         <div class="col-md-12">
-          <table id="tabla-asistentes" class="table">
+          <table id="tabla-asistente" class="display">
+            
+          </table>
+          <span>Total: </span>
+          <span id="total">0</span>
+        </div>
+        <hr>
+        <div class="col-md-5centrado-vertical">
+          <label>
+            <span class="red">* </span> Asistentes por genero: </label>
+        </div>
+        <div class="col-md-12">
+          <table id="tabla-genero" class="table">
             <thead class="thead-dark">
               <tr>
-                <th scope="col">TIPO DE POBLACIÓN</th>
+                <th scope="col">GENERO</th>
                 <th scope="col">CANTIDAD</th>
               </tr>
             </thead>
+              <tr id="masculino">
+                <td style="color: black">Masculino</td>
+                <td><input class="input-genero" id="inputgenero1"type="number" value="0" min="0"></td>
+              </tr>
+              <tr id="femenino">
+                <td style="color: black">Femenino</td>
+                <td><input class="input-genero" id="inputgenero2" type="number" value="0" min="0"></td>
+              </tr>
+              <tr id="total">
+                <td>Total</td>
+                <td><span id="total-genero">0</span></td>
+              </tr>
             <tbody>
             </tbody>
           </table>

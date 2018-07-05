@@ -1094,3 +1094,19 @@ div.coord.fc.fc-unthemed.fc-ltr{
     background-color: #349bfb;
 }
 
+/* Div asistentes de ejecucion_Gestora */
+#asistentes{
+    display: flex;
+    flex-direction: column;
+}
+
+.row.asistentes{
+    display: flex;
+    justify-content: space-between;
+}
+
+.row.total{
+    display: flex;
+    flex-direction: row;
+}
+

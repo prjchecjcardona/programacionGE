@@ -126,16 +126,16 @@ function bindEvents() {
 
 	$('#buttonEnviar').click(function () {
 		guardarAsistencia();
-	})
+	});
 
 	$('#buttonActualizar').click(function () {
 		actualizarAsistente();
-	})
+	});
 
 	$('#buttonCancelar').click(function () {
 
 		window.location.href = "detalle_Intervencion_Gestora.html?idIntervencion=" + idIntervencion + "&idZona=" + idZona;
-	})
+	});
 }
 
 /*Consulta el nombre de la persona que inicio sesión
@@ -443,8 +443,4 @@ function cargarAsistenteFormulario(idAsistente) {
 
 			}
 		}, 'json');
-}
-
-function reloadpage() {
-	location.reload();
 }
