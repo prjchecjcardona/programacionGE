@@ -28,7 +28,7 @@ $(function () {
           return '<a onclick="editarIntervencion(' + data + ')" class="edit-btn btn btn-sm btn-success" alt="Editar"><span class="eval fa fa-edit"></span></a>';
         },
         "className": "dt-body-center"
-      },
+      },  
       {
         "targets": -1,
         "data": "id_intervenciones",

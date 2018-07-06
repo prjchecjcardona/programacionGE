@@ -2,7 +2,6 @@
 $(function() {
   traerNombre();
   cargarTipoCedula();
-  getTipopoblacion();
 
   /*Extrae los parametros que llegan en la url
 	 * parametro: 
@@ -29,18 +28,17 @@ $(function() {
   nCumplimiento = "";
 	cargarDatosPlaneacion();
 	
-  listatipo = [];
-  var table_asistentes = $("#tabla-asistente").dataTable({
+/*   var table_asistentes = $("#tabla-asistente").dataTable({
 		ajax:{
-			url: 'php/ejecucion_Coordinadora.php',
-			
+			url: "php/ejecucion_Coordinadora.php",
+      dataSrc: "tipocontent"
 		},
-    data: listatipo,
     columnDefs: [
       {
         targets: -1,
+        data: "id_tipopoblacion",
         render: function(data, type, row) {
-          return '<input type="number" class="input_cant" id="inputcantidad' + data.id_tipopoblacion + '" value=0 min=0>';
+          return '<input type="number" class="input_cant" id="inputcantidad' + data + '" value=0 min=0>';
 				}
       }
     ],
@@ -60,11 +58,11 @@ $(function() {
 		select: false,
 		"initComplete": function(settings, listatipo) {
 			alert('Data cargado');
-		/* 	$(".input_cant").change(function() {
+			$(".input_cant").change(function() {
 				getTotalAsistentes();
-			}); */
+			});
 		}
-	});
+	}); */
 	
 
   var table = $("#ejecucion_coordinadora_asistencia").DataTable({
@@ -672,7 +670,7 @@ function confirmGuardar() {
   });
 }
 
-function getTipopoblacion() {
+/* function getTipopoblacion() {
   var url = "php/ejecucion_Coordinadora.php";
 
   $.post(url, { accion: "getTipopoblacion" }, function(data) {
@@ -683,7 +681,7 @@ function getTipopoblacion() {
 		}
 	}, "json");
 }
-
+ */
 // If value of td tabla-asistente changes
 
 function getTotalAsistentes() {
@@ -702,6 +700,10 @@ function getTotalAsistentes() {
 }
 
 // If value of table genero changes
+
+$(".input_cant").change(function() {
+  getTotalAsistentes();
+});
 
 $(".input-genero").change(function() {
   getTotalAsistentesGenero();

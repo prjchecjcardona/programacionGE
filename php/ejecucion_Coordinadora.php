@@ -362,14 +362,15 @@ function getTipopoblacion()
 {
     include "conexion.php";
 
-    $data = array('error' => 0, 'mensaje' => '', 'html' => '');
+    $data = array('error' => 0, 'mensaje' => '', 'tipocontent' => '');
 
     if ($con) {
         $sql = "SELECT id_tipopoblacion, tipopoblacion FROM tipopoblacion";
 
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-                $data['html'] = $filas;
+                $data['tipocontent'] = $filas;
+                var_dump($data['tipocontent']);
             }
         } else {
             print_r($con->errorInfo());
