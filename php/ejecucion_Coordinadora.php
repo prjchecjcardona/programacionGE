@@ -14,7 +14,7 @@ if (isset($_POST["accion"])) {
         guardarEjecucion($_POST["fecha"], $_POST["hora"], $_POST["asistentes"], $_POST["detalleCumplimiento"],
             $_POST["nCumplimiento"], $_POST["idPlaneacion"], $_POST["idIntervencion"], $_POST["arrayAsistentes"],
             $_POST["observaciones"], $_POST['nombreContacto'], $_POST['cargoContacto'], $_POST['telefonoContacto'], $_POST['correoContacto'],
-            $_POST['contacto']);
+            $_POST['contacto'], $_POST['tipopoblacion_asis'], $_POST['caracteristicas_asis']);
     }
     if ($_POST["accion"] == "cargarTipoCedula") {
         cargarTipoCedula();
@@ -25,7 +25,9 @@ if (isset($_POST["accion"])) {
     if ($_POST["accion"] == "getTipopoblacion") {
         getTipopoblacion();
     }
-
+    if ($_POST["accion"] == "getCaracteristicasPoblacion") {
+        getCaracteristicasPoblacion();
+    }
 }
 
 function cargarCompetencia()
@@ -157,7 +159,7 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada)
     echo json_encode($data);
 }
 
-function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $idIntervencion, $arrayAsistentes, $observaciones, $nombreContacto, $cargoContacto, $telefonoContacto, $correoContacto, $contacto)
+function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $idIntervencion, $arrayAsistentes, $observaciones, $nombreContacto, $cargoContacto, $telefonoContacto, $correoContacto, $contacto, $tipopoblacion_asis, $caracteristicas_asis)
 {
     include 'conexion.php';
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
@@ -248,8 +250,7 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
                                 // SE INSERTA EN ejecuciones por planeacion
 
                                 $sql = "INSERT INTO ejecuciones_por_planeacion (id_ejecuciones_por_planeacion, ejecucion_id_ejecucion,id_planeaciones_por_intervencion)
-												VALUES (nextval('sec_ejecuciones_por_planeacion')," . $id_ejecucion . ", " . $id_planeaciones_por_intervencion . ");
-												  ";
+												VALUES (nextval('sec_ejecuciones_por_planeacion')," . $id_ejecucion . ", " . $id_planeaciones_por_intervencion . ");";
 
                                 if ($rs = $con->query($sql)) {
                                     $data['mensaje'] = "Guardado Exitosamente";
@@ -272,7 +273,7 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
 
                                     //Insertar la detallenivelcumplimiento_por_ejecucion  FALTA CREA LA SECENCIA
                                     $sql = "INSERT INTO detallenivelcumplimiento_por_ejecucion (id_detallenivelcumplimiento_por_ejecucioncl, id_detalle_nivelcumplimiento, ejecucion_id_ejecucion,nivel_cumplimiento)
-															VALUES (nextval('sec_detallenivelcumplimiento_por_ejecucion'),'" . $detalleCumplimiento[$i] . "', '" . $id_ejecucion . "','" . $nivelCumplimiento . "');
+															      VALUES (nextval('sec_detallenivelcumplimiento_por_ejecucion'),'" . $detalleCumplimiento[$i] . "', '" . $id_ejecucion . "','" . $nivelCumplimiento . "');
                                                               ";
 
                                     if ($rs = $con->query($sql)) {
@@ -285,6 +286,40 @@ function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCu
                                         $data['error'] = 1;
                                     }
 
+                                }
+
+                                $k = 1;
+                                for ($i = 0; $i < count($tipopoblacion_asis); $i++) {
+                                    $sql = "INSERT INTO public.tipo_poblacion_por_ejecucion(
+                                    tppe_id_tipo_poblacion, tppe_id_ejecucion, tppe_cantidadpoblacion)
+                                    VALUES (" . $k . ", " . $id_ejecucion . ", " . $tipopoblacion_asis[$i] . ");";
+
+                                    if ($rs = $con->query($sql)) {
+                                        $k++;
+                                        $data['mensaje'] = "exito";
+                                        $data['error'] = 0;
+                                    } else {
+                                        print_r($con->errorInfo());
+                                        $data['mensaje'] = "No se realizo el insert de tipo_poblacion por ejecucion";
+                                        $data['error'] = 1;
+                                    }
+                                }
+
+                                $k = 1;
+                                for ($i = 0; $i < count($caracteristicas_asis); $i++) {
+                                    $sql = "INSERT INTO public.caracteristicas_poblacion_por_ejecucion(
+                                    cppe_id_carcateristica, cantidad, cppe_id_ejecucion)
+                                    VALUES (" . $k . ", " . $caracteristicas_asis[$i] . ", " . $id_ejecucion . ");";
+
+                                    if ($rs = $con->query($sql)) {
+                                        $k++;
+                                        $data['mensaje'] = "exito";
+                                        $data['error'] = 0;
+                                    } else {
+                                        print_r($con->errorInfo());
+                                        $data['mensaje'] = "No se realizo el insert de caracteristicas de poblacion por ejecucion";
+                                        $data['error'] = 1;
+                                    }
                                 }
                             }
                         }
@@ -360,22 +395,46 @@ function eliminarEjecucion($idPlaneacion)
 
 function getTipopoblacion()
 {
-    include "conexion.php";
-
-    $data = array('error' => 0, 'mensaje' => '', 'tipocontent' => '');
+      include "conexion.php";
+    $data = array('error' => 0, 'mensaje' => '', 'html' => '');
 
     if ($con) {
         $sql = "SELECT id_tipopoblacion, tipopoblacion FROM tipopoblacion";
-
+        
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-                $data['tipocontent'] = $filas;
-                var_dump($data['tipocontent']);
+                $data['html'] = $filas;
             }
         } else {
             print_r($con->errorInfo());
             $data['mensaje'] = "Hubo un error al conseguir datos en la consulta";
             $data['error'] = 1;
+        }
+    }
+    echo json_encode($data);
+}
+
+function getCaracteristicasPoblacion()
+{
+    include "conexion.php";
+
+    $data = array('error' => 0, 'mensaje' => '', 'html' => '');
+
+    if ($con) {
+        $sql = "SELECT id_caracteristica, caracteristica FROM caracteristicas_por_poblacion";
+        
+        $rs = $con->query($sql);
+        
+        $filas = $rs->fetchAll(PDO::FETCH_ASSOC);
+        
+        if ($rs) {
+            if ($filas) {
+                $data['html'] = $filas;
+            } else {
+                print_r($con->errorInfo());
+                $data['mensaje'] = "Hubo un error al conseguir datos en la consulta";
+                $data['error'] = 1;
+            }
         }
     }
     echo json_encode($data);

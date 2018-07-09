@@ -1,7 +1,9 @@
 //Invocacion del archivo File Input Ejecucion Coordinadora
 $(function() {
   traerNombre();
-  cargarTipoCedula();
+	cargarTipoCedula();
+	getTipopoblacion();
+	getCaracteristicasPoblacion();
 
   /*Extrae los parametros que llegan en la url
 	 * parametro: 
@@ -27,18 +29,16 @@ $(function() {
   isEjecutada = $.get("isEjecutada");
   nCumplimiento = "";
 	cargarDatosPlaneacion();
+
+	lista_asistentes = [];
 	
-/*   var table_asistentes = $("#tabla-asistente").dataTable({
-		ajax:{
-			url: "php/ejecucion_Coordinadora.php",
-      dataSrc: "tipocontent"
-		},
+  var table_asistentes = $("#tabla-asistente").dataTable({
+		data: lista_asistentes,
     columnDefs: [
       {
         targets: -1,
-        data: "id_tipopoblacion",
         render: function(data, type, row) {
-          return '<input type="number" class="input_cant" id="inputcantidad' + data + '" value=0 min=0>';
+          return '<input type="number" class="input_cant" id="inputcantidad' + data.id_tipopoblacion + '" value=0 min=0>';
 				}
       }
     ],
@@ -56,13 +56,36 @@ $(function() {
     paging: false,
     ordering: false,
 		select: false,
-		"initComplete": function(settings, listatipo) {
-			alert('Data cargado');
-			$(".input_cant").change(function() {
-				getTotalAsistentes();
-			});
-		}
-	}); */
+		info: false
+	});
+	
+  var table_caracteristicas = $("#tabla-caracteristica").dataTable({
+		data: lista_asistentes,
+    columnDefs: [
+      {
+        targets: -1,
+        render: function(data, type, row) {
+          return '<input type="number" class="input_caract" id="caracteristica' + data.id_caracteristica + '" value=0 min=0>';
+				}
+      }
+    ],
+    columns: [
+      {
+        data: "caracteristica",
+        title: "Características Población"
+      },
+      {
+        data: null,
+        title: "Cantidad"
+      }
+		],
+		searching: false,
+    paging: false,
+    ordering: false,
+		select: false,
+		info: false
+	});
+	
 	
 
   var table = $("#ejecucion_coordinadora_asistencia").DataTable({
@@ -349,16 +372,38 @@ function cargarDatosPlaneacion() {
 function guardarEjecucion() {
   $(".loader").show();
 
-  if (!validarInformacion()) {
-    $(".loader").hide();
+  if (!validarInformacion()[0]) {
+		if(validarInformacion()[1] != ""){
+			$(".loader").hide();
+    swal(
+      "Error", //titulo
+      validarInformacion()[1],
+      "error"
+    );
+		}else{
+			$(".loader").hide();
     swal(
       "", //titulo
       "Debes ingresar todos los datos!",
       "error"
     );
+		}
+    
   } else {
-    //detalleNivelCumplimiento
-    var list = new Array();
+		//detalleNivelCumplimiento
+		var list_tipopoblacion = [];
+
+		$.each($('.input_cant'), function(){
+			list_tipopoblacion.push($(this).val());
+		});
+
+		var list_caracteristica = [];
+
+		$.each($('.input_caract'), function(){
+			list_caracteristica.push($(this).val());
+		});	
+
+    var list = [];
 
     $.each($("#detalleNivelCumplimiento :checked"), function() {
       list.push($(this).val());
@@ -389,7 +434,9 @@ function guardarEjecucion() {
         fecha: $("#textFecha").val(),
         hora:
           $("#selectbasicHoraEje").val() + ":" + $("#selectbasicMinEje").val(),
-        asistentes: $("#textinputAsisNum").val(),
+				asistentes: parseInt($("#total").text()),
+				tipopoblacion_asis: list_tipopoblacion,
+				caracteristicas_asis: list_caracteristica,
         detalleCumplimiento: list,
         nCumplimiento: $("input:radio[name=nCumplimiento]:checked").val(),
         observaciones: $("#textareaObservaciones").val(),
@@ -511,7 +558,8 @@ function guardarEjecucion() {
 }
 
 function validarInformacion() {
-  var valido = true;
+	var valido = true;
+	var mensaje = "";
   //Verificar si se ingresa contacto
   if ($("input:radio[name=radiosAlgunContacto]:checked").val() == 1) {
     nombreContacto = $("#textinputNombreContacto").val();
@@ -534,7 +582,12 @@ function validarInformacion() {
   if (cont == 4) {
   } else {
     valido = false;
-  }
+	}
+	
+	if(parseInt($("#total-genero").text()) != parseInt($("#total").text())){
+		valido = false;
+		mensaje = "El total de tipo de población no coincide con el total de las características de la población.";
+	}
 
   $("input[id^=text]").each(function(e) {
     if ($(this).val() == "" && $(this).is(":visible")) {
@@ -549,7 +602,7 @@ function validarInformacion() {
 		valido = false;
 	} */
 
-  return valido;
+  return [valido, mensaje];
 }
 
 function cargarTipoCedula() {
@@ -670,7 +723,7 @@ function confirmGuardar() {
   });
 }
 
-/* function getTipopoblacion() {
+function getTipopoblacion() {
   var url = "php/ejecucion_Coordinadora.php";
 
   $.post(url, { accion: "getTipopoblacion" }, function(data) {
@@ -679,9 +732,27 @@ function confirmGuardar() {
 			var table_asistentes = $('#tabla-asistente');
 			table_asistentes.dataTable().fnAddData(asistentes);
 		}
+		$(".input_cant").change(function() {
+			getTotalAsistentes();
+		});
 	}, "json");
 }
- */
+
+function getCaracteristicasPoblacion() {
+  var url = "php/ejecucion_Coordinadora.php";
+
+  $.post(url, { accion: "getCaracteristicasPoblacion" }, function(data) {
+		caract = data.html;
+		if(data.html){
+			var table_caracteristicas = $('#tabla-caracteristica');
+			table_caracteristicas.dataTable().fnAddData(caract);
+		}
+		$(".input_caract").change(function() {
+			getCaracteristicas();
+		});		
+	}, "json");
+}
+
 // If value of td tabla-asistente changes
 
 function getTotalAsistentes() {
@@ -701,23 +772,22 @@ function getTotalAsistentes() {
 
 // If value of table genero changes
 
-$(".input_cant").change(function() {
-  getTotalAsistentes();
-});
-
-$(".input-genero").change(function() {
-  getTotalAsistentesGenero();
-});
-
-function getTotalAsistentesGenero() {
+function getCaracteristicas() {
   var asist = 0;
   for (var i = 1; i < 3; i++) {
-    if ($("#inputgenero" + i).val() == "") {
-      $("#inputgenero" + i).val(0);
+    if ($("#caracteristica" + i).val() == "") {
+      $("#caracteristica" + i).val(0);
     }
   }
   asist +=
-    parseInt($("#inputgenero1").val()) + parseInt($("#inputgenero2").val());
+		parseInt($("#caracteristica1").val()) + parseInt($("#caracteristica2").val()) + 
+		parseInt($("#caracteristica3").val()) + parseInt($("#caracteristica4").val()) + parseInt($("#caracteristica5").val());
 
   $("#total-genero").text(asist);
 }
+
+$('#each_input').click(function(){
+	$('.input_cant').each(function(){
+		alert(parseInt($(this).val()));
+	});
+});

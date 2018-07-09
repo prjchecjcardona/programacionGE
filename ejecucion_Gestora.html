@@ -191,7 +191,7 @@
 
 
         <!-- Label Total de Asistentes -->
-
+        <hr>
 
         <div class="col-md-5centrado-vertical">
           <label>
@@ -204,40 +204,13 @@
           <span>Total: </span>
           <span id="total">0</span>
         </div>
-        <hr>
-        <div class="col-md-5centrado-vertical">
-          <label>
-            <span class="red">* </span> Asistentes por genero: </label>
-        </div>
+        
         <div class="col-md-12">
-          <table id="tabla-genero" class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">GENERO</th>
-                <th scope="col">CANTIDAD</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr id="masculino">
-                <td style="color: black">Masculino</td>
-                <td>
-                  <input class="input-genero" id="inputgenero1" type="number" value="0" min="0">
-                </td>
-              </tr>
-              <tr id="femenino">
-                <td style="color: black">Femenino</td>
-                <td>
-                  <input class="input-genero" id="inputgenero2" type="number" value="0" min="0">
-                </td>
-              </tr>
-              <tr id="total">
-                <td>Total</td>
-                <td>
-                  <span id="total-genero">0</span>
-                </td>
-              </tr>
-            </tbody>
+          <table id="tabla-caracteristica" class="table">
+            
           </table>
+          <span>Total:</span>
+          <span id="total-genero">0</span>
         </div>
 
         <hr>
@@ -389,8 +362,8 @@
 
     <!-- Multiple Radios (inline) Algun Contacto? -->
     <div class="form-group esconder">
-      <label class="col-md-12 control-label" for="radiosAlgunContacto">¿Cuentas con algún contacto?</label>
-      <div class="col-md-12" id="radiosContacto">
+      <label class="col-md-12 control-label" for="radiosAlgunContacto">¿Has cambiado de contacto desde la planeación?</label>
+      <div class="col-md-12" id="radiosContacto"> 
         <label class="radio-inline" for="radiosAlgunContacto-0" id="radioContacto">
           <input type="radio" name="radiosAlgunContacto" id="SiContacto" value="1"> Si
         </label>

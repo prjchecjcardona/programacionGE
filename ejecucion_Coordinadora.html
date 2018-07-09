@@ -191,14 +191,26 @@
 
 
         <!-- Label Total de Asistentes -->
-        <div class="row">
-          <div class="col-md-4 centrado-vertical">
-            <label>
-              <span class="red">* </span> Total de Asistentes: </label>
-          </div>
-          <div class="col-md-4">
-            <input id="textinputAsisNum" name="textinputAsisNum" type="text" placeholder="" class="form-control input-md">
-          </div>
+        <hr>
+
+        <div class="col-md-5centrado-vertical">
+          <label>
+            <span class="red">* </span> Total de Asistentes: </label>
+        </div>
+        <div class="col-md-12">
+          <table id="tabla-asistente" class="display">
+
+          </table>
+          <span>Total: </span>
+          <span id="total">0</span>
+        </div>
+        <hr>
+        <div class="col-md-12">
+          <table id="tabla-caracteristica" class="table">
+            
+          </table>
+          <span>Total:</span>
+          <span id="total-genero">0</span>
         </div>
 
         <hr>
@@ -350,7 +362,7 @@
 
     <!-- Multiple Radios (inline) Algun Contacto? -->
     <div class="form-group esconder">
-      <label class="col-md-12 control-label" for="radiosAlgunContacto">¿Cuentas con algún contacto?</label>
+      <label class="col-md-12 control-label" for="radiosAlgunContacto">¿Has cambiado de contacto desde la planeación?</label>
       <div class="col-md-12" id="radiosContacto">
         <label class="radio-inline" for="radiosAlgunContacto-0" id="radioContacto">
           <input type="radio" name="radiosAlgunContacto" id="SiContacto" value="1"> Si

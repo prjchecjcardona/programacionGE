@@ -1110,3 +1110,6 @@ div.coord.fc.fc-unthemed.fc-ltr{
     flex-direction: row;
 }
 
+.swal-text{
+    text-align: center !important;
+}

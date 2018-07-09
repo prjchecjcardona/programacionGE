@@ -730,8 +730,8 @@ function cargarGestionEducativa() {
         },
         function(data) {
             if (data.error != 1) {
-                $("#selectbasicEntidad").val(data.html[0]['id_entidad']);
-                $("#selectbasicEstrategia").val(data.html[0]['id_estrategia']);
+                $("#selectbasicEntidad").val(data.html[0].id_entidad);
+                $("#selectbasicEstrategia").val(data.html[0].id_entidad);
                 var idEstrategia = $('#selectbasicEstrategia').val();
                 if (idEstrategia != 0) {
                     cargarTacticos(idEstrategia, "selectbasicEstrategia");
@@ -784,16 +784,16 @@ function cargarIndicadoresTacticos() {
         },
         function(data) {
             if (data.error != 1) {
-                $("#selectbasicTactico").val(data.html[0]['id_tactico']);
-                $("#selectbasicTema").val(data.html[0]['id_temas']);
-                var indicador_length = data.html[0]['indicadores_id_indicador'].length;
+                $("#selectbasicTactico").val(data.html[0].id_tactico);
+                $("#selectbasicTema").val(data.html[0].id_tema);
+                var indicador_length = data.html[0].indicadores_id_indicador.length;
                 for (var i = 0; i < indicador_length; i++) {
-                    if (data.html[0]['indicadores_id_indicador'][i] == document.getElementById("indicador" + (i + 1)).value) {
+                    if (data.html[0].indicadores_id_indicador[i] == document.getElementById("indicador" + (i + 1)).value) {
                         document.getElementById("indicador" + (i + 1)).checked = true;
                     }
                 }
             } else {
                 swal("Error", "Error cargando datos", "error");
             }
-        }, 'json')
+        }, 'json');
 }

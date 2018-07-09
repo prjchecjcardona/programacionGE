@@ -68,6 +68,12 @@ body{
   border-width: 2px;
 }
 
+#nav_banco{
+  display: flex;
+  justify-content: center;
+  padding: 0%;  
+}
+
 h3 {
   font-family: 'Cabin', sans-serif;
   color: rgb(139, 141, 142);

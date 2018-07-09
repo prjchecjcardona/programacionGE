@@ -857,7 +857,7 @@ function actualizarGestionEducativa($id_planeacion, $idTema, $indicadores, $tact
                 }
             }
         } else {
-            print_r($conexion->errorInfo());
+            print_r($con->errorInfo());
             $data['mensaje'] = "No se realizo la consulta";
             $data['error'] = 1;
         }

@@ -2,6 +2,8 @@
 $(function () {
 	traerNombre();
 	cargarTipoCedula();
+	getTipopoblacion();
+	getCaracteristicasPoblacion();
 
 	/*Extrae los parametros que llegan en la url
 	 * parametro: 
@@ -26,6 +28,62 @@ $(function () {
 	isEjecutada = $.get("isEjecutada");
 	nCumplimiento = "";
 	cargarDatosPlaneacion();
+
+	lista_asistentes = [];
+	
+  var table_asistentes = $("#tabla-asistente").dataTable({
+		data: lista_asistentes,
+    columnDefs: [
+      {
+        targets: -1,
+        render: function(data, type, row) {
+          return '<input type="number" class="input_cant" id="inputcantidad' + data.id_tipopoblacion + '" value=0 min=0>';
+				}
+      }
+    ],
+    columns: [
+      {
+        data: "tipopoblacion",
+        title: "Tipo de Población"
+      },
+      {
+        data: null,
+        title: "Cantidad"
+      }
+		],
+		searching: false,
+    paging: false,
+    ordering: false,
+		select: false,
+		info: false
+	});
+	
+  var table_caracteristicas = $("#tabla-caracteristica").dataTable({
+		data: lista_asistentes,
+    columnDefs: [
+      {
+        targets: -1,
+        render: function(data, type, row) {
+          return '<input type="number" class="input_caract" id="caracteristica' + data.id_caracteristica + '" value=0 min=0>';
+				}
+      }
+    ],
+    columns: [
+      {
+        data: "caracteristica",
+        title: "Características Población"
+      },
+      {
+        data: null,
+        title: "Cantidad"
+      }
+		],
+		searching: false,
+    paging: false,
+    ordering: false,
+		select: false,
+		info: false
+	});
 
 	var table = $('#ejecucion_coordinadora_asistencia').DataTable({
 		data: arrayAsistentes,
@@ -286,54 +344,74 @@ function cargarDatosPlaneacion() {
 }
 
 function guardarEjecucion() {
+  $(".loader").show();
 
-	$('.loader').show();
-
-	if (!validarInformacion()) {
-		$('.loader').hide();
-		swal(
-			'', //titulo
-			'Debes ingresar todos los datos!',
-			'error'
-		);
-	} else {
-
+  if (!validarInformacion()[0]) {
+		if(validarInformacion()[1] != ""){
+			$(".loader").hide();
+    swal(
+      "Error", //titulo
+      validarInformacion()[1],
+      "error"
+    );
+		}else{
+			$(".loader").hide();
+    swal(
+      "", //titulo
+      "Debes ingresar todos los datos!",
+      "error"
+    );
+		}
+    
+  } else {
 		//detalleNivelCumplimiento
-		var list = new Array();
+		var list_tipopoblacion = [];
 
-		$.each($('#detalleNivelCumplimiento :checked'), function () {
-
-			list.push($(this).val());
-
+		$.each($('.input_cant'), function(){
+			list_tipopoblacion.push($(this).val());
 		});
 
-		//Verificar si se ingresa contacto
-		if ($('input:radio[name=radiosAlgunContacto]:checked').val() == 1) {
-			nombreContacto = $('#textinputNombreContacto').val();
-			cargoContacto = $('#textinputCargoContacto').val();
-			telefonoContacto = $('#textinputTelefonoContacto').val();
-			correoContacto = $('#inputCorreoContacto').val();
-		} else {
-			nombreContacto = "";
-			cargoContacto = "";
-			telefonoContacto = "";
-			correoContacto = "";
-		}
+		var list_caracteristica = [];
 
+		$.each($('.input_caract'), function(){
+			list_caracteristica.push($(this).val());
+		});	
 
-		//Verificar si el registro de ejecución no tiene asistentes.
-		if (arrayAsistentes.length == 0) {
-			arrayAsistentes = ["1"];
-		}
+    var list = [];
 
+    $.each($("#detalleNivelCumplimiento :checked"), function() {
+      list.push($(this).val());
+    });
 
+    //Verificar si se ingresa contacto
+    if ($("input:radio[name=radiosAlgunContacto]:checked").val() == 1) {
+      nombreContacto = $("#textinputNombreContacto").val();
+      cargoContacto = $("#textinputCargoContacto").val();
+      telefonoContacto = $("#textinputTelefonoContacto").val();
+      correoContacto = $("#inputCorreoContacto").val();
+    } else {
+      nombreContacto = "";
+      cargoContacto = "";
+      telefonoContacto = "";
+      correoContacto = "";
+    }
 
-		$.post("php/ejecucion_Coordinadora.php", {
-				accion: 'guardarEjecucion',
-				fecha: $('#textFecha').val(),
-				hora: $('#selectbasicHoraEje').val() + ":" + $('#selectbasicMinEje').val(),
-				asistentes: $('#textinputAsisNum').val(),
-				detalleCumplimiento: list,
+    //Verificar si el registro de ejecución no tiene asistentes.
+    if (arrayAsistentes.length == 0) {
+      arrayAsistentes = ["1"];
+    }
+
+    $.post(
+      "php/ejecucion_Coordinadora.php",
+      {
+        accion: "guardarEjecucion",
+        fecha: $("#textFecha").val(),
+        hora:
+          $("#selectbasicHoraEje").val() + ":" + $("#selectbasicMinEje").val(),
+				asistentes: parseInt($("#total").text()),
+				tipopoblacion_asis: list_tipopoblacion,
+				caracteristicas_asis: list_caracteristica,
+        detalleCumplimiento: list,
 				nCumplimiento: $('input:radio[name=nCumplimiento]:checked').val(),
 				observaciones: $('#textareaObservaciones').val(),
 				idPlaneacion: idPlaneacion,
@@ -421,48 +499,50 @@ function guardarEjecucion() {
 
 function validarInformacion() {
 	var valido = true;
-	//radio
-	cont = 0;
-	//Verificar si se ingresa contacto
-	if ($('input:radio[name=radiosAlgunContacto]:checked').val() == 1) {
-		nombreContacto = $('#textinputNombreContacto').val();
-		cargoContacto = $('#textinputCargoContacto').val();
-		telefonoContacto = $('#textinputTelefonoContacto').val();
-		correoContacto = $('#inputCorreoContacto').val();
+	var mensaje = "";
+  //Verificar si se ingresa contacto
+  if ($("input:radio[name=radiosAlgunContacto]:checked").val() == 1) {
+    nombreContacto = $("#textinputNombreContacto").val();
+    cargoContacto = $("#textinputCargoContacto").val();
+    telefonoContacto = $("#textinputTelefonoContacto").val();
 
-		if (nombreContacto == "" || cargoContacto == "" || telefonoContacto == "") {
-			valido = false;
-		}
-	} else {
-		valido = true;
+    if (nombreContacto == "" || cargoContacto == "" || telefonoContacto == "") {
+      valido = false;
+    }
+  } else {
+    valido = true;
+  }
+  //radio
+  cont = 0;
+  $("#detalleNivelCumplimiento input:radio[name^=detalle_]:checked").each(
+    function(e) {
+      cont++;
+    }
+  );
+  if (cont == 4) {
+  } else {
+    valido = false;
 	}
-	$("#detalleNivelCumplimiento input:radio[name^=detalle_]:checked").each(function (e) {
-
-		cont++;
-	});
-	if (cont == 4) {
-
-	} else {
+	
+	if(parseInt($("#total-genero").text()) != parseInt($("#total").text())){
 		valido = false;
+		mensaje = "El total de tipo de población no coincide con el total de las características de la población.";
 	}
 
-	$("input[id^=text]").each(function (e) {
-		if ($(this).val() == "" && $(this).is(":visible")) { //alert("input"+$( this ).attr('id'));
-			valido = false;
-		}
-	});
+  $("input[id^=text]").each(function(e) {
+    if ($(this).val() == "" && $(this).is(":visible")) {
+      //alert("input"+$( this ).attr('id'));
+      valido = false;
+    }
+  });
 
-	var filesEvidencias = $('#file_fotograficas').fileinput('getFileStack');
-	var filesAsistencia = $('#file_asistencias').fileinput('getFileStack');
-	/* if(filesAsistencia.length == 0 /* || filesEvidencias.length == 0){
+  var filesEvidencias = $("#file_fotograficas").fileinput("getFileStack");
+  var filesAsistencia = $("#file_asistencias").fileinput("getFileStack");
+  /* if(filesAsistencia.length == 0/*  || filesEvidencias.length == 0){
 		valido = false;
 	} */
 
-	if (isNaN($('#textinputAsisNum').val())) {
-		valido = false;
-	}
-
-	return valido;
+  return [valido, mensaje];
 }
 
 
@@ -571,4 +651,67 @@ function confirmGuardar() {
 
 			}
 		});
+}
+
+function getTipopoblacion() {
+  var url = "php/ejecucion_Coordinadora.php";
+
+  $.post(url, { accion: "getTipopoblacion" }, function(data) {
+		asistentes = data.html;
+		if(data.html){
+			var table_asistentes = $('#tabla-asistente');
+			table_asistentes.dataTable().fnAddData(asistentes);
+		}
+		$(".input_cant").change(function() {
+			getTotalAsistentes();
+		});
+	}, "json");
+}
+
+function getCaracteristicasPoblacion() {
+  var url = "php/ejecucion_Coordinadora.php";
+
+  $.post(url, { accion: "getCaracteristicasPoblacion" }, function(data) {
+		caract = data.html;
+		if(data.html){
+			var table_caracteristicas = $('#tabla-caracteristica');
+			table_caracteristicas.dataTable().fnAddData(caract);
+		}
+		$(".input_caract").change(function() {
+			getCaracteristicas();
+		});		
+	}, "json");
+}
+
+// If value of td tabla-asistente changes
+
+function getTotalAsistentes() {
+  var asist = 0;
+  for (var i = 1; i < 4; i++) {
+    if ($("#inputcantidad" + i).val() == "") {
+      $("#inputcantidad" + i).val(0);
+    }
+  }
+  asist +=
+    parseInt($("#inputcantidad1").val()) +
+    parseInt($("#inputcantidad2").val()) +
+    parseInt($("#inputcantidad3").val());
+
+  $("#total").text(asist);
+}
+
+// If value of table genero changes
+
+function getCaracteristicas() {
+  var asist = 0;
+  for (var i = 1; i < 3; i++) {
+    if ($("#caracteristica" + i).val() == "") {
+      $("#caracteristica" + i).val(0);
+    }
+  }
+  asist +=
+		parseInt($("#caracteristica1").val()) + parseInt($("#caracteristica2").val()) + 
+		parseInt($("#caracteristica3").val()) + parseInt($("#caracteristica4").val());
+
+  $("#total-genero").text(asist);
 }

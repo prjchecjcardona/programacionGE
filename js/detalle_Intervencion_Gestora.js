@@ -270,17 +270,18 @@ function identificarEjecutadas(data, ejecutadas) {
 		if (isEjecutada) {
 			$($('#coordinadora_tabla tbody').children()[index]).addClass('rowEjecutada');
 			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').removeClass('fa-book');
+			$($('#coordinadora_tabla tbody').children()[index]).find('button.elejec').removeClass('disabled');
 			/* 			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-search');
 			 */
 			//Esta es para el perfil de gestora
 			$($('#coordinadora_tabla tbody').children()[index]).find('span.ejec').addClass('fa-check');
-			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejec_btn').addClass('disabled');
+			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejec_btn').removeClass('disabled');
 
 			$($('#coordinadora_tabla tbody').children()[index]).find('a.ejecucion').click(function () {
 				let data = table.row($(this).parents('tr')).data();
 				idPlaneacion = data[0];
 				window.location.href = "ejecucion_Gestora.html?isEjecutada=1&idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
-			})
+			});
 			$($('#coordinadora_tabla tbody').children()[index]).find('a.asistencia').removeClass('disabled');
 			$($('#coordinadora_tabla tbody').children()[index]).find('a.evaluacion').removeClass('disabled');
 		} else {
@@ -288,32 +289,33 @@ function identificarEjecutadas(data, ejecutadas) {
 				let data = table.row($(this).parents('tr')).data();
 				idPlaneacion = data[0];
 				window.location.href = "ejecucion_Gestora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
-			})
+			});
+			
 		}
 		$($('#coordinadora_tabla tbody').children()[index]).find('a.asistencia').click(function () {
 			let data = table.row($(this).parents('tr')).data();
 			idPlaneacion = data[0];
 			window.location.href = "registro_Asistencia_Gestora.html?idPlaneacion=" + idPlaneacion + "&idIntervencion=" + idIntervencion + "&id_zona=" + idZona;
-		})
+		});
 		$($('#coordinadora_tabla tbody').children()[index]).find('button.elplan').click(function () {
 			let data = table.row($(this).parents('tr')).data();
 			idPlaneacion = data[0];
 			eliminarPlaneacion(idPlaneacion);
-		})
+		});
 		$($('#coordinadora_tabla tbody').children()[index]).find('button.elejec').click(function () {
 			let data = table.row($(this).parents('tr')).data();
 			idPlaneacion = data[0];
 			eliminarEjecucion(idPlaneacion);
-		})
+		});
 		$($('#coordinadora_tabla tbody').children()[index]).find('button.edplan').click(function () {
 			let data = table.row($(this).parents('tr')).data();
 			idPlaneacion = data[0];
 			editarPlaneacionLink(idPlaneacion);
-		})
+		});
 		$($('#coordinadora_tabla tbody').children()[index]).find('button.edejec').click(function () {
 			let data = table.row($(this).parents('tr')).data();
 			idPlaneacion = data[0];
-		})
+		});
 
 	});
 
@@ -326,7 +328,7 @@ $("#btnNuevaPlaneacion").click(function () {
 });
 
 function navegar_home() {
-	idZona = $.get("id_zona")
+	idZona = $.get("id_zona");
 	window.location.href = "home_Gestora.html?id_zona=" + idZona;
 }
 
@@ -337,8 +339,8 @@ var dropdown_button =
 	'<div class="dropdown-menu" aria-labelledby="dropdownMenu2">' +
 	'<button class="elplan dropdown-item" type="button"><span class="plan fa fa-close"></span>&nbsp; Planeación</button>' +
 	'<button class="edplan dropdown-item" type="button"><span class="plan fa fa-edit"></span>&nbsp; Planeación</button>' +
-	'<button class="elejec dropdown-item" type="button"><span class="ejecu fa fa-close"></span>&nbsp; Ejecución</button>' +
-	'<button class="edejec dropdown-item" type="button"><span class="ejecu fa fa-edit"></span>&nbsp; Ejecución</button>' +
+	/* '<button class="elejec dropdown-item disabled" type="button"><span class="ejecu fa fa-close"></span>&nbsp; Ejecución</button>' +
+	'<button class="edejec dropdown-item" type="button"><span class="ejecu fa fa-edit"></span>&nbsp; Ejecución</button>' + */
 	'</div>' +
 	'</div>';
 
