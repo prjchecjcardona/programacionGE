@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Banco de Herramientas</title>
+  <link rel="shortcut icon" href="img/Martz90-Circle-Books.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/foundation.min.css">
+  <link rel="stylesheet" href="css/animate.min.css">
+  <link rel="stylesheet" href="fonts/foundation-icons/foundation-icons.css">
+  <link rel="stylesheet" href="css/contenido.css">
+</head>
+
+<body>
+
+  <div class="grid-y grid-padding-y" style="height: 100%">
+    <div id="side" class="sidenav">
+      <div id="img-sidebar">
+        <img src="img/chec.png" alt="CHEC">
+      </div>
+      <a href="index.html">
+        <img class="sidebar" data-alt-src="img/5-verde.png" src="img/1.png" height="40" alt="Inicio">Inicio</a>
+      <a href="generalidades.html">
+        <img class="sidebar" data-alt-src="img/5-verde.png" src="img/2.png" height="40" alt="Inicio">Generalidades</a>
+      <a href="criterios_conceptuales.html">
+        <img class="sidebar" data-alt-src="img/5-verde.png" src="img/3.png" height="40" alt="Inicio">Criterios Conceptuales</a>
+      <a href="herramientas_didacticas.html">
+        <img class="sidebar" data-alt-src="img/5-verde.png" src="img/4.png" height="40" alt="Inicio">Herramientas didácticas</a>
+      <a href="glosario.html">
+        <img class="sidebar" data-alt-src="img/5-verde.png" src="img/5.png" height="40" alt="Inicio">Glosario</a>
+      <a href="recursos.html">
+        <img class="sidebar" data-alt-src="img/5-verde.png" src="img/6.png" height="40" alt="Inicio">Recursos</a>
+    </div>
+
+    <!-- MAIN -->
+    <div id="main_generalidades">
+      <div id="main-herramientas" class="grid-y">
+        <div id="filtros-herramientas" class="cell small-3 medium-3 large-3">
+          <div class="row">
+              <button class="hollow button ficheros-button" data-open="subir-fichero">Subir Recurso</button>
+          </div>
+          <div class="row">
+            <label>Seleccione la competencia
+              <select id="competencia" class="fp filtros_competencia">
+              </select>
+            </label>
+            <label>Seleccione el tema
+              <select id="tema" class="fp filtros_tema">
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Seleccione la zona del gestor
+              <select id="zona" class="fp filtros_zona">
+              </select>
+            </label>
+            <label>Seleccione el indicador
+              <select id="indicador" class="fp filtros_indicador">
+              </select>
+            </label>
+          </div>
+        </div>
+        <div id="ficheros-display" class="cell small-9 medium-9 large-9">
+          <div id="area-ficheros">
+          </div>
+          <div id="pdf">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="reveal animated fadeInDown" id="subir-fichero" data-reveal>
+    <div id="header-modal">
+      Cargar Archivo
+    </div>
+    <div id="my-form">
+      <form>
+        <div class="grid-container">
+          <div class="grid-x grid-padding-x">
+            <div class="medium-12 cell">
+            </div>
+          </div>
+        </div>
+        <label>Selecciona la competencia
+          <select id="sfichero_competencia" class="sf filtros_competencia">
+          </select>
+        </label>
+        <label>Selecciona el indicador
+          <select id="sfichero_indicador" class="sf filtros_indicador">
+          </select>
+        </label>
+        <label>Selecciona el tema
+          <select id="sfichero_tema" class="sf filtros_tema">
+          </select>
+        </label>
+        <label> Selecciona la zona del gestor
+          <select id="sfichero_zona" class="sf filtros_zona">
+          </select>
+        </label>
+        <input id="button-subir_fichero" type="file" multiple>
+
+        <button id="generalidades-button" class="hollow button" href="#">Cargar Recursos</button>
+      </form>
+
+      <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+
+  </div>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="js/vendor/what-input.js"></script>
+  <script src="js/vendor/foundation.js"></script>
+  <script src="js/herramientas.js"></script>
+</body>
+
+</html>
