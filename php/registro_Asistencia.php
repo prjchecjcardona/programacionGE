@@ -26,7 +26,7 @@ if (isset($_POST["accion"])) {
         cargarAsistenteFormulario($_POST["idAsistente"]);
     }
     if ($_POST["accion"] == "actualizarAsistente"){
-      actualizarAsistente($_POST["datos"]);
+        actualizarAsistente($_POST["datos"]);
     }
 
 }

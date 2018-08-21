@@ -193,7 +193,8 @@ function cargarInformacionEnTabla(data) { //alert(data);
 			{ title: "Registrar Asistencia", data: null, className: "dt-center", defaultContent: '<a href="#" class="disabled asistencia ejec_btn btn btn-sm btn-success" alt="Asistencia"><span class="ejec fa fa-calendar-check-o"></span></a>' },
 			{ title: "Registrar Evaluación", data: null, className: "dt-center", defaultContent: '<a href="menu_Evaluacion_Coordinadora.html" id="evaluacion" class="evaluacion disabled eval_btn btn btn-sm btn-success" alt="Ejecución"><span class="eval fa fa-book"></span></a>' },
 		],
-		"paging": true,
+		/* Disable paging */
+		"paging": false,
 		"info": false,
 		"columnDefs": [
 			{ "className": "dt-left", "targets": "_all" }, //alinear texto a la izquierda
