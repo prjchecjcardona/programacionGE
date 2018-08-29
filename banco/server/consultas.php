@@ -14,11 +14,25 @@ function executeQuery($con, $sql)
     }
 }
 
+function executeQueryInsert($con, $sql)
+{
+    $data = array('success'=>"", 'message'=>"");
+    $result = $con->query($sql);
+    if($result){
+        $data['success'] = true;
+        $data['message'] = 'Insertado exitosamente';        
+    }else{
+        $data['success'] = false;
+        $data['message'] = 'Error!: '. $con->errorInfo()[2];
+    }
+    return $data;
+}
+
 function getRecursosQuery($con)
 {
     $sql = "SELECT id_archivo, rec.recurso_url || '/' || nombre_archivo AS recurso_url, nombre_archivo, rec.icon, rec.id_recurso
-  FROM archivos_recursos ar
-  JOIN recursos rec ON rec.id_recurso = ar.id_recurso";
+    FROM archivos_recursos ar
+    JOIN recursos rec ON rec.id_recurso = ar.id_recurso";
 
     return executeQuery($con, $sql);
 }
@@ -90,7 +104,7 @@ function getTemasQuery($con, $competencia)
 function getZonasQuery($con)
 {
     $sql = "SELECT id_zona, zonas
-  FROM zonas";
+    FROM zonas";
 
     return executeQuery($con, $sql);
 }
@@ -102,8 +116,16 @@ function getIndicadoresQuery($con)
     return executeQuery($con, $sql);
 }
 
-function getListaRecursosQuery($con){
+function getListaRecursosQuery($con)
+{
     $sql = "SELECT id_recurso, recurso, recurso_url FROM recursos";
 
     return executeQuery($con, $sql);
+}
+
+function subirArchivoQuery($con, $archivo, $recurso)
+{
+    $sql = "INSERT INTO archivos_recursos (nombre_archivo, id_recurso) VALUES ($archivo, $recurso)";
+
+    return executeQueryInsert($con, $sql);
 }

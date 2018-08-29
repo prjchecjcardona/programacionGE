@@ -31,7 +31,7 @@ if(isset($_FILES['archivo'])){
         $sql = "INSERT INTO evolucion_estado_comportamientos VALUES (nextval('sec_evolucion_estado'), '$img_url_paraBD', $idIntervencion, CURRENT_DATE);";
         
         if ($rs = $con->query($sql)) {
-           
+
         }else {
             $data['error'] ="Ocurrió un error al subir los archivos";
         }

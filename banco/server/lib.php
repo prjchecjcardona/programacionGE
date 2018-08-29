@@ -58,4 +58,8 @@ class geBanco
     public function getListaRecursos(){
         return getListaRecursosQuery($this->con);
     }
+
+    public function subirArchivo($archivo, $recurso){
+        return subirArchivoQuery($this->con, $archivo, $recurso);
+    }
 }

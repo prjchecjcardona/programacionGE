@@ -4,20 +4,21 @@ $(function() {
   getZonas();
   getIndicadores();
   getFicheros();
-  
+
+
+
   /* ONCLICKS */
-  $(".a_download").click(function(){
+  $(".a_download").click(function() {
     var url = window.location.hash.substr(1);
     getPDF(url);
   });
-
 });
 
 function load() {
   $("body").addClass("animated fadeIn");
 }
 
-$('.sf').change(function(){
+$(".sf").change(function() {
   var competencia = $("#sfichero_competencia").val();
   var tema = $("#sfichero_tema").val();
   var zona = $("#sfichero_zona").val();
@@ -41,8 +42,8 @@ $(".fp").change(function() {
   getFicheros(competencia, tema, zona, indicador);
 });
 
-function getPDF(src){
-  $('#pdf').html(
+function getPDF(src) {
+  $("#pdf").html(
     `<embed src="${src}" type="application/pdf" width="90%" height="90%">`
   );
 }
@@ -130,7 +131,9 @@ function getIndicadores() {
 }
 
 function getFicheros(competencia, tema, zona, indicador) {
-  $("#area-ficheros").html(`<img id="codificacion-img" src="img/codificacion.PNG" alt="">`);
+  $("#area-ficheros").html(
+    `<img id="codificacion-img" src="img/codificacion.PNG" alt="">`
+  );
   $("#pdf").html("");
   $.ajax({
     type: "POST",
@@ -145,7 +148,9 @@ function getFicheros(competencia, tema, zona, indicador) {
     success: function(response) {
       response.forEach(element => {
         $("#area-ficheros").append(
-          `<a class="a_download" href="#${element.fichero_url}">${element.codigo}</a>`
+          `<a class="a_download" href="#${element.fichero_url}">${
+            element.codigo
+          }</a>`
         );
       });
 
@@ -155,15 +160,13 @@ function getFicheros(competencia, tema, zona, indicador) {
         $("#area-ficheros").html(
           '<p class="p-card">No hay ficheros para este filtro</p>'
         );
-        $("#pdf").html(
-          '<p class="p-card">No hay pdfs</p>'
-        );
+        $("#pdf").html('<p class="p-card">No hay pdfs</p>');
       }
     }
   });
 }
 
-function getFicheroCodigo(competencia, tema, zona, indicador){
+function getFicheroCodigo(competencia, tema, zona, indicador) {
   $.ajax({
     type: "POST",
     url: "server/getFicheros.php",
@@ -177,7 +180,9 @@ function getFicheroCodigo(competencia, tema, zona, indicador){
     success: function(response) {
       response.forEach(element => {
         $("#area-ficheros").append(
-          `<a class="a_download" href="#${element.fichero_url}">${element.codigo}</a>`
+          `<a class="a_download" href="#${element.fichero_url}">${
+            element.codigo
+          }</a>`
         );
       });
 
@@ -187,21 +192,19 @@ function getFicheroCodigo(competencia, tema, zona, indicador){
         $("#area-ficheros").html(
           '<p class="p-card">No hay ficheros para este filtro</p>'
         );
-        $("#pdf").html(
-          '<p class="p-card">No hay pdfs</p>'
-        );
+        $("#pdf").html('<p class="p-card">No hay pdfs</p>');
       }
     }
   });
 }
 
-function fichas(){
-  $(".a_download").click(function(){
-    if($('.a_download').hasClass('selected')){
-      $('.a_download').removeClass('selected');
-      $(this).addClass('selected');
-    }else{
-      $(this).addClass('selected');
+function fichas() {
+  $(".a_download").click(function() {
+    if ($(".a_download").hasClass("selected")) {
+      $(".a_download").removeClass("selected");
+      $(this).addClass("selected");
+    } else {
+      $(this).addClass("selected");
     }
     var url = window.location.hash.substr(1);
     getPDF(url);

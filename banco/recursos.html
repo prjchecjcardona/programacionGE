@@ -96,7 +96,7 @@
           Cargar Archivo
         </div>
         <div id="my-form">
-          <form>
+          <form action="server/upload.php" method="POST" enctype="multipart/form-data" id="form-recursos">
             <div class="grid-container">
               <div class="grid-x grid-padding-x">
                 <div class="medium-12 cell">
@@ -104,12 +104,12 @@
               </div>
             </div>
             <label>¿A qué módulo desea subir el archivo?
-              <select id="select_recursos">
+              <select id="select_recursos" name="recurso">
               </select>
             </label>
-            <input id="button-subir_recurso" type="file" multiple>
+            <input id="button-subir_recurso" name="archivo" type="file" multiple onchange="getFileNames()">
 
-            <button id="generalidades-button" class="hollow button" href="#">Cargar Recursos</button>
+            <button id="generalidades-button" type="submit" class="hollow button" href="#">Cargar Recursos</button>
           </form>
 
           <button class="close-button" data-close aria-label="Close modal" type="button">
