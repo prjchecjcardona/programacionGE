@@ -107,6 +107,7 @@
             </div>
             <label>¿A qué módulo desea subir el archivo?
               <select id="select_recursos" name="recurso">
+                <option value="" selected>Seleccione el tema</option>
               </select>
             </label>
             <input id="button-subir_recurso" name="archivo" type="file" multiple onchange="getFileNames()">
@@ -128,6 +129,7 @@
   <script src="js/vendor/what-input.js"></script>
   <script src="js/vendor/foundation.js"></script>
   <script src="js/recursos.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 
 </html>

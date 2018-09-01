@@ -4,8 +4,8 @@ include "lib.php";
 
 $api = new geBanco();
 
-$errors = array();
-$data = array();
+$errors = array("archivo" => "", "recurso" => "");
+$data = array('success' => "", 'errors' => "");
 
 // Validate the variables
 
@@ -23,14 +23,20 @@ if(empty($_POST['recurso'])){
 
 // Return response 
 
-if(! empty($errors)){
+if(empty($errors['archivo'] == "" || $errors['recurso'] == "")){
 
   $data['success'] = false;
   $data['errors'] = $errors;
 
 }else{
 
-  $json = $api->subirArchivo($archivo, $recurso);
+  if(is_array($archivo)){
+    $archivoLength = sizeof($archivo);
+    echo $archivoLength;
+    for($i = 0; $i < $archivoLength; $i++){
+      $json = $api->subirArchivo($archivo[$i], $recurso);
+    }
+  }; 
 
 }
 

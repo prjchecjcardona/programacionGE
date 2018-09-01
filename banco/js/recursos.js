@@ -59,7 +59,6 @@ function getRecursos() {
 }
 
 function getListaRecursos() {
-  $("#select_recursos").html("");
   $.ajax({
     type: "POST",
     url: "server/getListaRecursos.php",
@@ -84,20 +83,21 @@ function getListaRecursos() {
 }
 
 $("#form-recursos").submit(function(event) {
+
   /* Tomar un array con los nombre los archivos */
   var x = document.getElementById("button-subir_recurso");
-  var fileName = "";
   var files = [];
 
   if ("files" in x) {
     var inputLength = x.files.length;
     for (var i = 0; i < inputLength; i++) {
       files.push(x.files[i].name);
+      console.log(x.files[i].name)
     }
   }
 
   var formData = {
-    archivo: files, /* Sends array files through POST */
+    archivo: files /* Sends array files through POST */,
     recurso: $("select[name=recurso]").val()
   };
 
@@ -108,7 +108,13 @@ $("#form-recursos").submit(function(event) {
     dataType: "json",
     encode: true
   }).done(function(data) {
-    console.log(data);
+    console.log(data.errors.archivo);
+/*     swal({
+      title: "Ups!",
+      text: display,
+      icon: "error",
+      button: "OK"
+    }); */
   });
 
   event.preventDefault();

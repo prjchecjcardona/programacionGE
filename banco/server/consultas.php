@@ -16,14 +16,14 @@ function executeQuery($con, $sql)
 
 function executeQueryInsert($con, $sql)
 {
-    $data = array('success'=>"", 'message'=>"");
+    $data = array('success' => "", 'message' => "");
     $result = $con->query($sql);
-    if($result){
+    if ($result) {
         $data['success'] = true;
-        $data['message'] = 'Insertado exitosamente';        
-    }else{
+        $data['message'] = 'Insertado exitosamente';
+    } else {
         $data['success'] = false;
-        $data['message'] = 'Error!: '. $con->errorInfo()[2];
+        $data['message'] = 'Error!: ' . $con->errorInfo()[2];
     }
     return $data;
 }
@@ -87,7 +87,7 @@ function getFicherosQuery($con, $competencia, $tema, $zona, $indicador)
 function getCompetenciasQuery($con)
 {
     $sql = "SELECT id_competencia, competencia
-  FROM competencias";
+    FROM competencias";
 
     return executeQuery($con, $sql);
 }
@@ -95,8 +95,8 @@ function getCompetenciasQuery($con)
 function getTemasQuery($con, $competencia)
 {
     $sql = "SELECT id_temas, temas
-  FROM temas
-  WHERE compe_por_compo_compe_id_compe = $competencia";
+    FROM temas
+    WHERE compe_por_compo_compe_id_compe = $competencia";
 
     return executeQuery($con, $sql);
 }
@@ -126,6 +126,7 @@ function getListaRecursosQuery($con)
 function subirArchivoQuery($con, $archivo, $recurso)
 {
     $sql = "INSERT INTO archivos_recursos (nombre_archivo, id_recurso) VALUES ($archivo, $recurso)";
+    var_dump($sql);
 
     return executeQueryInsert($con, $sql);
 }

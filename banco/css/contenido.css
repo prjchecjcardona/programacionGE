@@ -15,7 +15,7 @@ body {
 /* Sidebar */
 .sidenav {
   height: 100%;
-  width: 16%;
+  width: 250px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -31,11 +31,12 @@ body {
 .sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 15px;
   color: #fff;
   display: block;
   transition: 0.3s;
   font-family: checfont1;
+  width: 100%;
 }
 
 .sidenav a:hover {
@@ -45,7 +46,7 @@ body {
 }
 
 .main {
-  margin-left: 160px; /* Same as the width of the sidenav */
+  margin-left: 250px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
 }
@@ -68,8 +69,8 @@ body {
   padding-bottom: 4em;
 }
 
-#img-sidebar > img {
-  height: 3.5em;
+#img-sidebar img {
+  width: 92%;
 }
 
 div#main_generalidades {
@@ -79,7 +80,7 @@ div#main_generalidades {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding-left: 16%;
+  padding-left: 250px;
 }
 
 div#generalidades {
