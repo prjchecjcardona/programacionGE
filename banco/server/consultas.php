@@ -125,7 +125,7 @@ function getListaRecursosQuery($con)
 
 function subirArchivoQuery($con, $archivo, $recurso)
 {
-    $sql = "INSERT INTO archivos_recursos (nombre_archivo, id_recurso) VALUES ($archivo, $recurso)";
+    $sql = "INSERT INTO archivos_recursos (nombre_archivo, id_recurso) VALUES ('$archivo', $recurso)";
     var_dump($sql);
 
     return executeQueryInsert($con, $sql);

@@ -156,6 +156,10 @@ button#generalidades-button:hover {
   color: white;
 }
 
+.swal-text{
+  text-align: center;
+}
+
 .accordion {
   border-radius: 5px;
   background-color: #595959cc;

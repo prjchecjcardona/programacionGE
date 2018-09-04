@@ -10,9 +10,6 @@ $(function() {
     getListaRecursos();
   });
 
-  $("input[name=archivo]").change(function() {
-    getFileNames();
-  });
 });
 
 function load() {
@@ -83,52 +80,23 @@ function getListaRecursos() {
 }
 
 $("#form-recursos").submit(function(event) {
-
-  /* Tomar un array con los nombre los archivos */
-  var x = document.getElementById("button-subir_recurso");
-  var files = [];
-
-  if ("files" in x) {
-    var inputLength = x.files.length;
-    for (var i = 0; i < inputLength; i++) {
-      files.push(x.files[i].name);
-      console.log(x.files[i].name)
-    }
-  }
-
-  var formData = {
-    archivo: files /* Sends array files through POST */,
-    recurso: $("select[name=recurso]").val()
-  };
-
+  
   $.ajax({
     type: "POST",
     url: "server/upload.php",
-    data: formData,
+    data: new FormData(this),
     dataType: "json",
     encode: true
   }).done(function(data) {
-    console.log(data.errors.archivo);
-/*     swal({
-      title: "Ups!",
-      text: display,
-      icon: "error",
-      button: "OK"
-    }); */
-  });
-
-  event.preventDefault();
-});
-
-function getFileNames() {
-  var x = document.getElementById("button-subir_recurso");
-  var fileName = "";
-
-  if ("files" in x) {
-    var inputLength = x.files.length;
-    for (var i = 0; i < inputLength; i++) {
-      var fileInput = x.files[i].name;
-      console.log(inputLength + fileInput);
+    var errors = data.errors;
+    if(errors.archivo != "" && errors.recurso != ""){
+      var display = `${errors.archivo} - ${errors.recurso}`
+      swal({
+        title: "Ups!",
+        text: display,
+        icon: "error",
+        button: "OK"
+      });
     }
-  }
-}
+  });
+});
