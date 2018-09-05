@@ -4,59 +4,55 @@ include "lib.php";
 
 $api = new geBanco();
 
-$errors = array("archivo" => "", "recurso" => "");
-$data = array('success' => "", 'errors' => "");
+$recurso = $_POST['recurso'];
 
-// Validate the variables
+if (!empty($_FILES['files']['name'][0]) && !empty($recurso)) {
 
-if (empty($_POST['archivo'])) {
-    $errors['archivo'] = 'No has seleccionado el archivo';
-} else {
-    $archivo = $_POST['archivo'];
-}
+    $files = $_FILES['files'];
+    $uploaded = array();
+    $failed = array();
+    $data = array('uploaded' => $uploaded, 'failed' => $failed);
 
-if (empty($_POST['recurso'])) {
-    $errors['recurso'] = 'No has seleccionado el recurso a la cual deseas subir';
-} else {
-    $recurso = $_POST['recurso'];
-}
+    foreach ($files['name'] as $position => $file_name) {
 
-// Return response
+        $file_tmp = $files['tmp_name'][$position];
+        $file_size = $files['size'][$position];
+        $file_error = $files['error'];
+        $file_name = $files['name'][$position];
 
-if (empty($errors['archivo'] == "" || $errors['recurso'] == "")) {
-
-    $data['success'] = false;
-    $data['errors'] = $errors;
-
-} else {
-
-    /* if (is_array($archivo)) {
-        $archivoLength = sizeof($archivo);
-        echo $archivoLength;
-        for ($i = 0; $i < $archivoLength; $i++) {
-            $json = $api->subirArchivo($archivo[$i], $recurso);
+        switch ($recurso) {
+            case '1':
+                $file_destination = '../recursos/documentos/' . $file_name;
+                break;
+            case '2':
+                $file_destination = '../recursos/videos/' . $file_name;
+                break;
+            case '3':
+                $file_destination = '../recursos/imagenes/' . $file_name;
+                break;
+            case '4':
+                $file_destination = '../recursos/presentaciones/' . $file_name;
+                break;
+            case '5':
+                $file_destination = '../recursos/juegos/' . $file_name;
+                break;
+            case '6':
+                $file_destination = '../recursos/manuales/' . $file_name;
+                break;
+            case '7':
+                $file_destination = '../recursos/audios/' . $file_name;
+                break;
         }
-    } */
 
-    echo '<pre>', print_r($_FILES), '</pre>';
-
-/*     $target_dir = "recursos/";
-    $target_file = $target_dir . basename($_FILES['archivo']["name"]);
-    echo $target_file;
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-// Check if image file is a actual image or fake image
-    if (isset($_POST['archivo'])) {
-        $check = getimagesize($_FILES["archivo"]["tmp_name"]);
-        if ($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".";
-            $uploadOk = 1;
+        if (move_uploaded_file($file_tmp, $file_destination)) {
+            $json = $api->subirArchivo($file_name, $recurso);
         } else {
-            echo "File is not an image.";
-            $uploadOk = 0;
+            $json = $data['failed'][$position] = $file_name . ' falló para cargar.';
         }
-    } */
+    }
 
+} else {
+    echo 'No se han seleccionado archivos';
 }
 
-echo json_encode($data);
+echo json_encode($json);

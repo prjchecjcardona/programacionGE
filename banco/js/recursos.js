@@ -9,7 +9,6 @@ $(function() {
   $(".recursos-button").click(function() {
     getListaRecursos();
   });
-
 });
 
 function load() {
@@ -17,6 +16,7 @@ function load() {
 }
 
 function getRecursos() {
+  $('.tabs-panel').html("");
   $.ajax({
     type: "POST",
     url: "server/getRecursos.php",
@@ -80,22 +80,33 @@ function getListaRecursos() {
 }
 
 $("#form-recursos").submit(function(event) {
-  
+  event.preventDefault();
   $.ajax({
     type: "POST",
     url: "server/upload.php",
     data: new FormData(this),
     dataType: "json",
-    encode: true
+    encode: true,
+    contentType: false,
+    processData: false
   }).done(function(data) {
-    var errors = data.errors;
-    if(errors.archivo != "" && errors.recurso != ""){
-      var display = `${errors.archivo} - ${errors.recurso}`
+    if(data.success){
       swal({
-        title: "Ups!",
-        text: display,
+        title: "Listo!",
+        text: data.message,
+        icon: "success",
+        button: "Ok",
+      }).then(()=>{
+        getRecursos();
+      });
+    }else{
+      swal({
+        title: "Oh-oh!",
+        text: data.message,
         icon: "error",
-        button: "OK"
+        button: "Ok",
+      }).then(()=>{
+        getRecursos();
       });
     }
   });

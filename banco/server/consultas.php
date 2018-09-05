@@ -23,7 +23,7 @@ function executeQueryInsert($con, $sql)
         $data['message'] = 'Insertado exitosamente';
     } else {
         $data['success'] = false;
-        $data['message'] = 'Error!: ' . $con->errorInfo()[2];
+        $data['message'] = 'Ya existen los archivos';
     }
     return $data;
 }
@@ -118,15 +118,16 @@ function getIndicadoresQuery($con)
 
 function getListaRecursosQuery($con)
 {
-    $sql = "SELECT id_recurso, recurso, recurso_url FROM recursos";
+    $sql = "SELECT id_recurso, recurso, recurso_url FROM recursos WHERE id_recurso <> 8 ORDER BY id_recurso ASC";
 
     return executeQuery($con, $sql);
 }
 
+//function subirFicheroQuery($con, $)
+
 function subirArchivoQuery($con, $archivo, $recurso)
 {
     $sql = "INSERT INTO archivos_recursos (nombre_archivo, id_recurso) VALUES ('$archivo', $recurso)";
-    var_dump($sql);
 
     return executeQueryInsert($con, $sql);
 }

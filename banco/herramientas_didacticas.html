@@ -106,9 +106,15 @@
           <select id="sfichero_zona" class="sf filtros_zona">
           </select>
         </label>
-        <input id="button-subir_fichero" type="file" multiple>
 
-        <button id="generalidades-button" class="hollow button" href="#">Cargar Recursos</button>
+        <div id="gc">
+          <button id="generar-cod" class="hollow button">Generar Codigo</button>
+          <span id="codigo">...</span>
+        </div>
+
+        <input id="button-subir_fichero" type="file" name="fichero">
+
+        <button id="generalidades-button" class="hollow button" >Cargar Recursos</button>
       </form>
 
       <button class="close-button" data-close aria-label="Close modal" type="button">

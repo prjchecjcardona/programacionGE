@@ -5,27 +5,21 @@ $(function() {
   getIndicadores();
   getFicheros();
 
-
-
   /* ONCLICKS */
   $(".a_download").click(function() {
     var url = window.location.hash.substr(1);
     getPDF(url);
   });
+
+  $("#generar-cod").click(function(e){
+    e.preventDefault();
+    countFicheros();
+  })
 });
 
 function load() {
   $("body").addClass("animated fadeIn");
 }
-
-$(".sf").change(function() {
-  var competencia = $("#sfichero_competencia").val();
-  var tema = $("#sfichero_tema").val();
-  var zona = $("#sfichero_zona").val();
-  var indicador = $("#sfichero_indicador").val();
-
-  getFicheros(competencia, tema, zona, indicador);
-});
 
 $(".filtros_competencia").change(function() {
   var competencia = $(this).val();
@@ -66,6 +60,35 @@ function getCompetencias() {
         );
       });
     }
+  });
+}
+
+function countFicheros(){
+  var data = {
+    zona : $('#sfichero_zona').val()
+  }
+  $.ajax({
+    type: "POST",
+    url: "server/getFicheros.php",
+    data: data,
+    dataType: "json",
+    success: function (response) {
+      var length = response.length;
+
+      var competencia = $('#sfichero_competencia option:selected').text();
+      var tema = $("#sfichero_tema").val();
+      var zona = $("#sfichero_zona").val();
+      var indicador = $("#sfichero_indicador option:selected").text();
+
+      $('#codigo').html("");
+      $('#codigo').append(`${competencia.charAt(1)}_`);
+      $('#codigo').append(`${indicador.charAt(1)}`);
+      $('#codigo').append(`${tema}_`);
+      $('#codigo').append(`${length + 1}_`);
+      $('#codigo').append(`Z${zona}`);
+    }
+
+    
   });
 }
 
@@ -146,6 +169,7 @@ function getFicheros(competencia, tema, zona, indicador) {
     },
     dataType: "json",
     success: function(response) {
+      console.log(response.length);
       response.forEach(element => {
         $("#area-ficheros").append(
           `<a class="a_download" href="#${element.fichero_url}">${
