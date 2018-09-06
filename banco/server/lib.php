@@ -31,35 +31,48 @@ class geBanco
         }
     }
 
-    public function getRecursos(){
+    public function getRecursos()
+    {
         return getRecursosQuery($this->con);
     }
 
-    public function getFicheros($competencia, $tema, $zona, $indicador){
+    public function getFicheros($competencia, $tema, $zona, $indicador)
+    {
         return getFicherosQuery($this->con, $competencia, $tema, $zona, $indicador);
     }
 
-    public function getCompetencias(){
+    public function getCompetencias()
+    {
         return getCompetenciasQuery($this->con);
     }
 
-    public function getTemas($competencia){
+    public function getTemas($competencia)
+    {
         return getTemasQuery($this->con, $competencia);
     }
 
-    public function getZonas(){
+    public function getZonas()
+    {
         return getZonasQuery($this->con);
     }
 
-    public function getIndicadores(){
+    public function getIndicadores()
+    {
         return getIndicadoresQuery($this->con);
     }
 
-    public function getListaRecursos(){
+    public function getListaRecursos()
+    {
         return getListaRecursosQuery($this->con);
     }
 
-    public function subirArchivo($archivo, $recurso){
+    public function subirArchivo($archivo, $recurso)
+    {
         return subirArchivoQuery($this->con, $archivo, $recurso);
+    }
+
+    public function subirFichero($competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador)
+    {
+        return subirFicheroQuery($this->con, $competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador);
     }
 }

@@ -11,10 +11,10 @@ $(function() {
     getPDF(url);
   });
 
-  $("#generar-cod").click(function(e){
+  $("#generar-cod").click(function(e) {
     e.preventDefault();
     countFicheros();
-  })
+  });
 });
 
 function load() {
@@ -63,34 +63,46 @@ function getCompetencias() {
   });
 }
 
-function countFicheros(){
+function countFicheros() {
   var data = {
-    zona : $('#sfichero_zona').val()
-  }
+    zona: $("#sfichero_zona").val()
+  };
   $.ajax({
     type: "POST",
     url: "server/getFicheros.php",
     data: data,
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       var length = response.length;
 
-      var competencia = $('#sfichero_competencia option:selected').text();
+      var competencia = $("#sfichero_competencia option:selected").text();
       var tema = $("#sfichero_tema").val();
       var zona = $("#sfichero_zona").val();
       var indicador = $("#sfichero_indicador option:selected").text();
 
-      $('#codigo').html("");
-      $('#codigo').append(`${competencia.charAt(1)}_`);
-      $('#codigo').append(`${indicador.charAt(1)}`);
-      $('#codigo').append(`${tema}_`);
-      $('#codigo').append(`${length + 1}_`);
-      $('#codigo').append(`Z${zona}`);
+      $("#codigo").val(
+        `${competencia.charAt(1)}_${indicador.charAt(1)}${tema}_${length +
+          1}_Z${zona}`
+      );
     }
-
-    
   });
 }
+
+$("#form-ficheros").submit(function(event) {
+  event.preventDefault();
+  $.ajax({
+    type: "POST",
+    url: "server/uploadFichero.php",
+    data: new FormData(this),
+    dataType: "json",
+    encode: true,
+    contentType: false,
+    processData: false,
+    success: function(response) {
+      console.log(response);
+    }
+  });
+});
 
 function getZonas() {
   $(".filtros_zona").html('<option value="0" >No filtro</option>');
@@ -169,7 +181,6 @@ function getFicheros(competencia, tema, zona, indicador) {
     },
     dataType: "json",
     success: function(response) {
-      console.log(response.length);
       response.forEach(element => {
         $("#area-ficheros").append(
           `<a class="a_download" href="#${element.fichero_url}">${

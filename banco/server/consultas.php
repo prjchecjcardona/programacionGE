@@ -123,7 +123,13 @@ function getListaRecursosQuery($con)
     return executeQuery($con, $sql);
 }
 
-//function subirFicheroQuery($con, $)
+function subirFicheroQuery($con, $competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador){
+
+    $sql = "INSERT INTO ficheros (id_competencia, id_tema, id_zona, nombre_fichero, codigo, id_recurso, id_indicador)
+    VALUES ($competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador)";
+
+    return executeQueryInsert($con, $sql);
+}
 
 function subirArchivoQuery($con, $archivo, $recurso)
 {
