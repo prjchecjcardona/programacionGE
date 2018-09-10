@@ -46,7 +46,7 @@ function getFicherosQuery($con, $competencia, $tema, $zona, $indicador)
     }else{
         $sql = "SELECT rec.recurso_url || '/' || zna.id_zona || '/' || nombre_fichero AS fichero_url, fro.nombre_fichero, rec.icon, fro.codigo, tma.temas";
     }
-    
+
     $sql .= "FROM ficheros as fro
     JOIN competencias as cpte ON fro.id_competencia = cpte.id_competencia
     JOIN temas as tma ON tma.id_temas = fro.id_tema
@@ -87,6 +87,8 @@ function getFicherosQuery($con, $competencia, $tema, $zona, $indicador)
             $sql .= " AND id_indicador = $indicador";
         }
     }
+
+    var_dump($sql);
 
     return executeQuery($con, $sql);
 }
