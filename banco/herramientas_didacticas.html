@@ -83,7 +83,7 @@
       Cargar Archivo
     </div>
     <div id="form-ficheros">
-      <form>
+      <form id="form-sfichero" data-abide>
         <div class="grid-container">
           <div class="grid-x grid-padding-x">
             <div class="medium-12 cell">
@@ -91,28 +91,29 @@
           </div>
         </div>
         <label>Selecciona la competencia
-          <select id="sfichero_competencia" name="competencia" class="sf filtros_competencia">
+          <select id="sfichero_competencia" name="competencia" class="sf filtros_competencia" required>
           </select>
         </label>
         <label>Selecciona el indicador
-          <select id="sfichero_indicador" name="indicador" class="sf filtros_indicador">
+          <select id="sfichero_indicador" name="indicador" class="sf filtros_indicador" required>
           </select>
         </label>
         <label>Selecciona el tema
-          <select id="sfichero_tema" name="tema" class="sf filtros_tema">
+          <select id="sfichero_tema" name="tema" class="sf filtros_tema" required>
+            <option value="">No filtro</option>
           </select>
         </label>
         <label> Selecciona la zona del gestor
-          <select id="sfichero_zona" name="zona" class="sf filtros_zona">
+          <select id="sfichero_zona" name="zona" class="sf filtros_zona" required>
           </select>
         </label>
 
         <div id="gc">
           <button id="generar-cod" class="hollow button">Generar Codigo</button>
-          <input type="text" value="..." id="codigo" name="codigo" readonly></input>
+          <input type="text" value="" id="codigo" name="codigo" readonly required></input>
         </div>
 
-        <input id="button-subir_fichero" type="file" name="fichero">
+        <input id="button-subir_fichero" type="file" name="fichero" required>
 
         <button id="generalidades-button" class="hollow button" type="submit">Cargar Recursos</button>
       </form>
@@ -131,6 +132,7 @@
   <script src="js/vendor/what-input.js"></script>
   <script src="js/vendor/foundation.js"></script>
   <script src="js/herramientas.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 
 </html>

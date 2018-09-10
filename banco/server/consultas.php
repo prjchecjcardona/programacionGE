@@ -14,16 +14,18 @@ function executeQuery($con, $sql)
     }
 }
 
-function executeQueryInsert($con, $sql)
+function executeQueryInsert($con, $sql, $file_tmp, $file_dest)
 {
-    $data = array('success' => "", 'message' => "");
+    $data = array('success' => 0, 'message' => "");
     $result = $con->query($sql);
     if ($result) {
-        $data['success'] = true;
-        $data['message'] = 'Insertado exitosamente';
+        if (move_uploaded_file($file_tmp, $file_dest)) {
+            $data['message'] = 'Subido con exito';
+            return $data;
+        }
     } else {
-        $data['success'] = false;
-        $data['message'] = 'Ya existen los archivos';
+        $data['success'] = 1;
+        $data['message'] = $con->errorInfo()[2];
     }
     return $data;
 }
@@ -39,8 +41,13 @@ function getRecursosQuery($con)
 
 function getFicherosQuery($con, $competencia, $tema, $zona, $indicador)
 {
-    $sql = "SELECT rec.recurso_url || '/' || zna.zonas || '/' || nombre_fichero AS fichero_url, fro.nombre_fichero, rec.icon, fro.codigo, tma.temas
-    FROM ficheros as fro
+    if(is_null($zona)){
+        $sql = "SELECT rec.recurso_url || '/' || nombre_fichero AS fichero_url, fro.nombre_fichero, rec.icon, fro.codigo, tma.temas ";
+    }else{
+        $sql = "SELECT rec.recurso_url || '/' || zna.id_zona || '/' || nombre_fichero AS fichero_url, fro.nombre_fichero, rec.icon, fro.codigo, tma.temas";
+    }
+    
+    $sql .= "FROM ficheros as fro
     JOIN competencias as cpte ON fro.id_competencia = cpte.id_competencia
     JOIN temas as tma ON tma.id_temas = fro.id_tema
     JOIN zonas as zna ON zna.id_zona = fro.id_zona
@@ -123,17 +130,18 @@ function getListaRecursosQuery($con)
     return executeQuery($con, $sql);
 }
 
-function subirFicheroQuery($con, $competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador){
+function subirFicheroQuery($con, $competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador, $file_tmp, $file_dest)
+{
 
     $sql = "INSERT INTO ficheros (id_competencia, id_tema, id_zona, nombre_fichero, codigo, id_recurso, id_indicador)
-    VALUES ($competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador)";
+    VALUES ($competencia, $tema, $zona, '$nombre_fichero', '$codigo', $recurso, $indicador)";
 
-    return executeQueryInsert($con, $sql);
+    return executeQueryInsert($con, $sql, $file_tmp, $file_dest);
 }
 
-function subirArchivoQuery($con, $archivo, $recurso)
+function subirArchivoQuery($con, $archivo, $recurso, $file_tmp, $file_destination)
 {
     $sql = "INSERT INTO archivos_recursos (nombre_archivo, id_recurso) VALUES ('$archivo', $recurso)";
 
-    return executeQueryInsert($con, $sql);
+    return executeQueryInsert($con, $sql, $file_tmp, $file_destination);
 }

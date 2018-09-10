@@ -10,21 +10,42 @@ $(function() {
     var url = window.location.hash.substr(1);
     getPDF(url);
   });
+  /* ------------------------------------------------------------------ */
 
   $("#generar-cod").click(function(e) {
     e.preventDefault();
-    countFicheros();
+    verificarCodigo();
   });
+  /* ------------------------------------------------------------------ */
+
+  /* Desabilitar botón en el momento que comienza y termina un ajax. */
+  $(document).ajaxStart(function() {
+    $("#generar-cod").attr("disabled", true);
+  });
+  $(document).ajaxComplete(function() {
+    $("#generar-cod").attr("disabled", false);
+  });
+  /* ------------------------------------------------------------------ */
 });
 
 function load() {
   $("body").addClass("animated fadeIn");
 }
+/* ------------------------------------------------------------------------------------------ */
 
 $(".filtros_competencia").change(function() {
   var competencia = $(this).val();
   getTemas(competencia);
 });
+/* ------------------------------------------------------------------------------------------ */
+
+/* Si cambian los filtros el nombre de la codificacion debe removerse */
+$(".sf").change(function() {
+  if ($("input[name=codigo]").val() != "") {
+    $("input[name=codigo]").val("");
+  }
+});
+/* ------------------------------------------------------------------------------------------ */
 
 /* Llama funcion por cada cambio en el filtro */
 $(".fp").change(function() {
@@ -35,15 +56,19 @@ $(".fp").change(function() {
 
   getFicheros(competencia, tema, zona, indicador);
 });
+/* ------------------------------------------------------------------------------------------ */
 
 function getPDF(src) {
   $("#pdf").html(
     `<embed src="${src}" type="application/pdf" width="90%" height="90%">`
   );
 }
+/* ------------------------------------------------------------------------------------------ */
 
 function getCompetencias() {
-  $(".filtros_competencia").html('<option value="0" >No filtro</option>');
+  $(".filtros_competencia").html(
+    '<option value="" selected>No filtro</option>'
+  );
   $.ajax({
     type: "POST",
     url: "server/getCompetencias.php",
@@ -62,7 +87,28 @@ function getCompetencias() {
     }
   });
 }
+/* ------------------------------------------------------------------------------------------ */
 
+/* Verifica que los filtros anteriores se hallan seleccionado para generar una codificacion */
+function verificarCodigo() {
+  $competencia = $("#sfichero_competencia").val();
+  $tema = $("#sfichero_tema").val();
+  $zona = $("#sfichero_zona").val();
+  $indicador = $("#sfichero_indicador").val();
+
+  if ($competencia == "" || $tema == "" || $zona == "" || $indicador == "") {
+    swal({
+      icon: "error",
+      title: "Oops...",
+      text: "Debes llenar los filtros señalados"
+    });
+  } else {
+    countFicheros();
+  }
+}
+/* ------------------------------------------------------------------------------------------ */
+
+/* Genera la codificacion para contar los ficheros por cada zona y asi enumerarlo */
 function countFicheros() {
   var data = {
     zona: $("#sfichero_zona").val()
@@ -73,7 +119,8 @@ function countFicheros() {
     data: data,
     dataType: "json",
     success: function(response) {
-      var length = response.length;
+      var length =
+        response.length; /* Longitud del arreglo para determinar la el numero de fichero */
 
       var competencia = $("#sfichero_competencia option:selected").text();
       var tema = $("#sfichero_tema").val();
@@ -82,30 +129,65 @@ function countFicheros() {
 
       $("#codigo").val(
         `${competencia.charAt(1)}_${indicador.charAt(1)}${tema}_${length +
-          1}_Z${zona}`
+          1}_Z${zona}` /* codigo del fichero */
+        /* competencia & indicador=extrae el primer caracter del valor que esta seleccionado en el filtro */
+        /* length= suma un valor mas de la cantidad que se trae de la consulta*/
       );
+      $("#codigo").addClass(
+        "jackInTheBox animated"
+      ); /* Devuelve el codigo del fichero con animacion */
     }
   });
+  $("#codigo").removeClass();
 }
+/* ------------------------------------------------------------------------------------------ */
 
-$("#form-ficheros").submit(function(event) {
+/* Function para enviar el formulario de cargar archivo una vez se presione el botón submit */
+$("#form-sfichero").submit(function(event) {
   event.preventDefault();
-  $.ajax({
-    type: "POST",
-    url: "server/uploadFichero.php",
-    data: new FormData(this),
-    dataType: "json",
-    encode: true,
-    contentType: false,
-    processData: false,
-    success: function(response) {
-      console.log(response);
-    }
-  });
+  if ($("#codigo").val() != "") {
+    $.ajax({
+      type: "POST",
+      url: "server/uploadFichero.php",
+      data: new FormData(this),
+      dataType: "json",
+      encode: true,
+      contentType: false,
+      processData: false
+    }).done(function(data) {
+      console.log(data.success);
+      if (data.success == 0) {
+        swal({
+          icon: "success",
+          title: "Fichero subido!",
+          text: data.message
+        }).then(() => {
+          $("input[name=fichero]").val("");
+          $("input[name=codigo]").val("");
+          location.reload();
+        });
+      } else {
+        swal({
+          icon: "error",
+          title: "Problema al subir el fichero!",
+          text: data.message
+        });
+      }
+    });
+  } else {
+    swal({
+      icon: "error",
+      title: "Oops...",
+      text: "No se ha generado el codigo del fichero!"
+    });
+  }
 });
+/* ------------------------------------------------------------------------------------------ */
 
+/* Llama a las zonas para listarlas en los select */
 function getZonas() {
-  $(".filtros_zona").html('<option value="0" >No filtro</option>');
+  $(".filtros_zona").html('<option value="">No filtro</option>');
+  $(".filtros_zona").append('<option value="0" >Z0 - Sin zona</option>');
   $.ajax({
     type: "POST",
     url: "server/getZonas.php",
@@ -122,9 +204,11 @@ function getZonas() {
     }
   });
 }
+/* ------------------------------------------------------------------------------------------ */
 
+/* Llama a los temas una vez se halla seleccionado la competencia en los filtros */
 function getTemas(competencia) {
-  $(".filtros_tema").html('<option value="0" >No filtro</option>');
+  $(".filtros_tema").html('<option value="" >No filtro</option>');
   $.ajax({
     type: "POST",
     url: "server/getTemas.php",
@@ -143,9 +227,11 @@ function getTemas(competencia) {
     }
   });
 }
+/* ------------------------------------------------------------------------------------------ */
 
+/* Llama indicadores y los ubica en el filtro */
 function getIndicadores() {
-  $(".filtros_indicador").html('<option value="0" >No filtro</option>');
+  $(".filtros_indicador").html('<option value="" >No filtro</option>');
   $.ajax({
     type: "POST",
     url: "server/getIndicadores.php",
@@ -164,7 +250,9 @@ function getIndicadores() {
     }
   });
 }
+/* ------------------------------------------------------------------------------------------ */
 
+/* Llama ficheros de acuerdo a los filtros y los imprime en el menú */
 function getFicheros(competencia, tema, zona, indicador) {
   $("#area-ficheros").html(
     `<img id="codificacion-img" src="img/codificacion.PNG" alt="">`
@@ -200,38 +288,7 @@ function getFicheros(competencia, tema, zona, indicador) {
     }
   });
 }
-
-function getFicheroCodigo(competencia, tema, zona, indicador) {
-  $.ajax({
-    type: "POST",
-    url: "server/getFicheros.php",
-    data: {
-      competencia: competencia,
-      tema: tema,
-      zona: zona,
-      indicador: indicador
-    },
-    dataType: "json",
-    success: function(response) {
-      response.forEach(element => {
-        $("#area-ficheros").append(
-          `<a class="a_download" href="#${element.fichero_url}">${
-            element.codigo
-          }</a>`
-        );
-      });
-
-      fichas();
-      htmlString = $("#area-ficheros").text();
-      if (htmlString.trim() == "") {
-        $("#area-ficheros").html(
-          '<p class="p-card">No hay ficheros para este filtro</p>'
-        );
-        $("#pdf").html('<p class="p-card">No hay pdfs</p>');
-      }
-    }
-  });
-}
+/* ------------------------------------------------------------------------------------------ */
 
 function fichas() {
   $(".a_download").click(function() {

@@ -66,13 +66,13 @@ class geBanco
         return getListaRecursosQuery($this->con);
     }
 
-    public function subirArchivo($archivo, $recurso)
+    public function subirArchivo($archivo, $recurso, $file_tmp, $file_destination)
     {
-        return subirArchivoQuery($this->con, $archivo, $recurso);
+        return subirArchivoQuery($this->con, $archivo, $recurso, $file_tmp, $file_destination);
     }
 
-    public function subirFichero($competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador)
+    public function subirFichero($competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador, $file_tmp, $file_dest)
     {
-        return subirFicheroQuery($this->con, $competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador);
+        return subirFicheroQuery($this->con, $competencia, $tema, $zona, $nombre_fichero, $codigo, $recurso, $indicador, $file_tmp, $file_dest);
     }
 }

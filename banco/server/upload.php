@@ -44,11 +44,8 @@ if (!empty($_FILES['files']['name'][0]) && !empty($recurso)) {
                 break;
         }
 
-        if (move_uploaded_file($file_tmp, $file_destination)) {
-            $json = $api->subirArchivo($file_name, $recurso);
-        } else {
-            $json = $data['failed'][$position] = $file_name . ' falló para cargar.';
-        }
+        $json = $api->subirArchivo($file_name, $recurso, $file_tmp, $file_destination);
+
     }
 
 } else {
