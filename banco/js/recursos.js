@@ -4,11 +4,7 @@ $(function() {
 
   /* Funciones */
   getRecursos();
-
-  /* Click functions */
-  $(".recursos-button").click(function() {
-    getListaRecursos();
-  });
+  getListaRecursos();
 });
 
 function load() {
@@ -16,7 +12,7 @@ function load() {
 }
 
 function getRecursos() {
-  $('.tabs-panel').html("");
+  $(".tabs-panel").html("");
   $.ajax({
     type: "POST",
     url: "server/getRecursos.php",
@@ -66,15 +62,6 @@ function getListaRecursos() {
           `<option value="${element.id_recurso}">${element.recurso}</option>`
         );
       });
-
-      for (var i = 1; i < 8; i++) {
-        htmlString = $("#" + i + "").text();
-        if (htmlString.trim() == "") {
-          $("#" + i + "").html(
-            '<p class="p-card">No se han cargado archivos en el modúlo</p>'
-          );
-        }
-      }
     }
   });
 }
@@ -90,23 +77,22 @@ $("#form-recursos").submit(function(event) {
     contentType: false,
     processData: false
   }).done(function(data) {
-    if(data.success){
+    if (data.success == 0) {
       swal({
         title: "Listo!",
         text: data.message,
         icon: "success",
-        button: "Ok",
-      }).then(()=>{
+        button: "Ok"
+      }).then(() => {
+        $("input[name=files]").val("");
         getRecursos();
       });
-    }else{
+    } else {
       swal({
         title: "Oh-oh!",
         text: data.message,
         icon: "error",
-        button: "Ok",
-      }).then(()=>{
-        getRecursos();
+        button: "Ok"
       });
     }
   });

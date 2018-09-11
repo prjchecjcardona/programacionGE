@@ -42,6 +42,9 @@ if (!empty($_FILES['files']['name'][0]) && !empty($recurso)) {
             case '7':
                 $file_destination = '../recursos/audios/' . $file_name;
                 break;
+            case '9':
+                $file_destination = '../recursos/radio/' . $file_name;
+                break;
         }
 
         $json = $api->subirArchivo($file_name, $recurso, $file_tmp, $file_destination);
@@ -49,7 +52,7 @@ if (!empty($_FILES['files']['name'][0]) && !empty($recurso)) {
     }
 
 } else {
-    echo 'No se han seleccionado archivos';
+    $json = "Error al subir los archivos";
 }
 
 echo json_encode($json);
