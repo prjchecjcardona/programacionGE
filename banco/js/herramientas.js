@@ -21,9 +21,11 @@ $(function() {
   /* Desabilitar botón en el momento que comienza y termina un ajax. */
   $(document).ajaxStart(function() {
     $("#generar-cod").attr("disabled", true);
+    $("#generalidades-button").attr("disabled", true);
   });
   $(document).ajaxComplete(function() {
     $("#generar-cod").attr("disabled", false);
+    $("#generalidades-button").attr("disabled", false);
   });
   /* ------------------------------------------------------------------ */
 });
@@ -145,6 +147,7 @@ function countFicheros() {
 /* Function para enviar el formulario de cargar archivo una vez se presione el botón submit */
 $("#form-sfichero").submit(function(event) {
   event.preventDefault();
+  showLoader();
   if ($("#codigo").val() != "") {
     $.ajax({
       type: "POST",
@@ -155,8 +158,8 @@ $("#form-sfichero").submit(function(event) {
       contentType: false,
       processData: false
     }).done(function(data) {
-      console.log(data.success);
       if (data.success == 0) {
+        removeLoader();
         swal({
           icon: "success",
           title: "Fichero subido!",
@@ -167,6 +170,7 @@ $("#form-sfichero").submit(function(event) {
           location.reload();
         });
       } else {
+        removeLoader();
         swal({
           icon: "error",
           title: "Problema al subir el fichero!",
@@ -301,4 +305,14 @@ function fichas() {
     var url = window.location.hash.substr(1);
     getPDF(url);
   });
+}
+
+function showLoader(){
+  $('#request-loader').removeClass('hide');
+  $('#request-loader').addClass('show');
+}
+
+function removeLoader(){
+  $('#request-loader').addClass('hide');
+  $('#request-loader').removeClass('show');
 }

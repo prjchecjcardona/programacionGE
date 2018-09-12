@@ -151,7 +151,7 @@ function subirFicheroQuery($con, $competencia, $tema, $zona, $nombre_fichero, $c
 
 function subirArchivoQuery($con, $archivo, $recurso, $file_tmp, $file_destination)
 {
-    $sql = "INSERT INTO archivos_recursos (nombre_archivo, id_recurso) VALUES ('$archivo', $recurso)";
+    $sql = "INSERT INTO archivos_recursos (id_archivo, nombre_archivo, id_recurso) VALUES (nextval('sec_archivos_recursos'::regclass), '$archivo', $recurso)";
 
     return executeQueryInsert($con, $sql, $file_tmp, $file_destination);
 }

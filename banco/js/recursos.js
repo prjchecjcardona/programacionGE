@@ -5,6 +5,15 @@ $(function() {
   /* Funciones */
   getRecursos();
   getListaRecursos();
+
+  /* Desabilitar botón en el momento que comienza y termina un ajax. */
+  $(document).ajaxStart(function() {
+    $("#upload-recurso").attr("disabled", true);
+  });
+  $(document).ajaxComplete(function() {
+    $("#upload-recurso").attr("disabled", false);
+  });
+  /* ------------------------------------------------------------------ */
 });
 
 function load() {
@@ -68,6 +77,7 @@ function getListaRecursos() {
 
 $("#form-recursos").submit(function(event) {
   event.preventDefault();
+  showLoader();
   $.ajax({
     type: "POST",
     url: "server/upload.php",
@@ -78,6 +88,7 @@ $("#form-recursos").submit(function(event) {
     processData: false
   }).done(function(data) {
     if (data.success == 0) {
+      removeLoader();
       swal({
         title: "Listo!",
         text: data.message,
@@ -88,6 +99,7 @@ $("#form-recursos").submit(function(event) {
         getRecursos();
       });
     } else {
+      removeLoader();
       swal({
         title: "Oh-oh!",
         text: data.message,
@@ -97,3 +109,13 @@ $("#form-recursos").submit(function(event) {
     }
   });
 });
+
+function showLoader(){
+  $('#request-loader').removeClass('hide');
+  $('#request-loader').addClass('show');
+}
+
+function removeLoader(){
+  $('#request-loader').addClass('hide');
+  $('#request-loader').removeClass('show');
+}
