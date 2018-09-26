@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Nueva Intervención Gestora</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/fileinput.min.css">
+  <link rel="stylesheet" href="css/fileinput-rtl.min.css">
+  <link rel="stylesheet" href="php/SubirArchivo/dropzone.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
+  <link rel="stylesheet" href="css/css-loader.css">
+  <link rel="stylesheet" href="css/loader-double.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+  <div class="loader loader-double is-active"></div>
+
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <a class="navbar-brand" href="#">
+      <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
+      <img src="img/Universidad-de-manizales.png" class="img-fluid umanizales" alt="um"> Gestión Educativa
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menuSaludo">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <span class="h5">Hola, &nbsp;</span>
+          <span class="h5" id="Nombre"> </span>
+          <!-- Inserción dinamica del nombre del usuario logueado -->
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link link-1" id="nav_home" data-toggle="tooltip" data-placement="bottom" title="Menú Principal" onclick="navegar_home()">
+            <i class="fa fa-home fa-2x"></i>
+          </a>
+          <a class="nav-link link-1" id="nav_banco" href="banco/" target="_blank" data-toggle="tooltip"
+            data-placement="bottom" title="Banco de Herramientas">
+            <i class="fa fa-cube fa-2x"></i>
+          </a>
+          <a class="nav-link link-1" id="nav_out" href="http://drive.google.com" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión">
+            <i class="fa fa-sign-out fa-2x"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- Inicio Formulario Nueva Intervencion Gestora  -->
+  <div class="container">
+    <div class="row">
+      <legend>Nueva Intervención Gestora</legend>
+      <div class="col-md-5 card-body customBack">
+        <fieldset>
+          <!-- Form Name -->
+
+
+          <!-- Zona -->
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="selectbasicZonas">Zona:&nbsp;
+              <span id="nombreZona" class="card-subtitle mb-2 text-muted" for="selectbasicZonas"></span>
+            </label>
+          </div>
+
+          <!-- Seleccion Municipio -->
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="selectbasicMunicipio">
+              <span class="red">* </span>Municipio</label>
+            <div class="col-md-12">
+              <select id="selectbasicMunicipio" name="selectbasicMunicipio" class="form-control">
+
+              </select>
+            </div>
+          </div>
+
+          <!-- Multiple Radios (inline) -->
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="radiosMunicipio">Ubicación Municipio</label>
+            <div class="col-md-12" id="UrbanoRural">
+              <label class="radio-inline" for="radiosMunicipio-0">
+                <input onChange="" type="radio" name="radiosMunicipio" id="radiosMunicipio-0" value="1"> Rural
+              </label>
+              <label class="radio-inline" for="radiosMunicipio-1">
+                <input onChange="" type="radio" name="radiosMunicipio" id="radiosMunicipio-1" value="2"> Urbano
+              </label>
+            </div>
+          </div>
+
+
+          <!-- Seleccion Vereda -->
+          <div id="Rural">
+            <label class="col-md-12 control-label" for="selectbasicVereda">
+              <span class="red">* </span>Vereda</label>
+            <div class="form-inline">
+              <div class="col-sm-12">
+                <select disabled id="selectbasicVereda" name="selectbasicVereda" class="form-control">
+                </select>
+                <button id="btnNuevaVereda" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
+              </div>
+            </div>
+            <!-- Modal creacion Vereda -->
+            <div id="ex2" class="modal">
+
+              <head>
+                <h2>Añadir nueva Vereda</h2>
+              </head>
+              <hr>
+              <!-- Campo Vereda -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputVereda">
+                  <span class="red">* </span>Nombre de la Vereda</label>
+                <input id="textinputVereda" name="textinputVereda" type="text" placeholder="" class="form-control input-md">
+              </div>
+
+              <!-- Campo Latitud Vereda -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputVeredaLan">Latitud</label>
+                <input id="textinputVeredaLan" name="textinputVeredaLan" type="text" placeholder="" class="form-control input-md">
+              </div>
+              <!-- Campo Longitud Vereda -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputVeredaLon">Longitud</label>
+                <input id="textinputVeredaLon" name="textinputVeredaLon" type="text" placeholder="" class="form-control input-md">
+              </div>
+              <hr>
+              <span class="red">* </span>
+              <span class=""> Campo Obligatorio </span>
+              <!-- Button (Double) -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                  <a href="#" rel="modal:close" class="btn btn-danger regresarImgGestora">Cancelar</a>
+                  <button id="buttonEnviarVereda" name="button2id" class="btn btn-success regresarImgGestora" value="Enviar" onclick="guardarNuevaVereda();">Guardar</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div id="Urbano">
+            <!-- Seleccion Comuna -->
+            <label class="col-md-12 control-label" for="selectbasicComuna">
+              <span class="red">* </span>Comuna</label>
+            <div class="form-inline">
+              <div class="col-sm-12">
+                <select disabled id="selectbasicComuna" name="selectbasicComuna" class="form-control">
+                  <!-- <option value="0">Seleccione...</option> -->
+                </select>
+                <button id="btnNuevaComuna" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
+              </div>
+            </div>
+            <!-- Modal creacion Comuna -->
+            <div id="ex4" class="modal">
+
+              <head>
+                <h2>Añadir nueva Comuna</h2>
+              </head>
+              <hr>
+              <!-- Campo Comuna -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputComuna">
+                  <span class="red">* </span>Nombre de la Comuna</label>
+                <input id="textinputComuna" name="textinputComuna" type="text" placeholder="" class="form-control input-md">
+              </div>
+              <hr>
+              <span class="red">* </span>
+              <span class=""> Campo Obligatorio </span>
+
+              <!-- Button (Double) -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                  <a href="#" rel="modal:close" class="btn btn-danger regresarImgGestora">Cancelar</a>
+                  <button id="buttonEnviarComuna" name="button2id" class="btn btn-success regresarImgGestora" value="Enviar" onclick="guardarNuevaComuna();">Guardar</button>
+                </div>
+              </div>
+
+            </div>
+
+            <label class="col-md-12 control-label" for="selectbasicBarrio">
+              <span class="red">* </span>Barrio</label>
+            <div class="form-inline">
+              <div class="col-sm-12">
+                <select disabled id="selectbasicBarrio" name="selectbasicBarrio" class="form-control">
+                </select>
+                <button id="btnNuevoBarrio" type="submit" class="btn btn-primary botonEnLinea" data-toggle="modal" data-target="#">+</button>
+              </div>
+            </div>
+            <!-- Modal creacion Barrio -->
+            <div id="ex3" class="modal">
+
+              <head>
+                <h2>Añadir nuevo Barrio</h2>
+              </head>
+              <hr>
+              <!-- Campo Barrio -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputBarrio">
+                  <span class="red">* </span>Nombre del Barrio</label>
+                <input id="textinputBarrio" name="textinputBarrio" type="text" placeholder="" required class="form-control input-md">
+              </div>
+
+              <!-- Campo Latitud Barrio -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputBarrioLan">Latitud</label>
+                <input id="textinputBarrioLan" value="0" name="textinputBarrioLan" type="text" placeholder="" class="form-control input-md">
+              </div>
+              <!-- Campo Longitud Barrio -->
+              <div class="col-md-12 espaciado">
+                <label class="col-md-12control-label" for="textinputBarrioLon">Longitud</label>
+                <input id="textinputBarrioLon" value="0" name="textinputBarrioLon" type="text" placeholder="" class="form-control input-md">
+              </div>
+              <hr>
+              <span class="red">* </span>
+              <span class=""> Campo Obligatorio </span>
+              <!-- Button (Double) -->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                  <a href="#" rel="modal:close" class="btn btn-danger regresarImgGestora">Cancelar</a>
+                  <button id="buttonEnviarBarrio" name="button2id" class="btn btn-success regresarImgGestora" value="Enviar" onclick="guardarNuevoBarrio();">Guardar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Seleccion Tipo de Intervención -->
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="selectbasicTipoInvervencion">
+              <span class="red">* </span>Tipo de Intervención</label>
+            <div class="col-md-12">
+              <select id="selectbasicTipoInvervencion" name="selectbasicTipoInvervencion" class="form-control">
+              </select>
+            </div>
+          </div>
+
+          <!-- Seleccion Comportamiento -->
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="selectbasicComportamiento">
+              <span class="red">* </span>Comportamiento</label>
+            <div class="col-md-12">
+              <select onChange="" id="selectbasicComportamiento" name="selectbasicComportamiento" class="form-control">
+              </select>
+            </div>
+          </div>
+
+          <!-- Indicadores -->
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="selectbasicIndicadores">
+              <span class="red">* </span>Indicadores de control CHEC</label>
+
+            <div class="col-md-12">
+              <span class="grisTexto">Estos son los indicadores de control CHEC más relevantes observados en los tableros de control.</span>
+              <hr>
+
+              <select multiple onChange="" id="selectbasicIndicadores" name="selectbasicIndicadores" class="form-control">
+              </select>
+              <hr>
+              <span class="grisTexto">Nota: Para seleccionar varios indicadores, mantenga la tecla Ctrl Presionada y seleccione las opciones requeridas.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <hr>
+            <h4>Adjuntar Imágen</h4>
+            <form enctype="multipart/form-data">
+              <input id="upload_files_input" name="archivo" type="file" multiple>
+            </form>
+            <hr>
+          </div>
+
+          <span class="red">* </span>
+          <span class=""> Campo Obligatorio </span>
+
+        </fieldset>
+        <!-- </form> -->
+      </div>
+
+      <div class="col-md-8 imagenGestora regresoImgGestora">
+        <img src="img/MunequitaNuevaIntervencion.png">
+      </div>
+
+    </div>
+    <!--ROW  -->
+
+    <div class="form-group">
+      <label class="col-md-12 control-label" for="button1id"></label>
+      <div class="col-md-8">
+        <button id="buttonCancelar" name="button1id" class="btn btn-danger" value="Cancelar" onclick="">Cancelar</button>
+        <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Enviar" onclick="guardarIntervencion();">Enviar</button>
+        <input type="hidden" name="TipoFormulario" value="IntervencionCoordinadora">
+      </div>
+    </div>
+  </div>
+
+
+  <footer id="footer">
+    <h6 class="text">Gestión Educativa</h6>
+    <h6 class="text3">CHEC - UM &copy; Todos los derechos reservados 2018</h6>
+    <h6 class="text3">Versión 1.0.1</h6>
+  </footer>
+
+  <script src="js/includes/jquery-3.2.1.min.js"></script>
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+  <script src="http://www.google.com/jsapi"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//netsh.pp.ua/upwork-demo/1/js/typeahead.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="js/ValidarSesion.js"></script>
+  <script src="js/includes/fileInput/fileinput.js"></script>
+  <script src="js/includes/fileInput/sortable.min.js"></script>
+  <script src="js/includes/fileInput/theme.min.js"></script>
+  <script src="js/includes/fileInput/locales/es.js"></script>
+  <!--   <script src="js/includes/configuracionDatePicker.js"></script>
+ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <script src="js/nueva_Intervencion_Gestora.js"></script>
+
+</body>
+
+</html>

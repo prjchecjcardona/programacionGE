@@ -1,2 +1,5 @@
-recursos/*
-recursos.zip
+/vendor/
+.DS_Store
+phpExcel/*
+banco/recursos/*
+banco/*

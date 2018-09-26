@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Inicio</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/fullcalendar.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar">
+    <a class="navbar-brand" href="#">
+      <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
+      <img src="img/Universidad-de-manizales.png" class="img-fluid umanizales" alt="um"> Gestión Educativa
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menuSaludo">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <span class="h5">Hola,&nbsp;</span>
+          <span class="h5" id="Nombre"> </span>
+          <!-- Inserción dinamica del nombre del usuario logueado -->
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link link-1" id="nav_home" href="home_Coordinadora.html" data-toggle="tooltip" data-placement="bottom" title="Menú Principal">
+            <i class="fa fa-home fa-2x"></i>
+          </a>
+          <a class="nav-link link-1" id="nav_banco" href="banco/" target="_blank" data-toggle="tooltip"
+            data-placement="bottom" title="Banco de Herramientas">
+            <i class="fa fa-cube fa-2x"></i>
+          </a>
+          <a class="nav-link link-1" id="nav_out" href="http://drive.google.com" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión">
+            <i class="fa fa-sign-out fa-2x"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CONTAINER PRINCIPAL -->
+  <div class="container-fluid animated2 fadeIn2">
+    <div class="row coord-main">
+
+      <!-- Columna intervenciones -->
+      <div class="col-md-4 col-interv-coord">
+        <h3>Intervenciones por zona</h3>
+        <div id="intervercionesPorZona">
+          <div class="sk-fading-circle">
+            <div class="sk-circle1 sk-circle"></div>
+            <div class="sk-circle2 sk-circle"></div>
+            <div class="sk-circle3 sk-circle"></div>
+            <div class="sk-circle4 sk-circle"></div>
+            <div class="sk-circle5 sk-circle"></div>
+            <div class="sk-circle6 sk-circle"></div>
+            <div class="sk-circle7 sk-circle"></div>
+            <div class="sk-circle8 sk-circle"></div>
+            <div class="sk-circle9 sk-circle"></div>
+            <div class="sk-circle10 sk-circle"></div>
+            <div class="sk-circle11 sk-circle"></div>
+            <div class="sk-circle12 sk-circle"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8 posicionCol8">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
+              aria-selected="true">Mapa</a>
+            <a class="calnav nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+              aria-selected="false">Calendario</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
+              aria-selected="false">Informes y Configuración</a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div id="map">
+            </div>
+          </div>
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div id="calendar" class="coord fc fc-unthemed fc-ltr">
+            </div>
+
+          </div>
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="col-md-12">
+              <div id="div-informes" class="col-md-6">
+                <div class="boton-dashboard btn-verde" id="btnInformes">
+                  <i class="fa fa-bar-chart fa-4x"></i>
+                  <h6>Informes</h6>
+                </div>
+              </div>
+              <div id="div-configuracion" class="col-md-6">
+                <div id="dropdown-config" class="dropdown">
+                  <button class="boton-dashboard btn-gris btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-cogs fa-4x"></i>
+                    <h6>Configuración</h6>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="usuarios_Coordinadora.html">Configuración de Usuarios</a>
+                    <a class="dropdown-item" href="geografico_Coordinadora.html">Configuración Geografica</a>
+                    <a class="dropdown-item" href="sistema_Coordinadora.html">Configuración de Sistema</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Evento</h4>
+        </div>
+        <div class="modal-body">
+          <ul>
+            <li>
+              <b>Fecha:</b>
+              <span id="eventFecha"></span>
+            </li>
+            <li>
+              <b>Lugar:</b>
+              <span id="eventLugar"></span>
+            </li>
+            <li>
+              <span id="eventDescripcion"></span>
+            </li>
+            <li>
+              <b>Hora:</b>
+              <span id="eventHora"></span>
+            </li>
+            <li>
+              <b>Gestor:</b>
+              <span id="eventGestor"></span>
+            </li>
+            <li>
+              <b>Zona:</b>
+              <span id="eventZona"></span>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+  <footer id="footer">
+    <h6 class="text">Gestión Educativa</h6>
+    <h6 class="text3">CHEC - UM &copy; Todos los derechos reservados 2018</h6>
+    <h6 class="text3">Versión 1.0.1</h6>
+  </footer>
+
+  <script src="js/includes/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+    crossorigin="anonymous"></script>
+  <script src='js/includes/moment.min.js'></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src='js/includes/fullcalendar/fullcalendar.min.js'></script>
+  <script src='js/includes/fullcalendar/es.js'></script>
+  <script src="js/includes/bootstrap.min.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO9dhMcvk1MDYRaEi-TMUz_G0cI5m8Cl0&callback=getUbicaciones">
+  </script>
+  <script src="js/home_Coordinadora.js"></script>
+  <!-- <script type="text/javascript" src="js/funciones.js"></script>  -->
+  <!-- <script type="text/javascript" src="js/ValidarSesion.js"></script>  -->
+  <!-- <script type="text/javascript" src="js/coordinadora.js"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Registro de Asistencia Coordinadora</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/fileinput.min.css">
+  <link rel="stylesheet" href="css/fileinput-rtl.min.css">
+  <link rel="stylesheet" href="css/datatables.min.css">
+  <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
+  <link rel="stylesheet" href="css/css-loader.css">
+  <link rel="stylesheet" href="css/loader-double.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+  <div class="loader loader-double is-active"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <a class="navbar-brand" href="#">
+      <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
+      <img src="img/Universidad-de-manizales.png" class="img-fluid umanizales" alt="um"> Gestión Educativa
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menuSaludo">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <span class="h5">Hola, &nbsp;</span>
+          <span class="h5" id="Nombre">
+            <!-- Inserción dinamica del nombre del usuario logueado -->
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link link-1" id="nav_home" href="home_Coordinadora.html" data-toggle="tooltip" data-placement="bottom" title="Menú Principal">
+            <i class="fa fa-home fa-2x"></i>
+          </a>
+          <a class="nav-link link-1" id="nav_banco" href="banco/" target="_blank" data-toggle="tooltip"
+            data-placement="bottom" title="Banco de Herramientas">
+            <i class="fa fa-cube fa-2x"></i>
+          </a>
+          <a class="nav-link link-1" id="nav_out" href="http://drive.google.com" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión">
+            <i class="fa fa-sign-out fa-2x"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container wider">
+    <h2>Listado de Asistencia</h2>
+    <table id="ejecucion_coordinadora_asistencia" class="display">
+    </table>
+
+    <head>
+      <h2>Añadir Asistencia</h2>
+    </head>
+    <hr>
+
+    <div class="row">
+      <div class="form-group col-md-6">
+
+
+        <!-- Tipo de Documento -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="selectbasicTipoDocumento">Tipo de Documento</label>
+          <div class="col-md-10">
+            <select id="selectbasicTipoDocumento" name="selectbasicTipoDocumento" class="form-control">
+
+            </select>
+          </div>
+        </div>
+
+        <!-- Documento -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="inputDocumento">Número de Documento</label>
+          <div class="col-md-10">
+            <input id="id_asistente" name="textinputDocumento" type="hidden" placeholder="" class="form-control input-md">
+            <input id="inputDocumento" name="textinputDocumento" type="text" placeholder="" class="form-control input-md">
+          </div>
+        </div>
+
+        <!-- Nombres -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="textinputNombres">
+            <span class="red">* </span>Nombres</label>
+          <div class="col-md-10">
+            <input id="textinputNombres" name="textinputNombres" type="text" placeholder="" class="obligatorio form-control input-md">
+          </div>
+        </div>
+
+        <!-- Apellidos -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="textinputApellidos">
+            <span class="red">* </span>Apellidos</label>
+          <div class="col-md-10">
+            <input id="textinputApellidos" name="textinputApellidos" type="text" placeholder="" class="obligatorio form-control input-md">
+          </div>
+        </div>
+
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="radiosSexo">Género</label>
+          <div class="col-md-10">
+            <label class="radio-inline" for="radiosSexo-0">
+              <input type="radio" name="radiosSexo" id="radiosSexo-0" value="1" checked="checked"> Masculino
+            </label>
+            <label class="radio-inline" for="radiosSexo-1">
+              <input type="radio" name="radiosSexo" id="radiosSexo-1" value="2"> Femenino
+            </label>
+          </div>
+        </div>
+
+        <!-- Cuenta CHEC -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="textinputCuentaCHEC">Cuenta CHEC</label>
+          <div class="col-md-10">
+            <input id="textinputCuentaCHEC" name="textinputCuentaCHEC" type="text" placeholder="" class="form-control input-md">
+
+          </div>
+        </div>
+
+        <!-- Telefono -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="textinputTelefonoAsis">Teléfono</label>
+          <div class="col-md-10">
+            <input id="textinputTelefonoAsis" name="textinputTelefonoAsis" type="text" placeholder="" class="form-control input-md">
+
+          </div>
+        </div>
+
+        <span class="red">* </span>
+        <span class=""> Campo Obligatorio </span>
+        <!-- Button (Double) -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="button1id"></label>
+          <div class="col-md-10">
+            <button id="buttonCancelar" class="btn btn-warning">Atrás</button>
+            <button id="buttonEnviar" name="button2id" class="btn btn-success" value="Envia">Guardar</button>
+            <button id="buttonActualizar" name="button3id" class="btn btn-success" value="Actualizar">Actualizar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+
+        <!-- Móvil -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="textinputMovilAsis">Celular</label>
+          <div class="col-md-10">
+            <input id="textinputMovilAsis" name="textinputMovilAsis" type="text" placeholder="" class="form-control input-md">
+
+          </div>
+        </div>
+
+        <!-- Direccion -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="textinputDireccionAsis">Dirección</label>
+          <div class="col-md-10">
+            <input id="textinputDireccionAsis" name="textinputDireccionAsis" type="text" placeholder="" class="form-control input-md">
+
+          </div>
+        </div>
+
+        <!-- Correo Eletrónico -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="textinputCorreoAsis">Correo Electrónico</label>
+          <div class="col-md-10">
+            <input id="textinputCorreoAsis" name="textinputCorreoAsis" type="email" placeholder="" class="form-control input-md">
+
+          </div>
+        </div>
+
+        <!-- Rol -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="textinputRolAsis">Rol</label>
+          <div class="col-md-10">
+            <input id="textinputRolAsis" name="textinputRolAsis" type="text" placeholder="" class="form-control input-md">
+
+          </div>
+        </div>
+
+        <!-- Fecha de Nacimiento Asistente -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="FechainputNacimientoAsis">Edad</label>
+          <div class="col-md-10">
+            <p>
+              <input id="FechainputNacimientoAsis" name="FechainputNacimientoAsis" type="number" class="" placeholder=" Selecciona...">
+            </p>
+          </div>
+        </div>
+
+        <!-- Multiple Radios (inline) Manejo de Datos -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="radiosManejoDatos">¿Autoriza el manejo de datos?</label>
+          <div class="col-md-10">
+            <label class="radio-inline" for="radiosManejoDatos-0">
+              <input type="radio" name="radiosManejoDatos" id="radiosManejoDatos-0" value="1"> Si
+            </label>
+            <label class="radio-inline" for="radiosManejoDatos-1">
+              <input type="radio" name="radiosManejoDatos" id="radiosManejoDatos-1" value="2" checked="checked"> No
+            </label>
+          </div>
+        </div>
+
+        <!-- Multiple Radios (inline) Sesiones de Formación -->
+        <div class="form-group">
+          <label class="col-md-10 control-label" for="radiosSesionesForma">¿Ha asistido a sesiones de formación con CHEC?</label>
+          <div class="col-md-10">
+            <label class="radio-inline" for="radiosSesionesForma-0">
+              <input type="radio" name="radiosSesionesForma" id="radiosSesionesForma-0" value="1" checked="checked"> Si
+            </label>
+            <label class="radio-inline" for="radiosSesionesForma-1">
+              <input type="radio" name="radiosSesionesForma" id="radiosSesionesForma-1" value="2"> No
+            </label>
+          </div>
+        </div>
+        <!--                 <img id="imagen_asistencia" src="img/Asistencia72pxV1.png">
+ -->
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <footer id="footer">
+    <h6 class="text">Gestión Educativa</h6>
+    <h6 class="text3">CHEC - UM &copy; Todos los derechos reservados 2018</h6>
+    <h6 class="text3">Versión 1.0.1</h6>
+  </footer>
+
+  <!-- Fin creacion entidad -->
+
+  <script src="js/includes/jquery-3.2.1.min.js"></script>
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="js/includes/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+    crossorigin="anonymous"></script>
+  <script src="js/includes/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="js/includes/dataTable/datatables.min.js"></script>
+  <script src="js/includes/dataTable/jquery.dataTables.min.js"></script>
+  <script src="js/includes/dataTable/dataTables.bootstrap4.min.js"></script>
+  <script src="js/registro_Asistencia_Coordinadora.js"></script>
+
+
+</body>
+
+</html>

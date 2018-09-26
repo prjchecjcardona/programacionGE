@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Dashboard - CHEC</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+  <link rel="stylesheet" href="css/highcharts.css">
+  <link rel="stylesheet" href="css/highcharts.scss">
+  <link rel="stylesheet" href="css/datatables.min.css">
+  <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <a class="navbar-brand" href="#">
+      <img src="img/logo-min.png" class="img-fluid logo-min" alt="Chec">
+      <img src="img/Universidad-de-manizales.png" class="img-fluid umanizales" alt="um"> Gestión Educativa
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuSaludo" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menuSaludo">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <span class="h5">Hola, &nbsp;</span>
+          <span class="h5" id="Nombre">
+            <!-- Inserción dinamica del nombre del usuario logueado -->
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link link-1" id="nav_home" href="home_CHEC.html" data-toggle="tooltip" data-placement="bottom" title="Menú Principal">
+            <i class="fa fa-home fa-2x"></i>
+          </a>
+          <a class="nav-link link-1" id="nav_banco" href="Banco de Herramientas V2/index.html" target="_blank" data-toggle="tooltip"
+            data-placement="bottom" title="Banco de Herramientas">
+            <i class="fa fa-cube fa-2x"></i>
+          </a>
+          <a class="nav-link link-1" id="nav_out" href="http://drive.google.com" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión">
+            <i class="fa fa-sign-out fa-2x"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row customBack">
+      <div class="col-md-3 ">
+        <!-- Form Name -->
+        <h2>Opciones de Filtrado</h2>
+        <div class="card fondoBlanco">
+          <div class="card-body">
+
+            <h4 class="card-title">Tiempo</h4>
+            <!-- Radio Buttons -->
+            <div class="form-check">
+              <label class="form-check-label grisTexto">
+                <input class="form-check-input " type="radio" name="exampleRadio" id="exampleRadio1" value="1" checked> Consolidado Convenio
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label grisTexto">
+                <input class="form-check-input" type="radio" name="exampleRadio" id="exampleRadio2" value="2"> Consolidado Anual
+              </label>
+            </div>
+
+            <label class="form-check-label grisTexto">
+              Selección por Año
+            </label>
+            <div class="form-check">
+              <select id="multiple-anio" multiple="multiple" class="espaciado">
+                <option value="1">2016</option>
+                <option value="2">2017</option>
+              </select>
+            </div>
+
+            <label class="form-check-label grisTexto">
+              Selección por Mes
+            </label>
+            <div class="form-check">
+              <select id="multiple-mes" multiple="multiple" class="espaciado">
+                <option value="Enero">Enero</option>
+                <option value="Febrero">Febrero</option>
+                <option value="Marzo">Marzo</option>
+                <option value="Abril">Abril</option>
+                <option value="Mayo">Mayo</option>
+                <option value="Junio">Junio</option>
+                <option value="Julio">Julio</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Septiembre">Septiembre</option>
+                <option value="Octubre">Octubre</option>
+                <option value="Noviembre">Noviembre</option>
+                <option value="Diciembre">Diciembre</option>
+
+              </select>
+            </div>
+            <br>
+
+
+          </div>
+        </div>
+
+        <div class="card fondoBlanco">
+          <div class="card-body">
+            <h4 class="card-title">Municipio</h4>
+            <select id="multiple-municipio" multiple="multiple">
+              <option value="1">Opcion 1</option>
+              <option value="2">Opcion 2</option>
+              <option value="3">Opcion 3</option>
+              <option value="4">Opcion 4</option>
+              <option value="5">Opcion 5</option>
+              <option value="6">Opcion 6</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card fondoBlanco">
+          <div class="card-body">
+            <h4 class="card-title">Zona</h4>
+            <select id="multiple-zona" multiple="multiple">
+              <option value="1">Opcion 1</option>
+              <option value="2">Opcion 2</option>
+              <option value="3">Opcion 3</option>
+              <option value="4">Opcion 4</option>
+              <option value="5">Opcion 5</option>
+              <option value="6">Opcion 6</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card fondoBlanco">
+          <div class="card-body">
+            <h4 class="card-title">Entidad</h4>
+            <select id="multiple-entidad" multiple="multiple">
+              <option value="1">Opcion 1</option>
+              <option value="2">Opcion 2</option>
+              <option value="3">Opcion 3</option>
+              <option value="4">Opcion 4</option>
+              <option value="5">Opcion 5</option>
+              <option value="6">Opcion 6</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card fondoBlanco">
+          <div class="card-body">
+            <h4 class="card-title">Comportamiento</h4>
+            <select id="multiple-comportamiento" multiple="multiple">
+              <option value="1">Opcion 1</option>
+              <option value="2">Opcion 2</option>
+              <option value="3">Opcion 3</option>
+              <option value="4">Opcion 4</option>
+              <option value="5">Opcion 5</option>
+              <option value="6">Opcion 6</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card fondoBlanco">
+          <div class="card-body">
+            <h4 class="card-title">Estrategia</h4>
+            <select id="multiple-estrategia" multiple="multiple">
+              <option value="1">Opcion 1</option>
+              <option value="2">Opcion 2</option>
+              <option value="3">Opcion 3</option>
+              <option value="4">Opcion 4</option>
+              <option value="5">Opcion 5</option>
+              <option value="6">Opcion 6</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card fondoBlanco">
+          <div class="card-body">
+            <h4 class="card-title">Táctico</h4>
+            <select id="multiple-tactico" multiple="multiple">
+              <option value="1">Opcion 1</option>
+              <option value="2">Opcion 2</option>
+              <option value="3">Opcion 3</option>
+              <option value="4">Opcion 4</option>
+              <option value="5">Opcion 5</option>
+              <option value="6">Opcion 6</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Acá Empieza el Acordeon con los abributos -->
+
+
+        <!-- Añadir Nivel de Cumplimiento -->
+      </div>
+
+      <div class="col-md-9">
+        <h2>Visualización de Informes</h2>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <!-- Momento I Tab -->
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#momentoI" role="tab">Gestión de Redes</a>
+          </li>
+          <!-- Momento Ii Tab -->
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#momentoII" role="tab">Estrategia</a>
+          </li>
+          <!-- Momento III Tab -->
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#momentoIII" role="tab">Comportamiento</a>
+          </li>
+          <!-- Momento IV Tab -->
+          <!-- <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#momentoIV" role="tab">Táctico</a>
+          </li> -->
+          <!-- Momento V Tab -->
+          <!--           <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#momentoV" role="tab">Momento V</a>
+          </li>
+ -->
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- Gestion de Redes I graficos -->
+          <div class="tab-pane active" id="momentoI" role="tabpanel">
+            <div id="bar_coordinadora" style="width:100%; height:400px;"></div>
+            <hr>
+            <!-- Gestion de Redes I tabla -->
+            <div class="col-md-4 selectDerecha">
+              <label class="mr-sm-2">Selección de Gráfico: </label>
+            </div>
+            <div class="col-md-3">
+              <select id="selectbasicGrafico" name="selectbasicGrafico" class="form-control">
+                <option value="1">Barras</option>
+                <option value="2">Torta</option>
+                <option value="3">Lineas</option>
+              </select>
+            </div>
+            <hr>
+            <div>
+              <legend>Gestión de Redes</legend>
+              <table id="gestionRedes" class="display table">
+                <thead>
+                  <tr>
+                    <th>Tipo de Entidad</th>
+                    <th>Actores Sociales Clave</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr></tr>
+                  <td>Privada</td>
+                  <td>3</td>
+                  <tr></tr>
+                  <td>Pública</td>
+                  <td>35</td>
+                  <tr></tr>
+                  <td>Organización de base comunitaria</td>
+                  <td>4</td>
+                  <tr></tr>
+                  <td>Total</td>
+                  <td>42</td>
+                </tbody>
+              </table>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Momento II graficos -->
+          <div class="tab-pane" id="momentoII" role="tabpanel">
+            <div id="container" style="width:100%; height:400px;"></div>
+            <hr>
+            <!-- Cobertura General Tabla -->
+            <div class="col-md-4 selectDerecha">
+              <label class="mr-sm-2">Selección de Gráfico: </label>
+            </div>
+            <div class="col-md-3">
+              <select id="selectbasicGrafico" name="selectbasicGrafico" class="form-control">
+                <option value="1">Barras</option>
+                <option value="2">Torta</option>
+                <option value="3">Lineas</option>
+              </select>
+            </div>
+            <hr>
+            <div>
+              <legend>Cobertura General</legend>
+              <table id="coberturaGeneral" class="display table">
+                <thead>
+                  <tr>
+                    <th>Resumen Estrategias</th>
+                    <th>Preservación- Uso responsable de energía</th>
+                    <th>Respeto- Cultura de pago</th>
+                    <th>Cuidado- Disfrute del servicio de energía</th>
+                    <th>Confianza- Uso de canales vanguardistas</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr></tr>
+                  <td>1. Aprendiendo con energía en el Cole</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <tr></tr>
+                  <td>2. Aprendiendo con energía en Comunidad</td>
+                  <td>35</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <tr></tr>
+                  <td>3. Aprendiendo con energía en Familia</td>
+                  <td>4</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <tr></tr>
+                  <td>4. Aprendiendo con energía en mi Empresa</td>
+                  <td>42</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <tr></tr>
+                  <td>5. Aprendiendo con energía Gobierno</td>
+                  <td>42</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <tr></tr>
+                  <td>5. Total General</td>
+                  <td>42</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+          <!-- Momento III graficos -->
+          <div class="tab-pane" id="momentoIII" role="tabpanel">
+            <div id="pie_coordinadora" style="width:100%; height:400px;"></div>
+            <hr>
+            <!-- Gestion de Redes I tabla -->
+            <div class="col-md-4 selectDerecha">
+              <label class="mr-sm-2">Selección de Gráfico: </label>
+            </div>
+            <div class="col-md-3">
+              <select id="selectbasicGrafico" name="selectbasicGrafico" class="form-control">
+                <option value="1">Barras</option>
+                <option value="2">Torta</option>
+                <option value="3">Lineas</option>
+              </select>
+            </div>
+            <hr>
+            <div>
+              <legend>Competencia Ciudadana - Comportamiento Deseable</legend>
+              <table id="competenciaCiudadanaComportamientoDeseable" class="display table">
+                <thead>
+                  <tr>
+                    <th>Competencia Ciudadana - Comportamiento Deseables</th>
+                    <th>Cantidad Participantes</th>
+                    <th>Porcentaje</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr></tr>
+                  <td>PRESERVACIÓN- Uso responsable de la energía</td>
+                  <td>3</td>
+                  <td>%3</td>
+                  <tr></tr>
+                  <td>RESPETO- Cultura de pago</td>
+                  <td>35</td>
+                  <td>%3</td>
+                  <tr></tr>
+                  <td>CUIDADO- Disfrute del servicio como aporte a la calidad de vida</td>
+                  <td>4</td>
+                  <td>%3</td>
+                  <tr></tr>
+                  <td>CONFIANZA- Uso de canales vanguardistas</td>
+                  <td>42</td>
+                  <td>%3</td>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+
+          <!-- Momento IV graficos -->
+          <div class="tab-pane" id="momentoIV" role="tabpanel">
+            <div id="lines_coordinadora" style="width:100%; height:400px;"></div>
+          </div>
+          <!-- Momento V graficos -->
+          <!--           <div class="tab-pane" id="momentoV" role="tabpanel">
+            <div id="lines2_coordinadora" style="width:100%; height:400px;"></div>
+          </div>
+ --></div>
+        <hr>
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="footer">
+    <h6 class="text">Gestión Educativa</h6>
+    <h6 class="text3">CHEC - UM &copy; Todos los derechos reservados 2018</h6>
+    <h6 class="text3">Versión 1.0.1</h6>
+  </footer>
+
+
+  <script src="js/includes/jquery-3.2.1.min.js"></script>
+  <script src="js/includes/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+    crossorigin="anonymous"></script>
+  <script src="js/includes/bootstrap.min.js"></script>
+  <script src="js/includes/configuracionDatePicker.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+  <script src="js/graficos/highcharts.js"></script>
+  <script src="js/graficos/lines/series-label.js"></script>
+  <script src="js/graficos/lines/series-label.src.js"></script>
+  <script src="js/graficos/exporting/exporting.js"></script>
+  <script src="js/graficos/exporting/exporting.src.js"></script>
+  <script src="js/includes/dataTable/datatables.min.js"></script>
+  <script src="js/includes/dataTable/jquery.dataTables.min.js"></script>
+  <script src="js/includes/dataTable/dataTables.bootstrap4.min.js"></script>
+  <script src="js/dashboard_CHEC.js"></script>
+
+
+</body>
+
+
+</html>
