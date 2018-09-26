@@ -1,0 +1,406 @@
+@font-face {
+  font-family: checfont1;
+  src: url("../fonts/VAGRoundedStd-Light.otf");
+}
+
+html,
+body {
+  height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  font-family: checfont1;
+}
+
+#createInter {
+  height: 68%;
+  justify-content: space-evenly !important;
+}
+
+.main {
+  height: 100%;
+}
+
+.showNone {
+  display: none !important;
+}
+
+.form-group{
+  margin-bottom: 0%;
+}
+
+#rowContacto,
+#rowIcon {
+  justify-content: center;
+}
+
+#rowIcon {
+  padding: 10px 0px;
+  font-size: 150px;
+}
+
+#rowIcon {
+  width: 100%;
+  align-self: center;
+  border-radius: 3px 3px 0px 0px;
+  background: #56ab2f;
+  background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);
+  background: linear-gradient(to right, #a8e063, #56ab2f);
+}
+
+#iconRegistrarContacto {
+  margin-right: 10px;
+}
+
+#btnRegistrarContacto {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+#btnRegistrarContacto:hover {
+  background-color: #218838;
+}
+
+#formCrearContacto {
+  padding: 0% 15%;
+  margin-bottom: 30px;
+}
+
+#rowBtnContacto {
+  flex-wrap: nowrap;
+  margin-top: 30px;
+}
+
+.dataTables_scrollBody {
+  z-index: 0;
+}
+
+.colBtnContacto {
+  display: flex;
+  justify-content: center;
+}
+
+#intervencion,
+#planeacion {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  background-color: rgba(166, 168, 161, 0.3);
+  border: solid 3px green;
+  padding: 85px 150px 50px 150px;
+}
+
+#planeacion {
+  padding: 85px 50px 8px 50px;
+}
+
+#img-intervencion {
+  width: 86%;
+}
+
+#createInter {
+  padding-top: 30px;
+  margin-bottom: 20px;
+}
+
+#footer {
+  background-color: rgb(156, 193, 43);
+  margin-top: 30px;
+  width: 100%;
+  height: 115px;
+  text-align: center;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+  padding: 1.7em;
+  position: fixed;
+  bottom: 0;
+}
+
+#ruralOurbano {
+  padding: 10px 0px 5px 0px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#intForm {
+  display: flex;
+  flex-direction: column;
+}
+
+#observaciones {
+  width: 100%;
+}
+
+h1 {
+  font-family: checfont1 !important;
+  align-self: center;
+}
+
+form * {
+  font-family: checfont1;
+}
+
+label {
+  margin-top: 10px;
+  color: green;
+}
+
+button.btn.btn-outline-secondary.border-left-0 {
+  background-color: #2cd114;
+  color: #fff;
+}
+
+button.btn.btn-outline-secondary.border-left-0:hover {
+  background-color: #a8e063;
+  color: #000;
+}
+
+.obligatorio {
+  color: red !important;
+}
+
+#comunaObarrio {
+  padding: 30px 0px 0px 0px;
+}
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+.custom-control-label::before {
+  position: absolute;
+  top: 0.25rem;
+  left: -1.5rem;
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  pointer-events: none;
+  content: "";
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #504e4e;
+}
+
+.custom-radio .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #2cd114;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+#createInter {
+  padding: 30px 10px 0px 10px;
+}
+
+/* Mark the active step: */
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #4caf50;
+}
+
+.formRows {
+  margin-bottom: 20px;
+}
+
+#form-card {
+  padding: 0px 40px;
+}
+
+.header {
+  width: 50%;
+  background: #56ab2f;
+  background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);
+  background: linear-gradient(to right, #a8e063, #56ab2f);
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
+  margin-bottom: -70px;
+  left: 5em;
+  position: relative;
+  padding: 20px;
+  z-index: 2;
+  border-color: transparent;
+  border-radius: 100px 10px 10px 10px;
+  text-align: center;
+}
+
+.imgNav {
+  width: 2em;
+  margin-right: 10px;
+}
+
+#logoUM {
+  width: 3em;
+}
+
+nav {
+  background-color: #9cc12b !important;
+  -webkit-background-color: #9cc12b !important;
+}
+
+#tableContactos {
+  width: 100% !important;
+}
+
+.invalid {
+  background-color: #ffa6a6 !important;
+}
+
+.alert {
+  width: 100%;
+  text-align: center;
+}
+
+@media screen and (min-width: 770px) and (max-width: 992px) {
+  #intervencion {
+    margin-bottom: 13px;
+    padding: 55px 20px 10px 20px;
+  }
+
+  .header {
+    width: 71%;
+    text-align: center;
+    margin-bottom: -42px;
+    padding: 6px;
+  }
+
+  #intervencion,
+  #planeacion {
+    margin-bottom: 13px;
+  }
+
+  #coordinadoraInt {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    z-index: -3;
+    opacity: 0.2;
+  }
+
+  #colCreateInter {
+    height: 100%;
+  }
+
+  #intervencion,
+  #planeacion {
+    background-color: rgba(166, 168, 161, 0.5);
+    height: auto;
+  }
+
+  #coordinadoraInt > img {
+    width: 90%;
+  }
+
+  #createInter {
+    padding: 30px 10px 0px 10px;
+  }
+}
+
+@media screen and (min-width: 993px) and (max-width: 1171px) {
+  #intervencion,
+  #planeacion {
+    margin-bottom: 20px;
+    padding: 70px 40px 15px 40px !important;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: -42px;
+    padding: 6px;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  #comunaObarrio {
+    padding: 5px 0px 0px 0px;
+  }
+
+  #createInter {
+    height: 88%;
+  }
+
+  #form-card {
+    height: 100%;
+  }
+
+  #coordinadoraInt {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    z-index: -3;
+    opacity: 0.2;
+  }
+
+  #coordinadoraInt > img {
+    width: 90%;
+  }
+
+  #intervencion,
+  #planeacion {
+    margin-bottom: 13px;
+    background-color: rgba(166, 168, 161, 0.5);
+    height: auto;
+    padding: 50px 10px 0px 10px;
+  }
+
+  #createInter {
+    margin-bottom: 0%;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  #form-card {
+    padding: 0px 10px 0px 10px;
+  }
+
+  .header {
+    width: 95%;
+    height: 12%;
+    margin-bottom: -19px;
+    left: 5px;
+    position: relative;
+    padding: 6px;
+    z-index: 2;
+  }
+
+  nav {
+    justify-content: center !important;
+  }
+}
+
+@media screen and (min-width: 1172px) {
+  .gj-datepicker {
+    width: 50%;
+  }
+
+  #colDatepicker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+  }
+}

@@ -1,5 +1,5 @@
 /vendor/
 .DS_Store
-archivos/
-phpExcel/
+phpExcel/*
 banco/recursos/*
+banco/*
