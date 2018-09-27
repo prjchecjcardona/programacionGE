@@ -1,17 +1,25 @@
 $(document).ready(function() {
-
   $("#datepicker").datepicker({
     uiLibrary: "bootstrap4"
   });
 
   showTab(currentTab); // Display the current tab
 
-  if($('select').change(function () { 
-    if($(this).hasClass('invalid')){
-      $(this).removeClass('invalid');
-    }
-  }));
+  if (
+    $("select").change(function() {
+      if ($(this).hasClass("invalid")) {
+        $(this).removeClass("invalid");
+      }
+    })
+  );
 
+  $("#tableCaracteristica").DataTable({
+    scrollX: true,
+    searching: false,
+    lengthChange: false,
+    info: false,
+    paging: false
+  });
 
 });
 
@@ -66,7 +74,7 @@ function validateForm() {
   // A loop that checks every input field in the current tab:
   for (i = 0; i < y.length; i++) {
     // If a field is empty...
-    if (y[i].parentElement.parentElement.style.display != 'none') {
+    if (y[i].parentElement.parentElement.style.display != "none") {
       if (y[i].value == "") {
         // add an "invalid" class to the field:
         y[i].className += " invalid";

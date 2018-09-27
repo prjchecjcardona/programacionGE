@@ -47,7 +47,7 @@
             <form id="ejecForm" action="">
               <div class="tab">
                 <div class="row formRows">
-                  <div id="colDatepicker" class="col-lg-6 col-md-12 col-sm-12">
+                  <div class="col-lg-6 col-md-12 col-sm-12">
                     <label for="datepicker">Seleccione Fecha
                       <label class="obligatorio" for="datepicker">*</label>
                     </label>
@@ -69,9 +69,100 @@
                       </div>
                       <div class="col-lg-4 col-md-12 col-sm-12">
                         <label for="duracion">Duración
-                          <label class="obligatorio" for="duracion">*</label>
                         </label>
                         <input class="form-control" type="text" id="duracionFin" readonly placeholder="Duración">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row formRows">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <label for="tipoPoblacion">
+                      Tipo de población <label class="obligatorio" for="tipoPoblacion">*</label>
+                    </label>
+                    <div id="tipoPoblacion" class="row">
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="ninios">Niños</span>
+                          </div>
+                          <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
+                            aria-describedby="ninios">
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="jovenes">Jovenes</span>
+                          </div>
+                          <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
+                            aria-describedby="jovenes">
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="adultos">Adultos</span>
+                          </div>
+                          <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
+                            aria-describedby="adultos">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row formRows">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <label for="caracteristicasPoblacion">
+                      Tipo de población <label class="obligatorio" for="caracteristicasPoblacion">*</label>
+                    </label>
+                    <div id="caracteristicasPoblacion" class="row">
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="ninios">En situación de discapacidad</span>
+                          </div>
+                          <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
+                            aria-describedby="ninios">
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="jovenes">En situación de desplazamiento</span>
+                          </div>
+                          <input type="number" class="form-control required" placeholder="Cant" aria-label="Username"
+                            aria-describedby="jovenes">
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="adultos">Comunidad indigena</span>
+                          </div>
+                          <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
+                            aria-describedby="adultos">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="jovenes">Comunidad Afro</span>
+                          </div>
+                          <input type="number" class="form-control required" placeholder="Cant" aria-label="Username"
+                            aria-describedby="jovenes">
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="adultos">Ninguno</span>
+                          </div>
+                          <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
+                            aria-describedby="adultos">
+                        </div>
                       </div>
                     </div>
                   </div>
