@@ -11,7 +11,8 @@ body {
   font-family: checfont1;
 }
 
-#createInter {
+#createInter,
+#createEjec {
   height: 68%;
   justify-content: space-evenly !important;
 }
@@ -24,7 +25,7 @@ body {
   display: none !important;
 }
 
-.form-group{
+.form-group {
   margin-bottom: 0%;
 }
 
@@ -80,7 +81,8 @@ body {
 }
 
 #intervencion,
-#planeacion {
+#planeacion,
+#ejecucion {
   display: flex;
   flex-direction: column;
   border-radius: 5px;
@@ -92,7 +94,12 @@ body {
   padding: 85px 150px 50px 150px;
 }
 
-#planeacion {
+#tableContactosEjec{
+  width: 120%;
+}
+
+#planeacion,
+#ejecucion {
   padding: 85px 50px 8px 50px;
 }
 
@@ -100,7 +107,8 @@ body {
   width: 86%;
 }
 
-#createInter {
+#createInter,
+#createEjec {
   padding-top: 30px;
   margin-bottom: 20px;
 }
@@ -202,7 +210,8 @@ button.btn.btn-outline-secondary.border-left-0:hover {
   opacity: 0.5;
 }
 
-#createInter {
+#createInter,
+#createEjec {
   padding: 30px 10px 0px 10px;
 }
 
@@ -273,6 +282,65 @@ nav {
   text-align: center;
 }
 
+.title{
+  color: rgb(133, 40, 40);
+}
+
+.table-bordered thead td, .table-bordered thead th {
+	border-bottom-width: 2px;
+	padding: 1px 5px !important;
+}
+
+.table-bordered td, .table-bordered th {
+  border: 1px solid #dee2e6;
+  padding: 1px 5px !important;
+}
+
+hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: 0;
+	border-top: 1px solid rgba(0,0,0,.1);
+}
+
+#detalleCardContentGI > .row, #detalleCardContentGF > .row{
+  padding: 0px 30px
+}
+
+#headerDetalle {
+  position: absolute;
+  top: -30px;
+  width: 50%;
+  height: 4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);
+  background: linear-gradient(to right, #a8e063, #56ab2f);
+  -webkit-box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75);
+  align-self: center;
+}
+
+#rowTableContactos{
+  overflow-x: auto;
+}
+
+.detalleEjec {
+  border-radius: 3px !important;
+  -webkit-box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75) !important;
+  -moz-box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75) !important;
+  box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75) !important;
+  border: 0 !important;
+}
+
+#colDetalle {
+  margin-top: 25px;
+  padding-right: 60px;
+}
+
 @media screen and (min-width: 770px) and (max-width: 992px) {
   #intervencion {
     margin-bottom: 13px;
@@ -287,7 +355,8 @@ nav {
   }
 
   #intervencion,
-  #planeacion {
+  #planeacion,
+  #ejecucion {
     margin-bottom: 13px;
   }
 
@@ -299,12 +368,14 @@ nav {
     opacity: 0.2;
   }
 
-  #colCreateInter {
+  #colCreateInter,
+  #colCreateEjec {
     height: 100%;
   }
 
   #intervencion,
-  #planeacion {
+  #planeacion,
+  #ejecucion {
     background-color: rgba(166, 168, 161, 0.5);
     height: auto;
   }
@@ -313,14 +384,16 @@ nav {
     width: 90%;
   }
 
-  #createInter {
+  #createInter,
+  #createEjec {
     padding: 30px 10px 0px 10px;
   }
 }
 
 @media screen and (min-width: 993px) and (max-width: 1171px) {
   #intervencion,
-  #planeacion {
+  #planeacion,
+  #ejecucion {
     margin-bottom: 20px;
     padding: 70px 40px 15px 40px !important;
   }
@@ -337,7 +410,8 @@ nav {
     padding: 5px 0px 0px 0px;
   }
 
-  #createInter {
+  #createInter,
+  #createEjec {
     height: 88%;
   }
 
@@ -358,14 +432,16 @@ nav {
   }
 
   #intervencion,
-  #planeacion {
+  #planeacion,
+  #ejecucion {
     margin-bottom: 13px;
     background-color: rgba(166, 168, 161, 0.5);
     height: auto;
     padding: 50px 10px 0px 10px;
   }
 
-  #createInter {
+  #createInter,
+  #createEjec {
     margin-bottom: 0%;
   }
 
