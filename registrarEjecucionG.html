@@ -117,7 +117,7 @@
                       Tipo de población <label class="obligatorio" for="caracteristicasPoblacion">*</label>
                     </label>
                     <div id="caracteristicasPoblacion" class="row">
-                      <div class="col-lg-4 col-md-12 col-sm-12">
+                      <div class="col-lg-6 col-md-12 col-sm-12">
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text" id="ninios">En situación de discapacidad</span>
@@ -126,7 +126,7 @@
                             aria-describedby="ninios">
                         </div>
                       </div>
-                      <div class="col-lg-4 col-md-12 col-sm-12">
+                      <div class="col-lg-6 col-md-12 col-sm-12">
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text" id="jovenes">En situación de desplazamiento</span>
@@ -135,6 +135,8 @@
                             aria-describedby="jovenes">
                         </div>
                       </div>
+                    </div>
+                    <div class="row">
                       <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
@@ -144,14 +146,12 @@
                             aria-describedby="adultos">
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
                       <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text" id="jovenes">Comunidad Afro</span>
                           </div>
-                          <input type="number" class="form-control required" placeholder="Cant" aria-label="Username"
+                          <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
                             aria-describedby="jovenes">
                         </div>
                       </div>
@@ -169,7 +169,32 @@
                 </div>
               </div>
               <div class="tab">
+                <label for="resultadoEjecucion">Resultado de la ejecución <label class="obligatorio" for="resultadoEjecucion">*</label></label>
+                <div id="resultadoEjecucion" class="row">
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" id="radioEnProceso" name="resultadoEjecucion"
+                        required value="0">
+                      <label class="custom-control-label" for="radioEnProceso">En proceso</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" id="radioEfectivo" name="resultadoEjecucion"
+                        required value="1">
+                      <label class="custom-control-label" for="radioEfectivo">Efectivo</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" id="radioNoEfectivo" name="resultadoEjecucion"
+                        required value="2">
+                      <label class="custom-control-label" for="radioNoEfectivo">No efectivo</label>
+                    </div>
+                  </div>
+                </div>
 
+                div.col-lg-12.
               </div>
             </form>
 

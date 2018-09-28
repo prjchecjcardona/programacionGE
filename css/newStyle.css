@@ -354,6 +354,10 @@ hr {
     padding: 6px;
   }
 
+  #colDetalle{
+    display: none;
+  }
+
   #intervencion,
   #planeacion,
   #ejecucion {
@@ -403,6 +407,11 @@ hr {
     margin-bottom: -42px;
     padding: 6px;
   }
+
+  #colDetalle{
+    display: none;
+  }
+
 }
 
 @media screen and (max-width: 769px) {
@@ -413,6 +422,10 @@ hr {
   #createInter,
   #createEjec {
     height: 88%;
+  }
+
+  #colDetalle{
+    display: none;
   }
 
   #form-card {
@@ -429,6 +442,10 @@ hr {
 
   #coordinadoraInt > img {
     width: 90%;
+  }
+
+  .input-group-text{
+    font-size: 14px;
   }
 
   #intervencion,
