@@ -1,9 +1,12 @@
 $(document).ready(function() {
+  /* Functions */
+  getTotal("#tipoPoblacion input[type=number]", true);
+  getTotal("#caracteristicasPoblacion input[type=number]", false);
+  showTab(currentTab); // Display the current tab
+
   $("#datepicker").datepicker({
     uiLibrary: "bootstrap4"
   });
-
-  showTab(currentTab); // Display the current tab
 
   if (
     $("select").change(function() {
@@ -21,6 +24,26 @@ $(document).ready(function() {
     paging: false
   });
 
+  //Hide modal registro de contacto
+  $("#cerrarDetalleModal").click(function() {
+    $("#detalleEjecModal").modal("toggle");
+  });
+
+  $("#tipoPoblacion")
+    .find($("input[type=number]"))
+    .change(() => {
+      var element = "#tipoPoblacion input[type=number]";
+      var index = true;
+      getTotal(element, index);
+    });
+
+  $("#caracteristicasPoblacion")
+    .find($("input[type=number]"))
+    .change(() => {
+      var element = "#caracteristicasPoblacion input[type=number]";
+      var index = false;
+      getTotal(element, index);
+    });
 });
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -71,6 +94,17 @@ function validateForm() {
     valid = true;
   x = document.getElementsByClassName("tab");
   y = x[currentTab].getElementsByClassName("required");
+  k = x[currentTab].getElementsByClassName("totales");
+  //Verifies if spans have equal value
+  if (parseInt(k[0].innerHTML) != parseInt(k[1].innerHTML)) {
+    valid = false;
+
+    swal({ 
+      icon: "error",
+      title: "Los totales no concuerdan"
+    });
+  }
+
   // A loop that checks every input field in the current tab:
   for (i = 0; i < y.length; i++) {
     // If a field is empty...
@@ -99,4 +133,21 @@ function fixStepIndicator(n) {
   }
   //... and adds the "active" class to the current step:
   x[n].className += " active";
+}
+
+function getTotal(data, index) {
+  var index = index;
+  let tipoInputObject = $(data);
+  let tipoInputArray = tipoInputObject.get();
+  let total = 0;
+
+  tipoInputArray.forEach(element => {
+    total += parseInt(element.value);
+  });
+
+  if (index) {
+    $("#tipoTotal").html(`${total}`);
+  } else {
+    $("#caractTotal").html(`${total}`);
+  }
 }

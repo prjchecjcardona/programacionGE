@@ -75,7 +75,7 @@ body {
   z-index: 0;
 }
 
-.colBtnContacto {
+.colBtnContacto, .colBtnDetalle {
   display: flex;
   justify-content: center;
 }
@@ -94,7 +94,7 @@ body {
   padding: 85px 150px 50px 150px;
 }
 
-#tableContactosEjec{
+#tableContactosEjec {
   width: 120%;
 }
 
@@ -260,6 +260,10 @@ button.btn.btn-outline-secondary.border-left-0:hover {
   margin-right: 10px;
 }
 
+#btnVerDetalle{
+  display: none;
+}
+
 #logoUM {
   width: 3em;
 }
@@ -282,29 +286,55 @@ nav {
   text-align: center;
 }
 
-.title{
+.title {
   color: rgb(133, 40, 40);
 }
 
-.table-bordered thead td, .table-bordered thead th {
-	border-bottom-width: 2px;
-	padding: 1px 5px !important;
+.table-bordered thead td,
+.table-bordered thead th {
+  border-bottom-width: 2px;
+  padding: 1px 5px !important;
 }
 
-.table-bordered td, .table-bordered th {
+.table-bordered td,
+.table-bordered th {
   border: 1px solid #dee2e6;
   padding: 1px 5px !important;
 }
 
 hr {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	border: 0;
-	border-top: 1px solid rgba(0,0,0,.1);
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-#detalleCardContentGI > .row, #detalleCardContentGF > .row{
-  padding: 0px 30px
+#detalleCardContentGI > .row,
+#detalleCardContentGFw > .row {
+  padding: 0px 30px;
+}
+
+#headerDetalleModal {
+	width: 100%;
+	background-color: green;
+	border-radius: 3px 3px 0px 0px;
+	height: 85px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+}
+
+.detalleModal{
+  padding: 30px 50px 8px 50px !important; 
+}
+
+#resultadoEjecucion {
+  text-align: center;
+}
+
+.custom-file-label{
+  margin: 0% !important; 
 }
 
 #headerDetalle {
@@ -324,7 +354,7 @@ hr {
   align-self: center;
 }
 
-#rowTableContactos{
+#rowTableContactos {
   overflow-x: auto;
 }
 
@@ -347,6 +377,10 @@ hr {
     padding: 55px 20px 10px 20px;
   }
 
+  .detalleModal {
+    padding: 30px 30px 8px 30px !important;
+  }
+
   .header {
     width: 71%;
     text-align: center;
@@ -354,8 +388,12 @@ hr {
     padding: 6px;
   }
 
-  #colDetalle{
+  #colDetalle {
     display: none;
+  }
+
+  #btnVerDetalle{
+    display: block !important;
   }
 
   #intervencion,
@@ -408,10 +446,13 @@ hr {
     padding: 6px;
   }
 
-  #colDetalle{
-    display: none;
+  #btnVerDetalle{
+    display: block !important;
   }
 
+  #colDetalle {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 769px) {
@@ -419,17 +460,25 @@ hr {
     padding: 5px 0px 0px 0px;
   }
 
+  .detalleModal {
+    padding: 30px 30px 8px 30px !important;
+  }
+
   #createInter,
   #createEjec {
     height: 88%;
   }
 
-  #colDetalle{
+  #colDetalle {
     display: none;
   }
 
   #form-card {
     height: 100%;
+  }
+
+  #btnVerDetalle{
+    display: block !important;
   }
 
   #coordinadoraInt {
@@ -444,7 +493,7 @@ hr {
     width: 90%;
   }
 
-  .input-group-text{
+  .input-group-text {
     font-size: 14px;
   }
 
