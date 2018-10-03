@@ -72,7 +72,64 @@
                       class="form-control required">
                   </div>
                 </div>
-                <div class="row formRows">
+
+                <label for="ruralOurbano">Ubicación Municipio</label>
+                <div id="ruralOurbano" class="row">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radioRural" name="ubicMunicipio" required
+                      value="rural">
+                    <label class="custom-control-label" for="radioRural">Rural</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radioUrbano" name="ubicMunicipio" required
+                      value="urbano">
+                    <label class="custom-control-label" for="radioUrbano">Urbano</label>
+                  </div>
+                </div>
+
+                <div id="vereda" class="row formRows">
+                  <div class="col-sm-12">
+                    <label for="selectVereda">Vereda</label>
+                    <label for="selectVereda" class="obligatorio">*</label>
+                    <select class="form-control" id="selectVereda">
+                      <option value="" selected>Seleccione</option>
+                      <option value="1">Vereda #1</option>
+                      <option value="2">Vereda #2</option>
+                      <option value="3">Vereda #3</option>
+                      <option value="5">Vereda #4</option>
+                      <option value="6">Vereda #5</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div id="comunaObarrio" class="row">
+                  <div id="comuna" class="col-sm-6">
+                    <label for="selectComuna">Comuna</label>
+                    <label for="selectComuna" class="obligatorio">*</label>
+                    <select class="form-control" id="selectComuna">
+                      <option value="" selected>Seleccione</option>
+                      <option value="1">Comuna #1</option>
+                      <option value="2">Comuna #2</option>
+                      <option value="3">Comuna #3</option>
+                      <option value="5">Comuna #4</option>
+                      <option value="6">Comuna #5</option>
+                    </select>
+                  </div>
+                  <div id="barrio" class="col-sm-6">
+                    <label for="selectBarrio">Barrio</label>
+                    <label for="selectComuna" class="obligatorio">*</label>
+                    <select class="form-control" id="selectBarrio">
+                      <option value="" selected>Seleccione</option>
+                      <option value="1">Barrio #1</option>
+                      <option value="2">Barrio #2</option>
+                      <option value="3">Barrio #3</option>
+                      <option value="5">Barrio #4</option>
+                      <option value="6">Barrio #5</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!--                 <div class="row formRows">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                       <label for="observaciones">Observaciones</label>
@@ -80,7 +137,7 @@
                         rows="3"></textarea>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
 
               <div class="tab">
@@ -174,22 +231,12 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="form-group">
-                      <label for="planFichero">Fichero <label for="planFichero" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="planFichero" id="planFichero">
-                        <option value="">Seleccione</option>
-                        <option value="1">Fichero #1</option>
-                        <option value="2">Fichero #2</option>
-                      </select>
-                    </div>
-                  </div>
                 </div>
                 <div class="row formRows">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                       <label for="planEstrategia">Estrategia <label for="planEstrategia" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="planEstrategia" id="planEstrategia">
+                      <select class="custom-select required" name="planEstrategia" id="planEstrategia" multiple>
                         <option selected>Seleccione</option>
                         <option value="1">Estrategia #1</option>
                         <option value="2">Estrategia #2</option>
@@ -201,7 +248,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group">
                       <label for="planTactico">Tactico <label for="planTactico">Tactico <label for="planTactico" class="obligatorio">*</label></label></label>
-                      <select class="custom-select required" name="planTactico" id="planTactico">
+                      <select class="custom-select required" name="planTactico" id="planTactico" multiple>
                         <option selected>Seleccione</option>
                         <option value=""></option>
                         <option value="1">Tactico #1</option>
@@ -232,6 +279,43 @@
                         <option value="3">Indicador #3</option>
                         <option value="4">Indicador #4</option>
                       </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row formRows">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label for="planFichero">Guia de trabajo<label for="planFichero" class="obligatorio">*</label></label>
+                      <select class="custom-select required" name="planFichero" id="planFichero">
+                        <option value="">Seleccione</option>
+                        <option value="1">Fichero #1</option>
+                        <option value="2">Fichero #2</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <label for="solicitudEducativa">¿Esta actividad es una solicitud educativa recibida a través de la
+                  interventoría?</label>
+                <div id="solicitudEducativa" class="row formRows">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="siSolicitud" name="solicitudEducativa"
+                      required value="0">
+                    <label class="custom-control-label" for="siSolicitud">Si</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="noSolicitud" name="solicitudEducativa"
+                      required value="1" checked>
+                    <label class="custom-control-label" for="noSolicitud">No</label>
+                  </div>
+                </div>
+
+                <!-- Cargar una solicitud -->
+                <div class="row formRows">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div id="subirSolicitud" class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFileLang" lang="es" multiple>
+                      <label class="custom-file-label" for="customFileLang">Seleccionar solicitud</label>
                     </div>
                   </div>
                 </div>
@@ -277,23 +361,23 @@
             </div>
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
-                <label for="cedulaContacto">Cédula<label class="obligatorio">*</label></label>
+                <label for="cedulaContacto">Cédula</label>
                 <input type="text" placeholder="Cédula" id="cedulaContacto" name="cedulaContacto" aria-label="Cedula del contacto"
-                  class="form-control required" required>
+                  class="form-control required">
               </div>
             </div>
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
-                <label for="TelefonoContacto">Telefono<label class="obligatorio">*</label></label>
+                <label for="TelefonoContacto">Telefono</label>
                 <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefonoContacto" aria-label="Telefono del contacto"
-                  class="form-control required" required>
+                  class="form-control required">
               </div>
             </div>
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="correoContacto">Correo electronico</label>
                 <input type="text" placeholder="Correo" id="correoContacto" name="correoContacto" aria-label="Correo electronico del contacto"
-                  class="form-control required" required>
+                  class="form-control required">
               </div>
             </div>
             <div class="row rowForms">
@@ -309,9 +393,9 @@
             </div>
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
-                <label for="cargoContacto">Cargo<label class="obligatorio">*</label></label>
+                <label for="cargoContacto">Cargo</label>
                 <input type="text" placeholder="Cargo" id="cargoContacto" name="cargoContacto" aria-label="Cargo del contacto"
-                  class="form-control required" required>
+                  class="form-control required">
               </div>
             </div>
             <div id="rowBtnContacto" class="row rowForms">

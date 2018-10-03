@@ -24,6 +24,27 @@ $(document).ready(function() {
   });
 
   showTab(currentTab); // Display the current tab
+  $("#vereda").hide();
+  $("#comunaObarrio").hide();
+  $("#subirSolicitud").hide();
+  determineRadio();
+  checkSolicitudEducativa();
+
+  if (
+    $("select").change(function() {
+      if ($(this).hasClass("invalid")) {
+        $(this).removeClass("invalid");
+      }
+    })
+  );
+
+  $("input[name=solicitudEducativa]").change(function(){
+    checkSolicitudEducativa();
+  });
+
+  $('input[name="ubicMunicipio"]').change(function() {
+    determineRadio();
+  });
 
   //Hide modal registro de contacto
   $("#btnCancelarRegContacto").click(function() {
@@ -128,4 +149,37 @@ function fixStepIndicator(n) {
   }
   //... and adds the "active" class to the current step:
   x[n].className += " active";
+}
+
+function determineRadio() {
+  var vereda = $("#vereda");
+  var comunaObarrio = $("#comunaObarrio");
+  var radioVar = $('input[name="ubicMunicipio"]:checked');
+  if (radioVar.val() != undefined) {
+    if (radioVar.val() == "rural") {
+      if (vereda.is(":hidden") && comunaObarrio.is(":visible")) {
+        vereda.toggle();
+        comunaObarrio.toggle();
+      } else {
+        vereda.toggle();
+      }
+    } else if (comunaObarrio.is(":hidden") && vereda.is(":visible")) {
+      vereda.toggle();
+      comunaObarrio.toggle();
+    } else {
+      comunaObarrio.toggle();
+    }
+  }
+}
+
+function checkSolicitudEducativa() {
+  var solicitudRadio = $("input[name=solicitudEducativa]:checked");
+
+  if (solicitudRadio.val() == "0") {
+    $("#subirSolicitud").toggle();
+  } else {
+    if ($("#subirSolicitud").is(":visible")) {
+      $("#subirSolicitud").toggle();
+    }
+  }
 }

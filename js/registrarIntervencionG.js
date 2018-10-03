@@ -1,9 +1,6 @@
 $(document).ready(function() {
+  determineTipoGestion();
   showTab(currentTab); // Display the current tab
-
-  $("#vereda").hide();
-  $("#comunaObarrio").hide();
-  determineRadio();
 
   if($('select').change(function () { 
     if($(this).hasClass('invalid')){
@@ -11,9 +8,10 @@ $(document).ready(function() {
     }
   }));
 
-  $('input[name="ubicMunicipio"]').change(function(){
-    determineRadio();
-  });
+  $('input[name=tipoGestion]').change(function() {
+    determineTipoGestion();
+  })
+
 });
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -94,24 +92,16 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
-function determineRadio() {
-  var vereda = $("#vereda");
-  var comunaObarrio = $("#comunaObarrio");
-  var radioVar = $('input[name="ubicMunicipio"]:checked');
-  if (radioVar.val() != undefined) {
-    if (radioVar.val() == "rural") {
-      if (vereda.is(":hidden") && comunaObarrio.is(":visible")) {
-        vereda.toggle();
-        comunaObarrio.toggle();
-      } else {
-        vereda.toggle();
-      }
-    } else if (comunaObarrio.is(":hidden") && vereda.is(":visible")) {
-      vereda.toggle();
-      comunaObarrio.toggle();
-    } else {
-      comunaObarrio.toggle();
-    }
+function determineTipoGestion(){
+  var radioTipoGestion = $('input[name=tipoGestion]:checked');
+
+  if(parseInt(radioTipoGestion.val()) == 2){
+    console.log(radioTipoGestion.val());
+    $('#selectComportamiento').prop('disabled', true);
+    $('#selectTipoInt').prop('disabled', true);
+  }else{
+    $('#selectComportamiento').prop('disabled', false);
+    $('#selectTipoInt').prop('disabled', false);
   }
 }
 
