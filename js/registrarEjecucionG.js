@@ -29,6 +29,16 @@ $(document).ready(function() {
     $("#detalleEjecModal").modal("toggle");
   });
 
+
+//Prevent from typing negative numbers
+  $("input[type=number]").keydown(function(e) {
+    if (!((e.keyCode > 95 && e.keyCode < 106) ||
+        (e.keyCode > 47 && e.keyCode < 58) ||
+        e.keyCode == 8)){
+      return false;
+    }
+  });
+
   $("#tipoPoblacion")
     .find($("input[type=number]"))
     .change(() => {
@@ -96,13 +106,21 @@ function validateForm() {
   y = x[currentTab].getElementsByClassName("required");
   k = x[currentTab].getElementsByClassName("totales");
   //Verifies if spans have equal value
-  if (parseInt(k[0].innerHTML) != parseInt(k[1].innerHTML)) {
-    valid = false;
-
-    swal({ 
-      icon: "error",
-      title: "Los totales no concuerdan"
-    });
+  if (k.length != 0) {
+    if (parseInt(k[0].innerHTML) != parseInt(k[1].innerHTML)) {
+      valid = false;
+      swal({
+        icon: "error",
+        title: "Los totales no concuerdan"
+      });
+    }
+    if (parseInt($('input[name=ninguno]').val()) < 0) {
+      valid = false;
+      swal({
+        icon: "error",
+        title: "No puede haber un campo negativo"
+      });
+    }
   }
 
   // A loop that checks every input field in the current tab:
@@ -136,18 +154,35 @@ function fixStepIndicator(n) {
 }
 
 function getTotal(data, index) {
-  var index = index;
   let tipoInputObject = $(data);
   let tipoInputArray = tipoInputObject.get();
-  let total = 0;
+  var totalTipo = 0;
+  var totalCaract = 0;
+  let x = parseInt($("#tipoTotal").html());
 
   tipoInputArray.forEach(element => {
-    total += parseInt(element.value);
+    if (index) {
+      totalTipo += parseInt(element.value);
+    } else {
+      if (element.name != "ninguno") {
+        x = x - parseInt(element.value);
+        $("input[name=ninguno]").val(`${x}`);
+      }
+      totalCaract += parseInt(element.value);
+    }
   });
 
   if (index) {
-    $("#tipoTotal").html(`${total}`);
-  } else {
-    $("#caractTotal").html(`${total}`);
+    $("#tipoTotal").html(`${totalTipo}`);
+    $("input[name=ninguno]").val(
+      `${parseInt($("input[name=ninguno]").val()) +
+        (parseInt($("#tipoTotal").html()) -
+          parseInt($("#caractTotal").html()))}`
+    );
+    $("#caractTotal").html(`${totalTipo}`);
+  }
+
+  if (!index) {
+    $("#caractTotal").html(`${totalCaract}`);
   }
 }

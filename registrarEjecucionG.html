@@ -86,7 +86,7 @@
                             <span class="input-group-text" id="ninios">Niños</span>
                           </div>
                           <input type="number" name="ninios" class="form-control required" placeholder="Cantidad"
-                            aria-label="Username" aria-describedby="ninios" value="0">
+                            aria-label="Username" aria-describedby="ninios" value="0" min="0">
                         </div>
                       </div>
                       <div class="col-lg-4 col-md-12 col-sm-12">
@@ -95,7 +95,7 @@
                             <span class="input-group-text" id="jovenes">Jovenes</span>
                           </div>
                           <input type="number" name="jovenes" class="form-control required" placeholder="Cantidad"
-                            aria-label="Username" aria-describedby="jovenes" value="0">
+                            aria-label="Username" aria-describedby="jovenes" value="0" min="0">
                         </div>
                       </div>
                       <div class="col-lg-4 col-md-12 col-sm-12">
@@ -104,7 +104,7 @@
                             <span class="input-group-text" id="adultos">Adultos</span>
                           </div>
                           <input type="number" name="adultos" class="form-control required" placeholder="Cantidad"
-                            aria-label="Username" aria-describedby="adultos" value="0">
+                            aria-label="Username" aria-describedby="adultos" value="0" min="0">
                         </div>
                       </div>
                     </div>
@@ -129,45 +129,43 @@
                             <span class="input-group-text" id="discapacidad">Situación de discapacidad</span>
                           </div>
                           <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
-                            aria-describedby="discapacidad" value="0">
+                            aria-describedby="discapacidad" value="0" name="discapacidad" min="0">
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12">
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
-                            <span class="input-group-text" id="despalazamiento">Situación de desplazamiento</span>
+                            <span class="input-group-text" id="desplazamiento">Situación de desplazamiento</span>
                           </div>
                           <input type="number" class="form-control required" placeholder="Cant" aria-label="Username"
-                            aria-describedby="despalazamiento" value="0">
+                            aria-describedby="desplazamiento" value="0" name="desplazamiento" min="0">
                         </div>
                       </div>
-                      <div class="row formRows">
-                        <div class="col-lg-4 col-md-12 col-sm-12">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="indigena">Comunidad indigena</span>
-                            </div>
-                            <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
-                              aria-describedby="indigena" value="0">
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="indigena">Comunidad indigena</span>
                           </div>
+                          <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
+                            aria-describedby="indigena" value="0" name="indigena" min="0">
                         </div>
-                        <div class="col-lg-4 col-md-12 col-sm-12">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="afro">Comunidad Afro</span>
-                            </div>
-                            <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
-                              aria-describedby="afro" value="0">
+                      </div>
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="afro">Comunidad Afro</span>
                           </div>
+                          <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
+                            aria-describedby="afro" value="0" name="afro" min="0">
                         </div>
-                        <div class="col-lg-4 col-md-12 col-sm-12">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="ninguno">Ninguno</span>
-                            </div>
-                            <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
-                              aria-describedby="ninguno" value="0">
+                      </div>
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="ninguno">Ninguno</span>
                           </div>
+                          <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
+                            aria-describedby="ninguno" value="0" name="ninguno" min="0" readonly>
                         </div>
                       </div>
                       <div class="col-lg-12 col-md-12 col-sm-12">
@@ -191,6 +189,7 @@
                       <label class="custom-control-label" for="radioEnProceso">En proceso</label>
                     </div>
                   </div>
+
                   <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="custom-control custom-radio">
                       <input type="radio" class="custom-control-input" id="radioEfectivo" name="resultadoEjecucion"
@@ -198,6 +197,7 @@
                       <label class="custom-control-label" for="radioEfectivo">Efectivo</label>
                     </div>
                   </div>
+
                   <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="custom-control custom-radio">
                       <input type="radio" class="custom-control-input" id="radioNoEfectivo" name="resultadoEjecucion"
@@ -209,23 +209,61 @@
 
                 <div class="row formRows">
                   <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label for="desResultadoEjecucion">Descripción del resultado de la ejecución</label>
+                      <textarea class="form-control" id="desResultadoEjecucion" rows="3"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row formRows">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
                     <label for="evidenciasFotograficas">Evidencias Fotográficas <label for="actaReunion" class="obligatorio">*</label></label>
                     <div id="evidenciasFotograficas" class="input-group mb-3">
                       <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon01">Evidencias</span>
+                        <span class="input-group-text" id="inputEvidencias">Evidencias</span>
                       </div>
                       <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputEvidencias" aria-describedby="inputGroupFileAddon01">
+                        <input type="file" class="custom-file-input" id="inputEvidencias" aria-describedby="inputEvidencias"
+                          name="inputEvidenciasF">
                         <label class="custom-file-label" for="inputEvidencias">Seleccione</label>
                       </div>
                     </div>
+
+                    <label for="evidenciasFotograficas">Videos <label for="actaReunion" class="obligatorio">*</label></label>
+                    <div id="videos" class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputVideos">Videos</span>
+                      </div>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputEvidencias" aria-describedby="inputVideos"
+                          name="inputVideos">
+                        <label class="custom-file-label" for="inputEvidencias">Seleccione</label>
+                      </div>
+                    </div>
+
+                    <label for="evidenciasFotograficas">Asistencias <label for="actaReunion" class="obligatorio">*</label></label>
+                    <div id="asistencias" class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputAsistencia">Asistencia</span>
+                      </div>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputEvidencias" aria-describedby="inputAsistencia"
+                          name="inputAsistencia">
+                        <label class="custom-file-label" for="inputEvidencias">Seleccione</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg 12 col-md-6 col-sm-6" id="colActa">
                     <label for="actaReunion">Acta de reunión <label for="actaReunion" class="obligatorio">*</label></label>
                     <div id="actaReunion" class="input-group mb-3">
                       <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon02">Acta</span>
+                        <span class="input-group-text" id="inputActaReunion">Acta</span>
                       </div>
                       <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputActa" aria-describedby="inputGroupFileAddon02">
+                        <input type="file" class="custom-file-input" id="inputActa" aria-describedby="inputActaReunion"
+                          name="inputActa">
                         <label class="custom-file-label" for="inputActa">Seleccione</label>
                       </div>
                     </div>
@@ -252,6 +290,7 @@
             <div style="text-align:center;margin-top:40px;">
               <span class="step"></span>
               <span class="step"></span>
+              <span class="step"></span>
             </div>
 
           </div>
@@ -267,93 +306,63 @@
             </div>
             <div id="detalleCardContentGI">
               <div class="row">
-                <h5 class="title">
+                <h6 class="title">
                   Fecha de la ejecución: <h6> &nbsp; 12/02/2017</h6>
-                </h5>
+                </h6>
               </div>
               <hr>
               <div class="row">
-                <h5 class="title">
-                  Gestor: <h6> &nbsp; 12/02/2017</h6>
-                </h5>
-              </div>
-              <hr>
-              <div class="row">
-                <h5 class="title">
-                  Zona: <h6> &nbsp; Occidente</h6>
-                </h5>
-              </div>
-              <hr>
-              <div class="row">
-                <h5 class="title">
+                <h6 class="title">
                   Municipio: <h6> &nbsp; Lugar#1</h6>
-                </h5>
+                </h6>
               </div>
               <hr>
               <div class="row">
-                <h5 class="title">
+                <h6 class="title">
+                  Gestor: <h6> &nbsp; 12/02/2017</h6>
+                </h6>
+              </div>
+              <hr>
+              <div class="row">
+                <h6 class="title">
+                  Zona: <h6> &nbsp; Occidente</h6>
+                </h6>
+              </div>
+              <hr>
+              <div class="row">
+                <h6 class="title">
                   Entidad: <h6> &nbsp; I.E. Carmen del Rosario</h6>
-                </h5>
+                </h6>
               </div>
               <hr>
               <div class="row">
-                <h5 class="title">
-                  Tipo de entidad: <h6> &nbsp; Privada</h6>
-                </h5>
+                <h6 class="title">
+                  Comportamiento - Competencia: <h6> &nbsp; Cultura de pago - dfsdfsd</h6>
+                </h6>
               </div>
               <hr>
-              <div class="row">
-                <h5 class="title">
-                  Contacto(s):
-                </h5>
-              </div>
-              <div id="rowTableContactos" class="row">
-                <table id="tableContactosEjec" class="table-primary table-bordered">
-                  <thead>
-                    <tr>
-                      <th scope="col">Nombre</th>
-                      <th scope="col">Cédula</th>
-                      <th scope="col">Entidad</th>
-                      <th scope="col">Telefono</th>
-                      <th scope="col">Correo</th>
-                      <th scope="col">Cargo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Raul</th>
-                      <th scope="row">123456789</th>
-                      <th scope="row">Chinchina I.E.</th>
-                      <th scope="row">123456</th>
-                      <th scope="row">correo@gmail.com</th>
-                      <th scope="row">Supervisor</th>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
-            <hr>
             <div id="detalleCardContentGF">
               <div class="row">
-                <h5 class="title">
+                <h6 class="title">
                   Estrategias: <h6> &nbsp; Aprendiendo en el cole</h6>
-                </h5>
+                </h6>
               </div>
               <hr>
               <div class="row">
-                <h5 class="title">
+                <h6 class="title">
                   Tacticos: <h6> &nbsp; Tactico#1</h6>
-                </h5>
+                </h6>
               </div>
               <hr>
               <div class="row">
-                <h5 class="title">
+                <h6 class="title">
                   Temas: <h6> &nbsp; Cuidamundos</h6>
-                </h5>
+                </h6>
               </div>
               <hr>
               <div class="row">
-                <h5 class="title">
+                <h6 class="title">
                   Inidicadores: <br>
                   <h6>
                     <ul>
@@ -362,7 +371,13 @@
                       <li>Indicador#3</li>
                     </ul>
                   </h6>
-                </h5>
+                </h6>
+              </div>
+              <hr>
+              <div class="row">
+                <h6 class="title">
+                  Guías de trabajo: <h6> &nbsp; <a href="https://www.google.com/" target="_blank">Google</a></h6>
+                </h6>
               </div>
             </div>
           </div>
@@ -378,96 +393,66 @@
             <div id="headerDetalleModal">
               <h2>Detalle Planeación</h2>
             </div>
-            <div id="ejecucion" class="detalleEjec detalleModal">
+            <div id="detalleEjecModal" class="detalleEjec detalleModal">
               <div id="detalleCardContentGI">
                 <div class="row">
-                  <h5 class="title">
+                  <h6 class="title">
                     Fecha de la ejecución: <h6> &nbsp; 12/02/2017</h6>
-                  </h5>
+                  </h6>
                 </div>
                 <hr>
                 <div class="row">
-                  <h5 class="title">
-                    Gestor: <h6> &nbsp; 12/02/2017</h6>
-                  </h5>
-                </div>
-                <hr>
-                <div class="row">
-                  <h5 class="title">
-                    Zona: <h6> &nbsp; Occidente</h6>
-                  </h5>
-                </div>
-                <hr>
-                <div class="row">
-                  <h5 class="title">
+                  <h6 class="title">
                     Municipio: <h6> &nbsp; Lugar#1</h6>
-                  </h5>
+                  </h6>
                 </div>
                 <hr>
                 <div class="row">
-                  <h5 class="title">
+                  <h6 class="title">
+                    Gestor: <h6> &nbsp; 12/02/2017</h6>
+                  </h6>
+                </div>
+                <hr>
+                <div class="row">
+                  <h6 class="title">
+                    Zona: <h6> &nbsp; Occidente</h6>
+                  </h6>
+                </div>
+                <hr>
+                <div class="row">
+                  <h6 class="title">
                     Entidad: <h6> &nbsp; I.E. Carmen del Rosario</h6>
-                  </h5>
+                  </h6>
                 </div>
                 <hr>
                 <div class="row">
-                  <h5 class="title">
-                    Tipo de entidad: <h6> &nbsp; Privada</h6>
-                  </h5>
+                  <h6 class="title">
+                    Comportamiento - Competencia: <h6> &nbsp; Cultura de pago - dfsdfsd</h6>
+                  </h6>
                 </div>
                 <hr>
-                <div class="row">
-                  <h5 class="title">
-                    Contacto(s):
-                  </h5>
-                </div>
-                <div id="rowTableContactos" class="row">
-                  <table id="tableContactosEjec" class="table-primary table-bordered">
-                    <thead>
-                      <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Cédula</th>
-                        <th scope="col">Entidad</th>
-                        <th scope="col">Telefono</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Cargo</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Raul</th>
-                        <th scope="row">123456789</th>
-                        <th scope="row">Chinchina I.E.</th>
-                        <th scope="row">123456</th>
-                        <th scope="row">correo@gmail.com</th>
-                        <th scope="row">Supervisor</th>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
               </div>
-              <hr>
               <div id="detalleCardContentGF">
                 <div class="row">
-                  <h5 class="title">
+                  <h6 class="title">
                     Estrategias: <h6> &nbsp; Aprendiendo en el cole</h6>
-                  </h5>
+                  </h6>
                 </div>
                 <hr>
                 <div class="row">
-                  <h5 class="title">
+                  <h6 class="title">
                     Tacticos: <h6> &nbsp; Tactico#1</h6>
-                  </h5>
+                  </h6>
                 </div>
                 <hr>
                 <div class="row">
-                  <h5 class="title">
+                  <h6 class="title">
                     Temas: <h6> &nbsp; Cuidamundos</h6>
-                  </h5>
+                  </h6>
                 </div>
                 <hr>
                 <div class="row">
-                  <h5 class="title">
+                  <h6 class="title">
                     Inidicadores: <br>
                     <h6>
                       <ul>
@@ -476,7 +461,13 @@
                         <li>Indicador#3</li>
                       </ul>
                     </h6>
-                  </h5>
+                  </h6>
+                </div>
+                <hr>
+                <div class="row">
+                  <h6 class="title">
+                    Guías de trabajo: <h6> &nbsp; <a href="https://www.google.com/" target="_blank">Google</a></h6>
+                  </h6>
                 </div>
               </div>
               <div class="row rowForms">

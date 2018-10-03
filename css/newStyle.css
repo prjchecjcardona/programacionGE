@@ -80,6 +80,10 @@ body {
   justify-content: center;
 }
 
+#cerrarDetalleModal{
+  margin-top: 30px;
+}
+
 #intervencion,
 #planeacion,
 #ejecucion {
@@ -311,7 +315,7 @@ hr {
 }
 
 #detalleCardContentGI > .row,
-#detalleCardContentGFw > .row {
+#detalleCardContentGF > .row {
   padding: 0px 30px;
 }
 
