@@ -29,12 +29,15 @@ $(document).ready(function() {
     $("#detalleEjecModal").modal("toggle");
   });
 
-
-//Prevent from typing negative numbers
+  //Prevent from typing negative numbers
   $("input[type=number]").keydown(function(e) {
-    if (!((e.keyCode > 95 && e.keyCode < 106) ||
+    if (
+      !(
+        (e.keyCode > 95 && e.keyCode < 106) ||
         (e.keyCode > 47 && e.keyCode < 58) ||
-        e.keyCode == 8)){
+        e.keyCode == 8
+      )
+    ) {
       return false;
     }
   });
@@ -53,6 +56,10 @@ $(document).ready(function() {
       var element = "#caracteristicasPoblacion input[type=number]";
       var index = false;
       getTotal(element, index);
+    });
+
+    $("input[type=time]").change(function(){
+      calcularDuracion();
     });
 });
 
@@ -114,7 +121,7 @@ function validateForm() {
         title: "Los totales no concuerdan"
       });
     }
-    if (parseInt($('input[name=ninguno]').val()) < 0) {
+    if (parseInt($("input[name=ninguno]").val()) < 0) {
       valid = false;
       swal({
         icon: "error",
@@ -163,9 +170,12 @@ function getTotal(data, index) {
   tipoInputArray.forEach(element => {
     if (index) {
       totalTipo += parseInt(element.value);
-    } else {
+    } else if (!index) {
       if (element.name != "ninguno") {
         x = x - parseInt(element.value);
+        if (x < 0) {
+          x = 0;
+        }
         $("input[name=ninguno]").val(`${x}`);
       }
       totalCaract += parseInt(element.value);
@@ -184,5 +194,36 @@ function getTotal(data, index) {
 
   if (!index) {
     $("#caractTotal").html(`${totalCaract}`);
+  }
+}
+
+function calcularDuracion() {
+  var timeInputs = $("input[type=time]").get();
+
+  if (timeInputs[0].value != "" && timeInputs[1].value != "") {
+    var inicio = $("input[name=horaInicio]").val();
+    var fin = $("input[name=horaFin]").val();
+
+    var timeStart = new Date("01/01/2007 " + inicio);
+    var timeEnd = new Date("01/01/2007 " + fin);
+    var startHour = timeStart.getHours();
+    var endHour = timeEnd.getHours();
+    var startMinute = timeStart.getMinutes();
+    var endMinute = timeEnd.getMinutes();
+
+    if(endHour > startHour){
+      totalMinutes = Math.abs((endMinute - startMinute));
+      totalMinutes = Math.abs(totalMinutes - 60);
+      totalHours = Math.abs((endHour - 1));
+      totalHours = Math.abs((totalHours - startHour));
+
+    }else if(endHour <= startHour){
+      totalMinutes = Math.abs(endMinute - startMinute);
+      totalHours = Math.abs(endHour - startHour);
+    }
+
+    $('#duracionTotal').val(
+      `${totalHours} horas ${totalMinutes} minutos`
+    );
   }
 }
