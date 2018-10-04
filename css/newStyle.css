@@ -104,7 +104,7 @@ body {
 
 #planeacion,
 #ejecucion {
-  padding: 85px 50px 8px 50px;
+  padding: 65px 50px 8px 50px;
 }
 
 #img-intervencion {
@@ -250,10 +250,9 @@ button.btn.btn-outline-secondary.border-left-0:hover {
   -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
   box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
-  margin-bottom: -70px;
+  margin-bottom: -30px;
   left: 5em;
   position: relative;
-  padding: 20px;
   z-index: 2;
   border-color: transparent;
   border-radius: 100px 10px 10px 10px;
@@ -331,15 +330,40 @@ hr {
 }
 
 .detalleModal{
-  padding: 30px 50px 8px 50px !important; 
+  padding: 30px 50px 8px 50px !important;
 }
 
 #resultadoEjecucion {
   text-align: center;
 }
 
+#divNoEjecucionDad{
+    width: 90%;
+    background-color: rgba(74, 198, 36, 0.4);
+    height: 40px;
+    border-radius: 3px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+#divNoEjecucionDad > div > label{
+  color: black;
+}
+
 .custom-file-label{
-  margin: 0% !important; 
+  margin: 0% !important;
+}
+
+.danger{
+  background-color: rgba(255, 54, 54, 0.5) !important;
+}
+
+.modal-header{
+  background-color: rgba(255,0,0,0.5) !important;
+}
+
+#rowNovedad{
+  justify-content: center;
 }
 
 #headerDetalle {
@@ -526,7 +550,7 @@ hr {
 
   .header {
     width: 95%;
-    height: 12%;
+    height: auto;
     margin-bottom: -19px;
     left: 5px;
     position: relative;

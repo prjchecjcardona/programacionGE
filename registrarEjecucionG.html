@@ -44,6 +44,15 @@
           </div>
           <div id="ejecucion">
             <form id="ejecForm" action="">
+              <!-- Novedad de no ejecucion -->
+              <div class="row formRows" id="rowNovedad">
+                <div id="divNoEjecucionDad">
+                  <div id="divNoEjecucion" class="custom-control custom-radio">
+                    <input type="radio" id="noEjecucion" name="noEjecucion" class="custom-control-input" onclick="getChecked()">
+                    <label class="custom-control-label" for="noEjecucion">Novedad de no ejecución</label>
+                  </div>
+                </div>
+              </div>
               <div class="tab">
                 <div class="row formRows">
                   <div class="col-lg-6 col-md-12 col-sm-12">
@@ -476,6 +485,32 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de novedad de no ejecucion -->
+    <div class="modal fade" id="modalNoEjecucion" tabindex="-1" role="dialog" aria-labelledby="modalnoEjecucionTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalnoEjecucionTitle">Novedad de no Ejecución</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="getChecked()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="descripcionNovedad">Describa porque no se dío la ejecución <label for="descripcionNovedad"
+                  class="obligatorio">*</label></label>
+              <textarea class="form-control" name="descripcionNovedad" id="descripcionNovedad" rows="5" cols="10"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="getChecked()">Cancelar</button>
+            <button type="button" class="btn btn-success">Guardar</button>
           </div>
         </div>
       </div>
