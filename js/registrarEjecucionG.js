@@ -4,10 +4,11 @@ $(document).ready(function() {
   getTotal("#caracteristicasPoblacion input[type=number]", false);
   showTab(currentTab); // Display the current tab
   document.getElementById("noEjecucion").checked = false;
-
+  calcularDuracion();
 
   $("#datepicker").datepicker({
-    uiLibrary: "bootstrap4"
+    locale : "es-es",
+    uiLibrary: "bootstrap4",
   });
 
   if (
@@ -59,6 +60,14 @@ $(document).ready(function() {
       var index = false;
       getTotal(element, index);
     });
+
+  // When time input changes
+  $("input[type=time]").change(function() {
+    calcularDuracion();
+  });
+
+  //When window resizes
+  $(window).resize(resize).trigger("resize");
 });
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -209,37 +218,52 @@ function calcularDuracion() {
     var startMinute = timeStart.getMinutes();
     var endMinute = timeEnd.getMinutes();
 
-    if(endHour > startHour){
-      totalMinutes = Math.abs((endMinute - startMinute));
-      totalMinutes = Math.abs(totalMinutes - 60);
-      totalHours = Math.abs((endHour - 1));
-      totalHours = Math.abs((totalHours - startHour));
-
-    }else if(endHour <= startHour){
+    if (endHour > startHour) {
+      totalMinutes = Math.abs(endMinute - startMinute);
+      if (totalMinutes == 0) {
+        totalHours = Math.abs(endHour - startHour);
+      } else {
+        totalMinutes = Math.abs(totalMinutes - 60);
+        totalHours = Math.abs(endHour - 1);
+        totalHours = Math.abs(totalHours - startHour);
+      }
+    } else if (endHour <= startHour) {
       totalMinutes = Math.abs(endMinute - startMinute);
       totalHours = Math.abs(endHour - startHour);
     }
 
-    $('#duracionTotal').val(
-      `${totalHours} horas ${totalMinutes} minutos`
-    );
+    $("#duracionTotal").val(`${totalHours} horas ${totalMinutes} minutos`);
   }
 }
 
 var isChecked = false; // Sets that radio is unchecked for condition
 
-function getChecked(){
+function getChecked() {
   var radio = document.getElementById("noEjecucion");
   var alert = document.getElementById("divNoEjecucionDad");
 
-  if(!isChecked){
+  if (!isChecked) {
     radio.checked = true;
     isChecked = true;
-    alert.classList.add('danger'); // Adds danger indicating that radio is active
-    $('#modalNoEjecucion').modal(); // 
-  }else{
+    alert.classList.add("danger"); // Adds danger indicating that radio is active
+    $("#modalNoEjecucion").modal({
+      keyboard: false,
+      backdrop: "static"
+    }); //
+  } else {
     radio.checked = false;
     isChecked = false;
-    alert.classList.remove('danger');
+    alert.classList.remove("danger");
+  }
+}
+
+// When window resizes change class
+function resize() {
+  if ($(window).width() <= 1171) {
+    $("#colCreateEjec").removeClass("col-lg-8").addClass("col-lg-12");
+  } else {
+    if ($("#colCreateEjec").hasClass("col-lg-12")) {
+      $("#colCreateEjec").removeClass("col-lg-12").addClass("col-lg-8");
+    }
   }
 }
