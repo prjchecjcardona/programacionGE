@@ -75,4 +75,14 @@ class gestionEducativa
     {
         return getContactosQuery($this->con);
     }
+
+    public function getTacticos()
+    {
+        return getTacticosQuery($this->con);
+    }
+
+    public function getTemas()
+    {
+        return getTemasQuery($this->con);
+    }
 }

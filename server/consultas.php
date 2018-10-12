@@ -96,10 +96,25 @@ function getFicherosQuery($con)
 
     return executeQuery($con, $sql);
 }
+
 function getContactosQuery($con)
 {
     $sql = "SELECT nombrecontacto, id_contacto, telefono, cargo, entidades_id_entidades
     FROM contactos";
+
+    return executeQuery($con, $sql);
+}
+
+function getTacticosQuery($con)
+{
+    $sql = "SELECT id_tactico, nombretactico FROM tactico";
+
+    return executeQuery($con, $sql);
+}
+
+function getTemasQuery($con)
+{
+    $sql = "SELECT id_temas, temas FROM temas";
 
     return executeQuery($con, $sql);
 }

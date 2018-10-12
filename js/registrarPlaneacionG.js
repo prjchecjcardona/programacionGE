@@ -217,6 +217,14 @@ function executeAll() {
     {
       select: "selectFichero",
       data: "getFicheros"
+    },
+    {
+      select: "selectTactico",
+      data: "getTacticos"
+    },
+    {
+      select: "selectTema",
+      data: "getTemas"
     }
   ];
 

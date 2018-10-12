@@ -103,4 +103,26 @@ if (isset($_POST['get'])) {
 
         echo json_encode($json);
     }
+
+/* ------------------------ GET TACTICOS ------------------------ */
+    if ($_POST['get'] == "getTacticos") {
+        if (isset($_POST)) {
+            $json = $api->getTacticos();
+        } else {
+            $json = "No se recibieron los datos de manera adecuada";
+        }
+
+        echo json_encode($json);
+    }
+
+    /* ------------------------ GET TACTICOS ------------------------ */
+    if ($_POST['get'] == "getTemas") {
+      if (isset($_POST)) {
+          $json = $api->getTemas();
+      } else {
+          $json = "No se recibieron los datos de manera adecuada";
+      }
+
+      echo json_encode($json);
+  }
 }
