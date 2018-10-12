@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/fileinput-rtl.min.css">
   <link rel="stylesheet" href="css/newStyle.css">
 
+<body>
   <div class="main">
     <div id="navbar" class="row">
       <div class="col-12">
@@ -42,15 +43,10 @@
               <div class="tab">
                 <div class="row formRows">
                   <div class="col-lg-12 col-md-12 col-sm-12">
-                    <label for="selectMuncipio">Municipio</label>
+                    <label for="selectMunicipio">Municipio</label>
                     <label for="selectMunicipio" class="obligatorio">*</label>
-                    <select class="form-control" id="selectMuncipio">
+                    <select class="custom-select" id="selectMunicipio">
                       <option value="" selected>Seleccione</option>
-                      <option value="1">Anserma</option>
-                      <option value="2">Manizales</option>
-                      <option value="3">Aguadas</option>
-                      <option value="5">Chinchina</option>
-                      <option value="6">Dosquebradas</option>
                     </select>
                   </div>
                 </div>
@@ -87,31 +83,32 @@
                     <label for="selectComportamiento" class="obligatorio">*</label>
                     <select class="custom-select" id="selectComportamiento">
                       <option value="" selected>Seleccione</option>
-                      <option value="1">Cultura de pago</option>
-                      <option value="2">Uso de canales vanguardistas</option>
-                      <option value="3">Uso responsable y disfrute de la energia</option>
                     </select>
                   </div>
                 </div>
 
-                <!-- Indicadores de control -->
-                <div class="formRows">
-                  <label for="selectIndicadorInt">Indicadores de control CHEC</label>
-                  <label for="selectIndicadorInt" class="obligatorio">*</label>
-                  <small id="indicadorDesc" class="form-text text-muted">Estos son los indicadores de control CHEC más
-                    relevantes observados en los tableros de control.
-                  </small>
-                  <select class="form-control" id="selectIndicadorInt" multiple>
-                    <option value="10">SAIFI (Veces de indisponibilidad al mes)</option>
-                    <option value="9">SAIDI (Horas de indisponibilidad al mes)</option>
-                    <option value="1">Quejas CHEC</option>
-                    <option value="2">Reclamos ciertos facturación</option>
-                    <option value="12">Consumo subsidiado</option>
-                  </select>
-                  <small id="indicadorHelp" class="form-text text-muted">Para seleccionar varios indicadores, mantenga
-                    la
-                    tecla Ctrl Presionada y seleccione las opciones requeridas.
-                  </small>
+                <div class="tab">
+                  <!-- Indicadores de control -->
+                  <div class="formRows">
+                    <label for="selectIndicadorInt">Indicadores de control CHEC</label>
+                    <label for="selectIndicadorInt" class="obligatorio">*</label>
+                    <small id="indicadorDesc" class="form-text text-muted">Estos son los indicadores de control CHEC
+                      más
+                      relevantes observados en los tableros de control.
+                    </small>
+                    <select class="form-control" id="selectIndicadorInt" multiple>
+                      <option value="10">SAIFI (Veces de indisponibilidad al mes)</option>
+                      <option value="9">SAIDI (Horas de indisponibilidad al mes)</option>
+                      <option value="1">Quejas CHEC</option>
+                      <option value="2">Reclamos ciertos facturación</option>
+                      <option value="12">Consumo subsidiado</option>
+                    </select>
+                    <small id="indicadorHelp" class="form-text text-muted">Para seleccionar varios indicadores,
+                      mantenga
+                      la
+                      tecla Ctrl Presionada y seleccione las opciones requeridas.
+                    </small>
+                  </div>
                 </div>
               </div>
             </form>
@@ -124,6 +121,7 @@
             </div>
 
             <div style="text-align:center;margin-top:40px;">
+              <span class="step"></span>
               <span class="step"></span>
             </div>
 
@@ -139,7 +137,7 @@
   </div>
 
   <!-- SCRIPTS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
@@ -154,9 +152,9 @@
   <script src="js/includes/dataTable/dataTables.bootstrap4.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="js/registrarFocalizacionG.js"></script>
-</head>
+  </head>
 
-<body>
+
 
 </body>
 

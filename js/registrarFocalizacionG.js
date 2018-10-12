@@ -1,17 +1,20 @@
 $(document).ready(function() {
+  /* Functions */
+  executeAll();
   determineTipoGestion();
   showTab(currentTab); // Display the current tab
 
-  if($('select').change(function () { 
-    if($(this).hasClass('invalid')){
-      $(this).removeClass('invalid');
-    }
-  }));
+  if (
+    $("select").change(function() {
+      if ($(this).hasClass("invalid")) {
+        $(this).removeClass("invalid");
+      }
+    })
+  );
 
-  $('input[name=tipoGestion]').change(function() {
+  $("input[name=tipoGestion]").change(function() {
     determineTipoGestion();
-  })
-
+  });
 });
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -65,7 +68,7 @@ function validateForm() {
   // A loop that checks every input field in the current tab:
   for (i = 0; i < y.length; i++) {
     // If a field is empty...
-    if (y[i].parentElement.parentElement.style.display != 'none') {
+    if (y[i].parentElement.parentElement.style.display != "none") {
       if (y[i].value == "") {
         // add an "invalid" class to the field:
         y[i].className += " invalid";
@@ -92,17 +95,65 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
-function determineTipoGestion(){
-  var radioTipoGestion = $('input[name=tipoGestion]:checked');
+function determineTipoGestion() {
+  var radioTipoGestion = $("input[name=tipoGestion]:checked");
 
-  if(parseInt(radioTipoGestion.val()) == 2){
+  if (parseInt(radioTipoGestion.val()) == 2) {
     console.log(radioTipoGestion.val());
-    $('#selectComportamiento').prop('disabled', true);
-    $('#selectTipoInt').prop('disabled', true);
-  }else{
-    $('#selectComportamiento').prop('disabled', false);
-    $('#selectTipoInt').prop('disabled', false);
+    $("#selectComportamiento").prop("disabled", true);
+    $("#selectTipoInt").prop("disabled", true);
+  } else {
+    $("#selectComportamiento").prop("disabled", false);
+    $("#selectTipoInt").prop("disabled", false);
   }
 }
 
+/* function that creates array of objects that needs request from db
+select=name of html tag, data= name of query that will be in POST parameter
+ */
+function executeAll() {
+  /* Define array of objects with values to replace */
+  var ajaxJson = [
+    {
+      select: "selectMunicipio",
+      data: "getMunicipios"
+    },
+    {
+      select: "selectComportamiento",
+      data: "getComportamientos"
+    }
+  ];
 
+  ajaxJson.forEach(element => {
+    primaryAjax(element.select, element.data);
+  });
+}
+
+function primaryAjax(tag, data) {
+  $.ajax({
+    type: "POST",
+    url: "server/allGets.php",
+    data: {
+      get: data //POST parameter that proves what endpoint is needed
+    },
+    dataType: "json"
+  }).done(function(data) {
+    data.forEach(element => {
+      var elementArray = Object.values(element); // Converts objects to array
+
+      if (tag == "selectMunicipio") {
+        // Object from selectMunicipio has only 2 keys
+        $(`#${tag}`).append(
+          `<option value="${elementArray[0]}">${elementArray[1]}</option>`
+        );
+      } else {
+        // This object has more than 2, for that is required to add another element
+        $(`#${tag}`).append(
+          `<option value="${elementArray[0]}">${elementArray[1]} - ${
+            elementArray[2]
+          }</option>`
+        );
+      }
+    });
+  });
+}

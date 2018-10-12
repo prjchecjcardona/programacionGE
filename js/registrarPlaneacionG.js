@@ -1,5 +1,15 @@
 $(document).ready(function() {
+  /* Functions */
+  executeAll();
+  showTab(currentTab); // Display the current tab
+  $("#vereda").hide();
+  $("#comunaObarrio").hide();
+  $("#subirSolicitud").hide();
+  determineRadio();
+  checkSolicitudEducativa();
+
   $("#datepicker").datepicker({
+    locale: "es-es",
     uiLibrary: "bootstrap4"
   });
 
@@ -23,13 +33,6 @@ $(document).ready(function() {
     order: [[1, "asc"]]
   });
 
-  showTab(currentTab); // Display the current tab
-  $("#vereda").hide();
-  $("#comunaObarrio").hide();
-  $("#subirSolicitud").hide();
-  determineRadio();
-  checkSolicitudEducativa();
-
   if (
     $("select").change(function() {
       if ($(this).hasClass("invalid")) {
@@ -38,7 +41,7 @@ $(document).ready(function() {
     })
   );
 
-  $("input[name=solicitudEducativa]").change(function(){
+  $("input[name=solicitudEducativa]").change(function() {
     checkSolicitudEducativa();
   });
 
@@ -49,6 +52,10 @@ $(document).ready(function() {
   //Hide modal registro de contacto
   $("#btnCancelarRegContacto").click(function() {
     $("#modalRegistrarContacto").modal("toggle");
+  });
+
+  $("#btnCancelarRegEntidad").click(function() {
+    $("#modalRegistrarEntidad").modal("toggle");
   });
 });
 
@@ -182,4 +189,63 @@ function checkSolicitudEducativa() {
       $("#subirSolicitud").toggle();
     }
   }
+}
+
+function executeAll() {
+  /* Define array of objects with values to replace */
+  var ajaxJson = [
+    {
+      select: "selectEntidad",
+      data: "getEntidades"
+    },
+    {
+      select: "selectVereda",
+      data: "getVeredas"
+    },
+    {
+      select: "selectBarrio",
+      data: "getBarrios"
+    },
+    {
+      select: "selectComuna",
+      data: "getComunas"
+    },
+    {
+      select: "selectEstrategia",
+      data: "getEstrategias"
+    },
+    {
+      select: "selectFichero",
+      data: "getFicheros"
+    }
+  ];
+
+  ajaxJson.forEach(element => {
+    primaryAjax(element.url, element.select, element.data);
+  });
+}
+
+function primaryAjax(url, tag, data) {
+  $.ajax({
+    type: "POST",
+    url: "server/allGets.php",
+    data: {
+      get: data
+    },
+    dataType: "json"
+  }).done(function(data) {
+    data.forEach(element => {
+      var elementArray = Object.values(element);
+
+      if (elementArray.length == 1) {
+        $(`#${tag}`).append(
+          `<option value="${elementArray[0]}">${elementArray[0]}</option>`
+        );
+      } else {
+        $(`#${tag}`).append(
+          `<option value="${elementArray[0]}">${elementArray[1]}</option>`
+        );
+      }
+    });
+  });
 }

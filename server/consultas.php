@@ -34,30 +34,72 @@ function getMunicipioQuery($con)
 {
     $sql = "SELECT id_municipio, municipio FROM municipios";
 
-    executeQuery($con, $sql);
+    return executeQuery($con, $sql);
 }
 
-function getEntidadQuery($con)
+function getEntidadesQuery($con)
 {
-    $sql = "SELECT id_entidad, entidad FROM entidades";
+    $sql = "SELECT id_entidad, nombreentidad FROM entidades";
 
-    executeQuery($con, $sql);
+    return executeQuery($con, $sql);
 }
 
 function getTipoIntervencionQuery($con)
 {
     $sql = "SELECT * FROM tipo_intervencion";
 
-    executeQuery($con, $sql);
+    return executeQuery($con, $sql);
 }
 
-function getCompetenciasQuery($con)
+function getComportamientosQuery($con)
 {
-    $sql = "SELECT competencias_id_competencia, comportamientos_id_comportamientos, comportamientos
+    $sql = "SELECT comportamientos_id_comportamientos, comportamientos, competencia
     FROM competencias_por_comportamiento cpc
-    JOIN comportamientos cpt ON cpc.comportamientos_id_comportamientos = cpt.id_comportamientos";
+    JOIN comportamientos cpt ON cpc.comportamientos_id_comportamientos = cpt.id_comportamientos
+    JOIN competencias comp ON cpc.competencias_id_competencia = comp.id_competencia
+    WHERE comportamientos_id_comportamientos <> 5";
 
-    executeQuery($con, $sql);
+    return executeQuery($con, $sql);
 }
 
+function getComunasQuery($con)
+{
+    $sql = "SELECT id_comuna, comuna FROM comunas";
 
+    return executeQuery($con, $sql);
+}
+
+function getBarriosQuery($con)
+{
+    $sql = "SELECT id_barrio, barrio FROM barrios";
+
+    return executeQuery($con, $sql);
+}
+
+function getVeredasQuery($con)
+{
+    $sql = "SELECT id_veredas, vereda FROM veredas";
+
+    return executeQuery($con, $sql);
+}
+
+function getEstrategiasQuery($con)
+{
+    $sql = "SELECT * FROM estrategias";
+
+    return executeQuery($con, $sql);
+}
+
+function getFicherosQuery($con)
+{
+    $sql = "SELECT codigo FROM ficheros";
+
+    return executeQuery($con, $sql);
+}
+function getContactosQuery($con)
+{
+    $sql = "SELECT nombrecontacto, id_contacto, telefono, cargo, entidades_id_entidades
+    FROM contactos";
+
+    return executeQuery($con, $sql);
+}

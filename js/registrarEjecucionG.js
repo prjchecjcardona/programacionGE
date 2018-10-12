@@ -7,7 +7,7 @@ $(document).ready(function() {
   calcularDuracion();
 
   $("#datepicker").datepicker({
-    locale : "es-es",
+    locale : 'es-es',
     uiLibrary: "bootstrap4",
   });
 
@@ -44,6 +44,8 @@ $(document).ready(function() {
       return false;
     }
   });
+
+
 
   $("#tipoPoblacion")
     .find($("input[type=number]"))
