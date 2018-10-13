@@ -214,9 +214,12 @@
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                       <label for="selectEstrategia">Estrategia <label for="selectEstrategia" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="planEstrategia" id="selectEstrategia" multiple>
+                      <select class="custom-select required" name="planEstrategia" id="selectEstrategia"
+                        aria-describedby="selectHelpEstrategia" multiple>
                         <option selected>Seleccione</option>
                       </select>
+                      <small id="selectHelpEstrategia" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd> para
+                        seleccionar mas de una estrategia</small>
                     </div>
                   </div>
                 </div>
@@ -227,9 +230,11 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group">
                       <label for="selectTactico">Tactico <label for="selectTactico" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="planTactico" id="selectTactico" multiple>
+                      <select class="custom-select required" name="planTactico" id="selectTactico" aria-describedby="selectHelpTactico" multiple>
                         <option selected>Seleccione</option>
                       </select>
+                      <small id="selectHelpTactico" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd> para
+                        seleccionar mas de un tactico</small>
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12">
@@ -429,7 +434,8 @@
               </div>
               <div class="col-lg-2 col-md-3 col-sm-12 direccion1">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="direccionFirst" id="direccionFirst" placeholder="Ej: 2a" required>
+                  <input type="text" class="form-control" name="direccionFirst" id="direccionFirst" placeholder="Ej: 2a"
+                    required>
                 </div>
               </div>
               <div class="direccionCharacters">
