@@ -41,12 +41,12 @@ function getRecursosQuery($con)
 
 function getFicherosQuery($con, $competencia, $tema, $zona, $indicador)
 {
-    /* if ($zona == 0) {
+    if ($zona == 0) {
         $sql = "SELECT rec.recurso_url || '/' || nombre_fichero AS fichero_url, fro.nombre_fichero, rec.icon, fro.codigo, tma.temas ";
     } else {
-        
-    } */
-    $sql = "SELECT rec.recurso_url || '/' || zna.id_zona || '/' || nombre_fichero AS fichero_url, fro.nombre_fichero, rec.icon, fro.codigo, tma.temas ";
+        $sql = "SELECT rec.recurso_url || '/' || zna.id_zona || '/' || nombre_fichero AS fichero_url, fro.nombre_fichero, rec.icon, fro.codigo, tma.temas";
+    }
+
     $sql .= "FROM ficheros as fro
     JOIN competencias as cpte ON fro.id_competencia = cpte.id_competencia
     JOIN temas as tma ON tma.id_temas = fro.id_tema

@@ -45,19 +45,13 @@ $(document).ready(function() {
     checkSolicitudEducativa();
   });
 
-  //Hide modal registro de contacto
-  $("#cerrarDetalleModal").click(function() {
-    $("#detalleEjecModal").modal("toggle");
+  $('input[name="ubicMunicipio"]').change(function() {
+    determineRadio();
   });
 
-
-//Prevent from typing negative numbers
-  $("input[type=number]").keydown(function(e) {
-    if (!((e.keyCode > 95 && e.keyCode < 106) ||
-        (e.keyCode > 47 && e.keyCode < 58) ||
-        e.keyCode == 8)){
-      return false;
-    }
+  //Hide modal registro de contacto
+  $("#btnCancelarRegContacto").click(function() {
+    $("#modalRegistrarContacto").modal("toggle");
   });
 
   $("#btnCancelarRegEntidad").click(function() {
@@ -98,11 +92,14 @@ function nextPrev(n) {
   // if you have reached the end of the form... :
   if (currentTab >= x.length) {
     //...the form gets submitted:
-    document.getElementById("intForm").submit();
+    document.getElementById("planForm").submit();
     return false;
   }
   // Otherwise, display the correct tab:
   showTab(currentTab);
+  $("#tableContactos")
+    .DataTable()
+    .columns.adjust();
 }
 
 function validateForm() {
@@ -112,38 +109,37 @@ function validateForm() {
     i,
     valid = true;
   x = document.getElementsByClassName("tab");
-  y = x[currentTab].getElementsByClassName("required");
-  k = x[currentTab].getElementsByClassName("totales");
-  //Verifies if spans have equal value
-  if (k.length != 0) {
-    if (parseInt(k[0].innerHTML) != parseInt(k[1].innerHTML)) {
+  y = x[currentTab].getElementsByClassName("table");
+  // Verifies if there is a table en the current tab
+  if (y.length > 0) {
+    var table = $("#tableContactos").DataTable();
+    // Counts selected rows in table. if there are rows selected
+    //then valid=true if not, no row is selected and valid=false
+    var data = table.rows({ selected: true }).data();
+    if (data.length > 0) {
+      $(".alert").addClass("showNone");
+      valid = true;
+    } else {
+      $(".alert").removeClass("showNone");
+      $(".alert").addClass("show");
       valid = false;
-      swal({
-        icon: "error",
-        title: "Los totales no concuerdan"
-      });
     }
-    if (parseInt($('input[name=ninguno]').val()) < 0) {
-      valid = false;
-      swal({
-        icon: "error",
-        title: "No puede haber un campo negativo"
-      });
-    }
-  }
-
-  // A loop that checks every input field in the current tab:
-  for (i = 0; i < y.length; i++) {
-    // If a field is empty...
-    if (y[i].parentElement.parentElement.style.display != "none") {
-      if (y[i].value == "") {
-        // add an "invalid" class to the field:
-        y[i].className += " invalid";
-        // and set the current valid status to false:
-        valid = false;
+  } else {
+    y = x[currentTab].getElementsByClassName("required");
+    // A loop that checks every input field in the current tab:
+    for (i = 0; i < y.length; i++) {
+      // If a field is empty...
+      if (y[i].parentElement.parentElement.style.display != "none") {
+        if (y[i].value == "") {
+          // add an "invalid" class to the field:
+          y[i].className += " invalid";
+          // and set the current valid status to false:
+          valid = false;
+        }
       }
     }
   }
+
   // If the valid status is true, mark the step as finished and valid:
   if (valid) {
     document.getElementsByClassName("step")[currentTab].className += " finish";
@@ -162,37 +158,36 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
-function getTotal(data, index) {
-  let tipoInputObject = $(data);
-  let tipoInputArray = tipoInputObject.get();
-  var totalTipo = 0;
-  var totalCaract = 0;
-  let x = parseInt($("#tipoTotal").html());
-
-  tipoInputArray.forEach(element => {
-    if (index) {
-      totalTipo += parseInt(element.value);
-    } else {
-      if (element.name != "ninguno") {
-        x = x - parseInt(element.value);
-        $("input[name=ninguno]").val(`${x}`);
+function determineRadio() {
+  var vereda = $("#vereda");
+  var comunaObarrio = $("#comunaObarrio");
+  var radioVar = $('input[name="ubicMunicipio"]:checked');
+  if (radioVar.val() != undefined) {
+    if (radioVar.val() == "rural") {
+      if (vereda.is(":hidden") && comunaObarrio.is(":visible")) {
+        vereda.toggle();
+        comunaObarrio.toggle();
+      } else {
+        vereda.toggle();
       }
-      totalCaract += parseInt(element.value);
+    } else if (comunaObarrio.is(":hidden") && vereda.is(":visible")) {
+      vereda.toggle();
+      comunaObarrio.toggle();
+    } else {
+      comunaObarrio.toggle();
     }
-  });
-
-  if (index) {
-    $("#tipoTotal").html(`${totalTipo}`);
-    $("input[name=ninguno]").val(
-      `${parseInt($("input[name=ninguno]").val()) +
-        (parseInt($("#tipoTotal").html()) -
-          parseInt($("#caractTotal").html()))}`
-    );
-    $("#caractTotal").html(`${totalTipo}`);
   }
+}
 
-  if (!index) {
-    $("#caractTotal").html(`${totalCaract}`);
+function checkSolicitudEducativa() {
+  var solicitudRadio = $("input[name=solicitudEducativa]:checked");
+
+  if (solicitudRadio.val() == "0") {
+    $("#subirSolicitud").toggle();
+  } else {
+    if ($("#subirSolicitud").is(":visible")) {
+      $("#subirSolicitud").toggle();
+    }
   }
 }
 
