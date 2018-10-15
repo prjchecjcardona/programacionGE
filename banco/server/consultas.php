@@ -41,16 +41,16 @@ function getRecursosQuery($con)
 
 function getFicherosQuery($con, $competencia, $tema, $zona, $indicador)
 {
-    if(is_null($zona)){
+    /* if ($zona == 0) {
         $sql = "SELECT rec.recurso_url || '/' || nombre_fichero AS fichero_url, fro.nombre_fichero, rec.icon, fro.codigo, tma.temas ";
-    }else{
-        $sql = "SELECT rec.recurso_url || '/' || zna.id_zona || '/' || nombre_fichero AS fichero_url, fro.nombre_fichero, rec.icon, fro.codigo, tma.temas";
-    }
-    
+    } else {
+        
+    } */
+    $sql = "SELECT rec.recurso_url || '/' || zna.id_zona || '/' || nombre_fichero AS fichero_url, fro.nombre_fichero, rec.icon, fro.codigo, tma.temas ";
     $sql .= "FROM ficheros as fro
     JOIN competencias as cpte ON fro.id_competencia = cpte.id_competencia
     JOIN temas as tma ON tma.id_temas = fro.id_tema
-    JOIN zonas as zna ON zna.id_zona = fro.id_zona
+    LEFT JOIN zonas as zna ON zna.id_zona = fro.id_zona
     JOIN recursos rec ON rec.id_recurso = fro.id_recurso";
     /* Validar que la consulta termine en un WHERE y no en un AND */
     $is_where = true;
@@ -72,13 +72,23 @@ function getFicherosQuery($con, $competencia, $tema, $zona, $indicador)
         }
     }
     if (!is_null($zona)) {
-        if ($is_where) {
-            $sql .= " WHERE fro.id_zona = $zona";
-            $is_where = false;
+        if ($zona == 0) {
+            if ($is_where) {
+                $sql .= " WHERE fro.id_zona isnull";
+                $is_where = false;
+            } else {
+                $sql .= " AND fro.id_zona isnull";
+            }
         } else {
-            $sql .= " AND fro.id_zona = $zona";
+            if ($is_where) {
+                $sql .= " WHERE fro.id_zona = $zona";
+                $is_where = false;
+            } else {
+                $sql .= " AND fro.id_zona = $zona";
+            }
         }
     }
+
     if (!is_null($indicador)) {
         if ($is_where) {
             $sql .= " WHERE id_indicador = $indicador";
@@ -141,7 +151,7 @@ function subirFicheroQuery($con, $competencia, $tema, $zona, $nombre_fichero, $c
 
 function subirArchivoQuery($con, $archivo, $recurso, $file_tmp, $file_destination)
 {
-    $sql = "INSERT INTO archivos_recursos (nombre_archivo, id_recurso) VALUES ('$archivo', $recurso)";
+    $sql = "INSERT INTO archivos_recursos (id_archivo, nombre_archivo, id_recurso) VALUES (nextval('sec_archivos_recursos'::regclass), '$archivo', $recurso)";
 
     return executeQueryInsert($con, $sql, $file_tmp, $file_destination);
 }

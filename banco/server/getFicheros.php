@@ -15,7 +15,7 @@ if(isset($_POST['tema']) && $_POST['tema'] != 0){
     $tema = null;
 }
 
-if(isset($_POST['zona']) && $_POST['zona'] != 0){
+if(isset($_POST['zona']) && $_POST['zona'] != ""){
     $zona = $_POST['zona'];
 }else{
     $zona = null;
