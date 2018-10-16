@@ -302,8 +302,12 @@ function fichas() {
     } else {
       $(this).addClass("selected");
     }
-    var url = window.location.hash.substr(1);
-    getPDF(url);
+    var url = $(this).attr('href');
+    var urrl = url.substr(1);
+    console.log(urrl);
+    $("#pdf").html(
+      `<embed src="${urrl}" type="application/pdf" width="90%" height="90%">`
+    );
   });
 }
 

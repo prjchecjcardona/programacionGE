@@ -7,8 +7,8 @@ $(document).ready(function() {
   calcularDuracion();
 
   $("#datepicker").datepicker({
-    locale : 'es-es',
-    uiLibrary: "bootstrap4",
+    locale: "es-es",
+    uiLibrary: "bootstrap4"
   });
 
   if (
@@ -45,8 +45,6 @@ $(document).ready(function() {
     }
   });
 
-
-
   $("#tipoPoblacion")
     .find($("input[type=number]"))
     .change(() => {
@@ -69,7 +67,9 @@ $(document).ready(function() {
   });
 
   //When window resizes
-  $(window).resize(resize).trigger("resize");
+  $(window)
+    .resize(resize)
+    .trigger("resize");
 });
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -262,10 +262,14 @@ function getChecked() {
 // When window resizes change class
 function resize() {
   if ($(window).width() <= 1171) {
-    $("#colCreateEjec").removeClass("col-lg-8").addClass("col-lg-12");
+    $("#colCreateEjec")
+      .removeClass("col-lg-8")
+      .addClass("col-lg-12");
   } else {
     if ($("#colCreateEjec").hasClass("col-lg-12")) {
-      $("#colCreateEjec").removeClass("col-lg-12").addClass("col-lg-8");
+      $("#colCreateEjec")
+        .removeClass("col-lg-12")
+        .addClass("col-lg-8");
     }
   }
 }
