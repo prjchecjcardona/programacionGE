@@ -39,7 +39,7 @@ function getMunicipioQuery($con)
 
 function getEntidadesQuery($con)
 {
-    $sql = "SELECT id_entidad, nombreentidad FROM entidades";
+    $sql = "SELECT id_entidad, nombreentidad FROM entidades ORDER BY nombreentidad ASC";
 
     return executeQuery($con, $sql);
 }
