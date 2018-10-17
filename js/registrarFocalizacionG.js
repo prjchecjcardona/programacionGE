@@ -116,25 +116,25 @@ function executeAll() {
   var ajaxJson = [
     {
       select: "selectMunicipio",
-      data: "getMunicipios"
+      url: "getMunicipios.php"
     },
     {
       select: "selectComportamiento",
-      data: "getComportamientos"
+      url: "getComportamientos.php"
     }
   ];
 
   ajaxJson.forEach(element => {
-    primaryAjax(element.select, element.data);
+    primaryAjax(element.select, element.url);
   });
 }
 
-function primaryAjax(tag, data) {
+function primaryAjax(tag, url) {
   $.ajax({
     type: "POST",
-    url: "server/allGets.php",
+    url: url,
     data: {
-      get: data //POST parameter that proves what endpoint is needed
+      get: "" //POST parameter that proves what endpoint is needed
     },
     dataType: "json"
   }).done(function(data) {

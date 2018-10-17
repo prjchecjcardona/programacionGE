@@ -57,17 +57,17 @@ if(isset($_POST["accion"]))
 		guardarNuevaVereda($_POST["municipio"], $_POST["vereda"], $_POST["latitud"], $_POST["longitud"]);
 	}
 
-	
-	
-	
-	
+
+
+
+
 }
 
 function cargarZonasPorId($idZona){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
-	
+
 	if( $con )
  	{
  		//Datos de la zona que se selecciono
@@ -75,12 +75,12 @@ function cargarZonasPorId($idZona){
 			  FROM zonas
 			  WHERE id_zona = ".$idZona."
 			  ";
-			  
+
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
+
 					$data['html']= $filas[0]['zonas'];
-					
+
 				}
 			}
 			else
@@ -89,8 +89,8 @@ function cargarZonasPorId($idZona){
 				$data['mensaje']="No se realizo la consulta de zonas";
 				$data['error']=1;
 			}
-			
-			
+
+
 		  echo json_encode($data);
 	}
 }
@@ -99,27 +99,25 @@ function cargarMunicipiosPorIdZona($idZona){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
-	
+
 	if( $con )
  	{
- 		//Datos de la zona que se selecciono 
+ 		//Datos de la zona que se selecciono
     	$sql = "SELECT id_municipio, municipio
-			  FROM municipios
-			  WHERE id_zona = ".$idZona."
-			  ";
-			  
+			  FROM municipios";
+
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
+
 					$data['html']= '<option value="0">Selecciona tu opción</option>';
 					// foreach ($filas as $fila) {
-						// $array[] = $fila; 
+						// $array[] = $fila;
 						for ($i=0;$i<count($filas);$i++){
 							$data['html'].= '<option value="'.$filas[$i]['id_municipio'].'">'.$filas[$i]['municipio'].'</option>';
 					}
-					
-					
-					
+
+
+
 				}
 			}
 			else
@@ -128,8 +126,8 @@ function cargarMunicipiosPorIdZona($idZona){
 				$data['mensaje']="No se realizo la consulta de zonas";
 				$data['error']=1;
 			}
-			
-			
+
+
 		  echo json_encode($data);
 	}
 }
@@ -138,29 +136,29 @@ function cargarComunasPorIdMunicipio($idMunicipio,$ubicacion){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
-	
+
 	if( $con )
  	{
  		if($ubicacion ==2){
-			
+
 			//Datos de la comuna segun el municipio
-			$sql = "SELECT id_comuna, comuna 
-					FROM comunas 
+			$sql = "SELECT id_comuna, comuna
+					FROM comunas
 					where id_municipio = ".$idMunicipio."
 				  ";
-				  
+
 				if ($rs = $con->query($sql)) {
 					if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-						
+
 						$data['html']= '<option value="0">Selecciona tu opción</option>';
 						// foreach ($filas as $fila) {
-							// $array[] = $fila; 
+							// $array[] = $fila;
 							for ($i=0;$i<count($filas);$i++){
 								$data['html'].= '<option value="'.$filas[$i]['id_comuna'].'">'.$filas[$i]['comuna'].'</option>';
 						 }
-						
-						
-						
+
+
+
 					}
 				}
 				else
@@ -171,17 +169,17 @@ function cargarComunasPorIdMunicipio($idMunicipio,$ubicacion){
 				}
 		}
 		else{
-			
+
 			//Datos de la vereda segun el municipio
-			$sql = "SELECT id_veredas, vereda 
-				FROM veredas 
+			$sql = "SELECT id_veredas, vereda
+				FROM veredas
 				where id_municipio = ".$idMunicipio."
 			  ";
-			  
+
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
 						$data['html']= '<option value="0">Selecciona tu opción</option>';
-					
+
 						for ($i=0;$i<count($filas);$i++){
 							$data['html'].= '<option value="'.$filas[$i]['id_veredas'].'">'.$filas[$i]['vereda'].'</option>';
 					 }
@@ -196,9 +194,9 @@ function cargarComunasPorIdMunicipio($idMunicipio,$ubicacion){
 			}
 		}
 	}//con
-			
-			
-			
+
+
+
 		  echo json_encode($data);
 }
 
@@ -207,26 +205,26 @@ function cargarBarriosPorComuna($idComuna){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
-	
+
 	if( $con )
  	{
- 		//Datos de la zona que se selecciono 
-    	$sql = "SELECT id_barrio, barrio 
-				FROM barrios 
+ 		//Datos de la zona que se selecciono
+    	$sql = "SELECT id_barrio, barrio
+				FROM barrios
 				where id_comuna = '".$idComuna."'
 			  ";
-			  
+
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
+
 					$data['html']= '<option value="0">Selecciona tu opción</option>';
-					
+
 						for ($i=0;$i<count($filas);$i++){
 							$data['html'].= '<option value="'.$filas[$i]['id_barrio'].'">'.$filas[$i]['barrio'].'</option>';
 					 }
-					
-					
-					
+
+
+
 				}
 			}
 			else
@@ -235,8 +233,8 @@ function cargarBarriosPorComuna($idComuna){
 				$data['mensaje']="No se realizo la consulta de barrios";
 				$data['error']=1;
 			}
-			
-			
+
+
 		  echo json_encode($data);
 	}
 }
@@ -251,24 +249,24 @@ function cargarTipoIntervencion(){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
-	
+
 	if( $con )
  	{
- 		//Datos de la zona que se selecciono 
+ 		//Datos de la zona que se selecciono
     	$sql = "SELECT id_tipo_intervencion,tipo_intervencion
 				FROM tipo_intervencion
 			  ";
-			  
+
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
+
 					$data['html']= '<option value="0">Selecciona tu opción</option>';
-					
+
 						for ($i=0;$i<count($filas);$i++){
 							$data['html'].= '<option value="'.$filas[$i]['id_tipo_intervencion'].'">'.$filas[$i]['tipo_intervencion'].'</option>';
 					 }
-					 
-					
+
+
 				}
 			}
 			else
@@ -277,8 +275,8 @@ function cargarTipoIntervencion(){
 				$data['mensaje']="No se realizo la consulta de tipo intervencion";
 				$data['error']=1;
 			}
-			
-			
+
+
 		  echo json_encode($data);
 	}
 }
@@ -290,24 +288,24 @@ function cargarComportamientos(){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
-	
+
 	if( $con )
  	{
- 		//Datos de la zona que se selecciono 
+ 		//Datos de la zona que se selecciono
     	$sql = "SELECT id_comportamientos,comportamientos
 				FROM comportamientos
 			  ";
-			  
+
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
+
 					$data['html']= '<option value="0">Selecciona tu opción</option>';
-					
+
 						for ($i=0;$i<count($filas);$i++){
 							$data['html'].= '<option value="'.$filas[$i]['id_comportamientos'].'">'.$filas[$i]['comportamientos'].'</option>';
 					 }
-					 
-					
+
+
 				}
 			}
 			else
@@ -316,8 +314,8 @@ function cargarComportamientos(){
 				$data['mensaje']="No se realizo la consulta de comportamientos";
 				$data['error']=1;
 			}
-			
-			
+
+
 		  echo json_encode($data);
 	}
 }
@@ -326,25 +324,25 @@ function cargarIndicadoresChec($idIndicador){
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
-	
+
 	if( $con )
  	{
  		//Datos de la indicador
-    	$sql = "SELECT id_indicadores_chec,indicador 
-				from indicadores_chec 
+    	$sql = "SELECT id_indicadores_chec,indicador
+				from indicadores_chec
 				WHERE comportamientos_id_comportamientos = '".$idIndicador."'
 			  ";
-			  
+
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
+
 					// $data['html']= '<option value="0">Selecciona tu opción</option>';
-					
+
 						for ($i=0;$i<count($filas);$i++){
 							$data['html'].= '<option value="'.$filas[$i]['id_indicadores_chec'].'">'.$filas[$i]['indicador'].'</option>';
 					 }
-					 
-					
+
+
 				}
 			}
 			else
@@ -353,8 +351,8 @@ function cargarIndicadoresChec($idIndicador){
 				$data['mensaje']="No se realizo la consulta de indicadores";
 				$data['error']=1;
 			}
-			
-			
+
+
 		  echo json_encode($data);
 	}
 }
@@ -363,21 +361,21 @@ function guardarIntervencion($idZona,$barrio, $vereda, $ubicacion, $idTipoInterv
 
 	include('conexion.php');
 	$data = array('error'=>0,'mensaje'=>'','html'=>'');
-	
+
 	if( $con )
  	{
- 		
+
 		//consultar el id persona
-		$sql = "SELECT id_personas_por_zonacol 
-				from personas_por_zona 
+		$sql = "SELECT id_personas_por_zonacol
+				from personas_por_zona
 				WHERE zonas_id_zona = '".$idZona."'
 			  ";
-			  
+
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
+
 					$idPersonaPorZona=$filas[0]['id_personas_por_zonacol'];
-					
+
 				}
 			}
 			else
@@ -386,17 +384,17 @@ function guardarIntervencion($idZona,$barrio, $vereda, $ubicacion, $idTipoInterv
 				$data['mensaje']="No se realizo la consulta de id persona por zona";
 				$data['error']=1;
 			}
-			
+
 			//consultar el id operador
 			$sql = "SELECT id_operadores
-				from operadores 
+				from operadores
 				";
-			  
+
 			if ($rs = $con->query($sql)) {
 				if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-					
+
 					$idOperador=$filas[0]['id_operadores'];
-					
+
 				}
 			}
 			else
@@ -409,39 +407,39 @@ function guardarIntervencion($idZona,$barrio, $vereda, $ubicacion, $idTipoInterv
 			//Determinar si la intervencion es de un barrio o una vereda
 			if($ubicacion == 1){ //rural
 				$sql = "INSERT INTO intervenciones (id_intervenciones, id_vereda, operadores_id_operadores, personas_por_zona_id_personas_por_zonacol, tipo_intervencion_id_tipo_intervencion, fecha)
-				VALUES (nextval('sec_intervenciones'),'".$vereda."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE AT TIME ZONE 'CDT'); 
+				VALUES (nextval('sec_intervenciones'),'".$vereda."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE AT TIME ZONE 'CDT');
 			  ";
 			}else{  //urbano
 				$sql = "INSERT INTO intervenciones (id_intervenciones, id_barrio, operadores_id_operadores, personas_por_zona_id_personas_por_zonacol, tipo_intervencion_id_tipo_intervencion, fecha)
-			VALUES (nextval('sec_intervenciones'),'".$barrio."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE AT TIME ZONE 'CDT'); 
+			VALUES (nextval('sec_intervenciones'),'".$barrio."', '".$idOperador."', '".$idPersonaPorZona."', '".$idTipoIntervencion."', CURRENT_DATE AT TIME ZONE 'CDT');
 			  ";
 			}
-			  
+
 			if ($rs = $con->query($sql)) {
-				
-					
+
+
 					 //obtener el ultimo id insertado
-					$sql = "SELECT MAX(id_intervenciones) as id_intervenciones FROM intervenciones 
+					$sql = "SELECT MAX(id_intervenciones) as id_intervenciones FROM intervenciones
 						";
-					  
+
 					if ($rs = $con->query($sql)) {
 							if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
-								
+
 								$idIntervencion=$filas[0]['id_intervenciones'];
-								
+
 								if($idIntervencion!=""){
-									
+
 								foreach($indicadores as $idIndicador)
 								{
 									$sql = "INSERT INTO indicadores_chec_por_intervenciones (indicadores_chec_id_indicadores_chec, intervenciones_id_intervenciones)
-									VALUES ('".$idIndicador."', '".$idIntervencion."'); 
+									VALUES ('".$idIndicador."', '".$idIntervencion."');
 									  ";
-									  
-									if ($rs = $con->query($sql)) 
+
+									if ($rs = $con->query($sql))
 									{
 										$data['mensaje']="Guardado Exitosamente";
 										$data['idIntervencion']=$idIntervencion;
-										
+
 									} //
 									else
 									{
@@ -449,7 +447,7 @@ function guardarIntervencion($idZona,$barrio, $vereda, $ubicacion, $idTipoInterv
 										$data['mensaje']="No se inserto la intervencion correctamente";
 										$data['error']=1;
 									}
-			
+
 								}
 							}
 						}
@@ -459,7 +457,7 @@ function guardarIntervencion($idZona,$barrio, $vereda, $ubicacion, $idTipoInterv
 							$data['mensaje']="No se realizo la consulta de id intervencion";
 							$data['error']=1;
 						}
-					
+
 					}
 			}
 			else
@@ -468,8 +466,8 @@ function guardarIntervencion($idZona,$barrio, $vereda, $ubicacion, $idTipoInterv
 				$data['mensaje']="No se inserto la intervencion";
 				$data['error']=1;
 			}
-			
-			
+
+
 		  echo json_encode($data);
 	}
 }
@@ -479,10 +477,10 @@ function guardarNuevaComuna($municipio, $comuna){
 	$sql = "INSERT INTO public.comunas(
 		id_comuna, comuna, id_municipio)
 		VALUES (
-			(SELECT MAX(id_comuna)+1 FROM comunas), 
-			'".$comuna."', 
+			(SELECT MAX(id_comuna)+1 FROM comunas),
+			'".$comuna."',
 			".$municipio.");";
-  
+
 	if ($rs = $con->query($sql)) {
 		$data['mensaje']="Guardado Exitosamente";
 	}
@@ -500,12 +498,12 @@ function guardarNuevoBarrio($comuna, $barrio, $latitud, $longitud){
 	$sql = "INSERT INTO public.barrios(
 		id_barrio, barrio, id_comuna, lat, long)
 		VALUES (
-			(SELECT MAX(id_barrio)+1 FROM barrios), 
-			'".$barrio."', 
+			(SELECT MAX(id_barrio)+1 FROM barrios),
+			'".$barrio."',
 			".$comuna.",
 			'".$latitud."',
 			'".$longitud."');";
-  
+
 	if ($rs = $con->query($sql)) {
 		$data['mensaje']="Guardado Exitosamente";
 	}
@@ -523,8 +521,8 @@ function guardarNuevaVereda($municipio, $vereda, $latitud, $longitud){
 	$sql = "INSERT INTO public.veredas(
 		id_veredas, vereda, id_municipio, lat, long)
 		VALUES (
-			nextval('sec_veredas'), 
-			'".$vereda."', 
+			nextval('sec_veredas'),
+			'".$vereda."',
 			".$municipio.",
 			'".$latitud."',
 			'".$longitud."');";
@@ -539,4 +537,3 @@ function guardarNuevaVereda($municipio, $vereda, $latitud, $longitud){
 	}
 	echo json_encode($data);
 }
-

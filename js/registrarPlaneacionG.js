@@ -196,49 +196,49 @@ function executeAll() {
   var ajaxJson = [
     {
       select: "selectEntidad",
-      data: "getEntidades"
+      url: "getEntidades.php"
     },
     {
       select: "selectVereda",
-      data: "getVeredas"
+      url: "getVeredas.php"
     },
     {
       select: "selectBarrio",
-      data: "getBarrios"
+      url: "getBarrios.php"
     },
     {
       select: "selectComuna",
-      data: "getComunas"
+      url: "getComunas.php"
     },
     {
       select: "selectEstrategia",
-      data: "getEstrategias"
+      url: "getEstrategias.php"
     },
     {
       select: "selectFichero",
-      data: "getFicheros"
+      url: "getFicheros.php"
     },
     {
       select: "selectTactico",
-      data: "getTacticos"
+      url: "getTacticos.php"
     },
     {
       select: "selectTema",
-      data: "getTemas"
+      url: "getTemas.php"
     }
   ];
 
   ajaxJson.forEach(element => {
-    primaryAjax(element.url, element.select, element.data);
+    primaryAjax(element.url, element.select);
   });
 }
 
-function primaryAjax(url, tag, data) {
+function primaryAjax(url, tag) {
   $.ajax({
     type: "POST",
-    url: "server/allGets.php",
+    url: `server/${url}`,
     data: {
-      get: data
+      get: ""
     },
     dataType: "json"
   }).done(function(data) {
