@@ -3,6 +3,7 @@ $(document).ready(function() {
   executeAll();
   determineTipoGestion();
   showTab(currentTab); // Display the current tab
+  checkLogged();
 
   if (
     $("select").change(function() {
@@ -116,11 +117,11 @@ function executeAll() {
   var ajaxJson = [
     {
       select: "selectMunicipio",
-      url: "getMunicipios.php"
+      url: "server/getMunicipios.php"
     },
     {
       select: "selectComportamiento",
-      url: "getComportamientos.php"
+      url: "server/getComportamientos.php"
     }
   ];
 
@@ -133,9 +134,7 @@ function primaryAjax(tag, url) {
   $.ajax({
     type: "POST",
     url: url,
-    data: {
-      get: "" //POST parameter that proves what endpoint is needed
-    },
+    data: "",
     dataType: "json"
   }).done(function(data) {
     data.forEach(element => {
@@ -155,5 +154,24 @@ function primaryAjax(tag, url) {
         );
       }
     });
+  });
+}
+
+function checkLogged(){
+  $.ajax({
+    type: "POST",
+    url: "server/checkLog.php",
+    data: "",
+    dataType: "json"
+  }).done(function(data){
+    if(data.error){
+      swal({
+        type: 'info',
+        title: 'Usuario',
+        text: data.message,
+      }).then(function(){
+        window.location.href = "iniciarSesion.html";
+      });
+    }
   });
 }

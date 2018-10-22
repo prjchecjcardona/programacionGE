@@ -273,3 +273,23 @@ function resize() {
     }
   }
 }
+
+function checkLogged(){
+  $.ajax({
+    type: "POST",
+    url: "server/checkLog.php",
+    data: "",
+    dataType: "json"
+  }).done(function(data){
+    if(data.error){
+      swal({
+        type: 'info',
+        title: 'Usuario',
+        text: data.message,
+      }).then(function(){
+        window.location.href = "iniciarSesion.html";
+      });
+    }
+  });
+}
+

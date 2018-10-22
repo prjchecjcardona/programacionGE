@@ -6,8 +6,9 @@ $api = new gestionEducativa();
 
 if (isset($_POST['loginSubmit'])) {
 
+    $addPaswd = 'GIkkU2Eeyw1@!8';
     $mailuid = $_POST['mailuid'];
-    $passwd = $_POST['passwd'];
+    $passwd = $_POST['passwd'].$addPaswd;
 
     if (empty($mailuid) || empty($passwd)) {
         header("Location: ../iniciarSesion.html?error=emptyFields");
@@ -23,4 +24,5 @@ if (isset($_POST['loginSubmit'])) {
 
 }
 
+echo $passwd;
 echo $json;
