@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 function executeQuery($con, $sql)
 {
@@ -14,20 +14,31 @@ function executeQuery($con, $sql)
     }
 }
 
-function executeQueryInsert($con, $sql, $file_tmp, $file_dest)
+function logIn($con, $sql, $pass)
 {
-    $data = array('success' => 0, 'message' => "");
-    $result = $con->query($sql);
-    if ($result) {
-        if (move_uploaded_file($file_tmp, $file_dest)) {
-            $data['message'] = 'Subido con exito';
-            return $data;
+    if ($result = $con->query($sql)) {
+        if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+
+            $pswdCheck = password_verify($pass, $row['pass']);
+            if ($pswdCheck == false) {
+                header("Location: ../iniciarSesion.html?error=wrgpswd");
+                exit();
+                echo false;
+
+            }elseif($pswdCheck == true){
+                session_start();
+                $_SESSION['userId'] = $row['numeroidentificacion'];
+                $_SESSION['userPass'] = $row['pass'];
+
+                header("Location: ../iniciarSesion.html?login=success");
+                exit();
+                echo true;
+            }
+        } else {
+            header("Location: ../iniciarSesion.html?error=nouser");
+            exit();
         }
-    } else {
-        $data['success'] = 1;
-        $data['message'] = $con->errorInfo()[2];
     }
-    return $data;
 }
 
 function getMunicipioQuery($con)
@@ -117,4 +128,13 @@ function getTemasQuery($con)
     $sql = "SELECT id_temas, temas FROM temas";
 
     return executeQuery($con, $sql);
+}
+
+function loginQuery($con, $uid, $psswd)
+{
+    $sql = "SELECT numeroidentificacion, correoelectronico, usuario, pass, foto_url
+    FROM personas
+    WHERE correoelectronico= '".$uid."' ";
+
+    return logIn($con, $sql, $psswd);
 }

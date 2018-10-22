@@ -20,16 +20,16 @@
         <div class="card card-signin">
           <div class="card-body">
             <h5 class="card-title text-center">Inicie Sesión</h5>
-            <form class="form-signin">
+            <form class="form-signin" action="server/logIn.php" method="post">
               <div class="form-label-group">
                 <input type="email" id="inputEmail" class="form-control" placeholder="Correo Electronico" required=""
-                  autofocus="">
+                  autofocus="" name="mailuid">
                 <label for="inputEmail">Correo Electrónico</label>
               </div>
 
               <div class="form-label-group">
                 <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required=""
-                  autofocus="">
+                  autofocus="" name="passwd">
                 <label for="inputPassword">Contraseña</label>
               </div>
 
@@ -37,7 +37,7 @@
                 <input type="checkbox" class="custom-control-input" id="customCheck1">
                 <label class="custom-control-label" for="customCheck1">Recordar Contraseña</label>
               </div>
-              <button id="btnIngresar" class="btn btn-lg btn-block text-uppercase" type="submit">Ingresar</button>
+              <button id="btnIngresar" class="btn btn-lg btn-block text-uppercase" name="loginSubmit" type="submit">Ingresar</button>
             </form>
           </div>
         </div>
@@ -57,6 +57,7 @@
   <script src="js/includes/popper.min.js"></script>
   <script src="js/includes/bootstrap.min.js"></script>
   <script src="js/includes/bootstrap.bundle.min.js"></script>
+  <script src="js/iniciarSesion.js"></script>
 
 
 </body>

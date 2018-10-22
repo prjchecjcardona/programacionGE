@@ -85,4 +85,9 @@ class gestionEducativa
     {
         return getTemasQuery($this->con);
     }
+
+    public function logIn($uid, $pass)
+    {
+        return loginQuery($this->con, $uid, $pass);
+    }
 }
