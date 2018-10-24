@@ -601,6 +601,26 @@ hr {
   padding-right: 60px;
 }
 
+/* Universal homeNAV */
+
+#navGE{
+  background-color: #9cc12b;
+  justify-content: space-between !important;
+  align-items: center;
+}
+
+#navGE .nav-item{
+  display: flex;
+}
+
+
+.navImg{
+  padding: 10px;
+  height: 60px;
+  width: 60px;
+}
+/*  */
+
 @media screen and (min-width: 770px) and (max-width: 992px) {
   #intervencion {
     margin-bottom: 13px;

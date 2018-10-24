@@ -28,10 +28,10 @@ function logIn($con, $sql, $pass)
             } elseif ($pswdCheck == true) {
                 session_start();
 
-                $_SESSION['user'] = array('uid' => $row[numeroidentificacion],
+                $_SESSION['user'] = array('uid' => $row['numeroidentificacion'],
                     'pass' => $row['pass'], 'nombre' => $row['nombres']);
 
-                header("Location: ../iniciarSesion.html?id_zona=".$row['zonas_id_zona']);
+                header("Location: ../home_Gestora.html?id_zona=".$row['zonas_id_zona']);
                 exit();
             }
         } else {
@@ -132,7 +132,7 @@ function getTemasQuery($con)
 
 function loginQuery($con, $uid, $psswd)
 {
-    $sql = "SELECT per.numeroidentificacion, per.correoelectronico, per.usuario, per.pass, per.foto_url, ppz.zonas_id_zona
+    $sql = "SELECT per.numeroidentificacion, per.correoelectronico, per.usuario, per.pass, per.foto_url, ppz.zonas_id_zona, per.nombres
     FROM personas per
 	LEFT JOIN personas_por_zona ppz ON ppz.personas_numeroidentificacion = per.numeroidentificacion
     WHERE correoelectronico = '" . $uid . "' OR usuario = '" . $uid . "' ";
