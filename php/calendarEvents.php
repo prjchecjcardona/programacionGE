@@ -76,8 +76,8 @@ if (isset($_POST['id_zona'])) {
                         break;
                 }
 
-                if(is_null($value['tipo_registro'])) {
-                  $value['tipo_registro'] = 'Planeado';
+                if (is_null($value['tipo_registro'])) {
+                    $value['tipo_registro'] = 'Planeado';
                 }
 
                 if (is_null($value['nombreentidad'])) {

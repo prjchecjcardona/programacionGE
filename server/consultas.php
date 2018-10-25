@@ -48,6 +48,14 @@ function getMunicipioQuery($con)
     return executeQuery($con, $sql);
 }
 
+function getMunicipiosXZonaQuery($con, $zona)
+{
+    $sql = "SELECT id_municipio, municipio FROM municipios
+    WHERE id_zona = $zona";
+
+    return executeQuery($con, $sql);
+}
+
 function getEntidadesQuery($con)
 {
     $sql = "SELECT id_entidad, nombreentidad FROM entidades ORDER BY nombreentidad ASC";

@@ -90,4 +90,9 @@ class gestionEducativa
     {
         return loginQuery($this->con, $uid, $pass);
     }
+
+    public function getMunicipiosXZona($zona)
+    {
+        return getMunicipiosXZonaQuery($this->con, $zona);
+    }
 }
