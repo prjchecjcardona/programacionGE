@@ -1,15 +1,13 @@
-$(function(){
-
+$(function() {
+  
 });
 
-function checkIfLogged(){
+function checkIfLogged() {
   $.ajax({
     type: "POST",
     dataType: "dataType",
     url: "url",
     data: "data",
-    success: function (response) {
-
-    }
+    success: function(response) {}
   });
 }
