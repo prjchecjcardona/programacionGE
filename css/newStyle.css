@@ -677,6 +677,11 @@ main {
   width: 100%;
 }
 
+.card-body .fas{
+  font-size: 1em;
+  margin: 0px 0px 0px 5px;
+}
+
 #rightPortion {
   display: flex;
   align-items: center;
@@ -698,18 +703,18 @@ main {
   box-shadow: 0 0 0 0 transparent !important;
 }
 
-.focalizaciones, .planeaciones {
+.focalizaciones, .planeaciones, .municipios {
   height: 100%;
   padding: 0px 0px 15px 0px;
   margin-top: 73px;
 }
 
-.focalizaciones .card, .planeaciones .card {
+.card {
   width: 93%;
   border-radius: 10px;
 }
 
-.focalizaciones > div, .planeaciones > div {
+.focalizaciones > div, .planeaciones > div, .municipios > div {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -724,7 +729,11 @@ main {
   margin: 0;
 }
 
-#leftPortion div .fas {
+.crear{
+  margin: 0px 5px 0px 0px !important;
+}
+
+#leftPortion div .arrow {
   color: white;
   font-size: 2em;
   transition: 0.3s;

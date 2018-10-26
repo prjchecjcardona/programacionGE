@@ -95,4 +95,9 @@ class gestionEducativa
     {
         return getMunicipiosXZonaQuery($this->con, $zona);
     }
+
+    public function getFocalizacionesXZona($zona)
+    {
+        return getFocalizacionesXZonaQuery($this->con, $zona);
+    }
 }

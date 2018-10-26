@@ -50,8 +50,10 @@ function getMunicipioQuery($con)
 
 function getMunicipiosXZonaQuery($con, $zona)
 {
-    $sql = "SELECT id_municipio, municipio FROM municipios
-    WHERE id_zona = $zona";
+    $sql = "SELECT id_municipio, municipio, zna.zonas
+    FROM municipios mn
+    JOIN zonas zna ON mn.id_zona = zna.id_zona
+    WHERE mn.id_zona = $zona";
 
     return executeQuery($con, $sql);
 }
@@ -77,6 +79,17 @@ function getComportamientosQuery($con)
     JOIN comportamientos cpt ON cpc.comportamientos_id_comportamientos = cpt.id_comportamientos
     JOIN competencias comp ON cpc.competencias_id_competencia = comp.id_competencia
     WHERE comportamientos_id_comportamientos <> 5";
+
+    return executeQuery($con, $sql);
+}
+
+function getFocalizacionesXZonaQuery($con, $zona)
+{
+    $sql = "SELECT *
+    FROM intervenciones itv
+    LEFT JOIN personas_por_zona ppz ON ppz.id_personas_por_zonacol = itv.personas_por_zona_id_personas_por_zonacol
+    LEFT JOIN zonas zna ON ppz.zonas_id_zona = zna.id_zona
+    WHERE ppz.zonas_id_zona = $zona";
 
     return executeQuery($con, $sql);
 }
