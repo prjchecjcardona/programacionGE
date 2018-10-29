@@ -22,7 +22,7 @@ if( isset($_GET['idZona']) )
 	$resultados_zona = $con->query($sql);
 	if(!$resultados_zona)
 	{
-		$data['error']=1; 
+		$data['error']=1;
 	  	$data['mensaje']="Execute query error, because: ". print_r($con->errorInfo(),true);
 	}
 	$contador=0;
@@ -38,7 +38,7 @@ if( isset($_GET['idZona']) )
 		$contador++;
 	}
 
-}else{	
+}else{
 	$data['error']=1;
 	$data['mensaje']="Error en el envío de datos";
 }

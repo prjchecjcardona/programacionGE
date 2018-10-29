@@ -37,23 +37,41 @@ function getMunicipioXZona() {
                 <a href="#" class="btn btn-primary"><i class="fas fa-plus crear"></i> Trabajo Administrativo</a>
               </div>
             </div>
-            <a href="#${element.municipio}" onClick="getFocalizacionesXZona(${id_zona})"><i class="fas fa-arrow-circle-right arrow"></i></a>
+            <a href="#${element.municipio}" onClick="getFocalizacionesXZona(${element.id_municipio})"><i class="fas fa-arrow-circle-right arrow"></i></a>
           </div>`
       );
     });
   });
 }
 
-function getFocalizacionesXZona(zona){
+function getFocalizacionesXZona(mun){
   $.ajax({
     type: "POST",
     url: "server/getFocalizaciones.php",
     data: {
-      zona : zona
+      municipio : mun
     },
-    dataType: "json",
-    success: function (response) {
-      
-    }
+    dataType: "json"
+  }).done(function(data){
+    $('.municipios').addClass('showNone');
+    $('.focalizaciones').html('');
+    data.forEach(element => {
+      $(".focalizaciones").append(
+        `<div>
+          <a href="#"><i class="fas fa-arrow-circle-left arrow"></i></a>
+          <div class="card">
+            <div class="card-header">
+              ${element.fecha}
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">${element.comportamientos} - ${element.competencia}</h5>
+              <p>Tipo de focalización: ${element.tipo_intervencion}</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+          <a href="#"><i class="fas fa-arrow-circle-right arrow"></i></a>
+        </div>`
+      )
+    });
   });
 }

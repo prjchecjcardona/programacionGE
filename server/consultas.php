@@ -83,13 +83,24 @@ function getComportamientosQuery($con)
     return executeQuery($con, $sql);
 }
 
-function getFocalizacionesXZonaQuery($con, $zona)
+function getFocalizacionesXZonaQuery($con, $mun)
 {
-    $sql = "SELECT *
-    FROM intervenciones itv
-    LEFT JOIN personas_por_zona ppz ON ppz.id_personas_por_zonacol = itv.personas_por_zona_id_personas_por_zonacol
-    LEFT JOIN zonas zna ON ppz.zonas_id_zona = zna.id_zona
-    WHERE ppz.zonas_id_zona = $zona";
+    $sql = "SELECT inter.id_intervenciones, mun.municipio, compor.comportamientos, tipoint.tipo_intervencion, inter.fecha, compe.competencia
+    FROM intervenciones inter
+    JOIN personas_por_zona pxz ON pxz.id_personas_por_zonacol = inter.personas_por_zona_id_personas_por_zonacol
+    JOIN indicadores_chec_por_intervenciones indxinter ON indxinter.intervenciones_id_intervenciones = inter.id_intervenciones
+    JOIN indicadores_chec ind ON ind.id_indicadores_chec = indxinter.indicadores_chec_id_indicadores_chec
+    JOIN comportamientos compor ON compor.id_comportamientos = ind.comportamientos_id_comportamientos
+    JOIN competencias_por_comportamiento cpc ON cpc.comportamientos_id_comportamientos = compor.id_comportamientos
+    JOIN competencias compe ON compe.id_competencia = cpc.competencias_id_competencia
+    JOIN tipo_intervencion tipoint ON tipoint.id_tipo_intervencion = inter.tipo_intervencion_id_tipo_intervencion
+    LEFT OUTER JOIN barrios bar ON bar.id_barrio = inter.id_barrio
+    LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
+    LEFT OUTER JOIN veredas ver ON ver.id_veredas = inter.id_vereda
+    JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
+    WHERE mun.id_municipio = $mun
+    GROUP BY id_intervenciones, municipio, comportamientos, tipoint.tipo_intervencion, inter.fecha, compe.competencia
+    ORDER BY inter.fecha DESC";
 
     return executeQuery($con, $sql);
 }

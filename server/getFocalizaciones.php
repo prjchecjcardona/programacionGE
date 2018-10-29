@@ -4,10 +4,10 @@ include 'lib.php';
 
 $api = new gestionEducativa();
 
-if (isset($_POST['zona'])) {
+if (isset($_POST['municipio'])) {
 
-    $id_zona = $_POST['zona'];
-    $json = $api->getFocalizacionesXZona($id_zona);
+    $id_municipio = $_POST['municipio'];
+    $json = $api->getFocalizacionesXZona($id_municipio);
 
 } else {
     $json = "No se recibieron los datos de manera adecuada";
