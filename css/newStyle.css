@@ -660,15 +660,15 @@ main {
   overflow-x: hidden;
 }
 
-#homeBreadCrumbs{
+#homeBreadCrumbs {
   border-radius: 10px;
   position: fixed;
-	width: 38%;
-	margin: 0px;
-	z-index: 10;
+  width: 38%;
+  margin: 0px;
+  z-index: 10;
 }
 
-#homeBreadCrumbs > ol{
+#homeBreadCrumbs > ol {
   border-radius: 10px;
 }
 
@@ -677,7 +677,7 @@ main {
   width: 100%;
 }
 
-.card-body .fas{
+.card-body .fas {
   font-size: 1em;
   margin: 0px 0px 0px 5px;
 }
@@ -703,7 +703,9 @@ main {
   box-shadow: 0 0 0 0 transparent !important;
 }
 
-.focalizaciones, .planeaciones, .municipios {
+.focalizaciones,
+.planeaciones,
+.municipios {
   height: 100%;
   padding: 0px 0px 15px 0px;
   margin-top: 73px;
@@ -714,7 +716,9 @@ main {
   border-radius: 10px;
 }
 
-.focalizaciones > div, .planeaciones > div, .municipios > div {
+.focalizaciones > div,
+.planeaciones > div,
+.municipios > div {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -725,11 +729,11 @@ main {
   width: 100%;
 }
 
-.nav-item > h3{
+.nav-item > h3 {
   margin: 0;
 }
 
-.crear{
+.crear {
   margin: 0px 5px 0px 0px !important;
 }
 
@@ -740,7 +744,7 @@ main {
   margin-left: 5px;
 }
 
-.fa-arrow-circle-left{
+.fa-arrow-circle-left {
   margin-left: 0px;
   margin-right: 5px;
 }
@@ -753,6 +757,46 @@ main {
 #leftPortion div .fa-arrow-circle-left:hover {
   font-size: 2.5em;
   margin-right: 1em;
+}
+
+/* PULSE ANIMATION */
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pulse {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  background-color: #9cc12b;
+  border-radius: 50%;
+  animation: animate 1s linear infinite;
+}
+
+.pulse > img{
+  width: 65%;
+  height: 65%;
+}
+
+@keyframes animate {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 254, 0.3)
+  }
+  40% {
+    box-shadow: 0 0 0 50px rgba(255, 255, 254, 0)
+  }
+  80% {
+    box-shadow: 0 0 0 50px rgba(255, 255, 254, 0)
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 254, 0)
+  }
 }
 
 @media screen and (min-width: 770px) and (max-width: 992px) {

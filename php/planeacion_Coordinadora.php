@@ -144,7 +144,8 @@ function cargarTacticos()
     $data = array('error' => 0, 'mensaje' => '', 'html' => '');
     $sql = "SELECT id_tactico, nombretactico
             FROM tactico
-            WHERE id_estrategia = " . $_POST["idEstrategia"] . "";
+            WHERE id_estrategia = " . $_POST["idEstrategia"] . "
+            AND id_tactico IN(36, 1, 7, 6, 37, 29, 14, 22, 35, 34, 4, 19)";
 
     $array = array();
     if ($rs = $con->query($sql)) {
@@ -577,7 +578,7 @@ function consultarTemas($idComportamientos, $idCompetencia)
                 from temas
                 WHERE compe_por_compo_compe_id_compe = '" . $idCompetencia . "'
                 AND compe_por_compo_compo_id_compo = '" . $idComportamientos . "'
-              ";
+                AND id_temas IN (10, 19, 51, 8, 53, 11, 21, 48, 2)";
 
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
