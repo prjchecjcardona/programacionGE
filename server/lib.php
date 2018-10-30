@@ -100,4 +100,9 @@ class gestionEducativa
     {
         return getFocalizacionesXZonaQuery($this->con, $zona);
     }
+
+    public function getPlaneacionesXFocalizacion($foc)
+    {
+        return getPlaneacionesXFocalizacionQuery($this->con, $foc);
+    }
 }

@@ -1,5 +1,6 @@
 $(document).ready(function() {
   /* Functions */
+  checkLogged();
   executeAll();
   showTab(currentTab); // Display the current tab
   $("#vereda").hide();

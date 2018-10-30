@@ -1,5 +1,10 @@
 $(function() {
+  checkLogged();
   getMunicipioXZona();
+
+  $('#logOut a').click(function(){
+    $('#logOut').submit();
+  });
 });
 
 var id_zona = getZona("id_zona");
@@ -85,7 +90,7 @@ function getFocalizacionesXZona(mun){
                 <a href="#" class="btn btn-primary">Go somewhere</a>
               </div>
             </div>
-            <a href="#"><i class="fas fa-arrow-circle-right arrow"></i></a>
+            <a href="#${element.comportamientos}-${element.competencia}" onclick="getPlaneacionesXFocalizacion(${element.id_intervenciones})"><i class="fas fa-arrow-circle-right arrow"></i></a>
           </div>`
         )
       });
@@ -96,4 +101,41 @@ function getFocalizacionesXZona(mun){
       hideLoader();
     }
   })
+}
+
+function getPlaneacionesXFocalizacion(foc){
+  $.ajax({
+    type: "POST",
+    url: "server/getPlaneaciones.php",
+    data: {
+      foc : foc
+    },
+    dataType: "json",
+    success: function (data) {
+
+    }
+  });
+}
+
+function checkLogged(){
+  $.ajax({
+    type: "POST",
+    url: "server/checkLog.php",
+    data: "",
+    dataType: "json"
+  }).done(function(data){
+    if(data.error){
+      swal({
+        type: 'info',
+        title: 'Usuario',
+        text: data.message,
+      }).then(function(){
+        window.location.href = "iniciarSesion.html";
+      });
+    }else{
+      $('#userName').html(
+        `Hola ${data}`
+      );
+    }
+  });
 }

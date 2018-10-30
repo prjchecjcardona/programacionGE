@@ -28,13 +28,15 @@
       </li>
 
       <li class="nav-item">
-        <h3>Hola #{nombre}!</h3>
+        <h3 id="userName"></h3>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-home"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-book"></i></a>
-        <a class="nav-link active" href="#"><i class="fas fa-sign-out-alt"></i></a>
+        <a class="nav-link" href="iniciarSesion.html"><i class="fas fa-home"></i></a>
+        <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
+        <form action="server/logOut.php" id="logOut">
+          <a class="nav-link active"><i class="fas fa-sign-out-alt"></i></a>
+        </form>
       </li>
     </ul>
 

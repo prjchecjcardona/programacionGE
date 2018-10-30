@@ -31,7 +31,7 @@ function logIn($con, $sql, $pass)
                 $_SESSION['user'] = array('uid' => $row['numeroidentificacion'],
                     'pass' => $row['pass'], 'nombre' => $row['nombres']);
 
-                header("Location: ../home_Gestora.html?id_zona=".$row['zonas_id_zona']);
+                header("Location: ../homeGestor.html?id_zona=" . $row['zonas_id_zona']);
                 exit();
             }
         } else {
@@ -101,6 +101,26 @@ function getFocalizacionesXZonaQuery($con, $mun)
     WHERE mun.id_municipio = $mun
     GROUP BY id_intervenciones, municipio, comportamientos, tipoint.tipo_intervencion, inter.fecha, compe.competencia
     ORDER BY inter.fecha DESC";
+
+    return executeQuery($con, $sql);
+}
+
+function getPlaneacionesXFocalizacionQuery($con, $foc)
+{
+    $sql = "SELECT pl.id_planeacion, ep.etapaproceso, est.nombreestrategia, tact.nombretactico, tem.temas, pl.fecha
+	FROM planeacion pl
+	JOIN etapaproceso ep ON pl.etapaproceso_id_etapaproceso = ep.id_etapaproceso
+	JOIN tactico_por_planeacion tactxpl ON pl.id_planeacion = tactxpl.planeacion_id_planeacion
+	JOIN tactico tact ON tact.id_tactico = tactxpl.tactico_id_tactico
+	JOIN estrategias est ON tact.id_estrategia = est.id_estrategia
+	LEFT OUTER JOIN subtemas_por_planeacion subxpl ON subxpl.planeacion_id_planeacion = pl.id_planeacion
+	LEFT OUTER JOIN subtemas sub ON subxpl.subtemas_id_subtema = sub.id_subtema
+	LEFT OUTER JOIN temas tem ON sub.id_temas = tem.id_temas
+	JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
+	LEFT OUTER JOIN ejecuciones_por_planeacion epp ON epp.id_planeaciones_por_intervencion = plxint.id_planeaciones_por_intervencion
+	WHERE plxint.intervenciones_id_intervenciones = " . $foc . "
+	GROUP BY pl.id_planeacion, etapaproceso, nombreestrategia, nombretactico, temas, fecha
+    ORDER BY pl.id_planeacion";
 
     return executeQuery($con, $sql);
 }

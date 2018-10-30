@@ -1,5 +1,6 @@
 $(document).ready(function() {
   /* Functions */
+  checkLogged();
   getTotal("#tipoPoblacion input[type=number]", true);
   getTotal("#caracteristicasPoblacion input[type=number]", false);
   showTab(currentTab); // Display the current tab
@@ -292,4 +293,3 @@ function checkLogged(){
     }
   });
 }
-
