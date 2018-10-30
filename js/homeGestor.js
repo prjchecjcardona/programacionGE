@@ -48,25 +48,17 @@ function getMunicipioXZona() {
       });
     },
     complete: function(){
+      $('.municipios').fadeIn();
       $('.municipios').removeClass('showNone');
-      $('.municipios').addClass('fadeIn');
       $('#homeBreadCrumbs').removeClass('showNone');
-      hideLoader();
+      $('.center').fadeOut();
     }
   })
 }
 
-function showLoader(){
-  $('.center').removeClass('showNone')
-}
-
-function hideLoader(){
-  $('.center').addClass('showNone');
-}
-
 function getFocalizacionesXZona(mun){
-  showLoader();
-  $('.municipios').addClass('showNone');
+  $('.center').fadeIn();
+  $('.municipios').fadeOut();
   $.ajax({
     type: "POST",
     url: "server/getFocalizaciones.php",
@@ -75,11 +67,12 @@ function getFocalizacionesXZona(mun){
     },
     dataType: "json",
     success: function(data){
-      $('.focalizaciones').html('');
+      $('.focalizaciones').html(
+        `<a href="#" id="returnBtn" class="btn btn-success" onClick="returnMunicipio()"><i class="fas fa-arrow-circle-left arrow"></i></a>`
+      );
       data.forEach(element => {
         $(".focalizaciones").append(
           `<div>
-            <a href="#"><i class="fas fa-arrow-circle-left arrow"></i></a>
             <div class="card">
               <div class="card-header">
                 ${element.fecha}
@@ -87,18 +80,19 @@ function getFocalizacionesXZona(mun){
               <div class="card-body">
                 <h5 class="card-title">${element.comportamientos} - ${element.competencia}</h5>
                 <p>Tipo de focalización: ${element.tipo_intervencion}</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="#" class="btn btn-primary"><i class="fas fa-plus crear"></i> Planear</a>
+                <a href="#" class="btn btn-primary"><i class="fas fa-plus crear"></i> Ejecutar</a>
               </div>
             </div>
             <a href="#${element.comportamientos}-${element.competencia}" onclick="getPlaneacionesXFocalizacion(${element.id_intervenciones})"><i class="fas fa-arrow-circle-right arrow"></i></a>
           </div>`
-        )
+        );
       });
     },
     complete: function(){
+      $('.focalizaciones').fadeIn();
       $('.focalizaciones').removeClass('showNone');
-      $('.focalizaciones').addClass('fadeIn');
-      hideLoader();
+      $('.center').fadeOut();
     }
   })
 }
@@ -115,6 +109,11 @@ function getPlaneacionesXFocalizacion(foc){
 
     }
   });
+}
+
+function returnMunicipio(){
+  $('.focalizaciones').fadeOut();
+  $('.municipios').fadeIn();
 }
 
 function checkLogged(){
