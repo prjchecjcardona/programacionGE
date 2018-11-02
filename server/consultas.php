@@ -41,6 +41,30 @@ function logIn($con, $sql, $pass)
     }
 }
 
+function getEventsCalendar($con, $sql){
+    $result = $con->query($sql);
+    if ($result) {
+        $data = array();
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            array_push($data, $row);
+        }
+        foreach ($data as $key => $value) {
+
+            $data[$key] = array(
+                'id' => $value['id_planeacion'],
+                'title' => $value['municipio'].' - '.$value['comportamientos'],
+                'start' => $value['fecha'],
+                'editable' => false,
+                'color' => 'red',
+                'textColor' => "white"
+            );
+        }
+        return $data;
+    } else {
+        return $con->errorInfo()[2];
+    }
+}
+
 function getMunicipioQuery($con)
 {
     $sql = "SELECT id_municipio, municipio FROM municipios";
@@ -190,4 +214,22 @@ function loginQuery($con, $uid, $psswd)
     WHERE correoelectronico = '" . $uid . "' OR usuario = '" . $uid . "' ";
 
     return logIn($con, $sql, $psswd);
+}
+
+function getPlaneacionesCalendarQuery($con)
+{
+    $sql = "SELECT DISTINCT id_planeacion, plan.fecha, lugarencuentro, jor.jornada, mun.municipio, inter.id_intervenciones, bar.id_barrio, compor.comportamientos
+    FROM planeacion plan
+    JOIN jornada jor ON jor.id_jornada = plan.id_jornada
+    JOIN planeaciones_por_intervencion ppi ON ppi.planeacion_id_planeacion = plan.id_planeacion
+    lEFT JOIN intervenciones inter ON ppi.intervenciones_id_intervenciones = inter.id_intervenciones
+    LEFT JOIN barrios bar ON bar.id_barrio = inter.id_barrio
+    LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
+    LEFT JOIN veredas ver ON ver.id_veredas = bar.id_comuna
+    LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio
+	JOIN indicadores_chec_por_intervenciones icpi ON icpi.intervenciones_id_intervenciones = inter.id_intervenciones
+	JOIN indicadores_chec ic ON ic.id_indicadores_chec = icpi.indicadores_chec_id_indicadores_chec
+	JOIN comportamientos compor ON compor.id_comportamientos = ic.comportamientos_id_comportamientos";
+
+    return getEventsCalendar($con, $sql);
 }

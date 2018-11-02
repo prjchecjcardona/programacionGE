@@ -36,6 +36,7 @@ if (isset($_POST['id_zona'])) {
     if ($rs = $con->query($sql)) {
         if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
             foreach ($filas as $key => $value) {
+
                 $allDay = false;
                 switch ($value['jornada']) {
                     case 'Mañana':

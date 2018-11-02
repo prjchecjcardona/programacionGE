@@ -105,4 +105,9 @@ class gestionEducativa
     {
         return getPlaneacionesXFocalizacionQuery($this->con, $foc);
     }
+
+    public function getPlaneacionesCalendar()
+    {
+        return getPlaneacionesCalendarQuery($this->con);
+    }
 }

@@ -3,10 +3,10 @@
 include 'conexion.php';
 $data = array();
 
-$sql = "SELECT pl.lugarencuentro, mun.municipio, ent.nombreentidad,ru.id_registro, ru.latitud, ru.longitud, pl.fecha, ru.hora::time(0), 
-ru.tipo_registro, jor.jornada,pl.id_planeacion, tct.nombretactico, etg.nombreestrategia, COUNT(spp.subtemas_id_subtema), temas, 
+$sql = "SELECT pl.lugarencuentro, mun.municipio, ent.nombreentidad,ru.id_registro, ru.latitud, ru.longitud, pl.fecha, ru.hora::time(0),
+ru.tipo_registro, jor.jornada,pl.id_planeacion, tct.nombretactico, etg.nombreestrategia, COUNT(spp.subtemas_id_subtema), temas,
 compo.comportamientos, compe.competencia, zna.id_zona, zna.zonas, (psna.nombres || ' ' || psna.apellidos) as nombre
-FROM planeacion pl 
+FROM planeacion pl
 LEFT JOIN registro_ubicacion ru ON ru.id_planeacion = pl.id_planeacion
 LEFT JOIN jornada jor ON jor.id_jornada = pl.id_jornada
 LEFT JOIN entidades ent ON ent.id_entidad = pl.id_entidad
@@ -29,14 +29,17 @@ LEFT OUTER JOIN barrios bar ON bar.id_barrio = itv.id_barrio
 LEFT OUTER JOIN veredas ver ON ver.id_veredas = itv.id_vereda
 LEFT OUTER JOIN comunas com ON com.id_comuna = bar.id_comuna
 LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
-GROUP BY pl.id_planeacion,ru.id_registro, ru.latitud, ru.longitud, pl.fecha, ru.hora, ru.tipo_registro, jor.jornada,pl.id_planeacion, 
-tct.nombretactico, etg.nombreestrategia, tm.temas, compo.comportamientos, compe.competencia, zna.zonas, zna.id_zona, nombre, pl.lugarencuentro, 
+GROUP BY pl.id_planeacion,ru.id_registro, ru.latitud, ru.longitud, pl.fecha, ru.hora, ru.tipo_registro, jor.jornada,pl.id_planeacion,
+tct.nombretactico, etg.nombreestrategia, tm.temas, compo.comportamientos, compe.competencia, zna.zonas, zna.id_zona, nombre, pl.lugarencuentro,
 mun.municipio, ent.nombreentidad
 ORDER BY pl.id_planeacion";
 
 if ($rs = $con->query($sql)) {
     if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
+        print_r($filas);
         foreach ($filas as $key => $value) {
+            echo $key, '</br>';
+            echo '------------------------';
             $allDay = false;
             switch ($value['jornada']) {
                 case 'Mañana':

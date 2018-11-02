@@ -51,13 +51,13 @@ function getMunicipioXZona() {
       $('.municipios').fadeIn();
       $('.municipios').removeClass('showNone');
       $('#homeBreadCrumbs').removeClass('showNone');
-      $('.center').fadeOut();
+      $('#loaderList').fadeOut();
     }
   })
 }
 
 function getFocalizacionesXZona(mun){
-  $('.center').fadeIn();
+  $('#loaderList').fadeIn();
   $('.municipios').fadeOut();
   $.ajax({
     type: "POST",
@@ -92,7 +92,7 @@ function getFocalizacionesXZona(mun){
     complete: function(){
       $('.focalizaciones').fadeIn();
       $('.focalizaciones').removeClass('showNone');
-      $('.center').fadeOut();
+      $('#loaderList').fadeOut();
     }
   })
 }
