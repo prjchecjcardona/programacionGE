@@ -36,9 +36,7 @@ function getMunicipioXZona() {
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">${element.municipio}</h5>
-                  <a href="#" class="btn btn-primary"><i class="fas fa-plus crear"></i> Focalizar</a>
-                  <a href="#" class="btn btn-primary"><i class="fas fa-plus crear"></i> Planear</a>
-                  <a href="#" class="btn btn-primary"><i class="fas fa-plus crear"></i> Ejecutar</a>
+                  <a href="registrarFocalizacionG.html?id_zona=${element.id_zona}&id_mun=${element.id_municipio}" class="btn btn-primary"><i class="fas fa-plus crear"></i> Focalizar</a>
                   <a href="#" class="btn btn-primary"><i class="fas fa-plus crear"></i> Trabajo Administrativo</a>
                 </div>
               </div>
@@ -79,12 +77,11 @@ function getFocalizacionesXZona(mun){
               </div>
               <div class="card-body">
                 <h5 class="card-title">${element.comportamientos} - ${element.competencia}</h5>
-                <p>Tipo de focalización: ${element.tipo_intervencion}</p>
+                <p>Tipo de focalización: ${element.tipo_focalizacion}</p>
                 <a href="#" class="btn btn-primary"><i class="fas fa-plus crear"></i> Planear</a>
-                <a href="#" class="btn btn-primary"><i class="fas fa-plus crear"></i> Ejecutar</a>
               </div>
             </div>
-            <a href="#${element.comportamientos}-${element.competencia}" onclick="getPlaneacionesXFocalizacion(${element.id_intervenciones})"><i class="fas fa-arrow-circle-right arrow"></i></a>
+            <a href="registrarPlaneacionG.html?id_zona" onclick="getPlaneacionesXFocalizacion(${element.id_focalizacion})"><i class="fas fa-arrow-circle-right arrow"></i></a>
           </div>`
         );
       });
@@ -117,10 +114,13 @@ function returnMunicipio(){
 }
 
 function checkLogged(){
+
   $.ajax({
     type: "POST",
     url: "server/checkLog.php",
-    data: "",
+    data: {
+      zona : id_zona
+    },
     dataType: "json"
   }).done(function(data){
     if(data.error){

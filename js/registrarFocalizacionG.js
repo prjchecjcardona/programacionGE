@@ -16,7 +16,35 @@ $(document).ready(function() {
   $("input[name=tipoGestion]").change(function() {
     determineTipoGestion();
   });
+
+  $("#submitInstit").click(function(event) {
+    event.preventDefault();
+    swal({
+      type: "warning",
+      title: "Gestión Institucional",
+      text:
+        "Vas a registrar una focalización de gestión institucional, ¿Seguro?"
+    }).then(function() {
+      insertFocalizacion();
+    });
+  });
 });
+
+$("#selectComportamiento").change(function() {
+  getIndicadoresChec(this.value);
+});
+
+var id_zona = getParam("id_zona");
+var id_mun = getParam("id_mun");
+
+function getParam(param) {
+  param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + param + "=([^&#]*)");
+  var results = regex.exec(location.search);
+  return results === null
+    ? ""
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
 
@@ -51,7 +79,7 @@ function nextPrev(n) {
   // if you have reached the end of the form... :
   if (currentTab >= x.length) {
     //...the form gets submitted:
-    document.getElementById("intForm").submit();
+    insertFocalizacion();
     return false;
   }
   // Otherwise, display the correct tab:
@@ -70,11 +98,14 @@ function validateForm() {
   for (i = 0; i < y.length; i++) {
     // If a field is empty...
     if (y[i].parentElement.parentElement.style.display != "none") {
-      if (y[i].value == "") {
-        // add an "invalid" class to the field:
-        y[i].className += " invalid";
-        // and set the current valid status to false:
-        valid = false;
+      //If elements are not disabled... validate
+      if (!y[i].disabled) {
+        if (y[i].value == "") {
+          // add an "invalid" class to the field:
+          y[i].className += " invalid";
+          // and set the current valid status to false:
+          valid = false;
+        }
       }
     }
   }
@@ -99,13 +130,18 @@ function fixStepIndicator(n) {
 function determineTipoGestion() {
   var radioTipoGestion = $("input[name=tipoGestion]:checked");
 
-  if (parseInt(radioTipoGestion.val()) == 2) {
-    console.log(radioTipoGestion.val());
+  if (radioTipoGestion.val() == "Institucional") {
     $("#selectComportamiento").prop("disabled", true);
     $("#selectTipoInt").prop("disabled", true);
+
+    $("#nextBtn").hide();
+    $("#submitInstit").show();
   } else {
     $("#selectComportamiento").prop("disabled", false);
     $("#selectTipoInt").prop("disabled", false);
+
+    $("#nextBtn").show();
+    $("#submitInstit").hide();
   }
 }
 
@@ -117,30 +153,43 @@ function executeAll() {
   var ajaxJson = [
     {
       select: "selectMunicipio",
-      url: "server/getMunicipios.php"
+      url: "server/getMunicipios.php",
+      data: {
+        zona: id_zona
+      }
     },
     {
       select: "selectComportamiento",
-      url: "server/getComportamientos.php"
+      url: "server/getComportamientos.php",
+      data: ""
     }
   ];
 
   ajaxJson.forEach(element => {
-    primaryAjax(element.select, element.url);
+    primaryAjax(element.select, element.url, element.data);
   });
 }
 
-function primaryAjax(tag, url) {
+function primaryAjax(tag, url, dat) {
   $.ajax({
     type: "POST",
     url: url,
-    data: "",
+    data: dat,
     dataType: "json"
   }).done(function(data) {
     data.forEach(element => {
       var elementArray = Object.values(element); // Converts objects to array
 
       if (tag == "selectMunicipio") {
+        //Get id_mun to preselect municipio
+        if (id_mun == elementArray[0]) {
+          $(`#${tag}`).append(
+            `<option value="${elementArray[0]}" selected>${
+              elementArray[1]
+            }</option>`
+          );
+        }
+
         // Object from selectMunicipio has only 2 keys
         $(`#${tag}`).append(
           `<option value="${elementArray[0]}">${elementArray[1]}</option>`
@@ -157,21 +206,97 @@ function primaryAjax(tag, url) {
   });
 }
 
-function checkLogged(){
+function getIndicadoresChec(comportamiento) {
+  $("#selectIndicadorInt").html("");
+  $.ajax({
+    type: "POST",
+    url: "server/getIndicadoresChec.php",
+    data: {
+      comportamiento: comportamiento
+    },
+    dataType: "json",
+    success: function(response) {
+      response.forEach(data => {
+        $("#selectIndicadorInt").append(
+          `<option value="${data.id_indicador}">${data.indicador}</option>`
+        );
+      });
+    }
+  });
+}
+
+function insertFocalizacion() {
+  $(".loader").fadeIn();
+  formData = $("#intForm").serializeArray();
+  $.ajax({
+    type: "POST",
+    url: "server/insertFocalizacion.php",
+    data: formData,
+    dataType: "json",
+    success: function(response) {
+      if ($("#selectIndicadorInt").val().length > 0) {
+        insertIndicadoresXFocalizacion();
+      } else {
+        swal({
+          type: "success",
+          title: response
+        }).then(function() {
+          $(".loader").fadeOut();
+        });
+      }
+    }
+  });
+}
+
+function insertIndicadoresXFocalizacion() {
+  $.ajax({
+    type: "POST",
+    url: "server/insertIndicadores.php",
+    data: "",
+    dataType: "json",
+    success: function(response) {
+      id_foc = response[0].max;
+      formData = $("#intForm").serializeArray();
+      $.ajax({
+        type: "POST",
+        url: "server/insertIndicadores.php",
+        data: {
+          indicadores : $("#selectIndicadorInt").val(),
+          id_foc: id_foc
+        },
+        dataType: "json",
+        success: function(response) {
+          swal({
+            type: "success",
+            title: response
+          }).then(function() {
+            $(".loader").fadeOut();
+          });
+        }
+      });
+    }
+  });
+}
+
+function checkLogged() {
   $.ajax({
     type: "POST",
     url: "server/checkLog.php",
-    data: "",
+    data: {
+      zona: id_zona
+    },
     dataType: "json"
-  }).done(function(data){
-    if(data.error){
+  }).done(function(data) {
+    if (data.error) {
       swal({
-        type: 'info',
-        title: 'Usuario',
-        text: data.message,
-      }).then(function(){
+        type: "info",
+        title: "Usuario",
+        text: data.message
+      }).then(function() {
         window.location.href = "iniciarSesion.html";
       });
+    } else {
+      $("#userName").html(`Hola ${data}`);
     }
   });
 }

@@ -60,6 +60,17 @@ $(document).ready(function() {
   });
 });
 
+var id_zona = getZona("id_zona");
+
+function getZona(param) {
+  param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + param + "=([^&#]*)");
+  var results = regex.exec(location.search);
+  return results === null
+    ? ""
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 var currentTab = 0; // Current tab is set to be the first tab (0)
 
 function showTab(n) {
@@ -260,10 +271,13 @@ function primaryAjax(url, tag) {
 }
 
 function checkLogged(){
+
   $.ajax({
     type: "POST",
     url: "server/checkLog.php",
-    data: "",
+    data: {
+      zona : id_zona
+    },
     dataType: "json"
   }).done(function(data){
     if(data.error){
@@ -274,6 +288,10 @@ function checkLogged(){
       }).then(function(){
         window.location.href = "iniciarSesion.html";
       });
+    }else{
+      $('#userName').html(
+        `Hola ${data}`
+      );
     }
   });
 }

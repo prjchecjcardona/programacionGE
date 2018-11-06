@@ -8,13 +8,13 @@ if (isset($_POST['loginSubmit'])) {
 
     $addPaswd = 'GIkkU2Eeyw1@!8';
     $mailuid = $_POST['mailuid'];
-    $passwd = $_POST['passwd'].$addPaswd;
+    $pass = $_POST['passwd'].$addPaswd;
 
-    if (empty($mailuid) || empty($passwd)) {
+    if (empty($mailuid) || empty($pass)) {
         header("Location: ../iniciarSesion.html?error=emptyFields");
         exit;
     } else {
-        $json = $api->logIn($mailuid, $passwd);
+        $json = $api->logIn($mailuid, $pass);
     }
 
 } else {
@@ -24,5 +24,4 @@ if (isset($_POST['loginSubmit'])) {
 
 }
 
-echo $passwd;
 echo $json;

@@ -13,10 +13,15 @@ class gestionEducativa
     public function connectDB()
     {
         //DEV
-        $database = "d4asqdqb9dlt9p";
+/*         $database = "d4asqdqb9dlt9p";
         $uid = "ntafkvnrqqlbig";
         $pwd = "300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1";
-        $host = "ec2-54-197-233-123.compute-1.amazonaws.com";
+        $host = "ec2-54-197-233-123.compute-1.amazonaws.com"; */
+
+        $database = "GE3";
+        $uid = "postgres";
+        $pwd = "1234";
+        $host = "localhost";
 
         /*         //PRODUCCION
         $database = "gestjjlg_gestion_educativa";
@@ -29,11 +34,6 @@ class gestionEducativa
         if (!$this->con) {
             die('error de conexión');
         }
-    }
-
-    public function getMunicipio()
-    {
-        return getMunicipioQuery($this->con);
     }
 
     public function getComportamientos()
@@ -109,5 +109,25 @@ class gestionEducativa
     public function getPlaneacionesCalendar()
     {
         return getPlaneacionesCalendarQuery($this->con);
+    }
+
+    public function insertFocalizacion($id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha)
+    {
+        return insertFocalizacionQuery($this->con, $id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha);
+    }
+
+    public function insertIndicadoresXFocalizacion($id_foc, $id_indicador)
+    {
+        return insertIndicadoresXFocalizacionQuery($this->con, $id_foc, $id_indicador);
+    }
+
+    public function getMaxIdFoc()
+    {
+        return getMaxIdFocQuery($this->con);
+    }
+
+    public function getIndicadoresChec($comp)
+    {
+        return getIndicadoresChecQuery($this->con, $comp);
     }
 }
