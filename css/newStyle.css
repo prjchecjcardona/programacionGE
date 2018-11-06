@@ -765,6 +765,14 @@ main {
   margin-left: 1em;
 }
 
+#formCrearContacto input{
+  text-transform: uppercase;
+}
+
+#formCrearContacto #correoContacto{
+  text-transform: lowercase;
+}
+
 #returnBtn {
   width: 100%;
 }

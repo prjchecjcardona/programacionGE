@@ -103,16 +103,12 @@ function getMunicipiosXZonaQuery($con, $zona)
     return executeQuery($con, $sql);
 }
 
-function getEntidadesQuery($con)
+function getEntidadesQuery($con, $id_mun)
 {
-    $sql = "SELECT id_entidad, nombreentidad FROM entidades ORDER BY nombreentidad ASC";
-
-    return executeQuery($con, $sql);
-}
-
-function getTipoIntervencionQuery($con)
-{
-    $sql = "SELECT * FROM tipo_intervencion";
+    $sql = "SELECT id_entidad, nombre_entidad
+    FROM entidades
+    WHERE id_municipio = $id_mun
+    ORDER BY nombre_entidad ASC";
 
     return executeQuery($con, $sql);
 }
@@ -128,7 +124,7 @@ function getComportamientosQuery($con)
 
 function getFocalizacionesXZonaQuery($con, $mun)
 {
-    $sql = "SELECT foc.id_focalizacion, mun.id_municipio, mun.municipio, compor.comportamientos, foc.tipo_focalizacion, foc.fecha, compe.competencia
+    $sql = "SELECT foc.id_focalizacion, mun.id_municipio, mun.municipio, mun.id_zona, compor.id_comportamientos, compor.comportamientos, foc.tipo_focalizacion, foc.fecha, compe.competencia
     FROM focalizacion foc
     JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion= foc.id_focalizacion
     JOIN indicadores_chec ind ON ind.id_indicador= icxf.id_indicador
@@ -136,7 +132,7 @@ function getFocalizacionesXZonaQuery($con, $mun)
     JOIN competencias compe ON compe.id_competencia = compor.id_competencia
     JOIN municipios mun ON mun.id_municipio = foc.id_municipio
     WHERE mun.id_municipio = $mun
-    GROUP BY foc.id_focalizacion, mun.municipio, compor.comportamientos, foc.tipo_focalizacion, foc.fecha, compe.competencia
+    GROUP BY foc.id_focalizacion, mun.id_municipio, mun.municipio, compor.id_comportamientos, compor.comportamientos, foc.tipo_focalizacion, foc.fecha, compe.competencia
     ORDER BY foc.fecha DESC";
 
     return executeQuery($con, $sql);
@@ -155,23 +151,21 @@ function getPlaneacionesXFocalizacionQuery($con, $foc)
     return executeQuery($con, $sql);
 }
 
-function getComunasQuery($con)
+function getBarriosQuery($con, $id_mun)
 {
-    $sql = "SELECT id_comuna, comuna FROM comunas";
+    $sql = "SELECT id_barrio, barrio
+    FROM barrios bar
+    JOIN comunas com ON com.id_comuna = bar.id_comuna
+    WHERE com.id_municipio = $id_mun";
 
     return executeQuery($con, $sql);
 }
 
-function getBarriosQuery($con)
+function getVeredasQuery($con, $id_mun)
 {
-    $sql = "SELECT id_barrio, barrio FROM barrios";
-
-    return executeQuery($con, $sql);
-}
-
-function getVeredasQuery($con)
-{
-    $sql = "SELECT id_veredas, vereda FROM veredas";
+    $sql = "SELECT id_veredas, vereda
+    FROM veredas
+    WHERE id_municipio = $id_mun";
 
     return executeQuery($con, $sql);
 }
@@ -190,24 +184,31 @@ function getFicherosQuery($con)
     return executeQuery($con, $sql);
 }
 
-function getContactosQuery($con)
+function getContactosQuery($con, $id_mun)
 {
-    $sql = "SELECT nombrecontacto, id_contacto, telefono, cargo, entidades_id_entidades
-    FROM contactos";
+    $sql = "SELECT cedula, nombre, apellidos, cargo, ent.nombre_entidad
+    FROM contacto con
+    JOIN contactos_x_entidad cxe ON con.cedula = cxe.cedula
+    JOIN entidades ent ON ent.id_entidad = cxe.id_entidad
+    WHERE ent.id_municipio = $id_mun";
 
     return executeQuery($con, $sql);
 }
 
-function getTacticosQuery($con)
+function getTacticosQuery($con, $estrat)
 {
-    $sql = "SELECT id_tactico, nombretactico FROM tactico";
+    $sql = "SELECT id_tactico, nombretactico
+    FROM tactico
+    WHERE id_estrategia = $estrat";
 
     return executeQuery($con, $sql);
 }
 
-function getTemasQuery($con)
+function getTemasQuery($con, $compor)
 {
-    $sql = "SELECT id_temas, temas FROM temas";
+    $sql = "SELECT id_temas, temas
+    FROM temas
+    WHERE id_comportamiento = $compor";
 
     return executeQuery($con, $sql);
 }
@@ -232,28 +233,11 @@ function getIndicadoresChecQuery($con, $comp)
     return executeQuery($con, $sql);
 }
 
-function insertFocalizacionQuery($con, $id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha)
-{
-    $sql = "INSERT INTO public.focalizacion(id_municipio, id_tipo_gestion, fecha, tipo_focalizacion)
-    VALUES ($id_mun, $id_tipoGestion, '$fecha', '$tipo_focalizacion');";
-
-    return insertQuery($con, $sql);
-
-}
-
 function getMaxIdFocQuery($con)
 {
     $sql = "SELECT MAX(id_focalizacion) FROM focalizacion";
 
     return executeQuery($con, $sql);
-}
-
-function insertIndicadoresXFocalizacionQuery($con, $id_focalizacion, $id_indicador)
-{
-    $sql = "INSERT INTO public.indicadores_chec_x_focalizacion(id_indicador, id_focalizacion)
-    VALUES ($id_indicador, $id_focalizacion);";
-
-    return insertQuery($con, $sql);
 }
 
 function getPlaneacionesCalendarQuery($con)
@@ -272,4 +256,40 @@ function getPlaneacionesCalendarQuery($con)
 	JOIN comportamientos compor ON compor.id_comportamientos = ic.comportamientos_id_comportamientos";
 
     return getEventsCalendar($con, $sql);
+}
+
+/* INSERTS */
+
+function insertIndicadoresXFocalizacionQuery($con, $id_focalizacion, $id_indicador)
+{
+    $sql = "INSERT INTO public.indicadores_chec_x_focalizacion(id_indicador, id_focalizacion)
+    VALUES ($id_indicador, $id_focalizacion);";
+
+    return insertQuery($con, $sql);
+}
+
+function insertFocalizacionQuery($con, $id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha)
+{
+    $sql = "INSERT INTO public.focalizacion(id_municipio, id_tipo_gestion, fecha, tipo_focalizacion)
+    VALUES ($id_mun, $id_tipoGestion, '$fecha', '$tipo_focalizacion');";
+
+    return insertQuery($con, $sql);
+
+}
+
+function insertContactoQuery($con, $cedula, $nombres, $apellidos, $correo, $telefono, $celular, $cargo)
+{
+    $sql = "INSERT INTO public.contacto(
+    cedula, nombres, apellidos, correo, telefono, celular, cargo)
+    VALUES ($cedula, '$nombres', '$apellidos', '$correo', $telefono, $celular, '$cargo');";
+
+    return insertQuery($con, $sql);
+}
+
+function insertContactosXEntidadQuery($con, $cedula, $entidad)
+{
+    $sql = "INSERT INTO public.contactos_x_entidad(cedula, id_entidad)
+    VALUES ($cedula, $entidad);";
+
+    return insertQuery($con, $sql);
 }

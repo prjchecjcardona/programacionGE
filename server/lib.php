@@ -13,7 +13,7 @@ class gestionEducativa
     public function connectDB()
     {
         //DEV
-/*         $database = "d4asqdqb9dlt9p";
+        /*         $database = "d4asqdqb9dlt9p";
         $uid = "ntafkvnrqqlbig";
         $pwd = "300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1";
         $host = "ec2-54-197-233-123.compute-1.amazonaws.com"; */
@@ -41,24 +41,19 @@ class gestionEducativa
         return getComportamientosQuery($this->con);
     }
 
-    public function getComunas()
+    public function getBarrios($id_mun)
     {
-        return getComunasQuery($this->con);
+        return getBarriosQuery($this->con, $id_mun);
     }
 
-    public function getBarrios()
+    public function getVeredas($id_mun)
     {
-        return getBarriosQuery($this->con);
+        return getVeredasQuery($this->con, $id_mun);
     }
 
-    public function getVeredas()
+    public function getEntidades($id_mun)
     {
-        return getVeredasQuery($this->con);
-    }
-
-    public function getEntidades()
-    {
-        return getEntidadesQuery($this->con);
+        return getEntidadesQuery($this->con, $id_mun);
     }
 
     public function getEstrategias()
@@ -71,19 +66,19 @@ class gestionEducativa
         return getFicherosQuery($this->con);
     }
 
-    public function getContactos()
+    public function getContactos($id_mun)
     {
         return getContactosQuery($this->con);
     }
 
-    public function getTacticos()
+    public function getTacticos($estrat)
     {
-        return getTacticosQuery($this->con);
+        return getTacticosQuery($this->con, $estrat);
     }
 
-    public function getTemas()
+    public function getTemas($compor)
     {
-        return getTemasQuery($this->con);
+        return getTemasQuery($this->con, $compor);
     }
 
     public function logIn($uid, $pass)
@@ -129,5 +124,15 @@ class gestionEducativa
     public function getIndicadoresChec($comp)
     {
         return getIndicadoresChecQuery($this->con, $comp);
+    }
+
+    public function insertContacto($cedula, $nombres, $apellidos, $correo, $telefono, $celular, $cargo)
+    {
+        return insertContactoQuery($this->con, $cedula, $nombres, $apellidos, $correo, $telefono, $celular, $cargo);
+    }
+
+    public function insertContactosXEntidad($cedula, $entidad)
+    {
+        return insertContactosXEntidadQuery($this->con, $cedula, $entidad);
     }
 }

@@ -103,14 +103,7 @@
                 </div>
 
                 <div id="comunaObarrio" class="row">
-                  <div id="comuna" class="col-sm-6">
-                    <label for="selectComuna">Comuna</label>
-                    <label for="selectComuna" class="obligatorio">*</label>
-                    <select class="form-control" id="selectComuna">
-                      <option value="" selected>Seleccione</option>
-                    </select>
-                  </div>
-                  <div id="barrio" class="col-sm-6">
+                  <div id="barrio" class="col-sm-12">
                     <label for="selectBarrio">Barrio</label>
                     <label for="selectBarrio" class="obligatorio">*</label>
                     <select class="form-control" id="selectBarrio">
@@ -118,16 +111,6 @@
                     </select>
                   </div>
                 </div>
-
-                <!--                 <div class="row formRows">
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="form-group">
-                      <label for="observaciones">Observaciones</label>
-                      <textarea placeholder="Escribe algo..." class="form-control" name="observaciones" id="observaciones"
-                        rows="3"></textarea>
-                    </div>
-                  </div>
-                </div> -->
               </div>
 
               <div class="tab">
@@ -185,7 +168,7 @@
 
                 <div id="rowContacto" class="row formRows">
                   <button id="btnRegistrarContacto" type="button" class="btn btn-primary" data-toggle="modal"
-                    data-target="#modalRegistrarEntidad"><i class="fas fa-user-plus" id="iconRegistrarContacto"></i>Registrar
+                    data-target="#modalRegistrarContacto"><i class="fas fa-user-plus" id="iconRegistrarContacto"></i>Registrar
                     Contacto</button>
                 </div>
 
@@ -337,54 +320,62 @@
           </div>
           <form id="formCrearContacto" action="">
             <div class="row rowForms">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-                <label for="nombreContacto">Nombre del contacto<label class="obligatorio">*</label></label>
-                <input type="text" placeholder="Nombre" id="nombreContacto" name="nombreContacto" aria-label="Nombre del contacto"
+              <div class="col-lg-12 col-md-12 col-sm-6">
+                <label for="nombreContacto">Nombres<label class="obligatorio">*</label></label>
+                <input type="text" placeholder="Nombres" id="nombreContacto" name="nombres" aria-label="Nombres del contacto"
+                  class="form-control required" required>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-6">
+                <label for="apellidoContacto">Apellidos<label class="obligatorio">*</label></label>
+                <input type="text" placeholder="Apellidos" id="apellidoContacto" name="apellidos" aria-label="Apellidos del contacto"
                   class="form-control required" required>
               </div>
             </div>
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="cedulaContacto">Cédula</label>
-                <input type="text" placeholder="Cédula" id="cedulaContacto" name="cedulaContacto" aria-label="Cedula del contacto"
+                <input type="text" placeholder="Cédula" id="cedulaContacto" name="cedula" aria-label="Cedula del contacto"
                   class="form-control required">
               </div>
             </div>
             <div class="row rowForms">
-              <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="col-lg-12 col-md-12 col-sm-6">
                 <label for="TelefonoContacto">Telefono</label>
-                <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefonoContacto" aria-label="Telefono del contacto"
+                <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefono" aria-label="Telefono del contacto"
+                  class="form-control required">
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-6">
+                <label for="celularContacto">Celular</label>
+                <input type="text" placeholder="Telefono" id="celularContacto" name="celular" aria-label="Celular del contacto"
                   class="form-control required">
               </div>
             </div>
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="correoContacto">Correo electronico</label>
-                <input type="text" placeholder="Correo" id="correoContacto" name="correoContacto" aria-label="Correo electronico del contacto"
+                <input type="text" placeholder="Correo" id="correoContacto" name="email" aria-label="Correo electronico del contacto"
                   class="form-control required">
               </div>
             </div>
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="entidadContacto">Entidad<label class="obligatorio">*</label></label>
-                <select type="text" placeholder="Entidad" id="entidadContacto" name="entidadContacto" aria-label="Entidad del contacto"
+                <select type="text" placeholder="Entidad" id="entidadContacto" name="entidad" aria-label="Entidad del contacto"
                   class="custom-select required" required>
-                  <option value="">Entidad #1</option>
-                  <option value="1">Entidad #3</option>
-                  <option value="2">Entidad #2</option>
+                  <option value="" selected>Seleccione</option>
                 </select>
               </div>
             </div>
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="cargoContacto">Cargo</label>
-                <input type="text" placeholder="Cargo" id="cargoContacto" name="cargoContacto" aria-label="Cargo del contacto"
+                <input type="text" placeholder="Cargo" id="cargoContacto" name="cargo" aria-label="Cargo del contacto"
                   class="form-control required">
               </div>
             </div>
             <div id="rowBtnContacto" class="row rowForms">
               <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
-                <button type="submit" class="btn btn-success">Registrar</button>
+                <button id="btnCrearContacto" type="submit" class="btn btn-success">Registrar</button>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
                 <button id="btnCancelarRegContacto" type="button" class="btn btn-danger">Cancelar</button>

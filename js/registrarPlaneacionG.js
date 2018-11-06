@@ -58,11 +58,20 @@ $(document).ready(function() {
   $("#btnCancelarRegEntidad").click(function() {
     $("#modalRegistrarEntidad").modal("toggle");
   });
+
+  $("#btnCrearContacto").click(function(e) {
+    e.preventDefault();
+    insertContacto();
+  });
 });
 
-var id_zona = getZona("id_zona");
+/* PARAMETERS */
+id_zona = getParam("id_zona");
+id_mun = getParam("id_mun");
+id_foc = getParam("id_foc");
+id_comport = getParam("comport");
 
-function getZona(param) {
+function getParam(param) {
   param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
   var regex = new RegExp("[\\?&]" + param + "=([^&#]*)");
   var results = regex.exec(location.search);
@@ -208,19 +217,23 @@ function executeAll() {
   var ajaxJson = [
     {
       select: "selectEntidad",
-      url: "getEntidades.php"
+      url: "getEntidades.php",
+      data: { mun: id_mun }
+    },
+    {
+      select: "entidadContacto",
+      url: "getEntidades.php",
+      data: { mun: id_mun }
     },
     {
       select: "selectVereda",
-      url: "getVeredas.php"
+      url: "getVeredas.php",
+      data: { mun: id_mun }
     },
     {
       select: "selectBarrio",
-      url: "getBarrios.php"
-    },
-    {
-      select: "selectComuna",
-      url: "getComunas.php"
+      url: "getBarrios.php",
+      data: { mun: id_mun }
     },
     {
       select: "selectEstrategia",
@@ -232,26 +245,26 @@ function executeAll() {
     },
     {
       select: "selectTactico",
-      url: "getTacticos.php"
+      url: "getTacticos.php",
+      data: { estrategia: $("#selectEstrategia").val() }
     },
     {
       select: "selectTema",
-      url: "getTemas.php"
+      url: "getTemas.php",
+      data: { comportamiento: id_comport }
     }
   ];
 
   ajaxJson.forEach(element => {
-    primaryAjax(element.url, element.select);
+    primaryAjax(element.url, element.select, element.data);
   });
 }
 
-function primaryAjax(url, tag) {
+function primaryAjax(url, tag, data) {
   $.ajax({
     type: "POST",
     url: `server/${url}`,
-    data: {
-      get: ""
-    },
+    data: data,
     dataType: "json"
   }).done(function(data) {
     data.forEach(element => {
@@ -270,28 +283,43 @@ function primaryAjax(url, tag) {
   });
 }
 
-function checkLogged(){
+function insertContacto() {
+  formContacto = $("#formCrearContacto").serialize();
+  $.ajax({
+    type: "POST",
+    url: "server/insertContactos.php",
+    data: formContacto,
+    dataType: "json",
+    success: function(response) {
+      swal({
+        type: "success",
+        title: response
+      }).then(function() {
+        $("#modalRegistrarEntidad").modal("toggle");
+      });
+    }
+  });
+}
 
+function checkLogged() {
   $.ajax({
     type: "POST",
     url: "server/checkLog.php",
     data: {
-      zona : id_zona
+      zona: id_zona
     },
     dataType: "json"
-  }).done(function(data){
-    if(data.error){
+  }).done(function(data) {
+    if (data.error) {
       swal({
-        type: 'info',
-        title: 'Usuario',
-        text: data.message,
-      }).then(function(){
+        type: "info",
+        title: "Usuario",
+        text: data.message
+      }).then(function() {
         window.location.href = "iniciarSesion.html";
       });
-    }else{
-      $('#userName').html(
-        `Hola ${data}`
-      );
+    } else {
+      $("#userName").html(`Hola ${data}`);
     }
   });
 }
