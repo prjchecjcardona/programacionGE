@@ -103,6 +103,14 @@ function getMunicipiosXZonaQuery($con, $zona)
     return executeQuery($con, $sql);
 }
 
+function getIndicadoresGEQuery($con)
+{
+    $sql = "SELECT id_indicador, nombre_indicador
+    FROM indicadores_ge";
+
+    return executeQuery($con, $sql);
+}
+
 function getEntidadesQuery($con, $id_mun)
 {
     $sql = "SELECT id_entidad, nombre_entidad
@@ -197,7 +205,7 @@ function getContactosQuery($con, $id_mun)
 
 function getTacticosQuery($con, $estrat)
 {
-    $sql = "SELECT id_tactico, nombretactico
+    $sql = "SELECT id_tactico, nombre_tactico
     FROM tactico
     WHERE id_estrategia = $estrat";
 
@@ -240,6 +248,13 @@ function getMaxIdFocQuery($con)
     return executeQuery($con, $sql);
 }
 
+function getMaxIdPlanQuery($con)
+{
+    $sql = "SELECT MAX(id_planeacion) FROM planeacion";
+
+    return executeQuery($con, $sql);
+}
+
 function getPlaneacionesCalendarQuery($con)
 {
     $sql = "SELECT DISTINCT id_planeacion, plan.fecha, lugarencuentro, jor.jornada, mun.municipio, inter.id_intervenciones, bar.id_barrio, compor.comportamientos
@@ -277,6 +292,24 @@ function insertFocalizacionQuery($con, $id_mun, $id_tipoGestion, $tipo_focalizac
 
 }
 
+function insertPlaneacionQuery($con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro)
+{
+    $sql = "INSERT INTO public.planeacion(
+	jornada, lugar_encuentro, id_barrio, id_vereda, id_entidad, id_tema, fecha_plan, fecha_registro)
+    VALUES ('$jornada', '$lugar_encuentro', $id_barrio, $id_vereda, $id_entidad, $id_tema, '$fecha_plan', '$fecha_registro');";
+
+    return insertQuery($con, $sql);
+}
+
+function insertEntidadQuery($con, $nombre, $direccion, $telefono, $tipoEntidad, $municipio)
+{
+    $sql = "INSERT INTO public.entidades(
+    nombre_entidad, direccion, telefono, id_tipo_entidad, id_municipio)
+    VALUES ('$nombre', '$direccion', '$telefono', $tipoEntidad, $municipio);";
+
+    return insertQuery($con, $sql);
+}
+
 function insertContactoQuery($con, $cedula, $nombres, $apellidos, $correo, $telefono, $celular, $cargo)
 {
     $sql = "INSERT INTO public.contacto(
@@ -292,4 +325,25 @@ function insertContactosXEntidadQuery($con, $cedula, $entidad)
     VALUES ($cedula, $entidad);";
 
     return insertQuery($con, $sql);
+}
+
+function insertXPlaneacionQuery($con, $id_param, $id_plan, $name)
+{
+    if ($name == 'tactico[]') {
+
+        $sql = "INSERT INTO public.tacticos_x_planeacion(
+            id_planeacion, id_tactico)
+            VALUES ($id_plan, $id_param);";
+
+        return insertQuery($con, $sql);
+
+    } else if ($name == 'indicador[]') {
+
+        $sql = "INSERT INTO public.indicadores_x_planeacion(
+            id_planeacion, id_indicador)
+            VALUES ($id_plan, $id_param);";
+
+        return insertQuery($con, $sql);
+    }
+
 }

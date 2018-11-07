@@ -21,6 +21,14 @@
 
 <body>
 
+  <div class="loader" style="display: none">
+    <div class="center" id="loaderList">
+      <div class="pulse">
+        <img src="img/logo-min.png" alt="">
+      </div>
+    </div>
+  </div>
+
   <div class="main">
     <div id="navbar" class="row">
       <div class="col-12">
@@ -51,7 +59,7 @@
                     <label for="datepicker">Seleccione Fecha
                       <label class="obligatorio" for="datepicker">*</label>
                     </label>
-                    <input class="required" id="datepicker" placeholder="Fecha" readonly />
+                    <input class="required" id="datepicker" placeholder="Fecha" name="fecha" readonly />
                   </div>
                 </div>
 
@@ -96,8 +104,7 @@
                   <div class="col-sm-12">
                     <label for="selectVereda">Vereda</label>
                     <label for="selectVereda" class="obligatorio">*</label>
-                    <select class="form-control" id="selectVereda">
-                      <option value="" selected>Seleccione</option>
+                    <select class="form-control" id="selectVereda" name="vereda">
                     </select>
                   </div>
                 </div>
@@ -106,8 +113,7 @@
                   <div id="barrio" class="col-sm-12">
                     <label for="selectBarrio">Barrio</label>
                     <label for="selectBarrio" class="obligatorio">*</label>
-                    <select class="form-control" id="selectBarrio">
-                      <option value="" selected>Seleccione</option>
+                    <select class="form-control" id="selectBarrio" name="barrio">
                     </select>
                   </div>
                 </div>
@@ -179,7 +185,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group">
                       <label for="selectEntidad">Entidad <label for="selectEntidad" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="planEntidad" id="selectEntidad">
+                      <select class="custom-select required" name="entidad" id="selectEntidad">
                         <option value="" selected>Seleccione</option>
                       </select>
                     </div>
@@ -197,8 +203,8 @@
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                       <label for="selectEstrategia">Estrategia <label for="selectEstrategia" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="planEstrategia" id="selectEstrategia"
-                        aria-describedby="selectHelpEstrategia" multiple>
+                      <select class="custom-select required" name="estrategia[]" id="selectEstrategia" aria-describedby="selectHelpEstrategia"
+                        multiple>
                         <option selected>Seleccione</option>
                       </select>
                       <small id="selectHelpEstrategia" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd>
@@ -214,7 +220,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group">
                       <label for="selectTactico">Tactico <label for="selectTactico" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="planTactico" id="selectTactico" aria-describedby="selectHelpTactico"
+                      <select class="custom-select required" name="tactico[]" id="selectTactico" aria-describedby="selectHelpTactico"
                         multiple>
                         <option selected>Seleccione</option>
                       </select>
@@ -225,7 +231,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group">
                       <label for="selectTema">Tema <label for="selectTema" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="planTema" id="selectTema">
+                      <select class="custom-select required" name="tema" id="selectTema">
                         <option selected>Seleccione</option>
                       </select>
                     </div>
@@ -238,7 +244,7 @@
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                       <label for="selectIndicador">Indicador <label class="obligatorio" for="selectIndicador">*</label></label>
-                      <select multiple class="custom-select required" name="planIndicador" id="selectIndicador">
+                      <select multiple class="custom-select required" name="indicador[]" id="selectIndicador">
                         <option selected>Seleccione</option>
                       </select>
                     </div>
@@ -251,7 +257,7 @@
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                       <label for="selectFichero">Guia de trabajo<label for="selectFichero" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="planFichero" id="selectFichero">
+                      <select class="custom-select required" name="fichero[]" id="selectFichero">
                         <option value="">Seleccione</option>
                       </select>
                     </div>
@@ -265,12 +271,12 @@
                 <div id="solicitudEducativa" class="row formRows">
                   <div class="custom-control custom-radio">
                     <input type="radio" class="custom-control-input" id="siSolicitud" name="solicitudEducativa"
-                      required value="0">
+                      required value="true">
                     <label class="custom-control-label" for="siSolicitud">Si</label>
                   </div>
                   <div class="custom-control custom-radio">
                     <input type="radio" class="custom-control-input" id="noSolicitud" name="solicitudEducativa"
-                      required value="1" checked>
+                      required value="false" checked>
                     <label class="custom-control-label" for="noSolicitud">No</label>
                   </div>
                 </div>
@@ -320,12 +326,12 @@
           </div>
           <form id="formCrearContacto" action="">
             <div class="row rowForms">
-              <div class="col-lg-12 col-md-12 col-sm-6">
+              <div class="col-lg-6 col-md-12 col-sm-12">
                 <label for="nombreContacto">Nombres<label class="obligatorio">*</label></label>
                 <input type="text" placeholder="Nombres" id="nombreContacto" name="nombres" aria-label="Nombres del contacto"
                   class="form-control required" required>
               </div>
-              <div class="col-lg-12 col-md-12 col-sm-6">
+              <div class="col-lg-6 col-md-12 col-sm-12">
                 <label for="apellidoContacto">Apellidos<label class="obligatorio">*</label></label>
                 <input type="text" placeholder="Apellidos" id="apellidoContacto" name="apellidos" aria-label="Apellidos del contacto"
                   class="form-control required" required>
@@ -339,14 +345,14 @@
               </div>
             </div>
             <div class="row rowForms">
-              <div class="col-lg-12 col-md-12 col-sm-6">
+              <div class="col-lg-6 col-md-12 col-sm-12">
                 <label for="TelefonoContacto">Telefono</label>
                 <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefono" aria-label="Telefono del contacto"
                   class="form-control required">
               </div>
-              <div class="col-lg-12 col-md-12 col-sm-6">
+              <div class="col-lg-6 col-md-12 col-sm-12">
                 <label for="celularContacto">Celular</label>
-                <input type="text" placeholder="Telefono" id="celularContacto" name="celular" aria-label="Celular del contacto"
+                <input type="text" placeholder="Celular" id="celularContacto" name="celular" aria-label="Celular del contacto"
                   class="form-control required">
               </div>
             </div>
@@ -395,19 +401,9 @@
           </div>
           <form id="formRegistrarEntidad" action="">
             <div class="row rowForms">
-              <div class="col-lg-6 col-md-12 col-sm-12">
-                <label for="grupoEntidad">Grupo <label class="obligatorio">*</label></label>
-                <div class="form-group">
-                  <select class="custom-select" name="grupoEntidad" id="grupoEntidad" required>
-                    <option selected>Seleccione</option>
-                    <option value="1">Institución Edúcativa</option>
-                    <option value="2">Ninguna</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="nombreEntidad">Nombre entidad <label class="obligatorio">*</label></label>
-                <input type="text" placeholder="Nombre" id="nombreEntidad" name="nombreEntidad" aria-label="Nombre de la entidad"
+                <input type="text" placeholder="Nombre" id="nombreEntidad" name="nombre" aria-label="Nombre de la entidad"
                   class="form-control required" required>
               </div>
             </div>
@@ -416,32 +412,9 @@
 
             <label for="colDireccion">Dirección <label for="colDireccion" class="obligatorio">*</label></label>
             <div class="row rowForms">
-              <div class="col-lg-3 col-md-12 col-sm-12" id="colDireccion">
-                <div class="form-group">
-                  <select class="custom-select" name="craOcll" id="craOcll" required>
-                    <option selected>Seleccione</option>
-                    <option value="CRA">CRA</option>
-                    <option value="CLL">CLL</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-lg-2 col-md-3 col-sm-12 direccion1">
-                <div class="form-group">
-                  <input type="text" class="form-control" name="direccionFirst" id="direccionFirst" placeholder="Ej: 2a"
-                    required>
-                </div>
-              </div>
-              <div class="direccionCharacters">
-                <span>#</span>
-              </div>
-              <div class="col-lg-3 col-md-4 col-sm-12 direccion1">
-                <input type="text" class="form-control" name="direccionSecond" id="" placeholder="Ej: 53" required>
-              </div>
-              <div class="direccionCharacters">
-                <span>-</span>
-              </div>
-              <div class="col-lg-3 col-md-4 col-sm-12 direccion1">
-                <input type="text" class="form-control" name="direccionThird" id="" placeholder="Ej: 67" required>
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <input type="text" class="form-control" name="direccion" id="direccionEntidad" placeholder="Dirección"
+                  required>
               </div>
             </div>
 
@@ -450,7 +423,7 @@
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="TelefonoContacto">Telefono</label>
-                <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefonoContacto" aria-label="Telefono del contacto"
+                <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefono" aria-label="Telefono del contacto"
                   class="form-control" required>
               </div>
             </div>
@@ -463,16 +436,16 @@
                   <label for="tipoEntidad">Tipo entidad <label for="tipoEntidad" class="obligatorio">*</label></label>
                   <select class="custom-select" name="tipoEntidad" id="tipoEntidad" required>
                     <option selected>Seleccione</option>
-                    <option value="Pública"></option>
-                    <option value="Privada"></option>
-                    <option value="Organización de una base comunitaria"></option>
+                    <option value="1">Pública</option>
+                    <option value="2">Privada</option>
+                    <option value="3">Organización de una base comunitaria</option>
                   </select>
                 </div>
               </div>
             </div>
             <div id="rowBtnContacto" class="row rowForms">
               <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
-                <button type="submit" class="btn btn-success">Registrar</button>
+                <button type="submit" id="btnCrearEntidad" class="btn btn-success">Registrar</button>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
                 <button id="btnCancelarRegEntidad" type="button" class="btn btn-danger">Cancelar</button>

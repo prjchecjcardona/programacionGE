@@ -11,7 +11,8 @@ $(document).ready(function() {
 
   $("#datepicker").datepicker({
     locale: "es-es",
-    uiLibrary: "bootstrap4"
+    uiLibrary: "bootstrap4",
+    format: "dd-mm-yyyy"
   });
 
   $("#tableContactos").DataTable({
@@ -61,7 +62,33 @@ $(document).ready(function() {
 
   $("#btnCrearContacto").click(function(e) {
     e.preventDefault();
+    $(this).prop("disabled", true);
     insertContacto();
+  });
+
+  $("#btnCrearEntidad").click(function(e) {
+    e.preventDefault();
+    $(this).prop("disabled", true);
+    insertEntidad();
+  });
+
+  $("#selectEstrategia").change(function() {
+    arrayEstrategia = $("#selectEstrategia").serializeArray();
+    arrayEstrategia.forEach(element => {
+      primaryAjax("getTacticos.php", "selectTactico", {
+        estrategia: element.value
+      });
+    });
+  });
+
+  $(
+    "#formCrearContacto input, #planForm input, #formRegistrarEntidad input"
+  ).focusout(function() {
+    $(this).val(
+      $(this)
+        .val()
+        .toUpperCase()
+    );
   });
 });
 
@@ -113,7 +140,7 @@ function nextPrev(n) {
   // if you have reached the end of the form... :
   if (currentTab >= x.length) {
     //...the form gets submitted:
-    document.getElementById("planForm").submit();
+    insertPlaneacion();
     return false;
   }
   // Otherwise, display the correct tab:
@@ -221,6 +248,10 @@ function executeAll() {
       data: { mun: id_mun }
     },
     {
+      select: "selectIndicador",
+      url: "getIndicadoresGE.php"
+    },
+    {
       select: "entidadContacto",
       url: "getEntidades.php",
       data: { mun: id_mun }
@@ -244,11 +275,6 @@ function executeAll() {
       url: "getFicheros.php"
     },
     {
-      select: "selectTactico",
-      url: "getTacticos.php",
-      data: { estrategia: $("#selectEstrategia").val() }
-    },
-    {
       select: "selectTema",
       url: "getTemas.php",
       data: { comportamiento: id_comport }
@@ -261,6 +287,7 @@ function executeAll() {
 }
 
 function primaryAjax(url, tag, data) {
+  $(`#${tag}`).html('<option value="" selected>Seleccione</option>');
   $.ajax({
     type: "POST",
     url: `server/${url}`,
@@ -295,7 +322,75 @@ function insertContacto() {
         type: "success",
         title: response
       }).then(function() {
+        $("#modalRegistrarContacto").modal("toggle");
+        $("#btnCrearContacto").prop("disabled", false);
+        document.getElementById("formRegistrarContacto").reset();
+      });
+    }
+  });
+}
+
+function insertEntidad() {
+  formEntidad = $("#formRegistrarEntidad").serialize();
+  $.ajax({
+    type: "POST",
+    url: "server/insertEntidad.php",
+    data: formEntidad + `&municipio=${id_mun}`,
+    dataType: "json",
+    success: function(response) {
+      swal({
+        type: "success",
+        title: response
+      }).then(function() {
         $("#modalRegistrarEntidad").modal("toggle");
+        $("#btnCrearEntidad").prop("disabled", false);
+        document.getElementById("formRegistrarEntidad").reset();
+
+        primaryAjax("getEntidades.php", "selectEntidad", { mun: id_mun });
+      });
+    }
+  });
+}
+
+function insertPlaneacion() {
+  $(".loader").fadeIn();
+  formPlan = $("#planForm").serialize();
+  $.ajax({
+    type: "POST",
+    url: "server/insertPlaneacion.php",
+    data: formPlan,
+    dataType: "json",
+    success: function(response) {
+      insertXPlaneacion();
+    }
+  });
+}
+
+function insertXPlaneacion() {
+  $.ajax({
+    type: "POST",
+    url: "server/insertXPlaneacion.php",
+    data: "",
+    dataType: "json",
+    success: function(response) {
+      id_plan = response[0].max;
+      selects3 = $("#selectIndicador").serializeArray().concat($("#selectTactico").serializeArray());
+      $.ajax({
+        type: "POST",
+        url: "server/insertXPlaneacion.php",
+        data: {
+          op : selects3,
+          id_plan : id_plan
+        },
+        dataType: "json",
+        success: function(response) {
+          swal({
+            type: "success",
+            title: response
+          }).then(function() {
+            $(".loader").fadeOut();
+          });
+        }
       });
     }
   });

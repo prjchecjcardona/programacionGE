@@ -207,7 +207,7 @@ function primaryAjax(tag, url, dat) {
 }
 
 function getIndicadoresChec(comportamiento) {
-  $("#selectIndicadorInt").html("");
+  $("#selectIndicadorInt").html('<option value="">Seleccione</option>');
   $.ajax({
     type: "POST",
     url: "server/getIndicadoresChec.php",

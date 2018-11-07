@@ -71,6 +71,11 @@ class gestionEducativa
         return getContactosQuery($this->con);
     }
 
+    public function getIndicadoresGE()
+    {
+        return getIndicadoresGEQuery($this->con);
+    }
+
     public function getTacticos($estrat)
     {
         return getTacticosQuery($this->con, $estrat);
@@ -121,6 +126,11 @@ class gestionEducativa
         return getMaxIdFocQuery($this->con);
     }
 
+    public function getMaxPlanFoc()
+    {
+        return getMaxIdPlanQuery($this->con);
+    }
+
     public function getIndicadoresChec($comp)
     {
         return getIndicadoresChecQuery($this->con, $comp);
@@ -131,8 +141,23 @@ class gestionEducativa
         return insertContactoQuery($this->con, $cedula, $nombres, $apellidos, $correo, $telefono, $celular, $cargo);
     }
 
+    public function insertEntidad($nombre, $direccion, $telefono, $tipoEntidad, $municipio)
+    {
+        return insertEntidadQuery($this->con, $nombre, $direccion, $telefono, $tipoEntidad, $municipio);
+    }
+
+    public function insertPlaneacion($jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro)
+    {
+        return insertPlaneacionQuery($this->con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro);
+    }
+
     public function insertContactosXEntidad($cedula, $entidad)
     {
         return insertContactosXEntidadQuery($this->con, $cedula, $entidad);
+    }
+
+    public function insertXPlaneacion($id_param, $id_plan, $name)
+    {
+        return insertXPlaneacionQuery($this->con, $id_param, $id_plan, $name);
     }
 }

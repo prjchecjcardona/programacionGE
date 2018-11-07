@@ -6,9 +6,9 @@ $api = new gestionEducativa();
 if (isset($_POST)) {
     if (isset($_POST['estrategia'])) {
         $id_estrat = $_POST['estrategia'];
-        foreach ($id_estrat as $key => $value) {
-            $json = $api->getTacticos($value);
-        }
+
+        $json = $api->getTacticos($id_estrat);
+
     } else {
         $json = "No se recibieron los datos de manera adecuada";
     }
