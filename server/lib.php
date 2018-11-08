@@ -146,9 +146,9 @@ class gestionEducativa
         return insertEntidadQuery($this->con, $nombre, $direccion, $telefono, $tipoEntidad, $municipio);
     }
 
-    public function insertPlaneacion($jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro)
+    public function insertPlaneacion($jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro, $id_foc)
     {
-        return insertPlaneacionQuery($this->con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro);
+        return insertPlaneacionQuery($this->con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro, $id_foc);
     }
 
     public function insertContactosXEntidad($cedula, $entidad)

@@ -148,13 +148,15 @@ function getFocalizacionesXZonaQuery($con, $mun)
 
 function getPlaneacionesXFocalizacionQuery($con, $foc)
 {
-    $sql = "SELECT pl.id_planeacion, foc.id_tipo_gestion, est.estrategia, tem.tema, pl.fecha
+    $sql = "SELECT DISTINCT pl.id_planeacion, tg.tipo_gestion, estrat.nombre_estrategia, tem.temas, pl.fecha_plan, pl.fecha_registro
 	FROM planeacion pl
     JOIN focalizacion foc ON pl.id_focalizacion = foc.id_focalizacion
-    JOIN tema tem ON tem.id_tema = pl.id_tema
-    JOIN estrategias_x_planeacion esxp ON esxp.id_planeacion = pl.id_planeacion
-    JOIN estrategias est ON est.id_estrategia = esxp.id_estrategia
-    WHERE pl.id_focalizacion = '.$foc.'";
+    JOIN temas tem ON tem.id_temas = pl.id_tema
+    JOIN tacticos_x_planeacion txp ON txp.id_planeacion = pl.id_planeacion
+    JOIN tactico tact ON txp.id_tactico = tact.id_tactico
+    JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
+    JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
+    WHERE pl.id_focalizacion = '$foc'";
 
     return executeQuery($con, $sql);
 }
@@ -292,11 +294,11 @@ function insertFocalizacionQuery($con, $id_mun, $id_tipoGestion, $tipo_focalizac
 
 }
 
-function insertPlaneacionQuery($con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro)
+function insertPlaneacionQuery($con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro, $id_foc)
 {
     $sql = "INSERT INTO public.planeacion(
-	jornada, lugar_encuentro, id_barrio, id_vereda, id_entidad, id_tema, fecha_plan, fecha_registro)
-    VALUES ('$jornada', '$lugar_encuentro', $id_barrio, $id_vereda, $id_entidad, $id_tema, '$fecha_plan', '$fecha_registro');";
+	jornada, lugar_encuentro, id_barrio, id_vereda, id_entidad, id_tema, fecha_plan, fecha_registro, id_focalizacion)
+    VALUES ('$jornada', '$lugar_encuentro', $id_barrio, $id_vereda, $id_entidad, $id_tema, '$fecha_plan', '$fecha_registro', $id_foc);";
 
     return insertQuery($con, $sql);
 }

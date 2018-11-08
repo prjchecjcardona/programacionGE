@@ -358,7 +358,7 @@ function insertPlaneacion() {
   $.ajax({
     type: "POST",
     url: "server/insertPlaneacion.php",
-    data: formPlan,
+    data: `${formPlan}&id_foc=${id_foc}`,
     dataType: "json",
     success: function(response) {
       insertXPlaneacion();
