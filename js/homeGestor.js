@@ -63,6 +63,12 @@ function getMunicipioXZona() {
 function getFocalizacionesXZona(mun) {
   $("#loaderList").fadeIn();
   $(".municipios").fadeOut();
+  $("#returnMunicipio").removeClass('showNone');
+    //if returns and does not have showNoneClass
+  if(!$("#returnFocalizaciones").hasClass('showNone')){
+    $("#returnFocalizaciones").addClass('showNone');
+  }
+
   $.ajax({
     type: "POST",
     url: "server/getFocalizaciones.php",
@@ -71,9 +77,6 @@ function getFocalizacionesXZona(mun) {
     },
     dataType: "json",
     success: function(data) {
-      $(".focalizaciones").html(
-        `<a href="#" id="returnBtn" class="btn btn-success" onClick="returnMunicipio()"><i class="fas fa-arrow-circle-left arrow"></i></a>`
-      );
       data.forEach(element => {
         $(".focalizaciones").append(
           `<div>
@@ -115,6 +118,8 @@ function getFocalizacionesXZona(mun) {
 function getPlaneacionesXFocalizacion(foc) {
   $("#loaderList").fadeIn();
   $(".focalizaciones").fadeOut();
+  $("#returnFocalizacion").removeClass('showNone');
+  $("#returnMunicipio").addClass('showNone');
   $.ajax({
     type: "POST",
     url: "server/getPlaneaciones.php",
@@ -122,35 +127,20 @@ function getPlaneacionesXFocalizacion(foc) {
       foc: foc
     },
     dataType: "json",
-    success: function(data) {
-      console.log(data);
-      $(".planeaciones").html(
-        `<a href="#" id="returnBtn" class="btn btn-success" onClick="returnFocalizacion()"><i class="fas fa-arrow-circle-left arrow"></i></a>`
-      );
-
-      var arrayEstrategias = new Array();
-
-      data.forEach(element => {
-        if (!Array.isArray(arrayEstrategias[element.id_planeacion])) {
-          arrayEstrategias[element.id_planeacion] = [];
-        }
-        arrayEstrategias[element.id_planeacion].push(element.nombre_estrategia);
-        arrayEstrategias.slice(1);
-
-        arrayEstrategias[element.id_planeacion].forEach(element => {
-          console.log(element);
-        });+
+    success: function(response) {
+      for (var arrayIndex in response) {
+        var element = response[arrayIndex];
+        var arrEstrategia = response[arrayIndex].nombre_estrategia;
+        var estrategias = arrEstrategia.join(' - ');
 
         $(".planeaciones").append(
           `<div>
             <div class="card">
               <div class="card-header">
-                Fecha de planeación : ${
-                  element.fecha_plan
-                } - Fecha de registro : ${element.fecha_registro}
+                Fecha de planeación : ${element.fecha_plan} - Fecha de registro : ${element.fecha_registro}
               </div>
               <div class="card-body">
-                <h5 class="card-title">${element.nombre_estrategia}</h5>
+                <h5 class="card-title"> ${estrategias}</h5>
                 <p>Tipo : ${element.tipo_gestion}</p>
                 <p>Tema : ${element.temas}</p>
                 <a href="registrarEjecucionG.html?id_plan=${element.id_planeacion}"
@@ -159,7 +149,7 @@ function getPlaneacionesXFocalizacion(foc) {
             </div>
           </div>`
         );
-      });
+      }
     },
     complete: function() {
       $("#loaderList").fadeOut();
@@ -169,12 +159,15 @@ function getPlaneacionesXFocalizacion(foc) {
   });
 }
 
-function returnMunicipio() {
+function returnMunicipio(btn) {
+  $(btn).addClass('showNone');
   $(".focalizaciones").fadeOut();
   $(".municipios").fadeIn();
 }
 
-function returnFocalizacion() {
+function returnFocalizacion(btn) {
+  $('#returnMunicipio').removeClass('showNone');
+  $(btn).addClass('showNone');
   $(".planeaciones").fadeOut();
   $(".focalizaciones").fadeIn();
 }

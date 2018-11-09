@@ -662,15 +662,18 @@ main {
 }
 
 #homeBreadCrumbs {
+  display: flex;
+  justify-content: space-between;
   border-radius: 10px;
   position: fixed;
-  width: 39.1%;
+  width: 38%;
   margin: 0px;
   z-index: 10;
 }
 
-#homeBreadCrumbs > ol {
+#homeBreadCrumbs nav, #homeBreadCrumbs ol{
   border-radius: 10px;
+  width: 100%;
 }
 
 .content > .row, .contentLogIn > .row {
@@ -773,8 +776,18 @@ main {
   text-transform: lowercase;
 }
 
-#returnBtn {
-  width: 100%;
+.returnBtn {
+	display: flex;
+  align-items: center;
+  border-radius: 10px;
+  margin-left: 10px;
+  transition: 0.5s;
+  background-color: #28a745;
+  cursor: pointer;
+}
+
+.returnBtn:hover{
+  background-color: #218838;
 }
 
 /* PULSE LOADER ANIMATION */

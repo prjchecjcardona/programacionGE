@@ -44,13 +44,21 @@
       <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-5" id="leftPortion">
 
-          <nav aria-label="breadcrumb" class="animated showNone" id="homeBreadCrumbs">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Library</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Data</li>
-            </ol>
-          </nav>
+          <div id="homeBreadCrumbs" class="animated showNone">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Library</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Data</li>
+              </ol>
+            </nav>
+            <a id="returnMunicipio" class="returnBtn showNone" class="btn btn-success" onClick="returnMunicipio(this)">
+              <i class="fas fa-arrow-circle-left arrow"></i>
+            </a>
+            <a id="returnFocalizacion" class="returnBtn showNone" class="btn btn-success" onClick="returnFocalizacion(this)">
+                <i class="fas fa-arrow-circle-left arrow"></i>
+            </a>
+          </div>
 
           <div class="center" id="loaderList">
             <div class="pulse">
@@ -63,36 +71,6 @@
           <div class="focalizaciones showNone"></div>
 
           <div class="planeaciones showNone animated">
-            <div>
-              <a href="#"><i class="fas fa-arrow-circle-left arrow"></i></a>
-              <div class="card">
-                <div class="card-header">
-                  Featured
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-              <a href="#"><i class="fas fa-arrow-circle-right arrow"></i></a>
-            </div>
-
-            <div>
-              <a href="#"><i class="fas fa-arrow-circle-left arrow"></i></a>
-              <div class="card">
-                <div class="card-header">
-                  Featured
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-              <a href="#"><i class="fas fa-arrow-circle-right arrow"></i></a>
-            </div>
-
           </div>
         </div>
 
