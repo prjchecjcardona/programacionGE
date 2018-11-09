@@ -16,7 +16,6 @@ if (isset($_POST)) {
     if (isset($_POST['tipoGestion'])) {
         $tipoGestion = $_POST['tipoGestion'];
     } else {
-        echo 'works?';
         $tipoGestion = "null";
     }
 
@@ -32,7 +31,7 @@ if (isset($_POST)) {
         $comportamiento = "null";
     }
 
-    $json = $api->insertFocalizacion($id_mun, $tipoFocalizacion, $tipoGestion, $fecha);
+    $json = $api->insertFocalizacion($id_mun, $tipoGestion, $tipoFocalizacion, $fecha);
 
 } else {
     $json = "No se recibieron los datos de manera adecuada";

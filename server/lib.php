@@ -111,6 +111,11 @@ class gestionEducativa
         return getPlaneacionesCalendarQuery($this->con);
     }
 
+    public function getDetallePlaneacionEjecucion($id_plan)
+    {
+        return getDetallePlaneacionEjecucionQuery($this->con, $id_plan);
+    }
+
     public function insertFocalizacion($id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha)
     {
         return insertFocalizacionQuery($this->con, $id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha);
@@ -154,6 +159,16 @@ class gestionEducativa
     public function insertContactosXEntidad($cedula, $entidad)
     {
         return insertContactosXEntidadQuery($this->con, $cedula, $entidad);
+    }
+
+    public function insertEjecucion($fecha, $hora_inicio, $hora_fin, $id_resultado, $descripcion, $id_planeacion, $total_asist)
+    {
+        return insertEjecucionQuery($this->con, $fecha, $hora_inicio, $hora_fin, $id_resultado, $descripcion, $id_planeacion, $total_asist);
+    }
+
+    public function getTipoGestion($id_foc)
+    {
+        return getTipoGestionQuery($this->con, $id_foc);
     }
 
     public function insertXPlaneacion($id_param, $id_plan, $name)

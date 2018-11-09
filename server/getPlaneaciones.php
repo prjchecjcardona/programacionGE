@@ -20,6 +20,9 @@ if (isset($_POST['foc'])) {
                 "nombre_estrategia" => [],
                 "temas" => $value['temas'],
                 "fecha_plan" => $value['fecha_plan'],
+                "fecha_registro" => $value['fecha_registro'],
+                "id_zona" => $value['id_zona'],
+                "id_foc" => $value['id_focalizacion'],
             ];
         }
 
@@ -34,6 +37,36 @@ if (isset($_POST['foc'])) {
         }
 
     }
+}
+
+if (isset($_POST['detallePlaneacion'])) {
+    $json = $api->getDetallePlaneacionEjecucion($_POST['detallePlaneacion']);
+    $newArray = array();
+    $entro = true;
+    foreach ($json as $key => $value) {
+
+        if ($entro) {
+
+            $newArray[1] = [
+                "fecha" => $value['fecha_plan'],
+                "mun" => $value['municipio'],
+                "gestor" => $value['nombre'],
+                "zona" => $value['zonas'],
+                "entidad" => $value['nombre_entidad'],
+                "compor" => $value['comportamientos'],
+                "compe" => $value['competencia'],
+                "estrategias" => $value['nombre_estrategia'],
+                "tacticos" => [],
+                "temas" => $value['temas'],
+            ];
+
+            $entro = false;
+        }
+
+        array_push($newArray[1]['tacticos'], $value['nombre_tactico']);
+
+    }
+
 }
 
 echo json_encode($newArray);
