@@ -14,8 +14,8 @@ $(function() {
     draggable: false,
     eventLimit: true, // allow "more" link when too many events
 
-    eventRender: function eventRender( event, element, view ) {
-      return ['all', event.school].indexOf($('#school_selector').val()) >= 0
+    eventRender: function eventRender(event, element, view) {
+      return ["0", event.zona].indexOf($("#calendarSelect").val()) >= 0;
     }
   });
 
@@ -34,12 +34,29 @@ function getPlaneacionesCalendar() {
       $("#calendar").fullCalendar("removeEvents");
       $("#calendar").fullCalendar("addEventSource", data);
       getTrabajoAdministrativo();
+    }
+  });
+}
+
+function getTrabajoAdministrativo() {
+  $.ajax({
+    type: "POST",
+    url: "server/getTAdministrativos.php",
+    data: "",
+    dataType: "json",
+    success: function(response) {
+      $("#calendar").fullCalendar("addEventSource", response);
+      $("#calendar").fullCalendar("rerenderEvents");
     },
     complete: function() {
+      $("#calendar").fadeIn();
+      $("#calendar").removeClass("showNone");
+      $("#loaderCalendar").fadeOut();
+
       /* Append filter for calendar to choose specific zones */
       $(".fc-left").append(
         `<select class="custom-select" id="calendarSelect">
-          <option selected>Seleccione ZONA</option>
+          <option value="0" selected>Todos</option>
           <option value="1">Centro</option>
           <option value="2">Suroccidente</option>
           <option value="3">Occidente</option>
@@ -47,24 +64,10 @@ function getPlaneacionesCalendar() {
           <option value="5">Oriente</option>
         </select>`
       );
-    }
-  });
-}
 
-function getTrabajoAdministrativo(){
-  $.ajax({
-    type: "POST",
-    url: "server/getTAdministrativos.php",
-    data: "",
-    dataType: "json",
-    success: function (response) {
-      $("#calendar").fullCalendar("addEventSource", response);
-      $("#calendar").fullCalendar("rerenderEvents");
-    },
-    complete: function(){
-      $("#calendar").fadeIn();
-      $("#calendar").removeClass("showNone");
-      $("#loaderCalendar").fadeOut();
+      $("#calendarSelect").on("change", function() {
+        $("#calendar").fullCalendar("rerenderEvents");
+      });
     }
   });
 }
