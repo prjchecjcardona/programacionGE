@@ -1,6 +1,8 @@
 $(document).ready(function() {
   /* Functions */
   checkLogged();
+  getTipoGestion();
+  getDetallePlaneacion();
   getTotal("#tipoPoblacion input[type=number]", true);
   getTotal("#caracteristicasPoblacion input[type=number]", false);
   showTab(currentTab); // Display the current tab
@@ -8,7 +10,6 @@ $(document).ready(function() {
   calcularDuracion();
 
   $("#datepicker").datepicker({
-    locale: "es-es",
     uiLibrary: "bootstrap4"
   });
 
@@ -73,15 +74,37 @@ $(document).ready(function() {
     .trigger("resize");
 });
 
-var id_zona = getZona("id_zona");
+var id_zona = getParam("id_zona");
+let id_plan = getParam("id_plan");
+let id_foc = getParam("id_foc");
 
-function getZona(param) {
+function getParam(param) {
   param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
   var regex = new RegExp("[\\?&]" + param + "=([^&#]*)");
   var results = regex.exec(location.search);
   return results === null
     ? ""
     : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function getTipoGestion() {
+  $.ajax({
+    type: "POST",
+    url: "server/getTipoGestion.php",
+    data: {
+      tipo_gestion : id_foc
+    },
+    dataType: "json",
+    success: function(response) {
+
+      if(response[0].id_tipo_gestion != 1){
+        $('#detalleCardContentGF').addClass('showNone');
+        $('#colPoblacion').addClass('showNone');
+      }else{
+        $('#colActaReunion').addClass('showNone');
+      }
+    }
+  });
 }
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -117,7 +140,7 @@ function nextPrev(n) {
   // if you have reached the end of the form... :
   if (currentTab >= x.length) {
     //...the form gets submitted:
-    document.getElementById("intForm").submit();
+    insertEjecucion();
     return false;
   }
   // Otherwise, display the correct tab:
@@ -305,6 +328,38 @@ function checkLogged() {
       });
     } else {
       $("#userName").html(`Hola ${data}`);
+    }
+  });
+}
+
+function insertEjecucion(){
+  $(".loader").fadeIn();
+  $.ajax({
+    type: "POST",
+    url: "server/insertEjecucion.php",
+    data: `${$('#ejecForm').serialize()}&id_plan=${id_plan}`,
+    dataType: "json",
+    success: function (response) {
+      swal({
+        type: "success",
+        title: response
+      }).then(function() {
+        $(".loader").fadeOut();
+      });
+    }
+  });
+}
+
+function getDetallePlaneacion(){
+  $.ajax({
+    type: "POST",
+    url: "server/getPlaneaciones.php",
+    data: {
+      detallePlaneacion : id_plan
+    },
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
     }
   });
 }

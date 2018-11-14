@@ -116,6 +116,11 @@ class gestionEducativa
         return getDetallePlaneacionEjecucionQuery($this->con, $id_plan);
     }
 
+    function getZonas()
+    {
+        return getZonasQuery($this->con);
+    }
+
     public function insertFocalizacion($id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha)
     {
         return insertFocalizacionQuery($this->con, $id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha);
@@ -134,6 +139,11 @@ class gestionEducativa
     public function getMaxPlanFoc()
     {
         return getMaxIdPlanQuery($this->con);
+    }
+
+    public function getMaxIdTAdmin()
+    {
+        return getMaxIdTAdminQuery($this->con);
     }
 
     public function getIndicadoresChec($comp)
@@ -174,5 +184,20 @@ class gestionEducativa
     public function insertXPlaneacion($id_param, $id_plan, $name)
     {
         return insertXPlaneacionQuery($this->con, $id_param, $id_plan, $name);
+    }
+
+    public function insertTrabajoAdministrativo($hora_inicio, $hora_fin, $id_municipio, $fecha, $descripcion)
+    {
+        return insertTrabajoAdministrativoQuery($this->con, $hora_inicio, $hora_fin, $id_municipio, $fecha, $descripcion);
+    }
+
+    public function insertLaborXTrabajoAdministrativo($id_labor, $id_ta)
+    {
+        return insertLaborXTrabajoAdministrativoQuery($this->con, $id_labor, $id_ta);
+    }
+
+    public function getTrabajosAdministrativosCalendar()
+    {
+        return getTrabajosAdministrativosCalendarQuery($this->con);
     }
 }

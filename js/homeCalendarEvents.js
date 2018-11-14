@@ -12,7 +12,11 @@ $(function() {
     navLinks: true, // can click day/week names to navigate views
     editable: true,
     draggable: false,
-    eventLimit: true // allow "more" link when too many events
+    eventLimit: true, // allow "more" link when too many events
+
+    eventRender: function eventRender( event, element, view ) {
+      return ['all', event.school].indexOf($('#school_selector').val()) >= 0
+    }
   });
 
   //Adds showNone to calendar class when created.
@@ -29,13 +33,9 @@ function getPlaneacionesCalendar() {
     success: function(data) {
       $("#calendar").fullCalendar("removeEvents");
       $("#calendar").fullCalendar("addEventSource", data);
-      $("#calendar").fullCalendar("rerenderEvents");
+      getTrabajoAdministrativo();
     },
     complete: function() {
-      $("#calendar").fadeIn();
-      $("#calendar").removeClass("showNone");
-      $("#loaderCalendar").fadeOut();
-
       /* Append filter for calendar to choose specific zones */
       $(".fc-left").append(
         `<select class="custom-select" id="calendarSelect">
@@ -47,6 +47,24 @@ function getPlaneacionesCalendar() {
           <option value="5">Oriente</option>
         </select>`
       );
+    }
+  });
+}
+
+function getTrabajoAdministrativo(){
+  $.ajax({
+    type: "POST",
+    url: "server/getTAdministrativos.php",
+    data: "",
+    dataType: "json",
+    success: function (response) {
+      $("#calendar").fullCalendar("addEventSource", response);
+      $("#calendar").fullCalendar("rerenderEvents");
+    },
+    complete: function(){
+      $("#calendar").fadeIn();
+      $("#calendar").removeClass("showNone");
+      $("#loaderCalendar").fadeOut();
     }
   });
 }

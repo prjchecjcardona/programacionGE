@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="css/fileinput.min.css">
   <link rel="stylesheet" href="css/fileinput-rtl.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="css/fullcalendar.min.css">
   <link rel="stylesheet" href="css/newStyle.css">
 </head>
@@ -32,11 +34,21 @@
       </li>
 
       <li class="nav-item">
+        <div class="imgProfile">
+          <img class="" src="img/ic4qgE7.png" alt="">
+          <div class="profileDropdown">
+            <form action="server/logOut.php" id="logOut">
+              <a class="nav-link active"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+            </form>
+            <hr>
+            <div id="modoSeguimiento">
+              <label for="pCompleta">Pantalla completa</label>
+                <input id="pCompleta" type="checkbox" checked data-on="Activado" data-off="Desactivado">
+            </div>
+          </div>
+        </div>
         <a class="nav-link" href="iniciarSesion.html"><i class="fas fa-home"></i></a>
         <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
-        <form action="server/logOut.php" id="logOut">
-          <a class="nav-link active"><i class="fas fa-sign-out-alt"></i></a>
-        </form>
       </li>
     </ul>
 
@@ -58,6 +70,9 @@
             <a id="returnFocalizacion" class="returnBtn showNone" class="btn btn-success" onClick="returnFocalizacion(this)">
                 <i class="fas fa-arrow-circle-left arrow"></i>
             </a>
+            <a id="returnZona" class="returnBtn showNone" class="btn btn-success" onClick="returnZona(this)">
+              <i class="fas fa-arrow-circle-left arrow"></i>
+            </a>
           </div>
 
           <div class="center" id="loaderList">
@@ -66,11 +81,13 @@
             </div>
           </div>
 
-          <div class="municipios showNone"></div>
+          <div class="zonas showNone homeCard"></div>
 
-          <div class="focalizaciones showNone"></div>
+          <div class="municipios showNone homeCard"></div>
 
-          <div class="planeaciones showNone animated">
+          <div class="focalizaciones showNone homeCard"></div>
+
+          <div class="planeaciones showNone animated homeCard">
           </div>
         </div>
 
@@ -81,11 +98,104 @@
               <img src="img/logo-min.png" alt="">
             </div>
           </div>
-
-          <div id="calendar"></div>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Calendario</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Mapa</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div id="calendar"></div>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div id="map"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+
+
+    <!-- MODAL TRABAJO ADMINISTRATIVO -->
+  <div class="modal fade bd-example-modal-lg" id="modalTAdmin" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div id="modalLoader" class="showNone">
+          <div class="center" id="loaderList">
+            <div class="pulse">
+              <img src="img/logo-min.png" alt="">
+            </div>
+          </div>
+        </div>
+
+        <div id="detalleCard">
+          <div id="headerModalTAdmin">
+            <i class="fas fa-laptop"></i>
+            <h2>Registrar Trabajo Administrativo</h2>
+          </div>
+          <div id="tAdmin" class="trabajoAdmin">
+            <form id="formTAdmin">
+                <div class="row">
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <label for="datepicker">Seleccione Fecha
+                      <label class="obligatorio" for="datepicker">*</label>
+                    </label>
+                    <input class="required" id="datepicker" placeholder="Fecha" name="fecha" readonly required/>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <label for="duracion">Hora inicio
+                      <label class="obligatorio" for="duracion">*</label>
+                    </label>
+                    <input class="form-control required" type="time" id="duracionInicio" name="horaInicio" required>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <label for="duracion">Hora finalización
+                      <label class="obligatorio" for="duracion">*</label>
+                    </label>
+                    <input class="form-control required" type="time" id="duracionFin" name="horaFin" required>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-lg-12 col-md-12">
+                    <label for="options">Seleccione las labores a trabajar <label class="obligatorio" for="options">*</label></label>
+                    <div id="options">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="prodInforme" name="tAdmin" value="1">
+                        <label class="custom-control-label" for="prodInforme">Producción de informe mensual</label>
+                      </div>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="tiempoEstudio" name="tAdmin" value="2">
+                        <label class="custom-control-label" for="tiempoEstudio">Tiempo de estudio</label>
+                      </div>
+                      <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="seguimiento" name="tAdmin" value="3">
+                          <label class="custom-control-label" for="seguimiento">Seguimiento a grupos  </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="getMun" style="display:none">
+
+                </div>
+                <div id="rowBtnTAdmin" class="row rowForms modal-footer">
+                  <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
+                    <button id="btnCancelarTAdmin" type="button" class="btn btn-danger">Cancelar</button>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
+                    <button id="btnRegTAdmin" type="button" class="btn btn-success" onclick="insertTAdmin()">Registrar</button>
+                  </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   </main>
 
@@ -102,8 +212,14 @@
   <script src="js/includes/fullcalendar/es.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/messages/messages.es-es.js" type="text/javascript"></script>
   <script src="js/homeGestor.js"></script>
   <script src="js/homeCalendarEvents.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO9dhMcvk1MDYRaEi-TMUz_G0cI5m8Cl0&callback=initMap"></script>
+  <script src="js/homeMaps.js"></script>
+
 </body>
 
 </html>

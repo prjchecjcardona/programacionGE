@@ -19,6 +19,7 @@ body {
 }
 
 .card-signin {
+  width: 100%;
   border: 0;
   border-radius: 1rem;
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
@@ -51,12 +52,12 @@ body {
 }
 
 #colInicarSesion {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	padding: 0px 80px 0px 80px;
-	background: #269226;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0px 80px 0px 80px;
+  background: #269226;
+  align-items: center;
 }
 
 .card-body img {
@@ -217,6 +218,16 @@ body {
   border-color: #28a745;
 }
 
+a {
+  cursor: pointer;
+}
+
+.card-header {
+  font-size: 1.5em;
+  color: green;
+  font-weight: 600;
+}
+
 #btnRegistrarContacto:hover,
 #btnRegistrarEntidad:hover {
   background-color: #218838;
@@ -231,6 +242,113 @@ body {
 #rowBtnContacto {
   flex-wrap: nowrap;
   margin-top: 30px;
+}
+
+#formTAdmin .row {
+  padding: 0px 50px 0px 50px;
+}
+
+#formTAdmin .gj-datepicker {
+  width: 100% !important;
+}
+
+#rowBtnTAdmin {
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+  padding: 30px 0px 30px 0px !important;
+  margin: 0px;
+}
+
+.imgProfile {
+  border-radius: 50%;
+  background-color: #777;
+  max-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  align-self: center;
+  margin: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.profileDropdown {
+  max-width: 100%;
+  height: auto;
+  background-color: white;
+  position: absolute;
+  top: 55px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 5px 1px rgba(197, 197, 197, 0.8);
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.toggle-off.btn {
+  padding-left: 13px;
+  color: black;
+  background-color: rgba(166, 168, 161, 0.7);
+  transition: 0.3s;
+}
+
+.toggle-off.btn:hover {
+  background-color: #777;
+}
+
+.toggle-on.btn {
+  padding-left: 13px;
+  color: black;
+  background-color: #2cd114;
+}
+
+.toogle-on.btn:hover {
+  background-color: #218838;
+}
+
+#modoSeguimiento {
+  max-width: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#modoSeguimiento > label {
+  margin-top: 0px;
+}
+
+.activeProfile {
+  opacity: 1;
+  z-index: 5;
+}
+
+.profileDropdown a {
+  font-family: checfont1 !important;
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.profileDropdown a:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.profileDropdown i {
+  font-size: 1em !important;
+  color: #218838 !important;
+}
+
+#logOut > a:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px 5px 0px 0px;
+}
+
+.imgProfile > img {
+  max-width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
 
 .direccionCharacters {
@@ -501,7 +619,8 @@ hr.hrForm {
   padding: 0px 30px;
 }
 
-#headerDetalleModal {
+#headerDetalleModal,
+#headerModalTAdmin {
   width: 100%;
   background-color: green;
   border-radius: 3px 3px 0px 0px;
@@ -510,6 +629,23 @@ hr.hrForm {
   justify-content: center;
   align-items: center;
   color: white;
+}
+
+#options {
+  padding: 0px 0px 50px 35px;
+}
+
+#headerModalTAdmin {
+  flex-direction: column;
+  background: linear-gradient(89deg, #269226, #56ab2f, #a8e063);
+  height: auto;
+  padding: 20px 0px 10px 20px;
+}
+
+#headerModalTAdmin > i {
+  font-size: 4em;
+  color: white;
+  margin-bottom: 10px;
 }
 
 .detalleModal {
@@ -581,6 +717,18 @@ input#lugarEncuentro,
   align-self: center;
 }
 
+.nav-tabs{
+  margin: 10px 0px 10px 0px;
+}
+
+#myTabContent{
+  height: 92%;
+}
+
+#profile{
+  height: 100%
+}
+
 #rowTableContactos {
   overflow-x: auto;
 }
@@ -589,12 +737,26 @@ hr {
   margin: 0px 0px 10px 0px;
 }
 
-.detalleEjec {
+.detalleEjec,
+.trabajoAdmin {
   border-radius: 3px !important;
   -webkit-box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75) !important;
   -moz-box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75) !important;
   box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75) !important;
   border: 0 !important;
+}
+
+#map {
+  height: 100%;
+}
+
+#modalLoader {
+	z-index: 10;
+	background-color: rgba(0,0,0,0.5);
+	width: 100%;
+	height: 573px;
+	position: absolute;
+	border-radius: 3px;
 }
 
 #colDetalle {
@@ -632,7 +794,6 @@ hr {
 /*  */
 
 #calendar {
-  height: 95%;
   width: 100%;
 }
 
@@ -659,6 +820,7 @@ main {
   background-color: darkgreen;
   padding-top: 10px;
   overflow-x: hidden;
+  transition: 0.5s;
 }
 
 #homeBreadCrumbs {
@@ -671,19 +833,20 @@ main {
   z-index: 10;
 }
 
-#homeBreadCrumbs nav, #homeBreadCrumbs ol{
+#homeBreadCrumbs nav,
+#homeBreadCrumbs ol {
   border-radius: 10px;
   width: 100%;
 }
 
-.content > .row, .contentLogIn > .row {
+.content > .row,
+.contentLogIn > .row {
   height: 100%;
   width: 100%;
   margin: 0%;
-
 }
 
-#calendarSelect{
+#calendarSelect {
   width: auto;
 }
 
@@ -698,10 +861,11 @@ main {
 
 #rightPortion {
   display: flex;
-  align-items: center;
   padding-right: 40px;
   padding-left: 40px;
   max-height: 100%;
+  transition: 0.5s;
+  flex-direction: column;
 }
 
 .fc-toolbar button {
@@ -717,22 +881,22 @@ main {
   box-shadow: 0 0 0 0 transparent !important;
 }
 
-.focalizaciones,
-.planeaciones,
-.municipios {
+.homeCard {
   height: 90%;
   padding: 0px 0px 15px 0px;
   margin-top: 73px;
 }
 
-.card {
+.municipios a {
+  color: #fff !important;
+}
+
+#leftPortion .card {
   width: 93%;
   border-radius: 10px;
 }
 
-.focalizaciones > div,
-.planeaciones > div,
-.municipios > div {
+.homeCard > div {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -768,16 +932,16 @@ main {
   margin-left: 1em;
 }
 
-#formCrearContacto input{
+#formCrearContacto input {
   text-transform: uppercase;
 }
 
-#formCrearContacto #correoContacto{
+#formCrearContacto #correoContacto {
   text-transform: lowercase;
 }
 
 .returnBtn {
-	display: flex;
+  display: flex;
   align-items: center;
   border-radius: 10px;
   margin-left: 10px;
@@ -786,7 +950,7 @@ main {
   cursor: pointer;
 }
 
-.returnBtn:hover{
+.returnBtn:hover {
   background-color: #218838;
 }
 
@@ -800,11 +964,11 @@ main {
 }
 
 .loader {
-	background-color: rgba(0,0,0,0.7);
-	width: 100%;
-	z-index: 45;
-	height: 100%;
-	position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  z-index: 45;
+  height: 100%;
+  position: absolute;
 }
 
 .pulse {

@@ -61,31 +61,6 @@ function insertQuery($con, $sql)
     }
 }
 
-function getEventsCalendar($con, $sql)
-{
-    $result = $con->query($sql);
-    if ($result) {
-        $data = array();
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            array_push($data, $row);
-        }
-        foreach ($data as $key => $value) {
-
-            $data[$key] = array(
-                'id' => $value['id_planeacion'],
-                'title' => $value['municipio'] . ' - ' . $value['comportamientos'],
-                'start' => $value['fecha'],
-                'editable' => false,
-                'color' => 'red',
-                'textColor' => "white",
-            );
-        }
-        return $data;
-    } else {
-        return $con->errorInfo()[2];
-    }
-}
-
 /* CONSULTAS */
 
 function getMunicipiosXZonaQuery($con, $zona)
@@ -99,6 +74,16 @@ function getMunicipiosXZonaQuery($con, $zona)
     }
 
     $sql .= " ORDER BY municipio;";
+
+    return executeQuery($con, $sql);
+}
+
+function getZonasQuery($con){
+    $sql = "SELECT zon.id_zona, zonas, CONCAT(nombres, ' ', apellidos) as nombre
+    FROM zonas zon
+    JOIN asignar_zonas asz ON asz.id_zona = zon.id_zona
+    JOIN personas per ON asz.cedula_asignado = per.cedula
+    ORDER BY zon.id_zona ASC";
 
     return executeQuery($con, $sql);
 }
@@ -292,22 +277,37 @@ function getMaxIdPlanQuery($con)
     return executeQuery($con, $sql);
 }
 
+function getMaxIdTAdminQuery($con){
+    $sql = "SELECT MAX(id_trabajo_administrativo) FROM trabajo_administrativo";
+
+    return executeQuery($con, $sql);
+}
+
 function getPlaneacionesCalendarQuery($con)
 {
-    $sql = "SELECT DISTINCT id_planeacion, plan.fecha, lugarencuentro, jor.jornada, mun.municipio, inter.id_intervenciones, bar.id_barrio, compor.comportamientos
+    $sql = "SELECT DISTINCT id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio, foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona
     FROM planeacion plan
-    JOIN jornada jor ON jor.id_jornada = plan.id_jornada
-    JOIN planeaciones_por_intervencion ppi ON ppi.planeacion_id_planeacion = plan.id_planeacion
-    lEFT JOIN intervenciones inter ON ppi.intervenciones_id_intervenciones = inter.id_intervenciones
-    LEFT JOIN barrios bar ON bar.id_barrio = inter.id_barrio
+    LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
     LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
-    LEFT JOIN veredas ver ON ver.id_veredas = bar.id_comuna
+    LEFT JOIN veredas ver ON ver.id_veredas = plan.id_vereda
     LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio
-	JOIN indicadores_chec_por_intervenciones icpi ON icpi.intervenciones_id_intervenciones = inter.id_intervenciones
-	JOIN indicadores_chec ic ON ic.id_indicadores_chec = icpi.indicadores_chec_id_indicadores_chec
-	JOIN comportamientos compor ON compor.id_comportamientos = ic.comportamientos_id_comportamientos";
+    JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion
+    JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion = foc.id_focalizacion
+    JOIN indicadores_chec ic ON ic.id_indicador = icxf.id_indicador
+    JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
+    JOIN competencias compe ON compe.id_competencia = compor.id_competencia
+    JOIN zonas zon ON zon.id_zona = mun.id_zona";
 
-    return getEventsCalendar($con, $sql);
+    return executeQuery($con, $sql);
+}
+
+function getTrabajosAdministrativosCalendarQuery($con){
+    $sql = "SELECT id_trabajo_administrativo, municipio, fecha, hora_inicio, hora_fin, zonas, zon.id_zona
+    FROM trabajo_administrativo ta
+    JOIN municipios mun ON mun.id_municipio = ta.id_municipio
+    JOIN zonas zon ON zon.id_zona = mun.id_zona";
+
+    return executeQuery($con, $sql);
 }
 
 /* INSERTS */
@@ -392,4 +392,21 @@ function insertXPlaneacionQuery($con, $id_param, $id_plan, $name)
         return insertQuery($con, $sql);
     }
 
+}
+
+function insertTrabajoAdministrativoQuery($con, $hora_inicio, $hora_fin, $id_municipio, $fecha, $descripcion)
+{
+    $sql = "INSERT INTO public.trabajo_administrativo(
+    hora_inicio, hora_fin, id_municipio, fecha, descripcion)
+    VALUES ('$hora_inicio', '$hora_fin', $id_municipio, '$fecha', '$descripcion');";
+
+    return insertQuery($con, $sql);
+}
+
+function insertLaborXTrabajoAdministrativoQuery($con, $id_labor, $id_ta){
+    $sql = "INSERT INTO public.labores_x_trabajo_administrativo(
+    id_tipo_labor, id_trabajo_administrativo)
+    VALUES ($id_labor, $id_ta);";
+
+    return insertQuery($con, $sql);
 }

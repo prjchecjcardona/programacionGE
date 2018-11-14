@@ -130,7 +130,7 @@ function fixStepIndicator(n) {
 function determineTipoGestion() {
   var radioTipoGestion = $("input[name=tipoGestion]:checked");
 
-  if (radioTipoGestion.val() == "Institucional") {
+  if (radioTipoGestion.val() == "2") {
     $("#selectComportamiento").prop("disabled", true);
     $("#selectTipoInt").prop("disabled", true);
 
