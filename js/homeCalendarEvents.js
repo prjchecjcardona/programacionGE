@@ -3,12 +3,19 @@ $(function() {
   getPlaneacionesCalendar();
   containerEl.fullCalendar({
     themeSystem: "bootstrap4",
+    customButtons: {
+      detalles: {
+        text: 'Detalles Calendario',
+        click: function() {
+          $('#modalCalendarDetails').modal('toggle');
+        }
+      }
+    },
     header: {
-      left: "prev,next, today",
+      left: "prev,next, today, detalles",
       center: "title",
       right: "month,listWeek,agendaDay"
     },
-    defaultDate: "2018-01-12",
     navLinks: true, // can click day/week names to navigate views
     editable: true,
     draggable: false,
@@ -28,12 +35,39 @@ function getPlaneacionesCalendar() {
   $.ajax({
     type: "POST",
     url: "server/getPlaneacionesCalendar.php",
-    data: "",
+    data: {
+      planEjec_cal : ""
+    },
     dataType: "json",
-    success: function(data) {
+    success: function(dataEjecutado) {
       $("#calendar").fullCalendar("removeEvents");
-      $("#calendar").fullCalendar("addEventSource", data);
-      getTrabajoAdministrativo();
+      $("#calendar").fullCalendar("addEventSource", dataEjecutado);
+
+      $.ajax({
+        type: "POST",
+        url: "server/getPlaneacionesCalendar.php",
+        data: {
+          no_ejec : ""
+        },
+        dataType: "json",
+        success: function (dataNoEjecutado) {
+          $("#calendar").fullCalendar("addEventSource", dataNoEjecutado);
+          var fullArrayPlans = dataNoEjecutado.concat(dataEjecutado);
+
+          $.ajax({
+            type: "POST",
+            url: "server/getPlaneacionesCalendar.php",
+            data: {
+              plan_cal : fullArrayPlans
+            },
+            dataType: "json",
+            success: function (dataPlans) {
+              $("#calendar").fullCalendar("addEventSource", dataPlans);
+              getTrabajoAdministrativo();
+            }
+          });
+        }
+      });
     }
   });
 }
@@ -57,17 +91,19 @@ function getTrabajoAdministrativo() {
       $(".fc-left").append(
         `<select class="custom-select" id="calendarSelect">
           <option value="0" selected>Todos</option>
-          <option value="1">Centro</option>
-          <option value="2">Suroccidente</option>
-          <option value="3">Occidente</option>
-          <option value="4">Noroccidente</option>
-          <option value="5">Oriente</option>
+          <option value="Centro">Centro</option>
+          <option value="Suroccidente">Suroccidente</option>
+          <option value="Occidente">Occidente</option>
+          <option value="Noroccidente">Noroccidente</option>
+          <option value="Oriente">Oriente</option>
         </select>`
       );
 
       $("#calendarSelect").on("change", function() {
         $("#calendar").fullCalendar("rerenderEvents");
       });
+
+      $("#calendar").fullCalendar("rerenderEvents");
     }
   });
 }

@@ -301,10 +301,43 @@ a {
   padding-left: 13px;
   color: black;
   background-color: #2cd114;
+  border-color: transparent;
+}
+
+.indicadoresCalendar {
+  height: 30px;
+  width: auto;
+  margin: 10px;
+  border-radius: 25px;
+  padding: 19px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+}
+
+#ejecutado {
+  background-color: #269226;
+}
+
+#planeado {
+  background-color: red;
+}
+
+#enejecucion {
+  background-color: #eebc00;
+}
+
+#noejecutado {
+  background-color: #a2a1a0;
+}
+
+#tadmin {
+  background-color: blue;
 }
 
 .toogle-on.btn:hover {
-  background-color: #218838;
+  background-color: #218838 !important;
 }
 
 #modoSeguimiento {
@@ -717,16 +750,16 @@ input#lugarEncuentro,
   align-self: center;
 }
 
-.nav-tabs{
+.nav-tabs {
   margin: 10px 0px 10px 0px;
 }
 
-#myTabContent{
+#myTabContent {
   height: 92%;
 }
 
-#profile{
-  height: 100%
+#profile {
+  height: 100%;
 }
 
 #rowTableContactos {
@@ -751,12 +784,12 @@ hr {
 }
 
 #modalLoader {
-	z-index: 10;
-	background-color: rgba(0,0,0,0.5);
-	width: 100%;
-	height: 573px;
-	position: absolute;
-	border-radius: 3px;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 573px;
+  position: absolute;
+  border-radius: 3px;
 }
 
 #colDetalle {

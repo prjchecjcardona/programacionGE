@@ -78,7 +78,8 @@ function getMunicipiosXZonaQuery($con, $zona)
     return executeQuery($con, $sql);
 }
 
-function getZonasQuery($con){
+function getZonasQuery($con)
+{
     $sql = "SELECT zon.id_zona, zonas, CONCAT(nombres, ' ', apellidos) as nombre
     FROM zonas zon
     JOIN asignar_zonas asz ON asz.id_zona = zon.id_zona
@@ -277,31 +278,88 @@ function getMaxIdPlanQuery($con)
     return executeQuery($con, $sql);
 }
 
-function getMaxIdTAdminQuery($con){
+function getMaxIdTAdminQuery($con)
+{
     $sql = "SELECT MAX(id_trabajo_administrativo) FROM trabajo_administrativo";
 
     return executeQuery($con, $sql);
 }
 
-function getPlaneacionesCalendarQuery($con)
+function getPlaneacionesCalendarQuery($con, $plan_ejec)
 {
     $sql = "SELECT DISTINCT id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio, foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona
     FROM planeacion plan
     LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
     LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
     LEFT JOIN veredas ver ON ver.id_veredas = plan.id_vereda
-    LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio
+    LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
     JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion
     JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion = foc.id_focalizacion
     JOIN indicadores_chec ic ON ic.id_indicador = icxf.id_indicador
     JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
     JOIN competencias compe ON compe.id_competencia = compor.id_competencia
-    JOIN zonas zon ON zon.id_zona = mun.id_zona";
+    JOIN zonas zon ON zon.id_zona = mun.id_zona ";
+
+    if(!empty($plan_ejec)){
+
+        $and_true = true;
+
+        foreach ($plan_ejec as $key => $value) {
+            $val = $value['id'];
+            if($and_true){
+                $sql .= "WHERE id_planeacion <> $val";
+                $and_true = false;
+            }else{
+                $sql .= " AND id_planeacion <> $val";
+            }
+        }
+
+    }
 
     return executeQuery($con, $sql);
 }
 
-function getTrabajosAdministrativosCalendarQuery($con){
+function getPlaneacionesEjecutadosOEnEjecucionQuery($con)
+{
+    $sql = "SELECT DISTINCT id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio, foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona
+    FROM planeacion plan
+    LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
+    LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
+    LEFT JOIN veredas ver ON ver.id_veredas = plan.id_vereda
+    LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
+    JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion
+    JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion = foc.id_focalizacion
+    JOIN indicadores_chec ic ON ic.id_indicador = icxf.id_indicador
+    JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
+    JOIN competencias compe ON compe.id_competencia = compor.id_competencia
+    JOIN zonas zon ON zon.id_zona = mun.id_zona
+    WHERE id_planeacion IN (SELECT id_planeacion FROM ejecucion)";
+
+    return executeQuery($con, $sql);
+}
+
+function getNovedadesNoEjecucionQuery($con)
+{
+    $sql = "SELECT DISTINCT plan.id_planeacion, nne.fecha_aplazamiento, fecha_plan, jornada, lugar_encuentro, mun.municipio, foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona
+    FROM planeacion plan
+    JOIN novedad_no_ejecucion nne ON plan.id_planeacion = nne.id_planeacion
+    LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
+    LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
+    LEFT JOIN veredas ver ON ver.id_veredas = plan.id_vereda
+    LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
+    JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion
+    JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion = foc.id_focalizacion
+    JOIN indicadores_chec ic ON ic.id_indicador = icxf.id_indicador
+    JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
+    JOIN competencias compe ON compe.id_competencia = compor.id_competencia
+    JOIN zonas zon ON zon.id_zona = mun.id_zona
+    WHERE plan.id_planeacion IN(SELECT id_planeacion FROM novedad_no_ejecucion WHERE estado_novedad = 'No ejecutado')";
+
+    return executeQuery($con, $sql);
+}
+
+function getTrabajosAdministrativosCalendarQuery($con)
+{
     $sql = "SELECT id_trabajo_administrativo, municipio, fecha, hora_inicio, hora_fin, zonas, zon.id_zona
     FROM trabajo_administrativo ta
     JOIN municipios mun ON mun.id_municipio = ta.id_municipio
@@ -403,10 +461,20 @@ function insertTrabajoAdministrativoQuery($con, $hora_inicio, $hora_fin, $id_mun
     return insertQuery($con, $sql);
 }
 
-function insertLaborXTrabajoAdministrativoQuery($con, $id_labor, $id_ta){
+function insertLaborXTrabajoAdministrativoQuery($con, $id_labor, $id_ta)
+{
     $sql = "INSERT INTO public.labores_x_trabajo_administrativo(
     id_tipo_labor, id_trabajo_administrativo)
     VALUES ($id_labor, $id_ta);";
+
+    return insertQuery($con, $sql);
+}
+
+function insertNovedadNoEjecucionQuery($con, $id_planeacion, $descripcion, $fecha_aplazamiento)
+{
+    $sql = "INSERT INTO public.novedad_no_ejecucion(
+    id_planeacion, descripcion, fecha_aplazamiento, estado_novedad)
+    VALUES ($id_planeacion, '$descripcion', '$fecha_aplazamiento', 'No ejecutado');";
 
     return insertQuery($con, $sql);
 }

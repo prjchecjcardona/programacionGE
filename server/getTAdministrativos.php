@@ -18,7 +18,7 @@ if(isset($_POST)){
         'editable' => false,
         'color' => 'blue',
         'textColor' => "white",
-        'zona' => $value['id_zona']
+        'zona' => $value['zonas']
     );
 }
 }else{

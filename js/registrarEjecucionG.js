@@ -13,6 +13,10 @@ $(document).ready(function() {
     uiLibrary: "bootstrap4"
   });
 
+  $("#datepickerNoEjecucion").datepicker({
+    uiLibrary: "bootstrap4"
+  });
+
   if (
     $("select").change(function() {
       if ($(this).hasClass("invalid")) {
@@ -92,16 +96,15 @@ function getTipoGestion() {
     type: "POST",
     url: "server/getTipoGestion.php",
     data: {
-      tipo_gestion : id_foc
+      tipo_gestion: id_foc
     },
     dataType: "json",
     success: function(response) {
-
-      if(response[0].id_tipo_gestion != 1){
-        $('#detalleCardContentGF').addClass('showNone');
-        $('#colPoblacion').addClass('showNone');
-      }else{
-        $('#colActaReunion').addClass('showNone');
+      if (response[0].id_tipo_gestion != 1) {
+        $("#detalleCardContentGF").addClass("showNone");
+        $("#colPoblacion").addClass("showNone");
+      } else {
+        $("#colActaReunion").addClass("showNone");
       }
     }
   });
@@ -332,14 +335,14 @@ function checkLogged() {
   });
 }
 
-function insertEjecucion(){
+function insertEjecucion() {
   $(".loader").fadeIn();
   $.ajax({
     type: "POST",
     url: "server/insertEjecucion.php",
-    data: `${$('#ejecForm').serialize()}&id_plan=${id_plan}`,
+    data: `${$("#ejecForm").serialize()}&id_plan=${id_plan}`,
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       swal({
         type: "success",
         title: response
@@ -350,15 +353,42 @@ function insertEjecucion(){
   });
 }
 
-function getDetallePlaneacion(){
+function insertNoEjecucion() {
+  if (
+    $("textarea[name=descripcionNovedad]").val() == "" ||
+    $("input[name=fechaAplazada]").val() == "") {
+    swal({
+      type: "error",
+      title: "Debe digitar todos los campos para continuar"
+    });
+  } else {
+    $(".loader").fadeIn();
+    $.ajax({
+      type: "POST",
+      url: "server/insertNovedadNoEjecucion.php",
+      data: `${$("#formNoEjec").serialize()}&id_plan=${id_plan}`,
+      dataType: "json",
+      success: function(response) {
+        swal({
+          type: "success",
+          title: response
+        }).then(function() {
+          $(".loader").fadeOut();
+        });
+      }
+    });
+  }
+}
+
+function getDetallePlaneacion() {
   $.ajax({
     type: "POST",
     url: "server/getPlaneaciones.php",
     data: {
-      detallePlaneacion : id_plan
+      detallePlaneacion: id_plan
     },
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       console.log(response);
     }
   });

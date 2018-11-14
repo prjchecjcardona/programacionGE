@@ -18,7 +18,7 @@ if (isset($_POST)) {
         $json = $api->getMaxIdTAdmin();
     }
 
-}else{
-  $json = "No se recibieron adecuadamente los datos";
+} else {
+    $json = "No se recibieron adecuadamente los datos";
 }
 echo json_encode($json);

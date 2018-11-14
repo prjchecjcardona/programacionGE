@@ -413,15 +413,21 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="form-group">
-              <label for="descripcionNovedad">Describa porque no se dío la ejecución <label for="descripcionNovedad"
-                  class="obligatorio">*</label></label>
-              <textarea class="form-control" name="descripcionNovedad" id="descripcionNovedad" rows="5" cols="10"></textarea>
-            </div>
+            <form id="formNoEjec">
+              <div class="form-group">
+                <label for="descripcionNovedad">Describa porque no se dío la ejecución <label for="descripcionNovedad"
+                    class="obligatorio">*</label></label>
+                <textarea class="form-control" name="descripcionNovedad" id="descripcionNovedad" rows="5" cols="10"></textarea>
+              </div>
+              <label for="datepicker">Seleccione la fecha aplazada del evento no ejecutado
+                <label class="obligatorio" for="datepicker">*</label>
+              </label>
+              <input class="required" id="datepickerNoEjecucion" placeholder="Fecha" name="fechaAplazada" readonly />
+            </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="getChecked()">Cancelar</button>
-            <button type="button" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-success" onclick="insertNoEjecucion()">Guardar</button>
           </div>
         </div>
       </div>

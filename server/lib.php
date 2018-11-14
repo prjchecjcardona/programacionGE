@@ -106,9 +106,9 @@ class gestionEducativa
         return getPlaneacionesXFocalizacionQuery($this->con, $foc);
     }
 
-    public function getPlaneacionesCalendar()
+    public function getPlaneacionesCalendar($plan_ejec)
     {
-        return getPlaneacionesCalendarQuery($this->con);
+        return getPlaneacionesCalendarQuery($this->con, $plan_ejec);
     }
 
     public function getDetallePlaneacionEjecucion($id_plan)
@@ -199,5 +199,20 @@ class gestionEducativa
     public function getTrabajosAdministrativosCalendar()
     {
         return getTrabajosAdministrativosCalendarQuery($this->con);
+    }
+
+    public function insertNovedadNoEjecucion($id_planeacion, $descripcion, $fecha_aplazamiento)
+    {
+        return insertNovedadNoEjecucionQuery($this->con, $id_planeacion, $descripcion, $fecha_aplazamiento);
+    }
+
+    public function getPlaneacionesEjecutadosOEnEjecucion()
+    {
+        return getPlaneacionesEjecutadosOEnEjecucionQuery($this->con);
+    }
+
+    public function getNovedadesNoEjecucion()
+    {
+        return getNovedadesNoEjecucionQuery($this->con);
     }
 }
