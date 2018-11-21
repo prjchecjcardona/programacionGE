@@ -242,6 +242,7 @@ function insertFocalizacion() {
           title: response
         }).then(function() {
           $(".loader").fadeOut();
+          window.location.href = $('#homeBtn').attr('href');
         });
       }
     }
@@ -271,6 +272,7 @@ function insertIndicadoresXFocalizacion() {
             title: response
           }).then(function() {
             $(".loader").fadeOut();
+            window.location.href = $('#homeBtn').attr('href');
           });
         }
       });
@@ -296,7 +298,7 @@ function checkLogged() {
         window.location.href = "iniciarSesion.html";
       });
     } else {
-      $("#userName").html(`Hola ${data}`);
+      $('#homeBtn').attr('href', `home.html?user=${data.rol}&id_zona=${data.zona}`);
     }
   });
 }

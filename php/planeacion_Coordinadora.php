@@ -145,7 +145,7 @@ function cargarTacticos()
     $sql = "SELECT id_tactico, nombretactico
             FROM tactico
             WHERE id_estrategia = " . $_POST["idEstrategia"] . "
-            AND id_tactico IN(36, 1, 7, 6, 37, 29, 14, 22, 35, 34, 4, 19)";
+            AND id_tactico IN(36, 1, 7, 6, 37, 29, 14, 22, 35, 34, 4, 19, 10)";
 
     $array = array();
     if ($rs = $con->query($sql)) {

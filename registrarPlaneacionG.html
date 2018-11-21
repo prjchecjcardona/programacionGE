@@ -30,21 +30,23 @@
   </div>
 
   <div class="main">
-    <div id="navbar" class="row">
-      <div class="col-12">
-        <nav class="navbar">
-          <span class="navbar-text">
-            <div id="navImgs">
-              <img class="imgNav" src="img/logo-min.png" alt="">
-              <img id="logoUM" class="imgNav" src="img/Universidad-de-manizales.png" alt="">
-            </div>
-            <div id="navButtons">
+    <!-- NAVBAR PART -->
+    <ul class="nav justify-content-end" id="navGE">
+      <li class="nav-item imgsNav">
+        <img src="img/logo-min.png" alt="" class="navImg">
+        <img src="img/Universidad-de-manizales.png" alt="" class="navImg">
+      </li>
 
-            </div>
-          </span>
-        </nav>
-      </div>
-    </div>
+      <li class="nav-item">
+
+      </li>
+
+      <li class="nav-item" id="lastSideNav">
+        <a id="homeBtn" class="nav-link"><i class="fas fa-home"></i></a>
+        <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
+      </li>
+    </ul>
+
     <div id="createInter" class="row justify-content-center">
       <div id="colCreateInter" class="col-lg-7 col-md-12 col-sm-12">
         <div id="form-card">
@@ -127,43 +129,13 @@
                       <thead>
                         <tr>
                           <th></th>
-                          <th>Nombre</th>
                           <th>Cedula</th>
-                          <th>Telefono</th>
-                          <th>Correo</th>
-                          <th>Entidad</th>
+                          <th>Nombre</th>
+                          <th>Celular</th>
                           <th>Cargo</th>
+                          <th>Entidad</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td></td>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                          <td>61</td>
-                          <td>2011/04/25</td>
-                          <td>$320,800</td>
-                        </tr>
-                        <tr>
-                          <td></td>
-                          <td>Garrett Winters</td>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>63</td>
-                          <td>2011/07/25</td>
-                          <td>$170,750</td>
-                        </tr>
-                        <tr>
-                          <td></td>
-                          <td>Ashton Cox</td>
-                          <td>Junior Technical Author</td>
-                          <td>San Francisco</td>
-                          <td>66</td>
-                          <td>2009/01/12</td>
-                          <td>$86,000</td>
-                        </tr>
-                      </tbody>
                     </table>
                   </div>
                 </div>
@@ -341,26 +313,26 @@
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="cedulaContacto">Cédula</label>
                 <input type="text" placeholder="Cédula" id="cedulaContacto" name="cedula" aria-label="Cedula del contacto"
-                  class="form-control required">
+                  class="form-control ">
               </div>
             </div>
             <div class="row rowForms">
               <div class="col-lg-6 col-md-12 col-sm-12">
                 <label for="TelefonoContacto">Telefono</label>
                 <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefono" aria-label="Telefono del contacto"
-                  class="form-control required">
+                  class="form-control ">
               </div>
               <div class="col-lg-6 col-md-12 col-sm-12">
                 <label for="celularContacto">Celular</label>
                 <input type="text" placeholder="Celular" id="celularContacto" name="celular" aria-label="Celular del contacto"
-                  class="form-control required">
+                  class="form-control ">
               </div>
             </div>
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="correoContacto">Correo electronico</label>
                 <input type="text" placeholder="Correo" id="correoContacto" name="email" aria-label="Correo electronico del contacto"
-                  class="form-control required">
+                  class="form-control ">
               </div>
             </div>
             <div class="row rowForms">
@@ -376,7 +348,7 @@
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="cargoContacto">Cargo</label>
                 <input type="text" placeholder="Cargo" id="cargoContacto" name="cargo" aria-label="Cargo del contacto"
-                  class="form-control required">
+                  class="form-control">
               </div>
             </div>
             <div id="rowBtnContacto" class="row rowForms">
@@ -424,7 +396,7 @@
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="TelefonoContacto">Telefono</label>
                 <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefono" aria-label="Telefono del contacto"
-                  class="form-control" required>
+                  class="form-control">
               </div>
             </div>
 
@@ -460,7 +432,7 @@
 
   <!-- JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>0
+    crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"

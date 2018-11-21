@@ -37,14 +37,6 @@
         <div class="imgProfile">
           <img class="" src="img/ic4qgE7.png" alt="">
           <div class="profileDropdown">
-            <form action="server/logOut.php" id="logOut">
-              <a class="nav-link active"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
-            </form>
-            <hr>
-            <div id="modoSeguimiento">
-              <label for="pCompleta">Pantalla completa</label>
-                <input id="pCompleta" type="checkbox" checked data-on="Activado" data-off="Desactivado">
-            </div>
           </div>
         </div>
         <a class="nav-link" href="iniciarSesion.html"><i class="fas fa-home"></i></a>
@@ -59,9 +51,6 @@
           <div id="homeBreadCrumbs" class="animated showNone">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Library</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Data</li>
               </ol>
             </nav>
             <a id="returnMunicipio" class="returnBtn showNone" class="btn btn-success" onClick="returnMunicipio(this)">
@@ -192,6 +181,28 @@
               </div>
             </form>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CALENDAR EVENT DETAILS -->
+  <div class="modal fade" id="modalEventsCalendar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" id="modalEventHeader">
+          <h5 class="modal-title" id="modalEventTitle">
+
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modalEventDescription">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>

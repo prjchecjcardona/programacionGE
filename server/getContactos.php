@@ -7,6 +7,13 @@ if (isset($_POST)) {
     if (isset($_POST['mun'])) {
         $id_mun = $_POST['mun'];
         $json = $api->getContactos($id_mun);
+
+        $data = array("data" => "");
+        $data['data'] = array();
+        foreach ($json as $key => $value) {
+            array_push($data['data'], $json[$key]);
+        }
+        
     } else {
         $json = "No se recibieron los datos de manera adecuada";
     }
@@ -14,4 +21,4 @@ if (isset($_POST)) {
     $json = "No se recibieron los datos de manera adecuada";
 }
 
-echo json_encode($json);
+echo json_encode($data);

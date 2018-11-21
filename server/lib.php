@@ -66,11 +66,6 @@ class gestionEducativa
         return getFicherosQuery($this->con);
     }
 
-    public function getContactos($id_mun)
-    {
-        return getContactosQuery($this->con);
-    }
-
     public function getIndicadoresGE()
     {
         return getIndicadoresGEQuery($this->con);
@@ -116,7 +111,7 @@ class gestionEducativa
         return getDetallePlaneacionEjecucionQuery($this->con, $id_plan);
     }
 
-    function getZonas()
+    public function getZonas()
     {
         return getZonasQuery($this->con);
     }
@@ -151,9 +146,9 @@ class gestionEducativa
         return getIndicadoresChecQuery($this->con, $comp);
     }
 
-    public function insertContacto($cedula, $nombres, $apellidos, $correo, $telefono, $celular, $cargo)
+    public function insertContacto($cedula, $nombres, $apellidos, $correo, $telefono, $celular, $cargo, $id_entidad)
     {
-        return insertContactoQuery($this->con, $cedula, $nombres, $apellidos, $correo, $telefono, $celular, $cargo);
+        return insertContactoQuery($this->con, $cedula, $nombres, $apellidos, $correo, $telefono, $celular, $cargo, $id_entidad);
     }
 
     public function insertEntidad($nombre, $direccion, $telefono, $tipoEntidad, $municipio)
@@ -214,5 +209,15 @@ class gestionEducativa
     public function getNovedadesNoEjecucion()
     {
         return getNovedadesNoEjecucionQuery($this->con);
+    }
+
+    public function getContactos($mun)
+    {
+        return getContactosQuery($this->con, $mun);
+    }
+
+    public function contactoExiste($cedula)
+    {
+        return contactoExisteQuery($this->con, $cedula);
     }
 }

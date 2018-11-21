@@ -8,7 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
     crossorigin="anonymous">
-  <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
   <link rel="stylesheet" href="css/fileinput.min.css">
   <link rel="stylesheet" href="css/fileinput-rtl.min.css">
@@ -25,21 +26,24 @@
   </div>
 
   <div class="main">
-    <div id="navbar" class="row">
-      <div class="col-12">
-        <nav class="navbar">
-          <span class="navbar-text">
-            <div id="navImgs">
-              <img class="imgNav" src="img/logo-min.png" alt="">
-              <img id="logoUM" class="imgNav" src="img/Universidad-de-manizales.png" alt="">
-            </div>
-            <div id="navButtons">
 
-            </div>
-          </span>
-        </nav>
-      </div>
-    </div>
+        <!-- NAVBAR PART -->
+        <ul class="nav justify-content-end" id="navGE">
+            <li class="nav-item imgsNav">
+              <img src="img/logo-min.png" alt="" class="navImg">
+              <img src="img/Universidad-de-manizales.png" alt="" class="navImg">
+            </li>
+
+            <li class="nav-item">
+
+            </li>
+
+            <li class="nav-item" id="lastSideNav">
+              <a id="homeBtn" class="nav-link"><i class="fas fa-home"></i></a>
+              <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
+            </li>
+          </ul>
+
     <div id="createInter" class="row justify-content-center">
       <div id="colCreateInter" class="col-lg-9 col-md-12 col-sm-12">
         <div id="form-card">

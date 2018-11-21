@@ -1,58 +1,49 @@
 $(function() {
   checkLogged();
 
-
-  $('#pCompleta').bootstrapToggle('off');
-
   $("#datepicker").datepicker({
     locale: "es-es",
     uiLibrary: "bootstrap4",
     format: "dd-mm-yyyy"
   });
 
-  $('.imgProfile img').click(function(){
-    if($('.profileDropdown').hasClass('activeProfile')){
-      $('.profileDropdown').removeClass('activeProfile')
-    }else{
-      $('.profileDropdown').addClass('activeProfile');
+  $(".imgProfile img").click(function() {
+    if ($(".profileDropdown").hasClass("activeProfile")) {
+      $(".profileDropdown").removeClass("activeProfile");
+    } else {
+      $(".profileDropdown").addClass("activeProfile");
     }
-  })
+  });
+
+  if(user == 3 || user == "Gestor"){
+    $('#rightPortion').html(
+      `<div class="center" id="loaderCalendar">
+        <div class="pulse">
+          <img src="img/logo-min.png" alt="">
+        </div>
+      </div>
+      <div id="calendar"></div>`
+    )
+  }
 
   $("#logOut a").click(function() {
     $("#logOut").submit();
   });
 
-  $('#btnCancelarTAdmin').click(function(){
-    $('#modalTAdmin').modal('toggle');
-  });
-
-  $('#pCompleta').change(function(){
-    if($(this).prop('checked')){
-      $('#leftPortion').fadeOut();
-      $('#leftPortion').addClass('showNone');
-      $('#rightPortion').switchClass('col-md-6', 'col-md-12', 200, 'linear');
-      $('#rightPortion').switchClass('col-lg-7', 'col-lg-12', 200, 'linear');
-    }else{
-      if($('#leftPortion').hasClass('showNone')){
-        $('#rightPortion').switchClass('col-md-12', 'col-md-6', 200, 'linear');
-        $('#rightPortion').switchClass('col-lg-12', 'col-lg-7', 200, 'linear');
-        setTimeout(() => {
-          $('#leftPortion').fadeIn();
-          $('#leftPortion').removeClass('showNone');
-        }, 200);
-      }
-    }
+  $("#btnCancelarTAdmin").click(function() {
+    $("#modalTAdmin").modal("toggle");
   });
 });
 
 var id_zona = getParam("id_zona");
 let id_plan = getParam("id_plan");
 let id_foc = getParam("id_foc");
+let user = getParam("user")
 
-if(id_zona == ""){
+if (id_zona == "all") {
   getZona();
-}else{
-  getMunicipioXZona("");
+} else {
+  getMunicipioXZona("all");
 }
 
 function getParam(param) {
@@ -64,13 +55,13 @@ function getParam(param) {
     : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function getZona(){
+function getZona() {
   $.ajax({
     type: "POST",
     url: "server/getZonas.php",
     data: "",
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       response.forEach(element => {
         $(".zonas").append(
           ` <div>
@@ -83,8 +74,8 @@ function getZona(){
                 </div>
               </div>
               <a onClick="getMunicipioXZona(${
-            element.id_zona
-            })"><i class="fas fa-arrow-circle-right arrow"></i></a>
+                element.id_zona
+              })"><i class="fas fa-arrow-circle-right arrow"></i></a>
             </div>`
         );
       });
@@ -99,9 +90,9 @@ function getZona(){
 }
 
 function getMunicipioXZona(zona) {
-  $(".municipios").html('');
+  $(".municipios").html("");
   $("#loaderList").fadeIn();
-  if(zona == "") zona = id_zona;
+  if (zona == "all") zona = id_zona;
   $.ajax({
     type: "POST",
     url: "server/getMunicipios.php",
@@ -123,23 +114,32 @@ function getMunicipioXZona(zona) {
                     element.id_zona
                   }&id_mun=${
             element.id_municipio
-          }" class="btn btn-primary"><i class="fas fa-plus crear"></i> Focalizar</a>
-                  <a onclick="trabajoAdministrativo(${element.id_municipio})" class="btn btn-primary"><i class="fas fa-plus crear"></i> Trabajo Administrativo</a>
+          }" class="btn"><i class="fas fa-plus crear"></i> Focalizar</a>
+                  <a onclick="trabajoAdministrativo(${
+                    element.id_municipio
+                  })" class="btn"><i class="fas fa-plus crear"></i> Trabajo Administrativo</a>
                 </div>
               </div>
               <a href="#${element.municipio}" onClick="getFocalizacionesXZona(${
             element.id_municipio
-          })"><i class="fas fa-arrow-circle-right arrow"></i></a>
+          }, '${element.municipio}', '${
+            element.zonas
+          }')"><i class="fas fa-arrow-circle-right arrow"></i></a>
             </div>`
         );
       });
+      $(".breadcrumb").html("");
+      $(".breadcrumb").append(
+        `<li class="breadcrumb-item"><a href="#" onclick="returnMunicipio()">${
+          data[0].zonas
+        }</a></li>`
+      );
     },
     complete: function() {
-
-      if(!$('.zona').hasClass('showNone')){
+      if (!$(".zona").hasClass("showNone")) {
         $(".zonas").fadeOut();
-        $(".zonas").addClass('showNone');
-        $('#returnZona').removeClass('showNone')
+        $(".zonas").addClass("showNone");
+        $("#returnZona").removeClass("showNone");
       }
 
       $(".municipios").fadeIn();
@@ -150,7 +150,7 @@ function getMunicipioXZona(zona) {
   });
 }
 
-function getFocalizacionesXZona(mun) {
+function getFocalizacionesXZona(mun, municipio, zona) {
   $("#loaderList").fadeIn();
   $(".municipios").fadeOut();
   $("#returnMunicipio").removeClass("showNone");
@@ -158,6 +158,12 @@ function getFocalizacionesXZona(mun) {
   if (!$("#returnFocalizaciones").hasClass("showNone")) {
     $("#returnFocalizaciones").addClass("showNone");
   }
+
+  $(".breadcrumb").html("");
+  $(".breadcrumb").append(
+    `<li class="breadcrumb-item"><a href="#" onclick="returnMunicipio()">${zona}</a></li>
+    <li class="breadcrumb-item"><a href="#">${municipio}</a></li>`
+  );
 
   $.ajax({
     type: "POST",
@@ -169,8 +175,7 @@ function getFocalizacionesXZona(mun) {
     success: function(data) {
       $(".focalizaciones").html("");
       data.forEach(element => {
-
-        if(element.id_tipo_gestion == 2){
+        if (element.id_tipo_gestion == 2) {
           $(".focalizaciones").append(
             `<div>
               <div class="card">
@@ -183,15 +188,15 @@ function getFocalizacionesXZona(mun) {
                     element.id_zona
                   }&id_mun=${element.id_municipio}&id_foc=${
               element.id_focalizacion
-            }" class="btn btn-primary"><i class="fas fa-plus crear"></i> Planear</a>
+            }" class="btn"><i class="fas fa-plus crear"></i> Planear</a>
                 </div>
               </div>
               <a onclick="getPlaneacionesXFocalizacion(${
-              element.id_focalizacion
-            })"><i class="fas fa-arrow-circle-right arrow"></i></a>
+                element.id_focalizacion
+              })"><i class="fas fa-arrow-circle-right arrow"></i></a>
             </div>`
           );
-        }else{
+        } else {
           $(".focalizaciones").append(
             `<div>
               <div class="card">
@@ -209,7 +214,7 @@ function getFocalizacionesXZona(mun) {
               element.id_focalizacion
             }&comport=${
               element.id_comportamientos
-            }" class="btn btn-primary"><i class="fas fa-plus crear"></i> Planear</a>
+            }" class="btn"><i class="fas fa-plus crear"></i> Planear</a>
                 </div>
               </div>
               <a href="#${element.comportamientos}-${
@@ -263,7 +268,7 @@ function getPlaneacionesXFocalizacion(foc) {
                 <a href="registrarEjecucionG.html?id_plan=${
                   element.id_planeacion
                 }&id_zona=${element.id_zona}&id_foc=${element.id_foc}"
-                class="btn btn-primary"><i class="fas fa-plus crear"></i> Ejecutar</a>
+                class="btn"><i class="fas fa-plus crear"></i> Ejecutar</a>
               </div>
             </div>
           </div>`
@@ -278,12 +283,12 @@ function getPlaneacionesXFocalizacion(foc) {
   });
 }
 
-function trabajoAdministrativo(id_mun){
-  $('#getMun').html('');
-  $('#getMun').append(
+function trabajoAdministrativo(id_mun) {
+  $("#getMun").html("");
+  $("#getMun").append(
     `<input type="number" id="municipio" name="municipio" value="${id_mun}">`
-  )
-  $('#modalTAdmin').modal('toggle');
+  );
+  $("#modalTAdmin").modal("toggle");
 }
 
 function checkLogged() {
@@ -295,6 +300,7 @@ function checkLogged() {
     },
     dataType: "json"
   }).done(function(data) {
+    $('body').css('', value);
     if (data.error) {
       swal({
         type: "info",
@@ -304,57 +310,95 @@ function checkLogged() {
         window.location.href = "iniciarSesion.html";
       });
     } else {
-      $("#userName").html(`Hola ${data}`);
+      $(".profileDropdown").html(
+        `<h6>${data.nombre}</h6>
+        </hr>
+        <form action="server/logOut.php" id="logOut">
+          <a class="nav-link active" style="color: red">Cerrar Sesión</a>
+        </form>
+        <hr>
+        <div id="modoSeguimiento">
+          <label for="pCompleta">Pantalla completa</label>
+            <input id="pCompleta" type="checkbox" checked data-on="Activado" data-off="Desactivado">
+        </div>`
+      );
+
+      $("#pCompleta").bootstrapToggle("off");
+
+      $('#lastSideNav').html(
+        `<a class="nav-link" href="home.html?user=${data.rol}&id_zona=${data.zona}><i class="fas fa-home"></i></a>
+        <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>`
+      );
+
+
+      $("#pCompleta").change(function() {
+        if ($(this).prop("checked")) {
+          $("#leftPortion").fadeOut();
+          $("#leftPortion").addClass("showNone");
+          $("#rightPortion").switchClass("col-md-6", "col-md-12", 200, "linear");
+          $("#rightPortion").switchClass("col-lg-7", "col-lg-12", 200, "linear");
+        } else {
+          if ($("#leftPortion").hasClass("showNone")) {
+            $("#rightPortion").switchClass("col-md-12", "col-md-6", 200, "linear");
+            $("#rightPortion").switchClass("col-lg-12", "col-lg-7", 200, "linear");
+            setTimeout(() => {
+              $("#leftPortion").fadeIn();
+              $("#leftPortion").removeClass("showNone");
+            }, 200);
+          }
+        }
+      });
     }
   });
 }
 
-function insertTAdmin(){
-  $('#modalLoader').fadeIn();
-  $('#modalLoader').removeClass('showNone');
+function insertTAdmin() {
+  $("#modalLoader").fadeIn();
+  $("#modalLoader").removeClass("showNone");
   $.ajax({
     type: "POST",
     url: "server/insertTrabajoAdministrativo.php",
-    data: $('#formTAdmin').serialize(),
+    data: $("#formTAdmin").serialize(),
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       insertLaboresXTAdmin();
     }
   });
 }
 
-function insertLaboresXTAdmin(){
+function insertLaboresXTAdmin() {
   $.ajax({
     type: "POST",
     url: "server/insertTrabajoAdministrativo.php",
     data: "data",
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       id_ta = response[0].max;
       arrayLabores = [];
-      $('input[name=tAdmin]:checked').each(function(){
+      $("input[name=tAdmin]:checked").each(function() {
         arrayLabores.push($(this).val());
-      })
+      });
       $.ajax({
         type: "POST",
         url: "server/insertLaboresXTrabajo.php",
         data: {
-          labores : arrayLabores,
-          id_ta : id_ta
+          labores: arrayLabores,
+          id_ta: id_ta
         },
         dataType: "json",
-        success: function (response) {
+        success: function(response) {
           swal({
             type: "success",
             title: response
           }).then(function() {
-            document.getElementById('formTAdmin').reset();
-            $('#modalTAdmin').modal('toggle');
+            document.getElementById("formTAdmin").reset();
+            $("#modalTAdmin").modal("toggle");
           });
         },
-        complete: function(){
-          $('#modalLoader').fadeOut();
-          $('#modalLoader').addClass('showNone');
+        complete: function() {
+          $("#modalLoader").fadeOut();
+          $("#modalLoader").addClass("showNone");
+          getPlaneacionesCalendar();
         }
       });
     }
@@ -375,9 +419,12 @@ function returnFocalizacion(btn) {
 }
 
 function returnZona(btn) {
+  $(".breadcrumb").html("");
   $("#returnMunicipio").addClass("showNone");
-  $(btn).addClass('showNone')
+  $(btn).addClass("showNone");
   $(".municipios").fadeOut();
   $(".zonas").fadeIn();
-  $(".zonas").removeClass('showNone');
+  $(".zonas").removeClass("showNone");
 }
+
+function determineBreadcrumb() {}
