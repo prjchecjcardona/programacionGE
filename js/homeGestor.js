@@ -90,6 +90,8 @@ function getZona() {
 }
 
 function getMunicipioXZona(zona) {
+  $(".zonas").fadeOut();
+  $(".zonas").addClass("showNone");
   $(".municipios").html("");
   $("#loaderList").fadeIn();
   if (zona == "all") zona = id_zona;
@@ -300,7 +302,6 @@ function checkLogged() {
     },
     dataType: "json"
   }).done(function(data) {
-    $('body').css('', value);
     if (data.error) {
       swal({
         type: "info",

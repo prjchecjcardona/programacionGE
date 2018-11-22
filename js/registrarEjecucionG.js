@@ -367,15 +367,28 @@ function insertNoEjecucion() {
     $.ajax({
       type: "POST",
       url: "server/insertNovedadNoEjecucion.php",
-      data: `${$("#formNoEjec").serialize()}&id_plan=${id_plan}`,
+      data: `${$("#formNoEjec").serialize()}&id_plan=${id_plan}&no_ejec=`,
       dataType: "json",
       success: function(response) {
         swal({
           type: "success",
           title: response
         }).then(function() {
-          $(".loader").fadeOut();
-          window.location.href = $('#homeBtn').attr('href');
+          $.ajax({
+            type: "POST",
+            url: "server/insertNovedadNoEjecucion.php",
+            data: `${$("#formNoEjec").serialize()}&id_plan=${id_plan}&aplazar_plan=`,
+            dataType: "json",
+            success: function (response) {
+              swal({
+                type: "success",
+                title: response
+              }).then(function(){
+                $(".loader").fadeOut();
+                window.location.href = $("#homeBtn").attr("href");
+              });
+            }
+          });
         });
       }
     });

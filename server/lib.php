@@ -13,17 +13,12 @@ class gestionEducativa
     public function connectDB()
     {
         //DEV
-        /*         $database = "d4asqdqb9dlt9p";
+        $database = "d4asqdqb9dlt9p";
         $uid = "ntafkvnrqqlbig";
         $pwd = "300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1";
-        $host = "ec2-54-197-233-123.compute-1.amazonaws.com"; */
+        $host = "ec2-54-197-233-123.compute-1.amazonaws.com";
 
-        $database = "GE3";
-        $uid = "postgres";
-        $pwd = "1234";
-        $host = "localhost";
-
-        /*         //PRODUCCION
+        /*//PRODUCCION
         $database = "gestjjlg_gestion_educativa";
         $uid = "gestjjlg_usr_gestion";
         $pwd = "r!Hh7XNv22E(";
@@ -219,5 +214,20 @@ class gestionEducativa
     public function contactoExiste($cedula)
     {
         return contactoExisteQuery($this->con, $cedula);
+    }
+
+    public function aplazarPlaneacion($id_plan, $fecha_plan)
+    {
+        return aplazarPlaneacionQuery($this->con, $id_plan, $fecha_plan);
+    }
+
+    public function insertContactoXPlaneacion($id_contacto, $id_planeacion)
+    {
+        return insertContactoXPlaneacionQuery($this->con, $id_contacto, $id_planeacion);
+    }
+
+    public function getSubtemasXTema($id_tema)
+    {
+        return getSubtemasXTemaQuery($this->con, $id_tema);
     }
 }

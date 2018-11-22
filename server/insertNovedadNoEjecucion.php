@@ -6,11 +6,30 @@ $api = new gestionEducativa();
 
 if (isset($_POST)) {
 
-      $id_planeacion = $_POST['id_plan'];
-      $descripcion = $_POST['descripcionNovedad'];
-      $fecha_aplazamiento = $_POST['fechaAplazada'];
+    $id_planeacion = $_POST['id_plan'];
+    $descripcion = $_POST['descripcionNovedad'];
+    $fecha_aplazamiento = $_POST['fechaAplazada'];
 
-      $json = $api->insertNovedadNoEjecucion($id_planeacion, $descripcion, $fecha_aplazamiento);
+    if (isset($_POST['no_ejec'])) {
+        $json = $api->insertNovedadNoEjecucion($id_planeacion, $descripcion, $fecha_aplazamiento);
+
+        if($json['error'] == 0){
+            $json = "Novedad guardada!";
+        }else{
+            $json = "La novedad no se pudo guardar!";
+        }
+
+    }
+
+    if (isset($_POST['aplazar_plan'])) {
+        $json = $api->aplazarPlaneacion($id_planeacion, $fecha_aplazamiento);
+
+        if($json['error'] == 0){
+            $json = "Se aplazó la planeación existosamente";
+        }else{
+            $json = "No se pudo aplazar la planeación";
+        }
+    }
 
 } else {
     $json = "No se recibieron adecuadamente los datos";

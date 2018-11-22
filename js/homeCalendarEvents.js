@@ -29,6 +29,7 @@ $(function() {
         "modalEventHeader"
       ).style.cssText = `background-color: ${event.color} !important`;
       $("#modalEventTitle").html(event.title);
+      $("#modalEventTitle").css('color', 'white');
       $("#modalEventDescription").html(event.description);
       $("#modalEventsCalendar").modal();
     }
@@ -72,7 +73,11 @@ function getPlaneacionesCalendar() {
         dataType: "json",
         success: function(dataNoEjecutado) {
           $("#calendar").fullCalendar("addEventSource", dataNoEjecutado);
-          var fullArrayPlans = dataNoEjecutado.concat(dataEjecutado);
+          var fullArrayPlans = dataEjecutado;
+
+          if(fullArrayPlans == "") {
+            fullArrayPlans = "";
+          }
 
           $.ajax({
             type: "POST",
@@ -82,7 +87,9 @@ function getPlaneacionesCalendar() {
             },
             dataType: "json",
             success: function(dataPlans) {
-              $("#calendar").fullCalendar("addEventSource", dataPlans);
+              if(!dataPlans.error){
+                $("#calendar").fullCalendar("addEventSource", dataPlans);
+              }
               getTrabajoAdministrativo();
             }
           });

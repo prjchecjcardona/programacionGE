@@ -111,72 +111,83 @@ if (isset($_POST)) {
 
         $json = $api->getPlaneacionesCalendar($arrayPlaneaciones);
 
-        $newArray = array();
-        $n = 0;
+        if(empty($json)){
+            $json = array("message" => "No hay nada planeado", "error" => 1);
+        }else{
+            $newArray = array();
+            $n = 0;
 
-        foreach ($json as $key => $value) {
+            foreach ($json as $key => $value) {
 
-            if (!isset($newArray[$value['id_planeacion']])) {
+                if (!isset($newArray[$value['id_planeacion']])) {
 
-                $newArray[$value['id_planeacion']] = [
-                    "id_planeacion" => $value['id_planeacion'],
-                    "fecha_plan" => $value['fecha_plan'],
-                    "jornada" => $value['jornada'],
-                    "lugar_encuentro" => $value['lugar_encuentro'],
-                    "municipio" => $value['municipio'],
-                    "comportamientos" => $value['comportamientos'],
-                    "competencia" => $value['competencia'],
-                    "zonas" => $value['zonas'],
-                    "nombre_estrategia" => $value['nombre_estrategia'],
-                    "tacticos" => [],
-                    "temas" => $value['temas'],
-                    "gestor" => $value['nombre']
-                ];
-            }
+                    $newArray[$value['id_planeacion']] = [
+                        "id_planeacion" => $value['id_planeacion'],
+                        "fecha_plan" => $value['fecha_plan'],
+                        "jornada" => $value['jornada'],
+                        "lugar_encuentro" => $value['lugar_encuentro'],
+                        "municipio" => $value['municipio'],
+                        "comportamientos" => $value['comportamientos'],
+                        "competencia" => $value['competencia'],
+                        "zonas" => $value['zonas'],
+                        "nombre_estrategia" => $value['nombre_estrategia'],
+                        "tacticos" => [],
+                        "temas" => $value['temas'],
+                        "gestor" => $value['nombre'],
+                        "solicitud_interventora" => $value['solicitud_interventora']
+                    ];
+                }
 
-            if (empty($newArray[$value['id_planeacion']]['tacticos'])) {
-                array_push($newArray[$value['id_planeacion']]['tacticos'], $value['nombre_tactico']);
-            } else {
-                foreach ($newArray[$value['id_planeacion']]['tacticos'] as $k => $val) {
-                    if ($val != $value['nombre_tactico']) {
-                        array_push($newArray[$value['id_planeacion']]['tacticos'], $value['nombre_tactico']);
+                if (empty($newArray[$value['id_planeacion']]['tacticos'])) {
+                    array_push($newArray[$value['id_planeacion']]['tacticos'], $value['nombre_tactico']);
+                } else {
+                    foreach ($newArray[$value['id_planeacion']]['tacticos'] as $k => $val) {
+                        if ($val != $value['nombre_tactico']) {
+                            array_push($newArray[$value['id_planeacion']]['tacticos'], $value['nombre_tactico']);
+                        }
                     }
                 }
+
             }
 
+            foreach ($newArray as $key => $value) {
+
+                $tacticos = implode(", ", $value['tacticos']);
+
+                if($value['solicitud_interventora']){
+                    $color = "#7704df";
+                }else{
+                    $color = "red";
+                }
+
+                $newArray[$key] = array(
+
+                    'id' => $value['id_planeacion'],
+                    'title' => $value['comportamientos'] . ' - ' . $value['municipio'],
+                    'start' => $value['fecha_plan'],
+
+                    'description' =>
+                    'Fecha : ' . $value['fecha_plan'] . '</br>' .
+                    'Jornada : ' . $value['jornada'] . '</br>' .
+                    'Lugar de encuentro : ' . $value['lugar_encuentro'] . '</br>' .
+                    'Municipio : ' . $value['municipio'] . '</br>' .
+                    'Estrategias : ' . $value['nombre_estrategia'] . '</br>' .
+                    'Tacticos : ' . $tacticos . '</br>' .
+                    'Temas : ' . $value['temas'] . '</br>' .
+                    'Zona : ' . $value['zonas'] . '</br>' .
+                    'Gestor : ' . $value['gestor'] . '</br>',
+
+                    'editable' => false,
+
+                    'color' => $color,
+                    'textColor' => "white",
+                    'zona' => $value['zonas'],
+                );
+            }
+
+            $json = array_values($newArray);
         }
 
-        foreach ($newArray as $key => $value) {
-
-            $tacticos = implode(", ", $value['tacticos']);
-
-
-
-            $newArray[$key] = array(
-
-                'id' => $value['id_planeacion'],
-                'title' => $value['comportamientos'] . ' - ' . $value['municipio'],
-                'start' => $value['fecha_plan'],
-
-                'description' =>
-                'Fecha : ' . $value['fecha_plan'] . '</br>' .
-                'Jornada : ' . $value['jornada'] . '</br>' .
-                'Lugar de encuentro : ' . $value['lugar_encuentro'] . '</br>' .
-                'Municipio : ' . $value['municipio'] . '</br>' .
-                'Estrategias : ' . $value['nombre_estrategia'] . '</br>' .
-                'Tacticos : ' . $tacticos . '</br>' .
-                'Temas : ' . $value['temas'] . '</br>' .
-                'Zona : ' . $value['zonas'] . '</br>' .
-                'Gestor : ' . $value['gestor'] . '</br>',
-
-                'editable' => false,
-                'color' => 'red',
-                'textColor' => "white",
-                'zona' => $value['zonas'],
-            );
-        }
-
-        $json = array_values($newArray);
     }
 
 } else {

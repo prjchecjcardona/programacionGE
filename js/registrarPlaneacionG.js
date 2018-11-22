@@ -63,7 +63,7 @@ $(document).ready(function() {
     columnDefs: [
       {
         targets: 0,
-        render: function (data, type, row, meta){
+        render: function(data, type, row, meta) {
           return `<input type="checkbox" id="contacto" name="contacto" value="${data}">`;
         }
       }
@@ -106,12 +106,14 @@ $(document).ready(function() {
   });
 
   $("#selectEstrategia").change(function() {
-    arrayEstrategia = $("#selectEstrategia").serializeArray();
-    arrayEstrategia.forEach(element => {
-      primaryAjax("getTacticos.php", "selectTactico", {
-        estrategia: element.value
-      });
+    estrategia = $("#selectEstrategia").val();
+    primaryAjax("getTacticos.php", "selectTactico", {
+      estrategia: estrategia
     });
+  });
+
+  $('#selectTema').change(function(){
+    primaryAjax("getSubtemas.php", "selectSubtema", { tema : id_tema });
   });
 
   $(
@@ -193,16 +195,17 @@ function validateForm() {
   y = x[currentTab].getElementsByClassName("table");
   // Verifies if there is a table en the current tab
   if (y.length > 0) {
-    var table = $("#tableContactos").DataTable();
     // Counts selected rows in table. if there are rows selected
-    //then valid=true if not, no row is selected and valid=false
-    var data = table.rows({ selected: true }).data();
-    if (data.length > 0) {
-      $(".alert").addClass("showNone");
+    var contactList = $("input[name=contacto]:checked").length;
+    if (contactList > 0) {
+      if (!$(".alert").hasClass("showNone")) {
+        $(".alert").addClass("showNone");
+      }
       valid = true;
     } else {
-      $(".alert").removeClass("showNone");
-      $(".alert").addClass("show");
+      if ($(".alert").hasClass("showNone")) {
+        $(".alert").removeClass("showNone");
+      }
       valid = false;
     }
   } else {
@@ -263,7 +266,7 @@ function determineRadio() {
 function checkSolicitudEducativa() {
   var solicitudRadio = $("input[name=solicitudEducativa]:checked");
 
-  if (solicitudRadio.val() == "0") {
+  if (solicitudRadio.val() == "TRUE") {
     $("#subirSolicitud").toggle();
   } else {
     if ($("#subirSolicitud").is(":visible")) {
@@ -426,6 +429,12 @@ function insertXPlaneacion() {
     dataType: "json",
     success: function(response) {
       id_plan = response[0].max;
+      contactLength = $("input[name=contacto]:checked").length;
+      contactArray = [];
+      for (i = 0; i < contactLength; i++) {
+        let val = $('input[name="contacto"]:checked')[i].value;
+        contactArray.push(val);
+      }
       selects3 = $("#selectIndicador")
         .serializeArray()
         .concat($("#selectTactico").serializeArray());
@@ -434,6 +443,7 @@ function insertXPlaneacion() {
         url: "server/insertXPlaneacion.php",
         data: {
           op: selects3,
+          contacto: contactArray,
           id_plan: id_plan
         },
         dataType: "json",
