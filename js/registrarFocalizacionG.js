@@ -237,13 +237,23 @@ function insertFocalizacion() {
       if ($("#selectIndicadorInt").val().length > 0) {
         insertIndicadoresXFocalizacion();
       } else {
-        swal({
-          type: "success",
-          title: response
-        }).then(function() {
-          $(".loader").fadeOut();
-          window.location.href = $('#homeBtn').attr('href');
-        });
+        if(response.error == 0){
+          swal({
+            type: "success",
+            title: response.message
+          }).then(function() {
+            $(".loader").fadeOut();
+            window.location.href = $('#homeBtn').attr('href');
+          });
+        }else{
+          swal({
+            type: "error",
+            title: response.message
+          }).then(function() {
+            $(".loader").fadeOut();
+            location.reload();
+          });
+        }
       }
     }
   });

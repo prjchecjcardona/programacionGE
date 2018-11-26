@@ -29,7 +29,10 @@ class gestionEducativa
         if (!$this->con) {
             die('error de conexión');
         }
+
     }
+
+
 
     public function getComportamientos()
     {
@@ -61,9 +64,9 @@ class gestionEducativa
         return getFicherosQuery($this->con);
     }
 
-    public function getIndicadoresGE()
+    public function getIndicadoresGEXSubtema($id_subtema)
     {
-        return getIndicadoresGEQuery($this->con);
+        return getIndicadoresGEXSubtemaQuery($this->con, $id_subtema);
     }
 
     public function getTacticos($estrat)
@@ -151,9 +154,9 @@ class gestionEducativa
         return insertEntidadQuery($this->con, $nombre, $direccion, $telefono, $tipoEntidad, $municipio);
     }
 
-    public function insertPlaneacion($jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro, $id_foc)
+    public function insertPlaneacion($jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $fecha_plan, $fecha_registro, $id_foc)
     {
-        return insertPlaneacionQuery($this->con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $id_tema, $fecha_plan, $fecha_registro, $id_foc);
+        return insertPlaneacionQuery($this->con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $fecha_plan, $fecha_registro, $id_foc);
     }
 
     public function insertContactosXEntidad($cedula, $entidad)
@@ -191,9 +194,9 @@ class gestionEducativa
         return getTrabajosAdministrativosCalendarQuery($this->con);
     }
 
-    public function insertNovedadNoEjecucion($id_planeacion, $descripcion, $fecha_aplazamiento)
+    public function insertNovedadNoEjecucion($id_planeacion, $descripcion, $fecha_aplazamiento, $fecha_plan)
     {
-        return insertNovedadNoEjecucionQuery($this->con, $id_planeacion, $descripcion, $fecha_aplazamiento);
+        return insertNovedadNoEjecucionQuery($this->con, $id_planeacion, $descripcion, $fecha_aplazamiento, $fecha_plan);
     }
 
     public function getPlaneacionesEjecutadosOEnEjecucion()
@@ -219,11 +222,6 @@ class gestionEducativa
     public function aplazarPlaneacion($id_plan, $fecha_plan)
     {
         return aplazarPlaneacionQuery($this->con, $id_plan, $fecha_plan);
-    }
-
-    public function insertContactoXPlaneacion($id_contacto, $id_planeacion)
-    {
-        return insertContactoXPlaneacionQuery($this->con, $id_contacto, $id_planeacion);
     }
 
     public function getSubtemasXTema($id_tema)

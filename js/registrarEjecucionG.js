@@ -345,7 +345,7 @@ function insertEjecucion() {
     success: function(response) {
       swal({
         type: "success",
-        title: response
+        title: response.message
       }).then(function() {
         $(".loader").fadeOut();
         window.location.href = $('#homeBtn').attr('href');
@@ -355,9 +355,12 @@ function insertEjecucion() {
 }
 
 function insertNoEjecucion() {
+  var fechaPlan = $("#fechaDetallePlan").html().trim();
+
   if (
     $("textarea[name=descripcionNovedad]").val() == "" ||
     $("input[name=fechaAplazada]").val() == "") {
+
     swal({
       type: "error",
       title: "Debe digitar todos los campos para continuar"
@@ -367,7 +370,7 @@ function insertNoEjecucion() {
     $.ajax({
       type: "POST",
       url: "server/insertNovedadNoEjecucion.php",
-      data: `${$("#formNoEjec").serialize()}&id_plan=${id_plan}&no_ejec=`,
+      data: `${$("#formNoEjec").serialize()}&id_plan=${id_plan}&no_ejec=&fecha_plan=${fechaPlan}`,
       dataType: "json",
       success: function(response) {
         swal({
@@ -404,7 +407,75 @@ function getDetallePlaneacion() {
     },
     dataType: "json",
     success: function(response) {
-      console.log(response);
+      console.log(response[1].compe);
+      $('.detalleEjec').append(
+        `<div id="detalleCardContentGI">
+        <div class="row">
+          <h5 class="title">
+            Fecha de la planeación: &nbsp;<h6 id="fechaDetallePlan"> ${response[1].fecha}</h6>
+          </h5>
+        </div>
+        <hr>
+        <div class="row">
+          <h5 class="title">
+            Gestor: <h6> &nbsp; ${response[1].gestor}</h6>
+          </h5>
+        </div>
+        <hr>
+        <div class="row">
+          <h5 class="title">
+            Zona: <h6> &nbsp; ${response[1].zona}</h6>
+          </h5>
+        </div>
+        <hr>
+        <div class="row">
+          <h5 class="title">
+            Municipio: <h6> &nbsp; ${response[1].mun}</h6>
+          </h5>
+        </div>
+        <hr>
+        <div class="row">
+          <h5 class="title">
+            Entidad: <h6> &nbsp; ${response[1].entidad}</h6>
+          </h5>
+        </div>
+        <hr>
+        <div class="row">
+          <h5 class="title">
+            Comportamiento / Competencia: <h6> &nbsp; ${response[1].compor} / ${response[1].compe}</h6>
+          </h5>
+        </div>
+      </div>
+      <hr>
+      <div id="detalleCardContentGF">
+        <div class="row">
+          <h5 class="title">
+            Estrategias: <h6> &nbsp; ${response[1].estrategias}</h6>
+          </h5>
+        </div>
+        <hr>
+        <div class="row">
+          <h5 class="title">
+            Tacticos: <h6 id="tacticosList"> &nbsp; <ul></ul></h6>
+          </h5>
+        </div>
+        <hr>
+        <div class="row">
+          <h5 class="title">
+            Temas: <h6> &nbsp; ${response[1].temas}</h6>
+          </h5>
+        </div>
+        <hr>
+      </div>`
+      )
+
+      var tactic = response[1].tacticos;
+      for (let index = 0; index < tactic.length; index++) {
+        const element = tactic[index];
+        $('#tacticosList ul').append(
+          `<li>${element}</li>`
+        )
+      }
     }
   });
 }

@@ -154,7 +154,7 @@
 
               <div class="tab">
                 <div class="row formRows">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="col-lg-9 col-md-6 col-sm-12">
                     <div class="form-group">
                       <label for="selectEntidad">Entidad <label for="selectEntidad" class="obligatorio">*</label></label>
                       <select class="custom-select required" name="entidad" id="selectEntidad">
@@ -162,7 +162,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12" id="colRegistrarEntidad">
+                  <div class="col-lg-3 col-md-12 col-sm-12" id="colRegistrarEntidad">
                     <button id="btnRegistrarEntidad" type="button" class="btn btn-primary" data-toggle="modal"
                       data-target="#modalRegistrarEntidad"><i class="fas fa-building" id="iconRegistrarEntidad"></i></i>Registrar
                       Entidad</button>
@@ -172,40 +172,33 @@
                 <hr class="hrForms">
 
                 <div class="row formRows">
+                  <div class="col-lg-6 col-md-6 col-sm-12" style="border-right: solid 1px #80808066;">
+                    <div class="form-group">
+                      <label for="selectTema">Tema <label for="selectTema" class="obligatorio">*</label></label>
+                      <select class="custom-select required" name="tema" id="selectTema">
+                        <option selected>Seleccione</option>
+                      </select>
+                    </div>
+                    <div id="divSubtemas">
+                      <ul></ul>
+                    </div>
+                  </div>
+
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group">
                       <label for="selectEstrategia">Estrategia <label for="selectEstrategia" class="obligatorio">*</label></label>
                       <select class="custom-select required" name="estrategia" id="selectEstrategia" aria-describedby="selectHelpEstrategia">
                         <option selected>Seleccione</option>
                       </select>
-                      <small id="selectHelpEstrategia" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd>
-                        para
-                        seleccionar mas de una estrategia</small>
                     </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group">
-                      <label for="selectTactico">Tactico <label for="selectTactico" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="tactico[]" id="selectTactico" aria-describedby="selectHelpTactico"
-                        multiple>
-                        <option selected>Seleccione</option>
-                      </select>
-                      <small id="selectHelpTactico" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd> para
-                        seleccionar mas de un tactico</small>
-                    </div>
-                  </div>
-                </div>
-
-                <hr class="hrForms">
-
-                <div class="row formRows">
-
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="form-group">
-                      <label for="selectTema">Tema <label for="selectTema" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="tema" id="selectTema">
-                        <option selected>Seleccione</option>
-                      </select>
+                        <label for="selectTactico">Tactico <label for="selectTactico" class="obligatorio">*</label></label>
+                        <select class="custom-select required" name="tactico[]" id="selectTactico" aria-describedby="selectHelpTactico"
+                          multiple>
+                          <option selected>Seleccione</option>
+                        </select>
+                        <small id="selectHelpTactico" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd> para
+                          seleccionar mas de un tactico</small>
                     </div>
                   </div>
                 </div>
@@ -213,18 +206,24 @@
 
               <div class="tab">
                 <div class="row formRows">
-                  <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="col-lg-12 col-md-12 col-sm-12" id="indicadores">
                     <div class="form-group">
-                      <label for="selectIndicador">Indicador <label class="obligatorio" for="selectIndicador">*</label></label>
-                      <select multiple class="custom-select required" name="indicador[]" id="selectIndicador">
-                        <option selected>Seleccione</option>
-                      </select>
+                      <div class="card">
+                        <div class="card-header">
+                          INDICADORES DE LOGRO
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            <ul></ul>
+                          </h5>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <hr class="hrForms">
-
+<!--                 <hr class="hrForms">
+  
                 <div class="row formRows">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
@@ -234,7 +233,7 @@
                       </select>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
                 <hr class="hrForms">
 

@@ -113,7 +113,8 @@ $(document).ready(function() {
   });
 
   $('#selectTema').change(function(){
-    primaryAjax("getSubtemas.php", "selectSubtema", { tema : id_tema });
+    id_tema = $('#selectTema').val();
+    getSubtemasList(id_tema);
   });
 
   $(
@@ -307,10 +308,6 @@ function executeAll() {
       url: "getEstrategias.php"
     },
     {
-      select: "selectFichero",
-      url: "getFicheros.php"
-    },
-    {
       select: "selectTema",
       url: "getTemas.php",
       data: { comportamiento: id_comport }
@@ -346,6 +343,73 @@ function primaryAjax(url, tag, data) {
   });
 }
 
+function getSubtemasList(id_tema){
+  $('#divSubtemas').html('');
+  $.ajax({
+    type: "POST",
+    url: "server/getSubtemas.php",
+    data: {
+      tema : id_tema
+    },
+    dataType: "json",
+    success: function (response) {
+      response.forEach(element => {
+
+        arraySubtemas = element.subtemas.split('&');
+
+        $('#divSubtemas').append(
+          `<div class="checkbox-card">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" name="subtema" class="custom-control-input" id="customCheck${element.id_subtema}" value="${element.id_subtema}">
+              <label class="custom-control-label" for="customCheck${element.id_subtema}">
+                <ul>
+
+                </ul>
+              </label>
+            </div>
+          </div>`
+        )
+
+        arraySubtemas.forEach(element => {
+          $('label ul').append(
+            `<li>${element}</li>`
+          )
+        });
+
+      });
+
+      $('input[name=subtema]').change(function(){
+        getIndicadoresGEXSubtema();
+      });
+    }
+  });
+}
+
+function getIndicadoresGEXSubtema(){
+  subtemasLength = $('input[name=subtema]:checked').length;
+  subtemasArray = [];
+  for(i=0; i<subtemasLength; i++){
+    subtemasArray.push($('input[name=subtema]:checked')[i].value);
+  }
+
+  $.ajax({
+    type: "POST",
+    url: "server/getIndicadoresGE.php",
+    data: {
+      subtema : subtemasArray
+    },
+    dataType: "json",
+    success: function (response) {
+      $('#indicadores .card-title ul').html('');
+      response.forEach(element => {
+        $('#indicadores .card-title ul').append(
+          `<li id="${element.id_indicador}">${element.nombre_indicador}</li>`
+        )
+      });
+    }
+  });
+}
+
 function insertContacto() {
   var requiredElements = document.getElementById("formCrearContacto");
   var x = requiredElements.getElementsByClassName("required");
@@ -371,15 +435,22 @@ function insertContacto() {
       data: formContacto,
       dataType: "json",
       success: function(response) {
-        swal({
-          type: "success",
-          title: response
-        }).then(function() {
-          $("#modalRegistrarContacto").modal("toggle");
-          $("#btnCrearContacto").prop("disabled", false);
-          document.getElementById("formCrearContacto").reset();
-          reloadContactos();
-        });
+        if(response.error == 0){
+          swal({
+            type: "success",
+            title: response.message
+          }).then(function() {
+            $("#modalRegistrarContacto").modal("toggle");
+            $("#btnCrearContacto").prop("disabled", false);
+            document.getElementById("formCrearContacto").reset();
+            reloadContactos();
+          });
+        }else{
+          swal({
+            type: "error",
+            title: response.message
+          })
+        }
       }
     });
   }
@@ -416,7 +487,14 @@ function insertPlaneacion() {
     data: `${formPlan}&id_foc=${id_foc}`,
     dataType: "json",
     success: function(response) {
-      insertXPlaneacion();
+      if(response.error == 1){
+        swal({
+          type: "error",
+          title: response.message
+        })
+      }else{
+        insertXPlaneacion();
+      }
     }
   });
 }
@@ -429,32 +507,44 @@ function insertXPlaneacion() {
     dataType: "json",
     success: function(response) {
       id_plan = response[0].max;
-      contactLength = $("input[name=contacto]:checked").length;
-      contactArray = [];
-      for (i = 0; i < contactLength; i++) {
-        let val = $('input[name="contacto"]:checked')[i].value;
-        contactArray.push(val);
-      }
-      selects3 = $("#selectIndicador")
-        .serializeArray()
-        .concat($("#selectTactico").serializeArray());
+
+      /* GET SELECTED CONTACTS */
+      contactos = $("input[name=contacto]:checked").serializeArray();
+
+      /* GET SELECTED SUBTEMAS */
+      subtemas = $('input[name=subtema]').serializeArray();
+
+      /* GET SELECTED TACTICOS */
+      tacticos = $('#selectTactico').serializeArray()
+
       $.ajax({
         type: "POST",
         url: "server/insertXPlaneacion.php",
         data: {
-          op: selects3,
-          contacto: contactArray,
+          tacticos : tacticos,
+          subtemas : subtemas,
+          contactos: contactos,
           id_plan: id_plan
         },
         dataType: "json",
         success: function(response) {
-          swal({
-            type: "success",
-            title: response
-          }).then(function() {
-            $(".loader").fadeOut();
-            window.location.href = $("#homeBtn").attr("href");
-          });
+          if(response.error == 0){
+            swal({
+              type: "success",
+              title: response.message
+            }).then(function() {
+              $(".loader").fadeOut();
+              window.location.href = $("#homeBtn").attr("href");
+            });
+          }else{
+            swal({
+              type: "error",
+              title: response.message
+            }).then(function() {
+              $(".loader").fadeOut();
+              location.reload();
+            });
+          }
         }
       });
     }

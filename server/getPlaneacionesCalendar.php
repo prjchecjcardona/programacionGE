@@ -14,13 +14,13 @@ if (isset($_POST)) {
             $json[$key] = array(
                 'id' => $value['id_planeacion'],
                 'title' => 'No ejecucion / ' . $value['comportamientos'] . ' - ' . $value['competencia'],
-                'start' => $value['fecha_plan'],
-                'proximo' => $value['fecha_aplazamiento'],
+                'start' => $value['fecha_no_ejecutada'],
+                'proximo' => $value['fecha_plan'],
 
                 'description' =>
                 'Municipio : ' . $value['municipio'] . '</br>' .
-                'Fecha de la actividad no ejecutada : ' . $value['fecha_plan'] . '</br>' .
-                'Nueva fecha para la ejecución de la actividad : ' . $value['fecha_aplazamiento'] . '</br>' .
+                'Fecha de la actividad no ejecutada : ' . $value['fecha_no_ejecutada'] . '</br>' .
+                'Nueva fecha para la ejecución de la actividad : ' . $value['fecha_plan'] . '</br>' .
                 'Zona : ' . $value['zonas'] . '</br>' .
                 'Gestor : ' . $value['nombre'] . '</br>' .
                 'Tema : ' . $value['temas'] . '</br>' .

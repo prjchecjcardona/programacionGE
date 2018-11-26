@@ -11,7 +11,11 @@ if (isset($_POST)) {
     $fecha_aplazamiento = $_POST['fechaAplazada'];
 
     if (isset($_POST['no_ejec'])) {
-        $json = $api->insertNovedadNoEjecucion($id_planeacion, $descripcion, $fecha_aplazamiento);
+
+        $fecha = date_create($_POST['fecha_plan']);
+        $fecha_plan = date_format($fecha, 'm-d-Y');
+
+        $json = $api->insertNovedadNoEjecucion($id_planeacion, $descripcion, $fecha_aplazamiento, $fecha_plan);
 
         if($json['error'] == 0){
             $json = "Novedad guardada!";

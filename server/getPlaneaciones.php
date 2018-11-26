@@ -41,6 +41,7 @@ if (isset($_POST['foc'])) {
 
 if (isset($_POST['detallePlaneacion'])) {
     $json = $api->getDetallePlaneacionEjecucion($_POST['detallePlaneacion']);
+
     $newArray = array();
     $entro = true;
     foreach ($json as $key => $value) {

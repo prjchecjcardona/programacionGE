@@ -4,7 +4,7 @@ include 'lib.php';
 
 $api = new gestionEducativa();
 
-$fecha = (string) date("d-m-Y");
+$fecha = (string) date("m-d-Y");
 
 if (isset($_POST)) {
     if (isset($_POST['municipio'])) {
