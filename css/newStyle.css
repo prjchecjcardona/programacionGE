@@ -694,18 +694,6 @@ nav {
   color: rgb(133, 40, 40);
 }
 
-.table-bordered thead td,
-.table-bordered thead th {
-  border-bottom-width: 2px;
-  padding: 1px 5px !important;
-}
-
-.table-bordered td,
-.table-bordered th {
-  border: 1px solid #dee2e6;
-  padding: 1px 5px !important;
-}
-
 hr {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -934,7 +922,7 @@ main {
   justify-content: space-between;
   border-radius: 10px;
   position: fixed;
-  width: 38%;
+  width: 30%;
   margin: 0px;
   z-index: 10;
 }
@@ -973,6 +961,7 @@ main {
   transition: 0.5s;
   flex-direction: column;
   justify-content: center;
+  overflow-y: auto;
 }
 
 .fc-toolbar button {
