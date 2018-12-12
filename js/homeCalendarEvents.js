@@ -11,6 +11,7 @@ $(function() {
         }
       }
     },
+    height: getCalendarHeight(),
     header: {
       left: "prev,next, today, detalles",
       center: "title",
@@ -33,6 +34,11 @@ $(function() {
       $("#modalEventDescription").html(event.description);
       $("#modalEventsCalendar").modal();
     }
+  });
+
+  //
+  $(window).resize(function () { 
+    $('#calendar').fullCalendar('option', 'height', getCalendarHeight());
   });
 
   //Adds showNone to calendar class when created.
@@ -134,6 +140,10 @@ function getTrabajoAdministrativo() {
       getCalendarEventsZona();
     }
   });
+}
+
+function getCalendarHeight(){
+  return $(window).height() - 151;
 }
 
 function getCalendarEventsZona(){

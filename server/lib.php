@@ -228,4 +228,9 @@ class gestionEducativa
     {
         return getSubtemasXTemaQuery($this->con, $id_tema);
     }
+
+    public function getUserRol($name)
+    {
+        return getUserRolQuery($this->con, $name);
+    }    
 }

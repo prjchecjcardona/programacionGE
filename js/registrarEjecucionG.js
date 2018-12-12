@@ -7,7 +7,14 @@ $(document).ready(function() {
   getTotal("#caracteristicasPoblacion input[type=number]", false);
   showTab(currentTab); // Display the current tab
   document.getElementById("noEjecucion").checked = false;
-  calcularDuracion();
+
+  $('#horaInicio').timepicker({
+    uiLibrary: 'bootstrap4'
+  });
+
+  $('#horaFin').timepicker({
+    uiLibrary: 'bootstrap4'
+  })
 
   $("#datepicker").datepicker({
     uiLibrary: "bootstrap4"
@@ -31,11 +38,6 @@ $(document).ready(function() {
     lengthChange: false,
     info: false,
     paging: false
-  });
-
-  //Hide modal registro de contacto
-  $("#cerrarDetalleModal").click(function() {
-    $("#detalleEjecModal").modal("toggle");
   });
 
   //Prevent from typing negative numbers
@@ -164,7 +166,7 @@ function validateForm() {
     if (parseInt(k[0].innerHTML) != parseInt(k[1].innerHTML)) {
       valid = false;
       swal({
-        icon: "error",
+        type: "error",
         title: "Los totales no concuerdan"
       });
     }
@@ -241,38 +243,6 @@ function getTotal(data, index) {
 
   if (!index) {
     $("#caractTotal").html(`${totalCaract}`);
-  }
-}
-
-function calcularDuracion() {
-  var timeInputs = $("input[type=time]").get();
-
-  if (timeInputs[0].value != "" && timeInputs[1].value != "") {
-    var inicio = $("input[name=horaInicio]").val();
-    var fin = $("input[name=horaFin]").val();
-
-    var timeStart = new Date("01/01/2007 " + inicio);
-    var timeEnd = new Date("01/01/2007 " + fin);
-    var startHour = timeStart.getHours();
-    var endHour = timeEnd.getHours();
-    var startMinute = timeStart.getMinutes();
-    var endMinute = timeEnd.getMinutes();
-
-    if (endHour > startHour) {
-      totalMinutes = Math.abs(endMinute - startMinute);
-      if (totalMinutes == 0) {
-        totalHours = Math.abs(endHour - startHour);
-      } else {
-        totalMinutes = Math.abs(totalMinutes - 60);
-        totalHours = Math.abs(endHour - 1);
-        totalHours = Math.abs(totalHours - startHour);
-      }
-    } else if (endHour <= startHour) {
-      totalMinutes = Math.abs(endMinute - startMinute);
-      totalHours = Math.abs(endHour - startHour);
-    }
-
-    $("#duracionTotal").val(`${totalHours} horas ${totalMinutes} minutos`);
   }
 }
 
@@ -407,7 +377,6 @@ function getDetallePlaneacion() {
     },
     dataType: "json",
     success: function(response) {
-      console.log(response[1].compe);
       $('.detalleEjec').append(
         `<div id="detalleCardContentGI">
         <div class="row">
@@ -469,6 +438,14 @@ function getDetallePlaneacion() {
       </div>`
       )
 
+      $('#detalleEjecModalBody ').append(
+        `<div class="row rowForms">
+          <div class="col-lg-12 col-md-12 col-sm-12 colBtnDetalle">
+            <button id="cerrarDetalleModal" data-toggle="modal" data-target="#detalleEjecModal" type="button" class="btn btn-danger">Cerrar</button>
+          </div>
+        </div>`
+      )
+
       var tactic = response[1].tacticos;
       for (let index = 0; index < tactic.length; index++) {
         const element = tactic[index];
@@ -479,3 +456,4 @@ function getDetallePlaneacion() {
     }
   });
 }
+  

@@ -434,6 +434,15 @@ function getTrabajosAdministrativosCalendarQuery($con)
     return executeQuery($con, $sql);
 }
 
+function getUserRolQuery($con, $name)
+{
+    $sql = "SELECT id_rol
+    FROM personas
+    WHERE email = '$name' OR usuario = '$name'";
+
+    return executeQuery($con, $sql);
+}
+
 /* INSERTS */
 
 function insertIndicadoresXFocalizacionQuery($con, $id_focalizacion, $id_indicador)
