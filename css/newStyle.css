@@ -1036,6 +1036,10 @@ main {
   text-transform: lowercase;
 }
 
+.input-group-append button{
+  border-color: transparent;
+}
+
 .returnBtn {
   display: flex;
   align-items: center;

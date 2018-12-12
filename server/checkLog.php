@@ -9,7 +9,8 @@ if (!isset($_SESSION['user'])) {
 
     if ($rol_user == 3) {
         if ($id_zona == $zona_user) {
-            $data = array("nombre" => $_SESSION['user']['nombre'], "rol" => $rol_user, "zona" => $id_zona);
+            $data = array("nombre" => $_SESSION['user']['nombre'], 
+            "rol" => $rol_user, "zona" => $id_zona);
         } else {
             $data = ["message" => "Esta no es tu zona!", "error" => 2];
         }
