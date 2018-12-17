@@ -125,6 +125,21 @@ body {
   max-height: 100%;
 }
 
+#rowInvitado {
+	margin-top: 20px;
+	display: flex;
+  justify-content: center;
+}
+
+#btnIngresarInvitado{
+  border-radius: 0px;
+  background-color: cadetblue;
+}
+
+#btnIngresarInvitado:hover{
+  background-color: #777;
+}
+
 #imgBienvenida {
   height: 100%;
   padding: 40px 35px 0px 35px;

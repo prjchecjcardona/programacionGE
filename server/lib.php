@@ -32,8 +32,6 @@ class gestionEducativa
 
     }
 
-
-
     public function getComportamientos()
     {
         return getComportamientosQuery($this->con);
@@ -232,5 +230,10 @@ class gestionEducativa
     public function getUserRol($name)
     {
         return getUserRolQuery($this->con, $name);
-    }    
+    }
+
+    public function insertRegistros($tipo_registro, $id_plan, $url)
+    {
+        return insertRegistrosQuery($this->con, $tipo_registro, $id_plan, $url);
+    }
 }

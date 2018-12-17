@@ -249,15 +249,13 @@
                   </div>
                   <div class="col-lg 12 col-md-6 col-sm-6" id="colActaReunion">
                     <label for="actaReunion">Acta de reunión <label for="actaReunion" class="obligatorio">*</label></label>
-                    <div id="actaReunion" class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputActaReunion">Acta</span>
-                      </div>
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputActa" aria-describedby="inputActaReunion"
-                          name="inputActa">
-                        <label class="custom-file-label" for="inputActa">Seleccione</label>
-                      </div>
+                    <div class="custom-file-container" data-upload-id="actasReunion">
+                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">&times;</a></label>
+                      <label class="custom-file-container__custom-file" >
+                          <input type="file" id="actas" class="custom-file-container__custom-file__custom-file-input" accept="*" name="actas">
+                          <span class="custom-file-container__custom-file__custom-file-control"></span>
+                      </label>
+                      <div class="custom-file-container__image-preview"></div>
                     </div>
                   </div>
                 </div>
@@ -316,7 +314,7 @@
           </div>
         </div>
       </div>
-    </div>  
+    </div>
 
     <!-- Modal de novedad de no ejecucion -->
     <div class="modal fade" id="modalNoEjecucion" tabindex="-1" role="dialog" aria-labelledby="modalnoEjecucionTitle"
