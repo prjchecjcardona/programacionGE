@@ -144,6 +144,23 @@ function getFocalizacionesXZonaQuery($con, $mun)
     return executeQuery($con, $sql);
 }
 
+function getInformesQuery($con){
+    $sql = "SELECT zona, SUM(cantidad_participantes)
+    FROM cobertura
+    GROUP BY zona";
+
+    return executeQuery($con, $sql);
+}
+
+function getMunicipioInformeQuery($con)
+{
+    $sql = "SELECT DISTINCT municipio
+    FROM cobertura
+    ORDER BY municipio ASC";
+
+    return executeQuery($con, $sql);
+}
+
 function getPlaneacionesXFocalizacionQuery($con, $foc)
 {
     $sql = "SELECT DISTINCT pl.id_planeacion, tg.tipo_gestion, estrat.nombre_estrategia, tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona, pl.id_focalizacion

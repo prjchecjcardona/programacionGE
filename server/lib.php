@@ -227,6 +227,11 @@ class gestionEducativa
         return getSubtemasXTemaQuery($this->con, $id_tema);
     }
 
+    public function getMunicipioInforme()
+    {
+        return getMunicipioInformeQuery($this->con);
+    }
+
     public function getUserRol($name)
     {
         return getUserRolQuery($this->con, $name);
@@ -235,5 +240,10 @@ class gestionEducativa
     public function insertRegistros($tipo_registro, $id_plan, $url)
     {
         return insertRegistrosQuery($this->con, $tipo_registro, $id_plan, $url);
+    }
+
+    public function getInformes()
+    {
+        return getInformesQuery($this->con);
     }
 }

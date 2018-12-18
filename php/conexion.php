@@ -24,7 +24,7 @@ $con = new PDO( "pgsql:host=$host;port=5432;dbname=$database;user=$uid;password=
 
 
 if( $con) {
-	
+
 }else{
 	echo "Conexión no se pudo establecer.<br />";
 	// die( print_r( sqlsrv_errors(), true));
