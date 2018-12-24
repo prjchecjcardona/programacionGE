@@ -448,11 +448,40 @@ function getTrabajosAdministrativosCalendarQuery($con)
     return executeQuery($con, $sql);
 }
 
-function getUserRolQuery($con, $name)
+function getPlaneacionesGeoApp($con, $zona)
 {
-    $sql = "SELECT id_rol
-    FROM personas
-    WHERE email = '$name' OR usuario = '$name'";
+    $sql = "SELECT DISTINCT pl.id_planeacion, fecha_plan, municipio, CONCAT(nombres, ' ', apellidos) as nombre, zonas, nombre_entidad, comportamientos, competencia, nombre_estrategia, temas, nombre_tactico
+	FROM planeacion pl
+    JOIN focalizacion foc ON pl.id_focalizacion = foc.id_focalizacion
+    JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = pl.id_planeacion
+	JOIN subtemas sutem ON sutem.id_subtema = sxp.id_subtema
+    JOIN temas tem ON tem.id_temas = sutem.id_temas
+    JOIN tacticos_x_planeacion txp ON txp.id_planeacion = pl.id_planeacion
+    JOIN tactico tact ON txp.id_tactico = tact.id_tactico
+    JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
+    JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
+	JOIN municipios mun ON mun.id_municipio = foc.id_municipio
+	JOIN zonas zon ON mun.id_zona = zon.id_zona
+	JOIN asignar_zonas az ON az.id_zona = zon.id_zona
+	JOIN personas per ON per.cedula = az.cedula_asignado
+	JOIN entidades ent ON pl.id_entidad = ent.id_entidad
+	JOIN indicadores_chec_x_focalizacion ixf ON ixf.id_focalizacion = foc.id_focalizacion
+	JOIN indicadores_chec ic ON ic.id_indicador = ixf.id_indicador
+	JOIN comportamientos compor ON ic.id_comportamiento = compor.id_comportamientos
+	JOIN competencias compe ON compor.id_competencia = compe.id_competencia
+    WHERE fecha_plan = current_date ";
+    
+    if(empty($zona)){
+        $sql.= "AND zon.id_zona = 3";
+    }
+
+    return executeQuery($con, $sql);
+}
+
+function getUserRolQuery($con)
+{
+    $sql = "SELECT email, usuario, id_rol
+    FROM personas";
 
     return executeQuery($con, $sql);
 }

@@ -5,13 +5,11 @@ include 'lib.php';
 $api = new gestionEducativa();
 
 if (isset($_POST['user_rol'])) {
-    $user_name = $_POST['user_rol'];
-
-    $json = $api->getUserRol($user_name);
+    $json = $api->getUserRol();
 }
 
 if (isset($_POST)) {
-    if (isset($_POST['loginSubmit'])) {
+    if (isset($_POST['loginSubmit']) || isset($_POST['loginGeoApp'])) {
 
         $addPaswd = 'GIkkU2Eeyw1@!8';
         $mailuid = $_POST['mailuid'];

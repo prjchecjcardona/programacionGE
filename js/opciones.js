@@ -279,9 +279,9 @@ function checkLogged() {
         window.location.href = "iniciarSesion.html";
       });
     } else {
-      $("#homeBtn").attr(
-        "href",
-        `home.html?user=${data.rol}&id_zona=${data.zona}`
+      $("#menu").attr(
+        "onclick",
+        `window.location.href='home.html?user=${data.rol}&id_zona=${data.zona}'`
       );
     }
   });

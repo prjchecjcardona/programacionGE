@@ -34,7 +34,7 @@ function uploadAsistencias() {
   form.append('id_plan', id_plan);
 
   $.ajax({
-    type: "POST",
+     type: "POST",
     url: "server/uploadRegistros.php",
     data: form,
     dataType: "json",

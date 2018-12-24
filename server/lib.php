@@ -227,9 +227,14 @@ class gestionEducativa
         return getSubtemasXTemaQuery($this->con, $id_tema);
     }
 
-    public function getUserRol($name)
+    public function getUserRol()
     {
-        return getUserRolQuery($this->con, $name);
+        return getUserRolQuery($this->con);
+    }
+
+    public function getPlaneacionesGeoApp($zona)
+    {
+        return getPlaneacionesGeoApp($zona);
     }
 
     public function insertRegistros($tipo_registro, $id_plan, $url)
