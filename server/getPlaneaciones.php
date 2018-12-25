@@ -71,10 +71,13 @@ if (isset($_POST['detallePlaneacion'])) {
 }
 
 if(isset($_POST['geoAppPlan'])){
-    $json = $api->getPlaneacionesGeoApp(zona);
+    $zona = $_POST['geoAppPlan'];
+    $json = $api->getPlaneacionesGeoApp($zona);
 
     if(count($json) > 1){
-        
+        $newArray = $json[0];
+    }else{
+        $newArray = $json;
     }
 }
 

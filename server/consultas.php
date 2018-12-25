@@ -487,8 +487,8 @@ function getPlaneacionesGeoApp($con, $zona)
 	JOIN comportamientos compor ON ic.id_comportamiento = compor.id_comportamientos
 	JOIN competencias compe ON compor.id_competencia = compe.id_competencia
     WHERE fecha_plan = current_date ";
-    
-    if(empty($zona)){
+
+    if(!empty($zona)){
         $sql.= "AND zon.id_zona = 3";
     }
 

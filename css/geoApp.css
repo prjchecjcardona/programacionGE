@@ -45,7 +45,7 @@ h1{
   margin: 10px 0px 10px 0px;
 }
 
-#zona{
+#zona, #planeaciones{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -54,13 +54,21 @@ h1{
   width: 100%;
 }
 
-#zona div{
+#zona div, #planeaciones div{
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 50%;
   height: auto;
   padding: 30px;
+}
+
+#planeaciones div{
+  width: calc(100% - 3em);
+  align-items: center;
+  font-family: checfont1;
+  font-size: 3em;
+  font-weight: 800;
 }
 
 button.zona{
