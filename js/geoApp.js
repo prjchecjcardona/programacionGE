@@ -35,6 +35,7 @@ function getZonas(){
 function getPlaneaciones(zona){
   $('#planeaciones div').html('');
   $('#zona').fadeOut();
+  $('#planeaciones').fadeIn();
   $.ajax({
     type: "POST",
     url: "server/getPlaneaciones.php",
@@ -47,16 +48,16 @@ function getPlaneaciones(zona){
         $('#planeaciones div').html('No existe ninguna planeación registrada para hoy');
       }else{
         response.forEach(element => {
-          $('#planeaciones div').append(
+          $('#divPlan').append(
             `<div class="card">
               <div class="card-header">
                 ${element.municipio}
               </div>
               <div class="card-body">
                 <h5 class="card-title">${element.comportamientos} - ${element.competencia}</h5>
-                <p class="card-text">${nombre_estrategia}</p>
-                <a href="#" class="btn btn-primary">Ver detalles</a>
-                <a href="#" class="btn btn-success">Iniciar actividad</a>
+                <p class="card-text">${element.nombre_estrategia}</p>
+                <a href="#" class="btn btn-primary">Ver detalles <i class="fas fa-info-circle"></i></a>
+                <a href="#" class="btn btn-success">Iniciar actividad <i class="fas fa-map-marker-alt"></i></a>
               </div>
             </div>`
           );

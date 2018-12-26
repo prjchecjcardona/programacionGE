@@ -64,7 +64,7 @@ function intervencionesPorZona()
 
             }
         } else {
-            print_r($conexion->getPDO()-a>errorInfo());
+            print_r($con->getPDO()-a>errorInfo());
             $data['mensaje'] = "No se realizo la consulta gestoras por zona";
             $data['error'] = 1;
         }

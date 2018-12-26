@@ -467,6 +467,11 @@ function getTrabajosAdministrativosCalendarQuery($con)
 
 function getPlaneacionesGeoApp($con, $zona)
 {
+
+    date_default_timezone_set('America/Bogota');
+
+    $current_date = date('Y-m-d');
+
     $sql = "SELECT DISTINCT pl.id_planeacion, fecha_plan, municipio, CONCAT(nombres, ' ', apellidos) as nombre, zonas, nombre_entidad, comportamientos, competencia, nombre_estrategia, temas, nombre_tactico
 	FROM planeacion pl
     JOIN focalizacion foc ON pl.id_focalizacion = foc.id_focalizacion
@@ -486,10 +491,10 @@ function getPlaneacionesGeoApp($con, $zona)
 	JOIN indicadores_chec ic ON ic.id_indicador = ixf.id_indicador
 	JOIN comportamientos compor ON ic.id_comportamiento = compor.id_comportamientos
 	JOIN competencias compe ON compor.id_competencia = compe.id_competencia
-    WHERE fecha_plan = current_date ";
+    WHERE fecha_plan = '$current_date' ";
 
     if(!empty($zona)){
-        $sql.= "AND zon.id_zona = 3";
+        $sql.= "AND zon.id_zona = $zona";
     }
 
     return executeQuery($con, $sql);

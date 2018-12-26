@@ -72,13 +72,30 @@ if (isset($_POST['detallePlaneacion'])) {
 
 if(isset($_POST['geoAppPlan'])){
     $zona = $_POST['geoAppPlan'];
+    $i = 0;
+    $newArray = array();
+
     $json = $api->getPlaneacionesGeoApp($zona);
 
-    if(count($json) > 1){
-        $newArray = $json[0];
-    }else{
-        $newArray = $json;
+    foreach ($json as $key => $value) {
+        
+        if(empty($newArray)){
+            array_push($newArray, $value);
+        }else{
+            foreach ($newArray as $keyNA => $valueNA) {
+                if(!in_array($value['id_planeacion'], $valueNA, TRUE)){
+                    $exists = false;
+                }else{
+                    $exists = true;
+                }
+            }
+
+            if(!$exists) {
+                array_push($newArray, $value);
+            }
+        }
     }
+
 }
 
 echo json_encode($newArray);

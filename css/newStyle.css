@@ -883,6 +883,7 @@ hr {
 
 #navGE .nav-item {
   display: flex;
+  align-items: center;
 }
 
 .nav-item .fas {
