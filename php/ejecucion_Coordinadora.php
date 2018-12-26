@@ -61,7 +61,7 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada)
     include "conexion.php";
     $data = array('error' => 0, 'mensaje' => '', 'html' => array());
     $sql = "
-	SELECT pl.fecha, ent.nombreentidad AS lugarEncuentro, mun.municipio, comport.comportamientos, compet.competencia, est.nombreestrategia, tac.nombretactico, ind.nombreindicador
+	SELECT pl.fecha, ent.nombreentidad AS lugarEncuentro, mun.municipio, comport.comportamientos, compet.competencia, est.nombreestrategia, tac.nombretactico, ind.nombreindicador, tem.temas
 	FROM planeacion pl
 	JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
 	JOIN intervenciones int ON int.id_intervenciones = plxint.intervenciones_id_intervenciones
@@ -87,7 +87,7 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada)
 	LEFT OUTER JOIN competencias_por_comportamiento compexcomporT ON compexcomporT.comportamientos_id_comportamientos = comport.id_comportamientos
 	LEFT OUTER JOIN competencias compet ON compet.id_competencia = compexcomport.competencias_id_competencia
 	WHERE pl.id_planeacion = $idPlaneacion
-	GROUP BY pl.fecha, ent.nombreentidad, municipio, comport.comportamientos, compet.competencia, nombreestrategia, nombretactico, nombreindicador
+	GROUP BY pl.fecha, ent.nombreentidad, municipio, comport.comportamientos, compet.competencia, nombreestrategia, nombretactico, nombreindicador, tem.temas
 	";
 
     $array = "";
@@ -100,6 +100,7 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada)
             $data['html']['competencia'] = $filas[0]['competencia'];
             $data['html']['estrategia'] = $filas[0]['nombreestrategia'];
             $data['html']['tactico'] = $filas[0]['nombretactico'];
+            $data['html']['tema'] = $filas[0]['temas'];
             for ($i = 0; $i < count($filas); $i++) {
                 $array .= '<div class="row"><div class="col-md-12">
                 <label class="mr-sm-2" id="lblIndicadorChec1"><li>' . $filas[$i]['nombreindicador'] . '</li></label></div></div>';
@@ -154,9 +155,51 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada)
                 }
             }
         }
+
+        /* Obtener cantidad de tipo de poblacion */
+        $sql = "SELECT tppe_id_tipo_poblacion, tppe_cantidadpoblacion
+        FROM planeacion pl
+        JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
+            LEFT OUTER JOIN ejecuciones_por_planeacion epp ON epp.id_planeaciones_por_intervencion = plxint.id_planeaciones_por_intervencion
+            LEFT OUTER JOIN ejecucion eje ON eje.id_ejecucion = epp.ejecucion_id_ejecucion
+            LEFT OUTER JOIN tipo_poblacion_por_ejecucion tppe ON tppe.tppe_id_ejecucion = eje.id_ejecucion
+        WHERE pl.id_planeacion = $idPlaneacion";
+
+        $data['html']['datosEjec']['tipo_poblacion'] = array();
+        if($rs = $con->query($sql)){
+            if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+                foreach($filas as $key => $value){
+                    $data['html']['datosEjec']['tipo_poblacion'][$key] = $value;
+                }
+            }
+        }
+
+        /* Obtener cantidad de caracteristicas de poblacion */
+        $sql = "SELECT cppe_id_carcateristica, cantidad
+        FROM planeacion pl
+        JOIN planeaciones_por_intervencion plxint ON plxint.planeacion_id_planeacion = pl.id_planeacion
+            LEFT OUTER JOIN ejecuciones_por_planeacion epp ON epp.id_planeaciones_por_intervencion = plxint.id_planeaciones_por_intervencion
+            LEFT OUTER JOIN ejecucion eje ON eje.id_ejecucion = epp.ejecucion_id_ejecucion
+            LEFT OUTER JOIN caracteristicas_poblacion_por_ejecucion cppe ON cppe.cppe_id_ejecucion = eje.id_ejecucion
+        WHERE pl.id_planeacion = $idPlaneacion";
+
+        $data['html']['datosEjec']['carac_poblacion'] = array();
+        if($rs = $con->query($sql)){
+            if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+                foreach($filas as $key => $value){
+                    $data['html']['datosEjec']['carac_poblacion'][$key] = $value;
+                }
+            }
+        }
     }
 
     echo json_encode($data);
+}
+
+function cargarAsistencias()
+{
+    include 'conexion.php';
+    $data = array();
 }
 
 function guardarEjecucion($fecha, $hora, $asistentes, $detalleCumplimiento, $nCumplimiento, $idPlaneacion, $idIntervencion, $arrayAsistentes, $observaciones, $nombreContacto, $cargoContacto, $telefonoContacto, $correoContacto, $contacto, $tipopoblacion_asis, $caracteristicas_asis)
@@ -400,7 +443,7 @@ function getTipopoblacion()
 
     if ($con) {
         $sql = "SELECT id_tipopoblacion, tipopoblacion FROM tipopoblacion";
-        
+
         if ($rs = $con->query($sql)) {
             if ($filas = $rs->fetchAll(PDO::FETCH_ASSOC)) {
                 $data['html'] = $filas;
@@ -422,11 +465,11 @@ function getCaracteristicasPoblacion()
 
     if ($con) {
         $sql = "SELECT id_caracteristica, caracteristica FROM caracteristicas_por_poblacion";
-        
+
         $rs = $con->query($sql);
-        
+
         $filas = $rs->fetchAll(PDO::FETCH_ASSOC);
-        
+
         if ($rs) {
             if ($filas) {
                 $data['html'] = $filas;

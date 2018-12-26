@@ -232,7 +232,7 @@ class gestionEducativa
         return getMunicipioInformeQuery($this->con);
     }
 
-    public function getUserRol($name)
+    public function getUserRol()
     {
         return getUserRolQuery($this->con);
     }
