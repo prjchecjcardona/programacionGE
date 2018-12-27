@@ -191,6 +191,26 @@ function cargarDatosPlaneacion($idPlaneacion, $isEjecutada)
                 }
             }
         }
+
+        /* Obtener los adjuntos de las ejecuciones */
+        $sql = "SELECT ad.id_adjunto, urlarchivoadjunto
+        FROM adjuntos ad
+        JOIN ejecucion_adjuntos ea ON ea.id_adjunto = ad.id_adjunto
+        JOIN ejecucion eje ON eje.id_ejecucion = ea.id_ejecucion
+        JOIN ejecuciones_por_planeacion epp ON epp.ejecucion_id_ejecucion = eje.id_ejecucion
+        JOIN planeaciones_por_intervencion plxint ON plxint.id_planeaciones_por_intervencion = epp.id_planeaciones_por_intervencion
+        JOIN planeacion pl ON plxint.planeacion_id_planeacion = pl.id_planeacion
+        WHERE pl.id_planeacion = $idPlaneacion";
+
+        $data['html']['datosEjec']['adjuntos'] = array();
+
+        if($rs = $con->query($sql)){
+            if($filas = $rs->fetchAll(PDO::FETCH_ASSOC)){
+                foreach ($filas as $key => $value) {
+                    $data['html']['datosEjec']['adjuntos'][$key] = $value;
+                }
+            }
+        }
     }
 
     echo json_encode($data);

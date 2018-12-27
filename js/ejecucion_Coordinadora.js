@@ -330,6 +330,21 @@ function cargarDatosPlaneacion() {
 						$('#total-genero').text(total);
 					}
 
+					if(data.html.datosEjec.adjuntos != ""){
+						let adjuntos = data.html.datosEjec.adjuntos
+						adjuntos.forEach(element => {
+							let name = element.urlarchivoadjunto.split("/");
+
+							$('#showAdjuntos ul').append(
+								`<li><a href="${element.urlarchivoadjunto}">${name[2]}</a></li>`
+							);
+						});
+					}else{
+						$('#showAdjuntos').html(
+							`No se adjuntaron archivos`
+						);
+					}
+
 
 					$('.esconder, #button2id').hide();
 					$('#button1id')
