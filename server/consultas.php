@@ -465,14 +465,14 @@ function getTrabajosAdministrativosCalendarQuery($con)
     return executeQuery($con, $sql);
 }
 
-function getPlaneacionesGeoApp($con, $zona)
+function getPlaneacionesGeoAppQuery($con, $zona)
 {
 
     date_default_timezone_set('America/Bogota');
 
     $current_date = date('Y-m-d');
 
-    $sql = "SELECT DISTINCT pl.id_planeacion, fecha_plan, municipio, CONCAT(nombres, ' ', apellidos) as nombre, zonas, nombre_entidad, comportamientos, competencia, nombre_estrategia, temas, nombre_tactico
+    $sql = "SELECT DISTINCT pl.id_planeacion, fecha_plan, municipio, CONCAT(nombres, ' ', apellidos) as nombre, zonas, nombre_entidad, comportamientos, competencia, nombre_estrategia, temas, nombre_tactico, pl.estado
 	FROM planeacion pl
     JOIN focalizacion foc ON pl.id_focalizacion = foc.id_focalizacion
     JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = pl.id_planeacion
@@ -527,11 +527,11 @@ function insertFocalizacionQuery($con, $id_mun, $id_tipoGestion, $tipo_focalizac
 
 }
 
-function insertPlaneacionQuery($con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $fecha_plan, $fecha_registro, $id_foc)
+function insertPlaneacionQuery($con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $fecha_plan, $fecha_registro, $id_foc, $estado)
 {
     $sql = "INSERT INTO public.planeacion(
-	jornada, lugar_encuentro, id_barrio, id_vereda, id_entidad, fecha_plan, fecha_registro, id_focalizacion)
-    VALUES ('$jornada', '$lugar_encuentro', $id_barrio, $id_vereda, $id_entidad, '$fecha_plan', '$fecha_registro', $id_foc);";
+	jornada, lugar_encuentro, id_barrio, id_vereda, id_entidad, fecha_plan, fecha_registro, id_focalizacion, estado)
+    VALUES ('$jornada', '$lugar_encuentro', $id_barrio, $id_vereda, $id_entidad, '$fecha_plan', '$fecha_registro', $id_foc, '$estado');";
 
     return insertQuery($con, $sql);
 }
@@ -646,4 +646,30 @@ function insertRegistrosQuery($con, $tipo_registro, $id_plan, $url)
     VALUES (nextval('seq_tipo_registro'), $tipo_registro, $id_plan, '$url');";
 
     return insertQuery($con, $sql);
+}
+
+function updateEstadoPlaneacionQuery($con, $estado, $id_plan){
+    $sql = "UPDATE planeacion
+    SET estado = '$estado'
+    WHERE id_planeacion = $id_plan";
+
+    return insertQuery($con, $sql);
+}
+
+function getEtapaPlaneacionQuery($con, $id_plan)
+{
+    $sql = "SELECT etapa_planeacion
+    FROM registro_ubicacion 
+    WHERE id_planeacion = $id_plan";
+
+    return executeQuery($con, $sql);
+}
+
+function insertGeoLocationQuery($con, $lat, $long, $fecha, $hora, $id_plan, $etapa_plan)
+{
+    $sql = "INSERT INTO public.registro_ubicacion(
+    id_registro, latitud, longitud, fecha, hora, id_planeacion, etapa_planeacion)
+    VALUES (nextval('seq_registro_ubicacion'), $lat, $long, '$fecha', '$hora', $id_plan, '$etapa_plan');";
+
+    return executeQuery($con, $sql);
 }

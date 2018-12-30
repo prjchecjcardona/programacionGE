@@ -34,8 +34,7 @@ function getZonas(){
 
 function getPlaneaciones(zona){
   $('#planeaciones div').html('');
-  $('#zona').fadeOut();
-  $('#planeaciones').fadeIn();
+  $('#zona').addClass('hide');
   $.ajax({
     type: "POST",
     url: "server/getPlaneaciones.php",
@@ -45,9 +44,30 @@ function getPlaneaciones(zona){
     dataType: "json",
     success: function (response) {
       if(response == ""){
-        $('#planeaciones div').html('No existe ninguna planeación registrada para hoy');
+        $('#planeaciones div').html(
+          `<div class="alert alert-warning" role="alert">
+            No hay planeaciones digitadas para hoy! <a class="btn btn-success" id="returnBtn">Regresar</a>
+          </div>
+          <a class="btn btn-primary" id="startGeo">INICIAR GEOLOCALIZADOR</a>`
+        );
+
+        /* Function for return btn  */
+        $('#returnBtn').click(() => {
+          $('#planeaciones').addClass('hide');
+          $('#zona').removeClass('hide');
+        });
+
+        /* Function for geolocation */
+        $('#startGeo').click(() => {
+          getLocalizacion();
+        });
       }else{
         response.forEach(element => {
+          /* Switch for state of planeacion */
+          switch(element.estado){
+            case "En ejecucion": 
+            break;
+          }
           $('#divPlan').append(
             `<div class="card">
               <div class="card-header">
@@ -57,16 +77,56 @@ function getPlaneaciones(zona){
                 <h5 class="card-title">${element.comportamientos} - ${element.competencia}</h5>
                 <p class="card-text">${element.nombre_estrategia}</p>
                 <a href="#" class="btn btn-primary">Ver detalles <i class="fas fa-info-circle"></i></a>
-                <a href="#" class="btn btn-success">Iniciar actividad <i class="fas fa-map-marker-alt"></i></a>
+                <a href="#" id="${element.id_planeacion}" onclick="getLocalizacion(${element.id_planeacion})" class="btn btn-success geoloc">Iniciar actividad <i class="fas fa-map-marker-alt"></i></a>
               </div>
             </div>`
           );
         });
       }
+    },
+    complete: function(){
+      $('#planeaciones').removeClass('hide');
     }
   });
 }
 
-function getLocalizacion(){
-  
+function getLocalizacion(id_plan){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(position => {
+      $.ajax({
+        type: "POST",
+        url: "server/geoLocation.php",
+        data: {
+          id_plan: id_plan,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        },
+        dataType: "json",
+        success: function (response) {
+          if(response.etapa == "Iniciada"){
+            $(`#${id_plan}`).addClass('en-ejecucion');
+            $(`#${id_plan}`).html('Finalizar actividad <i class="fas fa-map-marker-alt"></i>');
+          }else if(response.etapa == "Finalizada"){
+              $(`#${id_plan}`).fadeOut();
+          }
+        }
+      });
+    });
+  }else{
+    alert('La geolocalización no se encuentra disponible en este navegador');
+  }
+}
+
+function verifyState(id_plan){
+  $.ajax({
+    type: "POST",
+    url: "server/getState.php",
+    data: {
+      id_plan : id_plan
+    },
+    dataType: "json",
+    success: function (response) {
+      
+    }
+  });
 }

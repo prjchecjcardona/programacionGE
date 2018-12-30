@@ -299,7 +299,7 @@ function cargarDatosPlaneacion() {
 					$('.input_caract').prop("disabled", true);
 					$('.input_cant').prop("disabled", true);
 
-					if(data.html.datosEjec.tipo_poblacion != ""){
+					if(data.html.datosEjec.tipo_poblacion != "" || data.html.datosEjec.tipo_poblacion != null){
 						let cant_tpo = data.html.datosEjec.tipo_poblacion;
 						$('#inputcantidad1').val(data.html.datosEjec.tipo_poblacion[0].tppe_cantidadpoblacion);
 						$('#inputcantidad2').val(data.html.datosEjec.tipo_poblacion[1].tppe_cantidadpoblacion);
@@ -314,7 +314,7 @@ function cargarDatosPlaneacion() {
 						$('#total').text(total);
 					}
 
-					if(data.html.datosEjec.carac_poblacion != ""){
+					if(data.html.datosEjec.carac_poblacion != "" || data.html.datosEjec.carac_poblacion != null){
 						let cant_cpo = data.html.datosEjec.carac_poblacion;
 						$('#caracteristica1').val(data.html.datosEjec.carac_poblacion[0].cantidad);
 						$('#caracteristica2').val(data.html.datosEjec.carac_poblacion[1].cantidad);

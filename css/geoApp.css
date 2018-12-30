@@ -101,25 +101,70 @@ button:hover {
 }
 
 .en-ejecucion {
-  background-color: rgb(182, 9, 9);
+  background-color: rgb(182, 9, 9) !important;
+  border-color: rgb(182, 9, 9) !important;
 }
 
 .nav {
+  display: flex;
+  justify-content: space-between;
   position: absolute;
   width: 100%;
   height: 60px;
   z-index: 2;
+  padding: 0px 0px 0px 10px;
+}
+
+#nombre{
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+#nombre h3{
+  color: #fff;
+  font-family: checfont1;
 }
 
 .nav .fas {
   font-weight: 900;
-  font-size: 3em;
+  font-size: 2em;
   padding: 10px;
   color: #fff;
   transition: 0.3s;
   cursor: pointer;
 }
 
+#icons{
+  display: flex;
+  align-items: center;
+}
+
+.alert{
+  font-family: checfont1;
+  text-align: center;
+}
+
 .nav .fas:hover{
   color: rgb(107, 105, 105);
+}
+
+.hide{
+  display: none !important;
+}
+
+#returnBtn{
+  width: auto;
+  margin: 0;
+  box-shadow: 1px 1px rgba(114, 112, 112, 0.685);
+  color: #fff;
+  font-weight: 900;
+}
+
+/** TEST */
+#startGeo{
+  width: auto;
+  font-size: 3em;
+  font-family: checfont1;
+
 }
