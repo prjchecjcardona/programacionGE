@@ -16,21 +16,19 @@ function executeQuery($con, $sql)
 
 function logIn($con, $sql, $pass)
 {
-    if(empty($sql)){
+    if (empty($sql)) {
         session_start();
 
         $_SESSION['guest'] = array("nombre" => "invitado", "rol" => 4, "zona" => "all");
-        header("Location: ../opciones.html?user=4&id_zona=all");
+        $data = array("error" => 1, "user" => $_SESSION['user']);
         exit();
-    }else{
+    } else {
         if ($result = $con->query($sql)) {
             if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
 
                 $pswdCheck = password_verify($pass, $row['passwd']);
                 if ($pswdCheck == false) {
-                    header("Location: ../iniciarSesion.html?error=wrgpswd");
-                    exit();
-                    echo false;
+                    $data = array("error" => 0, "error_type" => "wrgpswd");
 
                 } elseif ($pswdCheck == true) {
                     session_start();
@@ -39,25 +37,17 @@ function logIn($con, $sql, $pass)
                         'pass' => $row['passwd'], 'nombre' => $row['nombres'], 'rol' => $row['id_rol'],
                         'zona' => $row['id_zona']);
 
-                    if ($row['id_rol'] != 3) {
+                    $data = array("error" => 1, "user" => $_SESSION['user']);
 
-                        header("Location: ../opciones.html?user=" . $row['id_rol'] . "&id_zona=all");
-                        exit();
-                    } else {
-
-                        header("Location: ../opciones.html?user=" . $row['id_rol'] . "&id_zona=" . $row['id_zona'] . "");
-                        exit();
-                    }
                 }
             } else {
-                header("Location: ../iniciarSesion.html?error=nouser");
-                exit();
+                $data = array("error" => 0, "error_type" => "nouser");
             }
         }
     }
+
+    return $data;
 }
-
-
 
 function insertQuery($con, $sql)
 {
@@ -144,7 +134,8 @@ function getFocalizacionesXZonaQuery($con, $mun)
     return executeQuery($con, $sql);
 }
 
-function getInformesQuery($con){
+function getInformesQuery($con)
+{
     $sql = "SELECT zona, SUM(cantidad_participantes)
     FROM cobertura
     GROUP BY zona";
@@ -253,9 +244,9 @@ function getTemasQuery($con, $compor)
 
 function loginQuery($con, $uid, $psswd)
 {
-    if(empty($uid)){
+    if (empty($uid)) {
         $sql = "";
-    }else{
+    } else {
         $sql = "SELECT per.cedula, per.id_rol, rol.cargo, per.email, per.usuario, per.passwd, per.foto_url, asz.id_zona, per.nombres
         FROM personas per
         LEFT JOIN asignar_zonas asz ON asz.cedula_asignado = per.cedula
@@ -493,8 +484,8 @@ function getPlaneacionesGeoAppQuery($con, $zona)
 	JOIN competencias compe ON compor.id_competencia = compe.id_competencia
     WHERE fecha_plan = '$current_date' ";
 
-    if(!empty($zona)){
-        $sql.= "AND zon.id_zona = $zona";
+    if (!empty($zona)) {
+        $sql .= "AND zon.id_zona = $zona";
     }
 
     return executeQuery($con, $sql);
@@ -648,7 +639,8 @@ function insertRegistrosQuery($con, $tipo_registro, $id_plan, $url)
     return insertQuery($con, $sql);
 }
 
-function updateEstadoPlaneacionQuery($con, $estado, $id_plan){
+function updateEstadoPlaneacionQuery($con, $estado, $id_plan)
+{
     $sql = "UPDATE planeacion
     SET estado = '$estado'
     WHERE id_planeacion = $id_plan";

@@ -29,7 +29,7 @@ body {
   align-items: center;
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 60px);
 }
 
 #list {
@@ -81,6 +81,7 @@ h1 {
 a.btn {
   width: 100%;
   margin-bottom: 10px;
+  color: white !important;
 }
 
 button.zona {
@@ -106,13 +107,13 @@ button:hover {
 }
 
 .nav {
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  width: 100%;
-  height: 60px;
-  z-index: 2;
-  padding: 0px 0px 0px 10px;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	width: 100%;
+	height: 60px;
+	z-index: 2;
+	padding: 0px 20px 0px 30px;
 }
 
 #nombre{
@@ -146,7 +147,7 @@ button:hover {
 }
 
 .nav .fas:hover{
-  color: rgb(107, 105, 105);
+  color: rgb(212, 211, 211);
 }
 
 .hide{
@@ -161,10 +162,6 @@ button:hover {
   font-weight: 900;
 }
 
-/** TEST */
-#startGeo{
-  width: auto;
-  font-size: 3em;
-  font-family: checfont1;
-
+#nombre h3{
+  margin: 0%;
 }

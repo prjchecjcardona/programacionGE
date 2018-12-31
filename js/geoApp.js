@@ -1,5 +1,9 @@
-$(function(){
-  getZonas();
+$(function () {
+  checkLogged();
+
+  $('#salir').click(() => {
+    $('#logout').submit();
+  });
 });
 
 var id_zona = getParam("id_zona");
@@ -11,12 +15,18 @@ function getParam(param) {
   param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
   var regex = new RegExp("[\\?&]" + param + "=([^&#]*)");
   var results = regex.exec(location.search);
-  return results === null
-    ? ""
-    : decodeURIComponent(results[1].replace(/\+/g, " "));
+  return results === null ?
+    "" :
+    decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function getZonas(){
+if (id_zona == "all") {
+  getZonas();
+} else {
+  getPlaneaciones(id_zona);
+}
+
+function getZonas() {
   $.ajax({
     type: "POST",
     url: "server/getZonas.php",
@@ -32,66 +42,75 @@ function getZonas(){
   });
 }
 
-function getPlaneaciones(zona){
+function getPlaneaciones(zona) {
   $('#planeaciones div').html('');
   $('#zona').addClass('hide');
   $.ajax({
     type: "POST",
     url: "server/getPlaneaciones.php",
     data: {
-      geoAppPlan : zona
+      geoAppPlan: zona
     },
     dataType: "json",
     success: function (response) {
-      if(response == ""){
-        $('#planeaciones div').html(
-          `<div class="alert alert-warning" role="alert">
-            No hay planeaciones digitadas para hoy! <a class="btn btn-success" id="returnBtn">Regresar</a>
-          </div>
-          <a class="btn btn-primary" id="startGeo">INICIAR GEOLOCALIZADOR</a>`
-        );
+      if (response == "") {
+        if (id_zona == "all") {
+          $('#planeaciones div').html(
+            `<div class="alert alert-warning" role="alert">
+              No hay planeaciones digitadas para hoy! <a class="btn btn-success" onclick="rtnBtn()" id="returnBtn">Regresar</a>
+            </div>`
+          );
+        } else {
+          $('#planeaciones div').html(
+            `<div class="alert alert-warning" role="alert">
+              No hay planeaciones digitadas para hoy!
+            </div>`
+          );
+        }
 
-        /* Function for return btn  */
-        $('#returnBtn').click(() => {
-          $('#planeaciones').addClass('hide');
-          $('#zona').removeClass('hide');
-        });
-
-        /* Function for geolocation */
-        $('#startGeo').click(() => {
-          getLocalizacion();
-        });
-      }else{
+      } else {
         response.forEach(element => {
-          /* Switch for state of planeacion */
-          switch(element.estado){
-            case "En ejecucion": 
-            break;
-          }
           $('#divPlan').append(
-            `<div class="card">
+            `<div id="card${element.id_planeacion}" class="card">
               <div class="card-header">
                 ${element.municipio}
               </div>
               <div class="card-body">
                 <h5 class="card-title">${element.comportamientos} - ${element.competencia}</h5>
                 <p class="card-text">${element.nombre_estrategia}</p>
-                <a href="#" class="btn btn-primary">Ver detalles <i class="fas fa-info-circle"></i></a>
-                <a href="#" id="${element.id_planeacion}" onclick="getLocalizacion(${element.id_planeacion})" class="btn btn-success geoloc">Iniciar actividad <i class="fas fa-map-marker-alt"></i></a>
-              </div>
+                <a class="btn btn-primary">Ver detalles <i class="fas fa-info-circle"></i></a>
+                <a id="${element.id_planeacion}" onclick="getLocalizacion(${element.id_planeacion})" class="btn btn-success geoloc"> Iniciar actividad <i class="fas fa-map-marker-alt"></i></a>
+                </div>
             </div>`
           );
+
+          /* Switch for state of planeacion */
+          switch (element.estado) {
+            case "En Ejecución":
+              $(`#${element.id_planeacion}`).addClass('en-ejecucion');
+              $(`#${element.id_planeacion}`).html('Finalizar actividad <i class="fas fa-map-marker-alt"></i>');
+              break;
+            case "Ejecutado":
+              $(`#${element.id_planeacion}`).remove();
+              $(`#card${element.id_planeacion} .card-body`).append(
+                `<div class="alert alert-success" role="alert">
+                <i class="fas fa-check-circle" style="font-size: 2em;"></i>
+                </div>`
+              );
+              break;
+
+          }
         });
       }
     },
-    complete: function(){
+    complete: function () {
       $('#planeaciones').removeClass('hide');
     }
   });
 }
 
-function getLocalizacion(id_plan){
-  if(navigator.geolocation){
+function getLocalizacion(id_plan) {
+  if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
       $.ajax({
         type: "POST",
@@ -103,30 +122,53 @@ function getLocalizacion(id_plan){
         },
         dataType: "json",
         success: function (response) {
-          if(response.etapa == "Iniciada"){
+          if (response.etapa == "Iniciada") {
             $(`#${id_plan}`).addClass('en-ejecucion');
             $(`#${id_plan}`).html('Finalizar actividad <i class="fas fa-map-marker-alt"></i>');
-          }else if(response.etapa == "Finalizada"){
-              $(`#${id_plan}`).fadeOut();
+          } else if (response.etapa == "Finalizada") {
+            $(`#${id_plan}`).fadeOut();
+            $(`#card${element.id_planeacion} .card-body`).append(
+              `<div class="alert alert-success" role="alert">
+              <i class="fas fa-check-circle" style="font-size: 2em;"></i>
+              </div>`
+            );
           }
         }
       });
     });
-  }else{
+  } else {
     alert('La geolocalización no se encuentra disponible en este navegador');
   }
 }
 
-function verifyState(id_plan){
+function checkLogged() {
   $.ajax({
     type: "POST",
-    url: "server/getState.php",
+    url: "server/checkLog.php",
     data: {
-      id_plan : id_plan
+      zona: id_zona
     },
-    dataType: "json",
-    success: function (response) {
-      
+    dataType: "json"
+  }).done(function (data) {
+    if (data.error) {
+      swal({
+        type: "info",
+        title: "Usuario",
+        text: data.message
+      }).then(function () {
+        window.location.href = "iniciarSesion.html";
+      });
+    } else {
+      $("#menu").click(function () {
+        window.location.href = `home.html?user=${data.rol}&id_zona=${data.zona}`;
+      });
+      $('#nombre h3').html(`${data.nombre}`);
     }
   });
+}
+
+
+function rtnBtn() {
+  $('#planeaciones').addClass('hide');
+  $('#zona').removeClass('hide');
 }
