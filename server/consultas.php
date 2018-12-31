@@ -382,7 +382,7 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con)
 {
     $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio,
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
-	CONCAT(per.nombres, ' ', per.apellidos) as nombre
+	CONCAT(per.nombres, ' ', per.apellidos) as nombre, plan.estado
     FROM planeacion plan
     LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
     LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
@@ -403,7 +403,7 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con)
     JOIN tactico tact ON txp.id_tactico = tact.id_tactico
     JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
     JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
-    WHERE plan.id_planeacion IN (SELECT id_planeacion FROM ejecucion)";
+    WHERE plan.estado = 'En Ejecución' OR plan.estado = 'Ejecutado'";
 
     return executeQuery($con, $sql);
 }
