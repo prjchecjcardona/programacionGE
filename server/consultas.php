@@ -120,7 +120,8 @@ function getComportamientosQuery($con)
 
 function getFocalizacionesXZonaQuery($con, $mun)
 {
-    $sql = "SELECT foc.id_focalizacion, mun.id_municipio, id_tipo_gestion, mun.municipio, mun.id_zona, compor.id_comportamientos, compor.comportamientos, foc.tipo_focalizacion, foc.fecha, compe.competencia
+    $sql = "SELECT foc.id_focalizacion, mun.id_municipio, id_tipo_gestion, mun.municipio, mun.id_zona, compor.id_comportamientos,
+    compor.comportamientos, foc.tipo_focalizacion, foc.fecha, compe.competencia
     FROM focalizacion foc
     LEFT JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion= foc.id_focalizacion
     LEFT JOIN indicadores_chec ind ON ind.id_indicador= icxf.id_indicador
@@ -313,7 +314,7 @@ function getMaxIdTAdminQuery($con)
     return executeQuery($con, $sql);
 }
 
-function getPlaneacionesCalendarQuery($con, $plan_ejec)
+function getPlaneacionesCalendarQuery($con)
 {
     $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio,
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
@@ -337,25 +338,9 @@ function getPlaneacionesCalendarQuery($con, $plan_ejec)
     JOIN tacticos_x_planeacion txp ON txp.id_planeacion = plan.id_planeacion
     JOIN tactico tact ON txp.id_tactico = tact.id_tactico
     JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
-    JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion ";
-
-    if (!empty($plan_ejec)) {
-
-        $and_true = true;
-
-        foreach ($plan_ejec as $key => $value) {
-            $val = $value['id'];
-            if ($and_true) {
-                $sql .= "WHERE plan.id_planeacion <> $val";
-                $and_true = false;
-            } else {
-                $sql .= " AND plan.id_planeacion <> $val";
-            }
-        }
-
-        $sql .= " ORDER BY plan.id_planeacion ASC";
-
-    }
+    JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion 
+    WHERE plan.estado = 'Planeado'
+    ORDER BY plan.id_planeacion ASC";
 
     return executeQuery($con, $sql);
 }
@@ -382,7 +367,7 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con)
 {
     $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio,
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
-	CONCAT(per.nombres, ' ', per.apellidos) as nombre, plan.estado
+	CONCAT(per.nombres, ' ', per.apellidos) as nombre, plan.estado, hora, etapa_planeacion, plan.solicitud_interventora
     FROM planeacion plan
     LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
     LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
@@ -403,6 +388,7 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con)
     JOIN tactico tact ON txp.id_tactico = tact.id_tactico
     JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
     JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
+    JOIN registro_ubicacion ru ON ru.id_planeacion = plan.id_planeacion
     WHERE plan.estado = 'En Ejecución' OR plan.estado = 'Ejecutado'";
 
     return executeQuery($con, $sql);
@@ -495,6 +481,39 @@ function getUserRolQuery($con)
 {
     $sql = "SELECT email, usuario, id_rol
     FROM personas";
+
+    return executeQuery($con, $sql);
+}
+
+function checkFocalizacionQuery($con, $id_mun, $comp, $tipo)
+{
+    $sql = "SELECT DISTINCT mun.municipio, compe.competencia, foc.tipo_focalizacion
+    FROM focalizacion foc
+    LEFT JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion= foc.id_focalizacion
+    LEFT JOIN indicadores_chec ind ON ind.id_indicador= icxf.id_indicador
+    LEFT JOIN comportamientos compor ON compor.id_comportamientos = ind.id_comportamiento
+    LEFT JOIN competencias compe ON compe.id_competencia = compor.id_competencia
+    JOIN municipios mun ON mun.id_municipio = foc.id_municipio
+    WHERE mun.id_municipio = $id_mun AND compor.id_comportamientos = $comp AND foc.tipo_focalizacion = '$tipo'";
+
+    return executeQuery($con, $sql);
+}
+
+function ejecucion_planeacionQuery($con, $id_plan)
+{
+    $sql = "SELECT id_ejecucion
+    FROM ejecucion
+    WHERE id_planeacion = $id_plan";
+
+    return executeQuery($con, $sql);
+}
+
+function checkRegistrosQuery($con, $id_plan)
+{
+    $sql = "SELECT DISTINCT rp.id_planeacion, tr.id_tipo_registro
+    FROM registros_x_planeacion rp
+    JOIN tipo_registro tr ON tr.id_tipo_registro = rp.id_tipo_registro
+    WHERE id_planeacion = 20 AND rp.id_tipo_registro IN (1, 3, 4, 5)";
 
     return executeQuery($con, $sql);
 }
@@ -651,7 +670,7 @@ function updateEstadoPlaneacionQuery($con, $estado, $id_plan)
 function getEtapaPlaneacionQuery($con, $id_plan)
 {
     $sql = "SELECT etapa_planeacion
-    FROM registro_ubicacion 
+    FROM registro_ubicacion
     WHERE id_planeacion = $id_plan";
 
     return executeQuery($con, $sql);

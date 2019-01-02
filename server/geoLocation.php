@@ -18,12 +18,7 @@ if(isset($_POST)){
   if(count($estado) < 1){
     $etapa_plan = "Iniciada";
     $estado = "En Ejecución";
-  }else{
-    $etapa_plan = "Finalizada";
-    $estado = "Ejecutado";
   }
-
-  $json = $api->updateEstadoPlaneacion($estado, $id_plan);
 
   $json = array("sql" => $api->insertGeoLocation($lat, $long, $fecha, $hora, $id_plan, $etapa_plan),
   "etapa" => $etapa_plan);

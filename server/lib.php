@@ -97,9 +97,9 @@ class gestionEducativa
         return getPlaneacionesXFocalizacionQuery($this->con, $foc);
     }
 
-    public function getPlaneacionesCalendar($plan_ejec)
+    public function getPlaneacionesCalendar()
     {
-        return getPlaneacionesCalendarQuery($this->con, $plan_ejec);
+        return getPlaneacionesCalendarQuery($this->con);
     }
 
     public function getDetallePlaneacionEjecucion($id_plan)
@@ -265,5 +265,20 @@ class gestionEducativa
     public function insertGeoLocation($lat, $long, $fecha, $hora, $id_plan, $etapa_plan)
     {
         return insertGeoLocationQuery($this->con, $lat, $long, $fecha, $hora, $id_plan, $etapa_plan);
+    }
+
+    public function checkFocalizacion($id_mun, $comp, $tipo)
+    {
+        return checkFocalizacionQuery($this->con, $id_mun, $comp, $tipo);
+    }
+
+    public function ejecucion_planeacion($id_plan)
+    {
+        return ejecucion_planeacionQuery($this->con, $id_plan);
+    }
+
+    public function checkRegistros($id_plan)
+    {
+        return checkRegistrosQuery($this->con, $id_plan);
     }
 }

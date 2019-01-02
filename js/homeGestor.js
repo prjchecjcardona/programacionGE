@@ -1,5 +1,6 @@
 $(function () {
   checkLogged();
+  getPlaneacionesHoy();
 
   $("#datepicker").datepicker({
     locale: "es-es",
@@ -397,7 +398,7 @@ function insertLaboresXTAdmin() {
         success: function (response) {
           swal({
             type: "success",
-            title: response
+            title: response.message
           }).then(function () {
             document.getElementById("formTAdmin").reset();
             $("#modalTAdmin").modal("toggle");
@@ -512,4 +513,49 @@ function showReturnBtn(btn) {
       rtnbtns[i].classList.add("showNone");
     }
   }
+}
+
+function getPlaneacionesHoy(){
+  $.ajax({
+    type: "POST",
+    url: "server/getPlaneaciones.php",
+    data: {
+      geoAppPlan: ''
+    },
+    dataType: "json",
+    success: function (response) {
+      if(response == ""){
+        $('#plan_hoy').html(
+          `<div class="alert alert-warning" role="alert">
+            No hay nada planeado para el día de hoy
+          </div>`
+        )
+      }else{
+        $('#plan_hoy').html('');
+        response.forEach(element => {
+          if(element.estado == 'Planeado'){
+            element.estado = 'Sin iniciar';
+            color = 'grey';
+          }else{
+            color = '#edbe00';
+          }
+          $('#plan_hoy').append(
+            `<div class="card text-center">
+              <div class="card-header">
+                ${element.municipio} - ${element.nombre}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">${element.comportamientos} - ${element.competencia}</h5>
+                <p class="card-text">${element.nombre_estrategia} (${element.nombre_tactico}) - ${element.temas}</p>
+                <i class="fas fa-minus-circle" style="font-size:2em; color:${color}"></i>
+              </div>
+              <div class="card-footer text-muted">
+                ${element.estado}
+              </div>
+            </div>`
+          );
+        });
+      }
+    }
+  });
 }
