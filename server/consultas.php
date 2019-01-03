@@ -518,6 +518,16 @@ function checkRegistrosQuery($con, $id_plan)
     return executeQuery($con, $sql);
 }
 
+function getGuiasPlaneacionQuery($con, $subtema)
+{
+    $sql = "SELECT id_guia, CONCAT('banco', '/', rec.recurso_url,'/', nombre,'.pdf') AS fichero_url, nombre 
+    FROM guias as gui
+    JOIN recursos rec ON rec.id_recurso = gui.id_recurso
+    WHERE gui.id_subtema IN ($subtema) ";
+
+    return executeQuery($con, $sql);
+}
+
 /* INSERTS */
 
 function insertIndicadoresXFocalizacionQuery($con, $id_focalizacion, $id_indicador)

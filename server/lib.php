@@ -112,6 +112,11 @@ class gestionEducativa
         return getZonasQuery($this->con);
     }
 
+    public function getGuiasPlaneacion($subtema)
+    {
+        return getGuiasPlaneacionQuery($this->con, $subtema);
+    }
+
     public function insertFocalizacion($id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha)
     {
         return insertFocalizacionQuery($this->con, $id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha);
