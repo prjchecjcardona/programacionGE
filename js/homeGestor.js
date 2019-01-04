@@ -110,10 +110,13 @@ function getMunicipioXZona(zona, nombre_zona) {
           ` <div>
               <div class="card">
                 <div class="card-header">
-                  ${element.zonas}
+                  ${element.municipio}
+                  <button type="button" class="btn btn-primary">
+                    Focalizaciones <span class="badge badge-light">${element.total}</span>
+                  </button>
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title">${element.municipio}</h5>
+                  <h5 class="card-title">${element.zonas}</h5>
                   <a href="registrarFocalizacionG.html?id_zona=${
                     element.id_zona
                   }&id_mun=${
@@ -167,7 +170,10 @@ function getFocalizacionesXZona(mun, nom_mun) {
             `<div>
               <div class="card">
                 <div class="card-header">
-                  Fecha registro: ${element.fecha}
+                  Registro: ${element.fecha}
+                  <button type="button" class="btn btn-primary">
+                    Planeaciones <span class="badge badge-light">${element.total}</span>
+                  </button>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">Gestión Institucional</h5>
@@ -188,13 +194,15 @@ function getFocalizacionesXZona(mun, nom_mun) {
             `<div>
               <div class="card">
                 <div class="card-header">
-                Fecha registro: ${element.fecha}
+                Registro: ${element.fecha}
+                <button type="button" class="btn btn-primary">
+                  Planeaciones <span class="badge badge-light">${element.total}</span>
+                </button>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">${element.comportamientos} - ${
               element.competencia
             }</h5>
-                  <p>Tipo de focalización: ${element.tipo_focalizacion}</p>
                   <a href="registrarPlaneacionG.html?id_zona=${
                     element.id_zona
                   }&id_mun=${element.id_municipio}&id_foc=${
@@ -315,12 +323,8 @@ function checkLogged() {
 
       $("#pCompleta").bootstrapToggle("off");
 
-      $("#lastSideNav").html(
-        `<a class="nav-link" href="home.html?user=${data.rol}&id_zona=${
-          data.zona
-        }><i class="fas fa-home"></i></a>
-        <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>`
-      );
+      $('#home').prop('href', `home.html?user=${data.rol}&id_zona=${data.zona}`);
+      $('#menu').prop('href', `opciones.html?user=${data.rol}&id_zona=${data.zona}`);
 
       $("#pCompleta").change(function () {
         if ($(this).prop("checked")) {
@@ -515,7 +519,7 @@ function showReturnBtn(btn) {
   }
 }
 
-function getPlaneacionesHoy(){
+function getPlaneacionesHoy() {
   $.ajax({
     type: "POST",
     url: "server/getPlaneaciones.php",
@@ -524,30 +528,40 @@ function getPlaneacionesHoy(){
     },
     dataType: "json",
     success: function (response) {
-      if(response == ""){
+      if (response == "") {
         $('#plan_hoy').html(
           `<div class="alert alert-warning" role="alert">
             No hay nada planeado para el día de hoy
           </div>`
         )
-      }else{
+      } else {
         $('#plan_hoy').html('');
         response.forEach(element => {
-          if(element.estado == 'Planeado'){
-            element.estado = 'Sin iniciar';
-            color = 'grey';
-          }else{
-            color = '#edbe00';
+
+          switch (element.estado) {
+            case 'Planeado':
+              color = 'grey';
+              icon = 'minus'
+              break;
+            case 'Iniciado':
+              color = '#edbe00';
+              icon = 'minus'
+              break;
+            case 'Finalizado':
+              color = '#269226'
+              icon = 'check'
+              break;
           }
+
           $('#plan_hoy').append(
-            `<div class="card text-center">
+            `<div class="card text-center cardPlanHoy">
               <div class="card-header">
-                ${element.municipio} - ${element.nombre}
+                ${element.municipio} - ${element.nombre} - ${element.zonas}
               </div>
               <div class="card-body">
                 <h5 class="card-title">${element.comportamientos} - ${element.competencia}</h5>
-                <p class="card-text">${element.nombre_estrategia} (${element.nombre_tactico}) - ${element.temas}</p>
-                <i class="fas fa-minus-circle" style="font-size:2em; color:${color}"></i>
+                <p class="card-text">${element.nombre_estrategia} (${element.nombre_tactico.string}) - ${element.temas}</p>
+                <i class="fas fa-${icon}-circle" style="font-size:2em; color:${color}"></i>
               </div>
               <div class="card-footer text-muted">
                 ${element.estado}

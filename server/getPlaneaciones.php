@@ -70,7 +70,7 @@ if (isset($_POST['detallePlaneacion'])) {
 
 }
 
-if(isset($_POST['geoAppPlan'])){
+if (isset($_POST['geoAppPlan'])) {
     $zona = $_POST['geoAppPlan'];
     $i = 0;
     $newArray = array();
@@ -78,23 +78,51 @@ if(isset($_POST['geoAppPlan'])){
     $json = $api->getPlaneacionesGeoApp($zona);
 
     foreach ($json as $key => $value) {
-        
-        if(empty($newArray)){
-            array_push($newArray, $value);
-        }else{
-            foreach ($newArray as $keyNA => $valueNA) {
-                if(!in_array($value['id_planeacion'], $valueNA, TRUE)){
-                    $exists = false;
-                }else{
-                    $exists = true;
-                }
+
+        if (!isset($newArray[$value['id_planeacion']])) {
+
+            $estado = $api->getEtapaPlaneacion($value['id_planeacion']);
+
+            if (count($estado) == 0) {
+                $etapa_plan = "Planeado";
+            } else if (count($estado) == 1){
+                $etapa_plan = "Iniciado";
+            }else{
+                $etapa_plan = "Finalizado"; 
             }
 
-            if(!$exists) {
-                array_push($newArray, $value);
+            $newArray[$value['id_planeacion']] = [
+                "id_planeacion" => $value['id_planeacion'],
+                "fecha_plan" => $value['fecha_plan'],
+                "municipio" => $value['municipio'],
+                "nombre" => $value['nombre'],
+                "zonas" => $value['zonas'],
+                "nombre_entidad" => $value['nombre_entidad'],
+                "comportamientos" => $value['comportamientos'],
+                "competencia" => $value['competencia'],
+                "nombre_estrategia" => $value['nombre_estrategia'],
+                "temas" => $value['temas'],
+                "nombre_tactico" => array('array' => [], 'string' => ""),
+                "estado" => $etapa_plan
+            ];
+        }
+
+        if (empty($newArray[$value['id_planeacion']]['nombre_tactico']['array'])) {
+            array_push($newArray[$value['id_planeacion']]['nombre_tactico']['array'], $value['nombre_tactico']);
+        } else {
+            foreach ($newArray[$value['id_planeacion']]['nombre_tactico']['array'] as $k => $val) {
+                if ($val != $value['nombre_tactico']) {
+                    array_push($newArray[$value['id_planeacion']]['nombre_tactico']['array'], $value['nombre_tactico']);
+                }
             }
         }
+
+        /* Set implode to string variable in tacticos from array tacticos */
+        $newArray[$value['id_planeacion']]['nombre_tactico']['string'] = implode(' •• ', $newArray[$value['id_planeacion']]['nombre_tactico']['array']);
+
     }
+
+    $newArray = array_values($newArray);
 
 }
 

@@ -63,15 +63,17 @@ function insertQuery($con, $sql)
 
 function getMunicipiosXZonaQuery($con, $zona)
 {
-    $sql = "SELECT id_municipio, municipio, zna.zonas, zna.id_zona
+    $sql = "SELECT mn.id_municipio, municipio, zna.zonas, zna.id_zona, count(foc.id_focalizacion) as total
     FROM municipios mn
+    LEFT JOIN focalizacion foc ON foc.id_municipio = mn.id_municipio
     JOIN zonas zna ON mn.id_zona = zna.id_zona";
 
     if ($zona != "all") {
         $sql .= " WHERE mn.id_zona = $zona";
     }
 
-    $sql .= " ORDER BY municipio;";
+    $sql .= " GROUP BY mn.id_municipio, municipio, zna.zonas, zna.id_zona
+    ORDER BY municipio;";
 
     return executeQuery($con, $sql);
 }
@@ -121,15 +123,16 @@ function getComportamientosQuery($con)
 function getFocalizacionesXZonaQuery($con, $mun)
 {
     $sql = "SELECT foc.id_focalizacion, mun.id_municipio, id_tipo_gestion, mun.municipio, mun.id_zona, compor.id_comportamientos,
-    compor.comportamientos, foc.tipo_focalizacion, foc.fecha, compe.competencia
+    compor.comportamientos, foc.fecha, compe.competencia, count(id_planeacion) as total
     FROM focalizacion foc
     LEFT JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion= foc.id_focalizacion
     LEFT JOIN indicadores_chec ind ON ind.id_indicador= icxf.id_indicador
     LEFT JOIN comportamientos compor ON compor.id_comportamientos = ind.id_comportamiento
     LEFT JOIN competencias compe ON compe.id_competencia = compor.id_competencia
     JOIN municipios mun ON mun.id_municipio = foc.id_municipio
+    LEFT JOIN planeacion plan on plan.id_focalizacion = foc.id_focalizacion 
     WHERE mun.id_municipio = $mun
-    GROUP BY foc.id_focalizacion, mun.id_municipio, mun.municipio, compor.id_comportamientos, compor.comportamientos, foc.tipo_focalizacion, foc.fecha, compe.competencia
+    GROUP BY foc.id_focalizacion, mun.id_municipio, mun.municipio, compor.id_comportamientos, compor.comportamientos, foc.fecha, compe.competencia
     ORDER BY foc.fecha DESC";
 
     return executeQuery($con, $sql);
@@ -338,7 +341,7 @@ function getPlaneacionesCalendarQuery($con)
     JOIN tacticos_x_planeacion txp ON txp.id_planeacion = plan.id_planeacion
     JOIN tactico tact ON txp.id_tactico = tact.id_tactico
     JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
-    JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion 
+    JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
     WHERE plan.estado = 'Planeado'
     ORDER BY plan.id_planeacion ASC";
 
@@ -520,7 +523,7 @@ function checkRegistrosQuery($con, $id_plan)
 
 function getGuiasPlaneacionQuery($con, $subtema)
 {
-    $sql = "SELECT id_guia, CONCAT('banco', '/', rec.recurso_url,'/', nombre,'.pdf') AS fichero_url, nombre 
+    $sql = "SELECT id_guia, CONCAT('banco', '/', rec.recurso_url,'/', nombre,'.pdf') AS fichero_url, nombre
     FROM guias as gui
     JOIN recursos rec ON rec.id_recurso = gui.id_recurso
     WHERE gui.id_subtema IN ($subtema) ";
@@ -538,10 +541,10 @@ function insertIndicadoresXFocalizacionQuery($con, $id_focalizacion, $id_indicad
     return insertQuery($con, $sql);
 }
 
-function insertFocalizacionQuery($con, $id_mun, $id_tipoGestion, $tipo_focalizacion, $fecha)
+function insertFocalizacionQuery($con, $id_mun, $id_tipoGestion, $fecha)
 {
-    $sql = "INSERT INTO public.focalizacion(id_municipio, id_tipo_gestion, fecha, tipo_focalizacion)
-    VALUES ($id_mun, $id_tipoGestion, '$fecha', '$tipo_focalizacion');";
+    $sql = "INSERT INTO public.focalizacion(id_municipio, id_tipo_gestion, fecha)
+    VALUES ($id_mun, $id_tipoGestion, '$fecha');";
 
     return insertQuery($con, $sql);
 
@@ -692,5 +695,5 @@ function insertGeoLocationQuery($con, $lat, $long, $fecha, $hora, $id_plan, $eta
     id_registro, latitud, longitud, fecha, hora, id_planeacion, etapa_planeacion)
     VALUES (nextval('seq_registro_ubicacion'), $lat, $long, '$fecha', '$hora', $id_plan, '$etapa_plan');";
 
-    return executeQuery($con, $sql);
+    return insertQuery($con, $sql);
 }

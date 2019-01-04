@@ -177,13 +177,12 @@ function getFocalizacionesXZona(mun, btn) {
             `<div>
               <div class="card">
                 <div class="card-header">
-                Fecha registro: ${element.fecha}
+                Registro: ${element.fecha}
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">${element.comportamientos} - ${
               element.competencia
             }</h5>
-                  <p>Tipo de focalización: ${element.tipo_foc}</p>
 
                 </div>
               </div>
@@ -198,9 +197,9 @@ function getFocalizacionesXZona(mun, btn) {
           if(btn != "planeacion"){
             getPlaneacionesXFocalizacion(element.id_focalizacion);
           }else{
-            window.location.href = `registrarPlaneacionG.html?id_zona=${
-              element.id_zona
-            }&id_mun=${element.id_municipio}&id_foc=${element.id_focalizacion}&comport=${element.id_comportamientos}`;;
+            $(this).prop('href', `registrarPlaneacionG.html?id_zona=${element.id_zona
+            }&id_mun=${element.id_municipio}&id_foc=${element.id_focalizacion}&comport=${element.id_comportamientos}`);
+            
           }
         });
       });

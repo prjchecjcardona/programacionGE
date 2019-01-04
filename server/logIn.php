@@ -32,7 +32,7 @@ if (isset($_POST)) {
             }
 
             if (isset($_POST['loginSubmit'])) {
-                header("Location: ../opciones.html?user=" . $json['user']['rol'] . "&id_zona=all");
+                header("Location: ../opciones.html?user=" . $json['user']['rol'] . "&id_zona=" . $zona);
                 exit();
             } else {
                 if (isset($_POST['loginGeoApp'])) {
