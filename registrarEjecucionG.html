@@ -33,23 +33,23 @@
 
   <div class="main">
 
-        <!-- NAVBAR PART -->
-        <ul class="nav justify-content-end" id="navGE">
-            <li class="nav-item imgsNav">
-              <img src="img/logo-min.png" alt="" class="navImg">
-              <img src="img/Universidad-de-manizales.png" alt="" class="navImg">
-            </li>
+    <!-- NAVBAR PART -->
+    <ul class="nav justify-content-end" id="navGE">
+      <li class="nav-item imgsNav">
+        <img src="img/logo-min.png" alt="" class="navImg">
+        <img src="img/Universidad-de-manizales.png" alt="" class="navImg">
+      </li>
 
-            <li class="nav-item">
+      <li class="nav-item">
 
-            </li>
+      </li>
 
-            <li class="nav-item" id="lastSideNav">
-              <a id="homeBtn" class="nav-link"><i class="fas fa-home"></i></a>
-              <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
-              <a class="nav-link" href="informes.html"><i class="fas fa-chart-line"></i></a>
-            </li>
-          </ul>
+      <li class="nav-item" id="lastSideNav">
+        <a id="homeBtn" class="nav-link"><i class="fas fa-home"></i></a>
+        <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
+        <a class="nav-link" href="informes.html"><i class="fas fa-chart-line"></i></a>
+      </li>
+    </ul>
     <div id="createEjec" class="row justify-content-center">
       <div id="colCreateEjec" class="col-lg-8 col-md-12 col-sm-12">
         <div id="form-card">
@@ -186,6 +186,28 @@
               <!-- Tab #2 -->
 
               <div class="tab">
+
+                <label for="tipoEjecucion">Tipo de ejecución <label class="obligatorio" for="tipoEjecucion">*</label></label>
+                <div id="tipoEjecucion" class="row formRows">
+                  <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" id="radioEvento" name="tipoEjecucion"
+                        required value="Evento">
+                      <label class="custom-control-label" for="radioEvento">Evento</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" id="radioProceso" name="tipoEjecucion"
+                        required value="Proceso">
+                      <label class="custom-control-label" for="radioProceso">Proceso</label>
+                    </div>
+                  </div>
+                </div>
+
+                <hr>
+
                 <label for="resultadoEjecucion">Resultado de la ejecución <label class="obligatorio" for="resultadoEjecucion">*</label></label>
                 <div id="resultadoEjecucion" class="row formRows">
                   <div class="col-lg-4 col-md-12 col-sm-12">
@@ -213,6 +235,8 @@
                   </div>
                 </div>
 
+                <hr>
+
                 <div class="row formRows">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
@@ -230,20 +254,24 @@
                   <div class="col-lg-12 col-md-12 col-sm-12" id="colEvidencias">
                     <label for="evidenciasFotograficas">Evidencias Fotográficas <label for="actaReunion" class="obligatorio">*</label></label>
                     <div class="custom-file-container" data-upload-id="evidenciasFotograficas">
-                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">&times;</a></label>
-                      <label class="custom-file-container__custom-file" >
-                          <input type="file" id="fotograficas" class="custom-file-container__custom-file__custom-file-input" accept="*" multiple name="fotograficas">
-                          <span class="custom-file-container__custom-file__custom-file-control"></span>
+                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
+                          title="Clear Image">&times;</a></label>
+                      <label class="custom-file-container__custom-file">
+                        <input type="file" id="fotograficas" class="custom-file-container__custom-file__custom-file-input"
+                          accept="*" multiple name="fotograficas">
+                        <span class="custom-file-container__custom-file__custom-file-control"></span>
                       </label>
                       <div class="custom-file-container__image-preview"></div>
                     </div>
 
                     <label for="evidenciasFotograficas">Asistencias <label for="actaReunion" class="obligatorio">*</label></label>
                     <div class="custom-file-container" data-upload-id="evidenciasAsistencia">
-                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">&times;</a></label>
-                      <label class="custom-file-container__custom-file" >
-                          <input type="file" id="asistencias" class="custom-file-container__custom-file__custom-file-input" accept="*" multiple name="asistencias[]">
-                          <span class="custom-file-container__custom-file__custom-file-control"></span>
+                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
+                          title="Clear Image">&times;</a></label>
+                      <label class="custom-file-container__custom-file">
+                        <input type="file" id="asistencias" class="custom-file-container__custom-file__custom-file-input"
+                          accept="*" multiple name="asistencias[]">
+                        <span class="custom-file-container__custom-file__custom-file-control"></span>
                       </label>
                       <div class="custom-file-container__image-preview"></div>
                     </div>
@@ -251,10 +279,12 @@
                   <div class="col-lg 12 col-md-6 col-sm-6" id="colActaReunion">
                     <label for="actaReunion">Acta de reunión <label for="actaReunion" class="obligatorio">*</label></label>
                     <div class="custom-file-container" data-upload-id="actasReunion">
-                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">&times;</a></label>
-                      <label class="custom-file-container__custom-file" >
-                          <input type="file" id="actas" class="custom-file-container__custom-file__custom-file-input" accept="*" name="actas">
-                          <span class="custom-file-container__custom-file__custom-file-control"></span>
+                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
+                          title="Clear Image">&times;</a></label>
+                      <label class="custom-file-container__custom-file">
+                        <input type="file" id="actas" class="custom-file-container__custom-file__custom-file-input"
+                          accept="*" name="actas">
+                        <span class="custom-file-container__custom-file__custom-file-control"></span>
                       </label>
                       <div class="custom-file-container__image-preview"></div>
                     </div>
@@ -280,10 +310,7 @@
               </div>
             </div>
 
-            <div style="text-align:center;margin-top:40px;">
-              <span class="step"></span>
-              <span class="step"></span>
-              <span class="step"></span>
+            <div id="steps" style="text-align:center;margin-top:40px;">
             </div>
 
           </div>

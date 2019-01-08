@@ -806,8 +806,12 @@ hr.hrForm {
   padding: 30px 50px 8px 50px !important;
 }
 
-#resultadoEjecucion {
+#resultadoEjecucion, #tipoEjecucion{
   text-align: center;
+}
+
+#rowEntidadContacto{
+  display: flex;
 }
 
 #divNoEjecucionDad {
@@ -883,6 +887,12 @@ input#lugarEncuentro,
   height: 100%;
 }
 
+#profile.show{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 #rowTableContactos {
   overflow-x: auto;
 }
@@ -901,9 +911,8 @@ hr {
 }
 
 #map {
-  height: calc(100% - 10px);
-  border: solid 2px green;
-  border-radius: 10px;
+  height: calc(100% - 70px);
+  border: solid 1px green;
 }
 
 #modalLoader {

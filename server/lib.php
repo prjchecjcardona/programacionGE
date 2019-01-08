@@ -167,9 +167,9 @@ class gestionEducativa
         return insertContactosXEntidadQuery($this->con, $cedula, $entidad);
     }
 
-    public function insertEjecucion($fecha, $hora_inicio, $hora_fin, $id_resultado, $descripcion, $id_planeacion, $total_asist)
+    public function insertEjecucion($fecha, $hora_inicio, $hora_fin, $id_resultado, $descripcion, $id_planeacion, $total_asist, $tipo_ejecucion)
     {
-        return insertEjecucionQuery($this->con, $fecha, $hora_inicio, $hora_fin, $id_resultado, $descripcion, $id_planeacion, $total_asist);
+        return insertEjecucionQuery($this->con, $fecha, $hora_inicio, $hora_fin, $id_resultado, $descripcion, $id_planeacion, $total_asist, $tipo_ejecucion);
     }
 
     public function getTipoGestion($id_foc)

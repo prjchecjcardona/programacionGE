@@ -23,7 +23,7 @@ $(function () {
           <img src="img/logo-min.png" alt="">
         </div>
       </div>
-      <div id="calendar"></div>`
+      <div id="calendar" style="margin-top: 30px;"></div>`
     );
   }
 
@@ -44,7 +44,7 @@ let user = getParam("user");
 if (id_zona == "all") {
   getZona();
 } else {
-  getMunicipioXZona("all");
+  getMunicipioXZona(id_zona);
 }
 
 function getParam(param) {
@@ -81,7 +81,9 @@ function getZona() {
     },
     complete: function () {
       $(".zonas").fadeIn();
-      $(".zonas").removeClass("showNone");
+      if (user != 3) {
+        $(".zonas").removeClass("showNone");
+      }
       $("#homeBreadCrumbs").removeClass("showNone");
       $("#loaderList").fadeOut();
       determineRtnBtn();
@@ -96,7 +98,6 @@ function getMunicipioXZona(zona, nombre_zona) {
   $("#loaderList").fadeIn();
   determineBreadcrumb("zona", nombre_zona);
 
-  if (zona == "all") zona = id_zona;
   $.ajax({
     type: "POST",
     url: "server/getMunicipios.php",
@@ -489,7 +490,11 @@ function determineRtnBtn() {
 
   switch (element) {
     case "municipios":
-      showReturnBtn("returnZona");
+      if (user != 3) {
+        showReturnBtn("returnZona");
+      }else{
+        showReturnBtn("");
+      }
       break;
 
     case "focalizaciones":
@@ -499,22 +504,20 @@ function determineRtnBtn() {
     case "planeaciones":
       showReturnBtn("returnFocalizacion");
       break;
-
-    default:
-      showReturnBtn("");
-      break;
   }
 }
 
 function showReturnBtn(btn) {
-  var rtnbtns = document.getElementsByClassName("returnBtn");
-  for (i = 0; i < rtnbtns.length; i++) {
-    if (rtnbtns[i].id == btn) {
-      if (rtnbtns[i].classList.contains("showNone")) {
-        rtnbtns[i].classList.remove("showNone");
+  if (btn != "") {
+    var rtnbtns = document.getElementsByClassName("returnBtn");
+    for (i = 0; i < rtnbtns.length; i++) {
+      if (rtnbtns[i].id == btn) {
+        if (rtnbtns[i].classList.contains("showNone")) {
+          rtnbtns[i].classList.remove("showNone");
+        }
+      } else if (!rtnbtns[i].classList.contains("showNone")) {
+        rtnbtns[i].classList.add("showNone");
       }
-    } else if (!rtnbtns[i].classList.contains("showNone")) {
-      rtnbtns[i].classList.add("showNone");
     }
   }
 }

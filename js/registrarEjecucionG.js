@@ -1,11 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function () {
   /* Functions */
   checkLogged();
   getTipoGestion();
   getDetallePlaneacion();
   getTotal("#tipoPoblacion input[type=number]", true);
   getTotal("#caracteristicasPoblacion input[type=number]", false);
-  showTab(currentTab); // Display the current tab
   document.getElementById("noEjecucion").checked = false;
 
   $('#horaInicio').timepicker({
@@ -24,8 +23,10 @@ $(document).ready(function() {
     uiLibrary: "bootstrap4"
   });
 
+
+
   if (
-    $("select").change(function() {
+    $("select").change(function () {
       if ($(this).hasClass("invalid")) {
         $(this).removeClass("invalid");
       }
@@ -41,7 +42,7 @@ $(document).ready(function() {
   });
 
   //Prevent from typing negative numbers
-  $("input[type=number]").keydown(function(e) {
+  $("input[type=number]").keydown(function (e) {
     if (
       !(
         (e.keyCode > 95 && e.keyCode < 106) ||
@@ -70,7 +71,7 @@ $(document).ready(function() {
     });
 
   // When time input changes
-  $("input[type=time]").change(function() {
+  $("input[type=time]").change(function () {
     calcularDuracion();
   });
 
@@ -88,9 +89,9 @@ function getParam(param) {
   param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
   var regex = new RegExp("[\\?&]" + param + "=([^&#]*)");
   var results = regex.exec(location.search);
-  return results === null
-    ? ""
-    : decodeURIComponent(results[1].replace(/\+/g, " "));
+  return results === null ?
+    "" :
+    decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 function getTipoGestion() {
@@ -101,13 +102,22 @@ function getTipoGestion() {
       tipo_gestion: id_foc
     },
     dataType: "json",
-    success: function(response) {
+    success: function (response) {
       if (response[0].id_tipo_gestion != 1) {
         $("#detalleCardContentGF").addClass("showNone");
         $("#colPoblacion").addClass("showNone");
       } else {
         $("#colActaReunion").addClass("showNone");
+
+        /* Remove tab */
+        let child = document.getElementById('resultadoEjecucion').parentNode;
+        let parent = document.getElementById('resultadoEjecucion').parentNode.parentNode;
+        parent.removeChild(child);
+
       }
+
+      determineSteps();
+      showTab(currentTab); // Display the current tab
     }
   });
 }
@@ -130,6 +140,7 @@ function showTab(n) {
     document.getElementById("nextBtn").innerHTML = "Siguiente";
   }
   // ... and run a function that displays the correct step indicator:
+
   fixStepIndicator(n);
 }
 
@@ -282,6 +293,14 @@ function resize() {
   }
 }
 
+function determineSteps(){
+  let j = document.getElementsByClassName('tab')
+  $('#steps').html('');
+  for (i = 0; i < j.length; i++) {
+    $('#steps').append(`<span class="step"></span>`)
+  }
+}
+
 function checkLogged() {
   $.ajax({
     type: "POST",
@@ -290,13 +309,13 @@ function checkLogged() {
       zona: id_zona
     },
     dataType: "json"
-  }).done(function(data) {
+  }).done(function (data) {
     if (data.error) {
       swal({
         type: "info",
         title: "Usuario",
         text: data.message
-      }).then(function() {
+      }).then(function () {
         window.location.href = "iniciarSesion.html";
       });
     } else {
@@ -312,12 +331,12 @@ function insertEjecucion() {
     url: "server/insertEjecucion.php",
     data: `${$("#ejecForm").serialize()}&id_plan=${id_plan}`,
     dataType: "json",
-    success: function(response) {
-      if(!validarRegistros()){
+    success: function (response) {
+      if (!validarRegistros()) {
         swal({
           type: "success",
           title: response.message
-        }).then(function() {
+        }).then(function () {
           $(".loader").fadeOut();
           window.location.href = $('#homeBtn').attr('href');
         });
@@ -344,11 +363,11 @@ function insertNoEjecucion() {
       url: "server/insertNovedadNoEjecucion.php",
       data: `${$("#formNoEjec").serialize()}&id_plan=${id_plan}&no_ejec=&fecha_plan=${fechaPlan}`,
       dataType: "json",
-      success: function(response) {
+      success: function (response) {
         swal({
           type: "success",
           title: response
-        }).then(function() {
+        }).then(function () {
           $.ajax({
             type: "POST",
             url: "server/insertNovedadNoEjecucion.php",
@@ -358,7 +377,7 @@ function insertNoEjecucion() {
               swal({
                 type: "success",
                 title: response
-              }).then(function(){
+              }).then(function () {
                 $(".loader").fadeOut();
                 window.location.href = $("#homeBtn").attr("href");
               });
@@ -378,7 +397,7 @@ function getDetallePlaneacion() {
       detallePlaneacion: id_plan
     },
     dataType: "json",
-    success: function(response) {
+    success: function (response) {
       $('.detalleEjec').append(
         `<div id="detalleCardContentGI">
         <div class="row">

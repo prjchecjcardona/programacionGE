@@ -26,17 +26,17 @@ $("#focalizacion").click(function() {
 
 $("#ejecucion").click(function() {
   if (id_zona == "all") {
-    getZona("planeacion");
+    getZona("ejecucion");
   } else {
-    getMunicipioXZona(id_zona, "planeacion");
+    getMunicipioXZona(id_zona, "ejecucion");
   }
 });
 
 $("#planeacion").click(function() {
   if (id_zona == "all") {
-    getZona("ejecucion");
+    getZona("planeacion");
   } else {
-    getMunicipioXZona(id_zona, "ejecucion");
+    getMunicipioXZona(id_zona, "planeacion");
   }
 });
 
@@ -119,7 +119,7 @@ function getMunicipioXZona(zona, btn) {
 
         $(`#${element.municipio}`).click(function() {
           if (btn != "focalizacion") {
-            getFocalizacionesXZona(`${element.id_municipio}`, `'${btn}'`);
+            getFocalizacionesXZona(element.id_municipio, btn);
           } else {
             window.location.href = `registrarFocalizacionG.html?id_zona=${
               element.id_zona
@@ -140,6 +140,7 @@ function getMunicipioXZona(zona, btn) {
 }
 
 function getFocalizacionesXZona(mun, btn) {
+  console.log(btn);
   $('#opcionesTitulo').html('Seleccione la focalización');
   $.ajax({
     type: "POST",
@@ -160,16 +161,9 @@ function getFocalizacionesXZona(mun, btn) {
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">Gestión Institucional</h5>
-                  <a href="registrarPlaneacionG.html?id_zona=${
-                    element.id_zona
-                  }&id_mun=${element.id_municipio}&id_foc=${
-              element.id_focalizacion
-            }" class="btn"><i class="fas fa-plus crear"></i> Planear</a>
                 </div>
               </div>
-              <a onclick="getPlaneacionesXFocalizacion(${
-                element.id_focalizacion
-              }, 'Gestión Institucional')"><i class="fa fa-arrow-circle-right"></i></a>
+              <a><i class="fa fa-arrow-circle-right"></i></a>
             </div>`
           );
         } else {
@@ -186,19 +180,19 @@ function getFocalizacionesXZona(mun, btn) {
 
                 </div>
               </div>
-              <a id="${
+              <a id="arrow${
                 element.competencia
               }"><i class="fa fa-arrow-circle-right"></i></a>
             </div>`
           );
         }
 
-        $(`#${element.competencia}`).click(function() {
+        $(`#arrow${element.competencia}`).click(function() {
           if(btn != "planeacion"){
             getPlaneacionesXFocalizacion(element.id_focalizacion);
           }else{
-            $(this).prop('href', `registrarPlaneacionG.html?id_zona=${element.id_zona
-            }&id_mun=${element.id_municipio}&id_foc=${element.id_focalizacion}&comport=${element.id_comportamientos}`);
+            window.location.href = `registrarPlaneacionG.html?id_zona=${element.id_zona
+            }&id_mun=${element.id_municipio}&id_foc=${element.id_focalizacion}&comport=${element.id_comportamientos}`;
             
           }
         });

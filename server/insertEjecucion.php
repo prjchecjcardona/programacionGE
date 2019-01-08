@@ -20,8 +20,9 @@ isset($_POST['horaFin']) && isset($_POST['ninios']) && isset($_POST['jovenes']) 
     $total_asist = $_POST['ninios'] + $_POST['jovenes'] + $_POST['adultos'];
     $id_planeacion = $_POST['id_plan'];
     $id_resultado = $_POST['resultadoEjecucion'];
+    $tipo_ejecucion = $_POST['tipoEjecucion'];
 
-    $json = $api->insertEjecucion($fecha, $hora_inicio, $hora_fin, $id_resultado, $desc, $id_planeacion, $total_asist);
+    $json = $api->insertEjecucion($fecha, $hora_inicio, $hora_fin, $id_resultado, $desc, $id_planeacion, $total_asist, $tipo_ejecucion);
 }else{
   $json = "No se recibieron adecuadamente los datos";
 }

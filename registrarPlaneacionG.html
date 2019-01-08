@@ -193,13 +193,13 @@
                       </select>
                     </div>
                     <div class="form-group">
-                        <label for="selectTactico">Tactico <label for="selectTactico" class="obligatorio">*</label></label>
-                        <select class="custom-select required" name="tactico[]" id="selectTactico" aria-describedby="selectHelpTactico"
-                          multiple>
-                          <option selected>Seleccione</option>
-                        </select>
-                        <small id="selectHelpTactico" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd> para
-                          seleccionar mas de un tactico</small>
+                      <label for="selectTactico">Tactico <label for="selectTactico" class="obligatorio">*</label></label>
+                      <select class="custom-select required" name="tactico[]" id="selectTactico" aria-describedby="selectHelpTactico"
+                        multiple>
+                        <option selected>Seleccione</option>
+                      </select>
+                      <small id="selectHelpTactico" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd> para
+                        seleccionar mas de un tactico</small>
                     </div>
                   </div>
                 </div>
@@ -238,7 +238,7 @@
                   </div>
                 </div>
 
-<!--                 <hr class="hrForms">
+                <!--                 <hr class="hrForms">
   
                 <div class="row formRows">
                   <div class="col-lg-12 col-md-12 col-sm-12">
@@ -353,10 +353,13 @@
             <div class="row rowForms">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <label for="entidadContacto">Entidad<label class="obligatorio">*</label></label>
-                <select type="text" placeholder="Entidad" id="entidadContacto" name="entidad" aria-label="Entidad del contacto"
-                  class="custom-select required" required>
-                  <option value="" selected>Seleccione</option>
-                </select>
+                <div id="rowEntidadContacto">
+                  <select type="text" placeholder="Entidad" id="entidadContacto" name="entidad" aria-label="Entidad del contacto"
+                    class="custom-select required" required>
+                    <option value="" selected>Seleccione</option>
+                  </select>
+                  <a id="createEntidadContacto"><i class="fas fa-plus-square" style="font-size: 41px; color: #28a745"></i></a>
+                </div>
               </div>
             </div>
             <div class="row rowForms">
