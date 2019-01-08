@@ -286,4 +286,19 @@ class gestionEducativa
     {
         return checkRegistrosQuery($this->con, $id_plan);
     }
+
+    public function getMaxIdEjec()
+    {
+        return getMaxIdEjecQuery($this->con);
+    }
+
+    public function insertTipoPoblacionXEjecucion($id_tipo, $id_ejec, $total)
+    {
+        return insertTipoPoblacionXEjecucionQuery($this->con, $id_tipo, $id_ejec, $total);
+    }
+
+    public function insertCaractPoblacionXEjecucion($id_caract, $id_ejec, $total)
+    {
+        return insertCaractPoblacionXEjecucionQuery($this->con, $id_caract, $id_ejec, $total);
+    }
 }

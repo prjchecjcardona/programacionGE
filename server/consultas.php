@@ -123,14 +123,13 @@ function getComportamientosQuery($con)
 function getFocalizacionesXZonaQuery($con, $mun)
 {
     $sql = "SELECT foc.id_focalizacion, mun.id_municipio, id_tipo_gestion, mun.municipio, mun.id_zona, compor.id_comportamientos,
-    compor.comportamientos, foc.fecha, compe.competencia, count(id_planeacion) as total
+    compor.comportamientos, foc.fecha, compe.competencia, (SELECT count(id_planeacion) FROM planeacion plan WHERE plan.id_focalizacion = foc.id_focalizacion) as total
     FROM focalizacion foc
     LEFT JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion= foc.id_focalizacion
     LEFT JOIN indicadores_chec ind ON ind.id_indicador= icxf.id_indicador
     LEFT JOIN comportamientos compor ON compor.id_comportamientos = ind.id_comportamiento
     LEFT JOIN competencias compe ON compe.id_competencia = compor.id_competencia
     JOIN municipios mun ON mun.id_municipio = foc.id_municipio
-    LEFT JOIN planeacion plan on plan.id_focalizacion = foc.id_focalizacion 
     WHERE mun.id_municipio = $mun
     GROUP BY foc.id_focalizacion, mun.id_municipio, mun.municipio, compor.id_comportamientos, compor.comportamientos, foc.fecha, compe.competencia
     ORDER BY foc.fecha DESC";
@@ -299,6 +298,13 @@ function getDetallePlaneacionEjecucionQuery($con, $id_plan)
 function getMaxIdFocQuery($con)
 {
     $sql = "SELECT MAX(id_focalizacion) FROM focalizacion";
+
+    return executeQuery($con, $sql);
+}
+
+function getMaxIdEjecQuery($con)
+{
+    $sql = "SELECT MAX(id_ejecucion) FROM ejecucion";
 
     return executeQuery($con, $sql);
 }
@@ -589,7 +595,7 @@ function insertEjecucionQuery($con, $fecha, $hora_inicio, $hora_fin, $id_resulta
 {
     $sql = "INSERT INTO public.ejecucion(
     fecha, hora_inicio, hora_fin, id_resultado_ejecucion, descripcion_resultado, id_planeacion, total_asistentes, tipo_ejecucion)
-    VALUES ('$fecha', '$hora_inicio', '$hora_fin', $id_resultado, '$descripcion', $id_planeacion, $total_asist, $tipo_ejecucion);";
+    VALUES ('$fecha', '$hora_inicio', '$hora_fin', $id_resultado, '$descripcion', $id_planeacion, $total_asist, '$tipo_ejecucion');";
 
     return insertQuery($con, $sql);
 }
@@ -694,6 +700,24 @@ function insertGeoLocationQuery($con, $lat, $long, $fecha, $hora, $id_plan, $eta
     $sql = "INSERT INTO public.registro_ubicacion(
     id_registro, latitud, longitud, fecha, hora, id_planeacion, etapa_planeacion)
     VALUES (nextval('seq_registro_ubicacion'), $lat, $long, '$fecha', '$hora', $id_plan, '$etapa_plan');";
+
+    return insertQuery($con, $sql);
+}
+
+function insertTipoPoblacionXEjecucionQuery($con, $id_tipo, $id_ejec, $total)
+{
+    $sql = "INSERT INTO public.tipo_poblacion_x_ejecucion(
+    id_tipo, id_ejecucion, total)
+    VALUES ($id_tipo, $id_ejec, $total)";
+
+    return insertQuery($con, $sql);
+}
+
+function insertCaractPoblacionXEjecucionQuery($con, $id_caract, $id_ejec, $total)
+{
+    $sql = "INSERT INTO public.caracteristicas_poblacion_x_ejecucion(
+    id_caracteristica, id_ejecucion, total)
+    VALUES ($id_caract, $id_ejec, $total)";
 
     return insertQuery($con, $sql);
 }

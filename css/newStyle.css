@@ -814,6 +814,11 @@ hr.hrForm {
   display: flex;
 }
 
+#createEntidadContacto{
+  margin-left: 10px;
+}
+
+
 #divNoEjecucionDad {
   width: 90%;
   background-color: rgba(74, 198, 36, 0.4);

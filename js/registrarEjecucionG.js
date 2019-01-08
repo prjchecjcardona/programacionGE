@@ -110,8 +110,8 @@ function getTipoGestion() {
         $("#colActaReunion").addClass("showNone");
 
         /* Remove tab */
-        let child = document.getElementById('resultadoEjecucion').parentNode;
-        let parent = document.getElementById('resultadoEjecucion').parentNode.parentNode;
+        let child = document.getElementById('resultadosInstitucional');
+        let parent = document.getElementById('resultadosInstitucional').parentNode;
         parent.removeChild(child);
 
       }
@@ -293,7 +293,7 @@ function resize() {
   }
 }
 
-function determineSteps(){
+function determineSteps() {
   let j = document.getElementsByClassName('tab')
   $('#steps').html('');
   for (i = 0; i < j.length; i++) {
@@ -326,21 +326,33 @@ function checkLogged() {
 
 function insertEjecucion() {
   $(".loader").fadeIn();
+
   $.ajax({
     type: "POST",
     url: "server/insertEjecucion.php",
     data: `${$("#ejecForm").serialize()}&id_plan=${id_plan}`,
     dataType: "json",
     success: function (response) {
-      if (!validarRegistros()) {
-        swal({
-          type: "success",
-          title: response.message
-        }).then(function () {
+      if (response.error != 1) {
+        type = "success";
+        text = "";
+        function callback(){
           $(".loader").fadeOut();
           window.location.href = $('#homeBtn').attr('href');
-        });
+        }
+      }else{
+        type = "error";
+        text = response.error_message;
+        function callback(){
+        }
       }
+      swal({
+        type: type,
+        title: response.message,
+        text: text
+      }).then(function () {
+        callback();
+      });
     }
   });
 }

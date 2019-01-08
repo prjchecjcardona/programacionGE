@@ -110,21 +110,21 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="ninios">Niños</span>
                             </div>
-                            <input type="number" name="ninios" class="form-control required" placeholder="Cantidad"
+                            <input type="number" name="ninios" class="tipo form-control required" placeholder="Cantidad"
                               aria-label="Username" aria-describedby="ninios" value="0" min="0">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="jovenes">Jovenes</span>
                             </div>
-                            <input type="number" name="jovenes" class="form-control required" placeholder="Cantidad"
+                            <input type="number" name="jovenes" class="tipo form-control required" placeholder="Cantidad"
                               aria-label="Username" aria-describedby="jovenes" value="0" min="0">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="adultos">Adultos</span>
                             </div>
-                            <input type="number" name="adultos" class="form-control required" placeholder="Cantidad"
+                            <input type="number" name="adultos" class="tipo form-control required" placeholder="Cantidad"
                               aria-label="Username" aria-describedby="adultos" value="0" min="0">
                           </div>
                           <div>
@@ -140,36 +140,37 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="discapacidad">Situación de discapacidad</span>
                             </div>
-                            <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
-                              aria-describedby="discapacidad" value="0" name="discapacidad" min="0">
+                            <input type="number" class="caracteristicas form-control required" placeholder="Cantidad"
+                              aria-label="Username" aria-describedby="discapacidad" value="0" name="discapacidad" min="0">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="desplazamiento">Situación de desplazamiento</span>
                             </div>
-                            <input type="number" class="form-control required" placeholder="Cant" aria-label="Username"
-                              aria-describedby="desplazamiento" value="0" name="desplazamiento" min="0">
+                            <input type="number" class="caracteristicas form-control required" placeholder="Cant"
+                              aria-label="Username" aria-describedby="desplazamiento" value="0" name="desplazamiento"
+                              min="0">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="indigena">Comunidad indigena</span>
                             </div>
-                            <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
-                              aria-describedby="indigena" value="0" name="indigena" min="0">
+                            <input type="number" class="caracteristicas form-control required" placeholder="Cantidad"
+                              aria-label="Username" aria-describedby="indigena" value="0" name="indigena" min="0">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="afro">Comunidad Afro</span>
                             </div>
-                            <input type="number" class="form-control required" placeholder="Cantidad" aria-label="Username"
-                              aria-describedby="afro" value="0" name="afro" min="0">
+                            <input type="number" class="caracteristicas form-control required" placeholder="Cantidad"
+                              aria-label="Username" aria-describedby="afro" value="0" name="afro" min="0">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="ninguno">Ninguno</span>
                             </div>
-                            <input type="number" class="form-control required" aria-label="Username" aria-describedby="ninguno"
-                              value="0" name="ninguno" min="0" readonly>
+                            <input type="number" class="caracteristicas form-control required" aria-label="Username"
+                              aria-describedby="ninguno" value="0" name="ninguno" min="0" readonly>
                           </div>
                           <div>
                             <span>
@@ -191,57 +192,59 @@
                 <div id="tipoEjecucion" class="row formRows">
                   <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" id="radioEvento" name="tipoEjecucion"
-                        required value="Evento">
+                      <input type="radio" class="custom-control-input" id="radioEvento" name="tipoEjecucion" required
+                        value="Evento">
                       <label class="custom-control-label" for="radioEvento">Evento</label>
                     </div>
                   </div>
 
                   <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" id="radioProceso" name="tipoEjecucion"
-                        required value="Proceso">
+                      <input type="radio" class="custom-control-input" id="radioProceso" name="tipoEjecucion" required
+                        value="Proceso">
                       <label class="custom-control-label" for="radioProceso">Proceso</label>
                     </div>
                   </div>
                 </div>
 
-                <hr>
 
-                <label for="resultadoEjecucion">Resultado de la ejecución <label class="obligatorio" for="resultadoEjecucion">*</label></label>
-                <div id="resultadoEjecucion" class="row formRows">
-                  <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" id="radioEnProceso" name="resultadoEjecucion"
-                        required value="0">
-                      <label class="custom-control-label" for="radioEnProceso">En proceso</label>
+                <div id="resultadosInstitucional">
+                  <hr>
+                  <label for="resultadoEjecucion">Resultado de la ejecución <label class="obligatorio" for="resultadoEjecucion">*</label></label>
+                  <div id="resultadoEjecucion" class="row formRows">
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" id="radioEnProceso" name="resultadoEjecucion"
+                          required value="0">
+                        <label class="custom-control-label" for="radioEnProceso">En proceso</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" id="radioEfectivo" name="resultadoEjecucion"
+                          required value="1">
+                        <label class="custom-control-label" for="radioEfectivo">Efectivo</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" id="radioNoEfectivo" name="resultadoEjecucion"
+                          required value="2">
+                        <label class="custom-control-label" for="radioNoEfectivo">No efectivo</label>
+                      </div>
                     </div>
                   </div>
 
-                  <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" id="radioEfectivo" name="resultadoEjecucion"
-                        required value="1">
-                      <label class="custom-control-label" for="radioEfectivo">Efectivo</label>
-                    </div>
-                  </div>
+                  <hr>
 
-                  <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" id="radioNoEfectivo" name="resultadoEjecucion"
-                        required value="2">
-                      <label class="custom-control-label" for="radioNoEfectivo">No efectivo</label>
-                    </div>
-                  </div>
-                </div>
-
-                <hr>
-
-                <div class="row formRows">
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="form-group">
-                      <label for="desResultadoEjecucion">Descripción del resultado de la ejecución</label>
-                      <textarea class="form-control" id="desResultadoEjecucion" rows="3" name="descResultado"></textarea>
+                  <div class="row formRows">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <div class="form-group">
+                        <label for="desResultadoEjecucion">Descripción del resultado de la ejecución</label>
+                        <textarea class="form-control" id="desResultadoEjecucion" rows="3" name="descResultado"></textarea>
+                      </div>
                     </div>
                   </div>
                 </div>
