@@ -44,6 +44,7 @@ if (isset($_POST['fecha']) && isset($_POST['horaInicio']) &&
             for ($i = 1; $i <= count($caract); $i++) {
                 $json = $api->insertCaractPoblacionXEjecucion($i, $max[0]['max'], $caract[$i]);
             }
+            $sql = $api->updateEstadoPlaneacion("En Ejecución", $id_planeacion);
         }
     }
 } else {
