@@ -31,7 +31,7 @@ if (isset($_POST)) {
         $comportamiento = "null";
     }
 
-    $json = $api->insertFocalizacion($id_mun, $tipoGestion, $tipoFocalizacion, $fecha);
+    $json = $api->insertFocalizacion($id_mun, $tipoGestion, $fecha);
 
 } else {
     $json = "No se recibieron los datos de manera adecuada";

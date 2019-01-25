@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
   /* Functions */
   checkLogged();
 
@@ -21,7 +21,7 @@ $(document).ready(function () {
     searching: false,
     lengthChange: false,
     info: false,
-    paging: false,
+    paging: true,
     ajax: {
       url: `server/getContactos.php`,
       type: "POST",
@@ -29,9 +29,7 @@ $(document).ready(function () {
         mun: id_mun
       }
     },
-    columns: [{
-        data: "id_contacto"
-      },
+    columns: [
       {
         data: "cedula"
       },
@@ -39,7 +37,7 @@ $(document).ready(function () {
         data: "nombre"
       },
       {
-        data: "celular"
+        data: "telefono"
       },
       {
         data: "cargo"
@@ -52,7 +50,8 @@ $(document).ready(function () {
     sLengthMenu: "Mostrar _MENU_ registros",
     sZeroRecords: "No se encontraron resultados",
     sEmptyTable: "Ningún dato disponible en esta tabla",
-    sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    sInfo:
+      "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
     sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
     sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
     sInfoPostFix: "",
@@ -70,68 +69,70 @@ $(document).ready(function () {
       sSortAscending: ": Activar para ordenar la columna de manera ascendente",
       sSortDescending: ": Activar para ordenar la columna de manera descendente"
     },
-    columnDefs: [{
-      targets: 0,
-      render: function (data, type, row, meta) {
-        return `<input type="checkbox" id="contacto" name="contacto" value="${data}">`;
+    columnDefs: [
+      {
+        targets: 0,
+        render: function(data, type, row, meta) {
+          return `<input type="checkbox" id="contacto" name="contacto" value="${data}">`;
+        }
       }
-    }]
+    ]
   });
 
   if (
-    $("select").change(function () {
+    $("select").change(function() {
       if ($(this).hasClass("invalid")) {
         $(this).removeClass("invalid");
       }
     })
   );
 
-  $("input[name=solicitudEducativa]").change(function () {
+  $("input[name=solicitudEducativa]").change(function() {
     checkSolicitudEducativa();
   });
 
-  $('input[name="ubicMunicipio"]').change(function () {
+  $('input[name="ubicMunicipio"]').change(function() {
     determineRadio();
   });
 
   //Hide modal registro de contacto
-  $("#btnCancelarRegContacto").click(function () {
+  $("#btnCancelarRegContacto").click(function() {
     $("#modalRegistrarContacto").modal("toggle");
   });
 
-  $("#btnCancelarRegEntidad").click(function () {
+  $("#btnCancelarRegEntidad").click(function() {
     $("#modalRegistrarEntidad").modal("toggle");
   });
 
-  $("#btnCrearContacto").click(function (e) {
+  $("#btnCrearContacto").click(function(e) {
     e.preventDefault();
     insertContacto();
   });
 
-  $("#btnCrearEntidad").click(function (e) {
+  $("#btnCrearEntidad").click(function(e) {
     e.preventDefault();
     insertEntidad();
   });
 
-  $("#selectEstrategia").change(function () {
+  $("#selectEstrategia").change(function() {
     estrategia = $("#selectEstrategia").val();
     primaryAjax("getTacticos.php", "selectTactico", {
       estrategia: estrategia
     });
   });
 
-  $('#selectTema').change(function () {
-    id_tema = $('#selectTema').val();
+  $("#selectTema").change(function() {
+    id_tema = $("#selectTema").val();
     getSubtemasList(id_tema);
   });
 
   $(
     "#formCrearContacto input, #planForm input, #formRegistrarEntidad input"
-  ).focusout(function () {
+  ).focusout(function() {
     $(this).val(
       $(this)
-      .val()
-      .toUpperCase()
+        .val()
+        .toUpperCase()
     );
   });
 });
@@ -142,13 +143,15 @@ id_mun = getParam("id_mun");
 id_foc = getParam("id_foc");
 id_comport = getParam("comport");
 
+let uploadSolicitud = new FileUploadWithPreview("solicitudEdu");
+
 function getParam(param) {
   param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
   var regex = new RegExp("[\\?&]" + param + "=([^&#]*)");
   var results = regex.exec(location.search);
-  return results === null ?
-    "" :
-    decodeURIComponent(results[1].replace(/\+/g, " "));
+  return results === null
+    ? ""
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -273,9 +276,9 @@ function determineRadio() {
 }
 
 function checkSolicitudEducativa() {
-  var solicitudRadio = $("input[name=solicitudEducativa]:checked");
+  let solicitudRadio = $("input[name=solicitudEducativa]:checked");
 
-  if (solicitudRadio.val() == "TRUE") {
+  if (solicitudRadio.val() == "true") {
     $("#subirSolicitud").toggle();
   } else {
     if ($("#subirSolicitud").is(":visible")) {
@@ -286,7 +289,8 @@ function checkSolicitudEducativa() {
 
 function executeAll() {
   /* Define array of objects with values to replace */
-  var ajaxJson = [{
+  var ajaxJson = [
+    {
       select: "selectEntidad",
       url: "getEntidades.php",
       data: {
@@ -343,7 +347,7 @@ function primaryAjax(url, tag, data) {
     url: `server/${url}`,
     data: data,
     dataType: "json"
-  }).done(function (data) {
+  }).done(function(data) {
     data.forEach(element => {
       var elementArray = Object.values(element);
 
@@ -361,7 +365,7 @@ function primaryAjax(url, tag, data) {
 }
 
 function getSubtemasList(id_tema) {
-  $('#divSubtemas').html('');
+  $("#divSubtemas").html("");
   $.ajax({
     type: "POST",
     url: "server/getSubtemas.php",
@@ -369,33 +373,33 @@ function getSubtemasList(id_tema) {
       tema: id_tema
     },
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       response.forEach(element => {
+        arraySubtemas = element.subtemas.split("&");
 
-        arraySubtemas = element.subtemas.split('&');
-
-        $('#divSubtemas').append(
+        $("#divSubtemas").append(
           `<div class="checkbox-card">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" name="subtema" class="custom-control-input" id="customCheck${element.id_subtema}" value="${element.id_subtema}">
-              <label class="custom-control-label" for="customCheck${element.id_subtema}">
+              <input type="checkbox" name="subtema" class="custom-control-input" id="customCheck${
+                element.id_subtema
+              }" value="${element.id_subtema}">
+              <label class="custom-control-label" for="customCheck${
+                element.id_subtema
+              }">
                 <ul>
 
                 </ul>
               </label>
             </div>
           </div>`
-        )
+        );
 
         arraySubtemas.forEach(element => {
-          $('label ul').append(
-            `<li>${element}</li>`
-          )
+          $("label ul").append(`<li>${element}</li>`);
         });
-
       });
 
-      $('input[name=subtema]').change(function () {
+      $("input[name=subtema]").change(function() {
         getIndicadoresGEXSubtema();
         getGuiasPlaneacion();
       });
@@ -404,10 +408,10 @@ function getSubtemasList(id_tema) {
 }
 
 function getIndicadoresGEXSubtema() {
-  subtemasLength = $('input[name=subtema]:checked').length;
+  subtemasLength = $("input[name=subtema]:checked").length;
   subtemasArray = [];
   for (i = 0; i < subtemasLength; i++) {
-    subtemasArray.push($('input[name=subtema]:checked')[i].value);
+    subtemasArray.push($("input[name=subtema]:checked")[i].value);
   }
 
   $.ajax({
@@ -417,22 +421,22 @@ function getIndicadoresGEXSubtema() {
       subtema: subtemasArray
     },
     dataType: "json",
-    success: function (response) {
-      $('#indicadores .card-title ul').html('');
+    success: function(response) {
+      $("#indicadores .card-title ul").html("");
       response.forEach(element => {
-        $('#indicadores .card-title ul').append(
+        $("#indicadores .card-title ul").append(
           `<li id="${element.id_indicador}">${element.nombre_indicador}</li>`
-        )
+        );
       });
     }
   });
 }
 
 function getGuiasPlaneacion() {
-  subtemasLength = $('input[name=subtema]:checked').length;
+  subtemasLength = $("input[name=subtema]:checked").length;
   subtemasArray = [];
   for (i = 0; i < subtemasLength; i++) {
-    subtemasArray.push($('input[name=subtema]:checked')[i].value);
+    subtemasArray.push($("input[name=subtema]:checked")[i].value);
   }
 
   $.ajax({
@@ -442,13 +446,14 @@ function getGuiasPlaneacion() {
       subtema: subtemasArray
     },
     dataType: "json",
-    success: function (response) {
-      $('#guias .card-title ul').html('');
+    success: function(response) {
+      $("#guias .card-title ul").html("");
       response.forEach(element => {
-        $('#guias .card-title ul').append(
-
-          `<li><a href="${element.fichero_url}" id="${element.id_guia}" target="_blank">${element.nombre}</a></li>`
-        )
+        $("#guias .card-title ul").append(
+          `<li><a href="${element.fichero_url}" id="${
+            element.id_guia
+          }" target="_blank">${element.nombre}</a></li>`
+        );
       });
     }
   });
@@ -478,12 +483,12 @@ function insertContacto() {
       url: "server/insertContactos.php",
       data: formContacto,
       dataType: "json",
-      success: function (response) {
+      success: function(response) {
         if (response.error == 0) {
           swal({
             type: "success",
             title: response.message
-          }).then(function () {
+          }).then(function() {
             $("#modalRegistrarContacto").modal("toggle");
             $("#btnCrearContacto").prop("disabled", false);
             document.getElementById("formCrearContacto").reset();
@@ -493,7 +498,7 @@ function insertContacto() {
           swal({
             type: "error",
             title: response.message
-          })
+          });
         }
       }
     });
@@ -501,21 +506,21 @@ function insertContacto() {
 }
 
 function insertEntidad() {
-  let type = "success"
+  let type = "success";
   formEntidad = $("#formRegistrarEntidad").serialize();
   $.ajax({
     type: "POST",
     url: "server/insertEntidad.php",
     data: formEntidad + `&municipio=${id_mun}`,
     dataType: "json",
-    success: function (response) {
-      if(response.error !== 0){
-        type = "error"
+    success: function(response) {
+      if (response.error !== 0) {
+        type = "error";
       }
       swal({
         type: type,
         title: response.message
-      }).then(function () {
+      }).then(function() {
         $("#modalRegistrarEntidad").modal("toggle");
         $("#btnCrearEntidad").prop("disabled", false);
         document.getElementById("formRegistrarEntidad").reset();
@@ -534,26 +539,43 @@ function insertEntidad() {
 
 function insertPlaneacion() {
   $(".loader").fadeIn();
-  formPlan = $("#planForm").serialize();
+  let formPlan = document.getElementById("planForm");
+  let form = new FormData(formPlan);
+  form.append("id_foc", id_foc);
+
+  if ($("input[name=solicitudEducativa]").val() == "true") {
+    let file = uploadSolicitud.cachedFileArray[0];
+    form.append("solicitud", file);
+  }
+
   $.ajax({
     type: "POST",
     url: "server/insertPlaneacion.php",
-    data: `${formPlan}&id_foc=${id_foc}`,
+    data: form,
     dataType: "json",
-    success: function (response) {
+    processData: false,
+    contentType: false,
+    success: function(response) {
       if (response.error == 1) {
+        if (!response.error_message) {
+          response.error_message = "";
+          callback = window.location.reload();
+        }else{
+          callback = insertXPlaneacion();
+        }
         swal({
           type: "error",
-          title: response.message
-        })
-      } else {
+          title: response.message,
+          text: response.message_error
+        }).then(()=>{
+          callback;
+        });
+      }else{
         insertXPlaneacion();
       }
     }
   });
 }
-
-
 
 function insertXPlaneacion() {
   $.ajax({
@@ -561,17 +583,17 @@ function insertXPlaneacion() {
     url: "server/insertXPlaneacion.php",
     data: "",
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       id_plan = response[0].max;
 
       /* GET SELECTED CONTACTS */
       contactos = $("input[name=contacto]:checked").serializeArray();
 
       /* GET SELECTED SUBTEMAS */
-      subtemas = $('input[name=subtema]').serializeArray();
+      subtemas = $("input[name=subtema]").serializeArray();
 
       /* GET SELECTED TACTICOS */
-      tacticos = $('#selectTactico').serializeArray()
+      tacticos = $("#selectTactico").serializeArray();
 
       $.ajax({
         type: "POST",
@@ -583,12 +605,12 @@ function insertXPlaneacion() {
           id_plan: id_plan
         },
         dataType: "json",
-        success: function (response) {
+        success: function(response) {
           if (response.error == 0) {
             swal({
               type: "success",
               title: response.message
-            }).then(function () {
+            }).then(function() {
               $(".loader").fadeOut();
               window.location.href = $("#homeBtn").attr("href");
             });
@@ -596,7 +618,7 @@ function insertXPlaneacion() {
             swal({
               type: "error",
               title: response.message
-            }).then(function () {
+            }).then(function() {
               $(".loader").fadeOut();
               location.reload();
             });
@@ -615,13 +637,13 @@ function checkLogged() {
       zona: id_zona
     },
     dataType: "json"
-  }).done(function (data) {
+  }).done(function(data) {
     if (data.error) {
       swal({
         type: "info",
         title: "Usuario",
         text: data.message
-      }).then(function () {
+      }).then(function() {
         window.location.href = "iniciarSesion.html";
       });
     } else {

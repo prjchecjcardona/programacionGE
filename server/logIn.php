@@ -20,8 +20,9 @@ if (isset($_POST)) {
         $json = $api->logIn($mailuid, $pass);
 
         if (!$json['error']) {
-            if ($json['error_type' == "wrgpswd"]) {
-                $json['message'] = "Contraseña incorrecta, ingrese nuevamente.";
+            if ($json['error_type'] == "wrgpswd" || $json['error_type'] == "nouser") {
+                header("location: ../iniciarSesion.html?login=wrgpswd");
+                exit();
             }
         } else {
 

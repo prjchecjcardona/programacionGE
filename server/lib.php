@@ -157,9 +157,9 @@ class gestionEducativa
         return insertEntidadQuery($this->con, $nombre, $direccion, $telefono, $tipoEntidad, $municipio);
     }
 
-    public function insertPlaneacion($jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $fecha_plan, $fecha_registro, $id_foc, $estado)
+    public function insertPlaneacion($jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $fecha_plan, $fecha_registro, $id_foc, $solictud, $estado)
     {
-        return insertPlaneacionQuery($this->con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $fecha_plan, $fecha_registro, $id_foc, $estado);
+        return insertPlaneacionQuery($this->con, $jornada, $lugar_encuentro, $id_barrio, $id_vereda, $id_entidad, $fecha_plan, $fecha_registro, $id_foc, $solictud, $estado);
     }
 
     public function insertContactosXEntidad($cedula, $entidad)
@@ -227,6 +227,11 @@ class gestionEducativa
         return aplazarPlaneacionQuery($this->con, $id_plan, $fecha_plan);
     }
 
+    public function getUrlArchivosPlan($id_plan, $id_tipo_registro)
+    {
+        return getUrlArchivosPlanQuery($this->con, $id_plan, $id_tipo_registro);
+    }
+
     public function getSubtemasXTema($id_tema)
     {
         return getSubtemasXTemaQuery($this->con, $id_tema);
@@ -272,9 +277,9 @@ class gestionEducativa
         return insertGeoLocationQuery($this->con, $lat, $long, $fecha, $hora, $id_plan, $etapa_plan);
     }
 
-    public function checkFocalizacion($id_mun, $comp, $tipo)
+    public function checkFocalizacion($id_mun, $comp)
     {
-        return checkFocalizacionQuery($this->con, $id_mun, $comp, $tipo);
+        return checkFocalizacionQuery($this->con, $id_mun, $comp);
     }
 
     public function ejecucion_planeacion($id_plan)

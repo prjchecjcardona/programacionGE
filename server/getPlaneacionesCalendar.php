@@ -60,8 +60,12 @@ if (isset($_POST)) {
                     "tacticos" => [],
                     "temas" => $value['temas'],
                     "gestor" => $value['nombre'],
+                    "url_solicitud" => $value['url'],
                     "hora" => [],
                     "estado" => $value['estado'],
+                    "evidencias" => [],
+                    "actas" => [],
+                    "asistencias" => [],
                 ];
             }
 
@@ -82,10 +86,15 @@ if (isset($_POST)) {
             }
 
             /* Set time */
-            if ($value['etapa_planeacion'] == "Iniciada") {
-                $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = $value['hora'];
+            if (!empty($value['etapa_planeacion'])) {
+                if ($value['etapa_planeacion'] == "Iniciada") {
+                    $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = $value['hora'];
+                } else {
+                    $newArray[$value['id_planeacion']]['hora']['hora_fin'] = $value['hora'];
+                }
             } else {
-                $newArray[$value['id_planeacion']]['hora']['hora_fin'] = $value['hora'];
+                $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = '--:--:--';
+                $newArray[$value['id_planeacion']]['hora']['hora_fin'] = '--:--:--';
             }
         }
 
@@ -117,13 +126,45 @@ if (isset($_POST)) {
                         array_push($requisitos, 'Adjuntar acta');
                     } else {
 
+                        $rgtros_array = array();
+
+                        for ($i = 0; $i < count($registros); $i++) {
+                            array_push($rgtros_array, $registros[$i]['id_tipo_registro']);
+                        }
+
+                        $unique = array_unique($rgtros_array);
+
+                        if (!in_array(1, $unique)) {
+                            array_push($requisitos, 'Adjuntar evidencias');
+                        }
+
+                        if (!in_array(3, $unique)) {
+                            array_push($requisitos, 'Adjuntar asistencia');
+                        }
+
+                        if (!in_array(4, $unique)) {
+                            array_push($requisitos, 'Adjuntar acta');
+                        }
+
                     }
 
-                    for ($i = 0; $i < count($requisitos); $i++) {
-                        $list .= '<li>' . $requisitos[$i] . '</li>';
+                    if(empty($requisitos)){
+                        if($value['estado'] != 'Ejecutado'){
+                            $value['estado'] = 'Ejecutado';
+                            $update = $api->updateEstadoPlaneacion('Ejecutado', $value['id_planeacion']);
+                        }
+                    }else{
+                        for ($i = 0; $i < count($requisitos); $i++) {
+                            $list .= '<li>' . $requisitos[$i] . '</li>';
+                        }
                     }
 
                 }
+            }
+
+            $solicitud = "";
+            if(!empty($value['url'])){
+                $solicitud = $value['url'];
             }
 
             if ($value['estado'] != 'Ejecutado') {
@@ -153,6 +194,7 @@ if (isset($_POST)) {
                 '<li> Temas : ' . $value['temas'] . '</li>' .
                 '<li> Zona : ' . $value['zonas'] . '</li>' .
                 '<li> Gestor : ' . $value['gestor'] . '</li>' .
+                 $solicitud .
                 '</ul>',
 
                 'editable' => false,
@@ -232,6 +274,7 @@ if (isset($_POST)) {
                         "temas" => $value['temas'],
                         "gestor" => $value['nombre'],
                         "solicitud_interventora" => $value['solicitud_interventora'],
+                        "url_solicitud" => $value['url'],
                     ];
                 }
 
@@ -257,6 +300,11 @@ if (isset($_POST)) {
                     $color = "red";
                 }
 
+                $solicitud = "";
+                if($value['solicitud_interventora'] == "true"){
+                    $solicitud = '<li> <a target="_blank" href="' . $value['url_solicitud'] . '"> Ver solicitud </a> </li>';
+                }
+
                 $newArray[$key] = array(
 
                     'id' => $value['id_planeacion'],
@@ -274,6 +322,7 @@ if (isset($_POST)) {
                     '<li> Temas : ' . $value['temas'] . '</li>' .
                     '<li> Zona : ' . $value['zonas'] . '</li>' .
                     '<li> Gestor : ' . $value['gestor'] . '</li>' .
+                    $solicitud .
                     '</ul>',
 
                     'editable' => false,

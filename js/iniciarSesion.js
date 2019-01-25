@@ -1,15 +1,36 @@
 $(function () {
   /* Set  */
   userRol();
-
+  checkParam();
 });
 
-var userArray;
+let userArray;
+let login = getParam("login");
+
+function getParam(param) {
+  param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + param + "=([^&#]*)");
+  var results = regex.exec(location.search);
+  return results === null
+    ? ""
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 
 //Change functions
 $('#inputEmail').change(function(){
   verifyUserRol();
 });
+
+function checkParam(){
+  if(login == 'wrgpswd'){
+    swal({
+      type: 'error',
+      title: 'Oops',
+      text: '¡Ingresaste mal el usuario o contraseña!'
+    });
+  }
+}
 
 function userRol() {
   $.ajax({

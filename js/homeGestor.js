@@ -1,12 +1,17 @@
 $(function () {
   checkLogged();
   getPlaneacionesHoy();
+  showRegistrosInput();
 
   $("#datepicker").datepicker({
     locale: "es-es",
     uiLibrary: "bootstrap4",
     format: "dd-mm-yyyy"
   });
+
+  $('input[name=registros]').change(() => {
+    showRegistrosInput();
+  })
 
   $(".imgProfile img").click(function () {
     if ($(".profileDropdown").hasClass("activeProfile")) {
@@ -250,8 +255,19 @@ function getPlaneacionesXFocalizacion(foc, comp) {
       $(".planeaciones").html("");
       for (var arrayIndex in response) {
         var element = response[arrayIndex];
-        var arrEstrategia = response[arrayIndex].nombre_estrategia;
-        var estrategias = arrEstrategia.join(" - ");
+
+        if(element.ejecucion > 0){
+          element.ejecucion =
+          `<button class="btn ejecutado">
+            <i class="fas fa-check-circle"></i>
+          </button>`;
+        }else{
+          element.ejecucion =
+          `<button onclick=window.location.href="registrarEjecucionG.html?id_plan=${
+            element.id_planeacion
+          }&id_zona=${element.id_zona}&id_foc=${element.id_focalizacion}"
+          class="btn" ${element.ejecucion}><i class="fas fa-plus crear"></i> Ejecutar</button>`;
+        }
 
         $(".planeaciones").append(
           `<div>
@@ -261,13 +277,13 @@ function getPlaneacionesXFocalizacion(foc, comp) {
                 Fecha de registro : ${element.fecha_registro}
               </div>
               <div class="card-body">
-                <h5 class="card-title"> ${estrategias}</h5>
+                <h5 class="card-title"> ${element.nombre_estrategia}</h5>
                 <p>Tipo : ${element.tipo_gestion}</p>
                 <p>Tema : ${element.temas}</p>
-                <a href="registrarEjecucionG.html?id_plan=${
-                  element.id_planeacion
-                }&id_zona=${element.id_zona}&id_foc=${element.id_foc}"
-                class="btn"><i class="fas fa-plus crear"></i> Ejecutar</a>
+                ${element.ejecucion}
+                <button class="btn" data-toggle="modal" data-target="#uploadRegistrosModal" onclick="getPlan(${element.id_planeacion})">
+                  <i class="fas fa-plus crear"></i> Subir archivo
+                </button>
               </div>
             </div>
           </div>`
@@ -324,7 +340,7 @@ function checkLogged() {
 
       $("#pCompleta").bootstrapToggle("off");
 
-      $('#home').prop('href', `home.html?user=${data.rol}&id_zona=${data.zona}`);
+      $('#homeBtn').prop('href', `home.html?user=${data.rol}&id_zona=${data.zona}`);
       $('#menu').prop('href', `opciones.html?user=${data.rol}&id_zona=${data.zona}`);
 
       $("#pCompleta").change(function () {
@@ -378,6 +394,13 @@ function insertTAdmin() {
       insertLaboresXTAdmin();
     }
   });
+}
+
+function getPlan(id){
+  $("#getPlan").html("");
+  $("#getPlan").append(
+    `<input type="number" id="planea" name="municipio" value="${id}">`
+  );
 }
 
 function insertLaboresXTAdmin() {
@@ -575,4 +598,41 @@ function getPlaneacionesHoy() {
       }
     }
   });
+}
+
+function showRegistrosInput(){
+  let registros = document.getElementsByName('registros');
+  for(i=0;i<registros.length;i++){
+    switch (registros[i].id) {
+      case "asistencias":
+        if(registros[i].checked){
+          $('#colAsistencia').removeClass('showNone');
+        }else{
+          if(!$('#colAsistencia').hasClass('showNone')){
+            $('#colAsistencia').addClass('showNone');
+          }
+        }
+        break;
+
+        case "fotografias":
+          if(registros[i].checked){
+            $('#colEvidencias').removeClass('showNone');
+          }else{
+            if(!$('#colEvidencias').hasClass('showNone')){
+              $('#colEvidencias').addClass('showNone');
+            }
+          }
+        break;
+
+        case "acta":
+        if(registros[i].checked){
+          $('#colActaReunion').removeClass('showNone');
+        }else{
+          if(!$('#colActaReunion').hasClass('showNone')){
+            $('#colActaReunion').addClass('showNone');
+          }
+        }
+        break;
+    }
+  }
 }

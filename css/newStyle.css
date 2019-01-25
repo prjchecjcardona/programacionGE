@@ -23,6 +23,7 @@ body {
   border: 0;
   border-radius: 1rem;
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  height: 80%;
 }
 
 .card-signin .card-title {
@@ -32,6 +33,9 @@ body {
 }
 
 .card-signin .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   padding: 2rem;
 }
 
@@ -61,22 +65,11 @@ body {
 }
 
 .card-body img {
-  width: 15em;
+  width: 20em;
 }
 
 .imgSesion>.row {
   justify-content: center;
-  padding: 0px 36px 0px 36px;
-  height: 100%;
-}
-
-.imgSesion {
-  height: 19%;
-}
-
-.imgSesion>.row>img {
-  max-width: 100%;
-  max-height: 60%;
 }
 
 #imgBienvenida>img {
@@ -132,7 +125,6 @@ body {
 }
 
 #btnIngresarInvitado {
-  border-radius: 0px;
   background-color: cadetblue;
 }
 
@@ -141,8 +133,11 @@ body {
 }
 
 #imgBienvenida {
-  height: 100%;
-  padding: 40px 35px 0px 35px;
+	height: 100%;
+	padding: 40px 35px 0px 35px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .form-label-group input::-webkit-input-placeholder {
@@ -343,10 +338,16 @@ a {
   text-align: center;
 }
 
-.card-body a.btn {
-  color: black !important;
-  border: solid green 2px;
-  transition: 0.3s;
+.card-body .btn {
+	color: black !important;
+	border: solid green 2px;
+	transition: 0.3s;
+	font-size: medium;
+	font-weight: 900;
+}
+
+.form-signin .btn{
+  color: white !important;
 }
 
 #modalEventsCalendar>.modal-dialog {
@@ -443,14 +444,19 @@ a {
   background-color: #269226;
 }
 
-.card-body a.btn:hover {
+.card-body .btn:hover {
   color: #fff !important;
   background-color: green;
   border: solid white 2px;
 }
 
-#ejecutado {
+#ejecutado, .ejecutado {
   background-color: #269226;
+}
+
+.ejecutado:hover{
+  cursor: default !important;
+  color: black !important;
 }
 
 #planeado {
@@ -1028,7 +1034,6 @@ main {
 
 .card-body .fas {
   font-size: 1em;
-  margin: 0px 0px 0px 5px;
 }
 
 #rightPortion {

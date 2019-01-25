@@ -30,17 +30,7 @@ $(document).ready(function () {
 });
 
 $("#selectComportamiento").change(function () {
-  let tipo = $('#selectTipoInt').val();
-  if(tipo != ""){
-    checkFocalizacion(this.value, tipo);    
-  }
-});
-
-$("#selectTipoInt").change(function () {
-  let tipo = $('#selectComportamiento').val();
-  if(tipo != ""){
-    checkFocalizacion(tipo, this.value);    
-  }
+  checkFocalizacion(this.value);
 });
 
 var id_zona = getParam("id_zona");
@@ -316,14 +306,13 @@ function checkLogged() {
   });
 }
 
-function checkFocalizacion(compor, tipo) {
+function checkFocalizacion(compor) {
   $.ajax({
     type: "POST",
     url: "server/checkFocalizacion.php",
     data: {
       id_mun: id_mun,
       comportamiento: compor,
-      tipoFocalizacion: tipo
     },
     dataType: "json",
     success: function (response) {

@@ -6,6 +6,9 @@
   <title>Bienvenido</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+  integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+  crossorigin="anonymous">
   <link rel="stylesheet" href="css/newStyle.css">
   <link rel="stylesheet" href="css/iniciarSesion.css">
 </head>
@@ -19,8 +22,8 @@
       <div id="colInicarSesion" class="col-sm-12 col-md-7 col-lg-5">
         <div class="card card-signin">
           <div class="card-body">
-            <h5 class="card-title text-center">Inicie Sesión</h5>
             <form class="form-signin" action="server/logIn.php" method="post">
+              <h5 class="card-title text-center">Inicie Sesión</h5>
               <div class="form-label-group">
                 <input type="text" id="inputEmail" class="form-control" placeholder="Correo Electronico" required=""
                   autofocus="" name="mailuid" onfocusout="verifyUserRol()">
@@ -35,23 +38,23 @@
 
               <div class="row">
                 <div class="col-lg-6 col-md-12 col-sm-12">
-                  <button id="btnIngresar" class="btn btn-lg btn-block text-uppercase" name="loginSubmit" type="submit">Ingresar</button>
+                  <button id="btnIngresar" class="btn btn-lg btn-block text-uppercase" name="loginSubmit" type="submit">Ingresar <i class="fas fa-sign-in-alt"></i></button>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-12">
-                  <button id="btnIngresarApp" class="btn btn-lg btn-block text-uppercase" name="loginGeoApp" type="submit" disabled="true">Activar Geolocalizador</button>
+                  <button id="btnIngresarApp" class="btn btn-lg btn-block text-uppercase" name="loginGeoApp" type="submit" disabled="true">Activar Geolocalizador <i class="fas fa-map-marker-alt"></i></button>
                 </div>
               </div>
               <div class="row" id="rowInvitado">
                 <div class="col-lg-6 col-md-12 col-sm-12">
-                  <button id="btnIngresarInvitado" class="btn btn-lg btn-block text-uppercase" name="loginGuest" type="submit">Invitado</button>
+                  <button id="btnIngresarInvitado" class="btn btn-lg btn-block text-uppercase" name="loginGuest" type="submit">Invitado <i class="fas fa-users"></i></button>
                 </div>
               </div>
             </form>
-          </div>
-        </div>
-        <div class="imgSesion">
-          <div class="row">
-            <img src="img/LogoUMChec-01.png" alt="">
+            <div class="imgSesion">
+              <div class="row">
+                <img src="img/LogoUMChec-01.png" alt="">
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -65,6 +68,8 @@
   <script src="js/includes/popper.min.js"></script>
   <script src="js/includes/bootstrap.min.js"></script>
   <script src="js/includes/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
 <script src="js/iniciarSesion.js"></script>
 
 

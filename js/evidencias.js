@@ -1,11 +1,11 @@
 $(function() {});
 
-var uploadEF = new FileUploadWithPreview("evidenciasFotograficas");
-var uploadAsis = new FileUploadWithPreview("evidenciasAsistencia");
-var uploadActas = new FileUploadWithPreview("actasReunion");
-
+let uploadEF = new FileUploadWithPreview("evidenciasFotograficas");
+let uploadAsis = new FileUploadWithPreview("evidenciasAsistencia");
+let uploadActas = new FileUploadWithPreview("actasReunion");
+     
 function uploadAsistencias() {
-  var form = new FormData();
+  let form = new FormData();
 
   if($('#colEvidencia').css('display') != 'none'){
     /* Ciclo de evidencias fotograficas */
@@ -25,13 +25,15 @@ function uploadAsistencias() {
     /* Ciclo de actas */
     for (i=0; i<uploadActas.cachedFileArray.length; i++){
       element = uploadActas.cachedFileArray[i];
-      form.append('actas', element);
+      form.append('actas[]', element);
     }
   }
 
-  /* Solicitudes educativas */
-
-  form.append('id_plan', id_plan);
+  if(id_plan != ""){
+    form.append('id_plan', id_plan);
+  }else{
+    form.append('id_plan', $('#planea').val());
+  }
 
   $.ajax({
      type: "POST",
