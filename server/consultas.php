@@ -137,11 +137,90 @@ function getFocalizacionesXZonaQuery($con, $mun)
     return executeQuery($con, $sql);
 }
 
-function getInformesQuery($con)
+function getInformesQuery($con, $comportamiento, $municipio, $estrategia, $tactico, $tipo, $zona)
 {
-    $sql = "SELECT zona, SUM(cantidad_participantes)
+    $ejex = array();
+    $where = false;
+    $w = '';
+    if (!empty($comportamiento)) {
+        $where = true;
+        $c = true;
+        array_push($ejex, 'competencia');
+        $comps = implode(",", $comportamiento);
+        $result_string = "'" . str_replace(",", "','", $comps) . "'";
+        $w = "WHERE competencia IN ($result_string)";
+    }
+
+    if (!empty($estrategia)) {
+        array_push($ejex, 'estrategia');
+        $estr = implode(",", $estrategia);
+        $result_string = "'" . str_replace(",", "','", $estr) . "'";
+        if ($where) {
+            $w .= " AND estrategia IN ($result_string)";
+        } else {
+            $w .= "WHERE estrategia IN ($result_string)";
+            $where = true;
+        }
+    }
+
+    if (!empty($tactico)) {
+        array_push($ejex, 'tactico');
+        $tact = implode(",", $tactico);
+        $result_string = "'" . str_replace(",", "','", $tact) . "'";
+        if ($where) {
+            $w .= " AND tactico IN ($result_string)";
+        } else {
+            $w .= "WHERE tactico IN ($result_string)";
+            $where = true;
+        }
+    }
+
+    if (!empty($tipo)) {
+        array_push($ejex, 'tipo_actividad');
+        $tip = implode(",", $tipo);
+        $result_string = "'" . str_replace(",", "','", $tip) . "'";
+        if ($where) {
+            $w .= " AND tipo_actividad IN ($result_string)";
+        } else {
+            $w .= "WHERE tipo_actividad IN ($result_string)";
+            $where = true;
+        }
+    }
+
+    if (!empty($zona)) {
+        array_push($ejex, 'zona');
+        $zona = implode(",", $zona);
+        $result_string = "'" . str_replace(",", "','", $zona) . "'";
+        if ($where) {
+            $w .= " AND zona IN ($result_string)";
+        } else {
+            $w .= "WHERE zona IN ($result_string)";
+            $where = true;
+        }
+    }
+
+    if (!empty($municipio)) {
+        array_push($ejex, 'municipio');
+        $municipio = implode(", ", $municipio);
+        $result_string = "'" . str_replace(",", "','", $municipio) . "'";
+        if ($where) {
+            $w .= " AND municipio IN ('$result_string')";
+        } else {
+            $w .= "WHERE municipio IN ('$result_string')";
+            $where = true;
+        }
+    }
+
+    if (empty($ejex)) {
+        $cons = "zona";
+    } else {
+        $cons = implode(", ", $ejex);
+    }
+
+    $sql = "SELECT $cons, SUM(cantidad_participantes)
     FROM cobertura
-    GROUP BY zona";
+    $w
+    GROUP BY $cons";
 
     return executeQuery($con, $sql);
 }
@@ -174,7 +253,8 @@ function getPlaneacionesXFocalizacionQuery($con, $foc)
 	LEFT JOIN ejecucion eje ON eje.id_planeacion = pl.id_planeacion
     WHERE pl.id_focalizacion = '$foc'
 	GROUP BY pl.id_planeacion, tg.tipo_gestion, estrat.nombre_estrategia,
-    tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona, pl.id_focalizacion";
+    tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona, pl.id_focalizacion
+    ORDER BY pl.fecha_plan DESC";
 
     return executeQuery($con, $sql);
 }
@@ -247,7 +327,7 @@ function getTemasQuery($con, $compor)
     $sql = "SELECT id_temas, temas
     FROM temas ";
 
-    if(!empty($compor)){
+    if (!empty($compor)) {
         $sql .= "WHERE id_comportamiento = $compor";
     }
 
@@ -332,11 +412,11 @@ function getMaxIdTAdminQuery($con)
     return executeQuery($con, $sql);
 }
 
-function getPlaneacionesCalendarQuery($con)
+function getPlaneacionesCalendarQuery($con, $zona)
 {
     $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio,
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
-	per.nombres || ' ' || per.apellidos as nombre, solicitud_interventora, rxp.url
+	per.nombres || ' ' || per.apellidos as nombre, solicitud_interventora, rxp.url, foc.id_tipo_gestion
     FROM planeacion plan
     LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
     LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
@@ -345,21 +425,26 @@ function getPlaneacionesCalendarQuery($con)
     LEFT JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion
     LEFT JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion = foc.id_focalizacion
     LEFT JOIN indicadores_chec ic ON ic.id_indicador = icxf.id_indicador
-    LEFT JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
-    LEFT JOIN competencias compe ON compe.id_competencia = compor.id_competencia
     LEFT JOIN zonas zon ON zon.id_zona = mun.id_zona
 	LEFT JOIN asignar_zonas az ON az.id_zona = zon.id_zona
     LEFT JOIN personas per ON per.cedula = az.cedula_asignado
     LEFT JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = plan.id_planeacion
 	LEFT JOIN subtemas sutem ON sutem.id_subtema = sxp.id_subtema
     LEFT JOIN temas tem ON tem.id_temas = sutem.id_temas
+    LEFT JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento OR compor.id_comportamientos = tem.id_comportamiento
+    LEFT JOIN competencias compe ON compe.id_competencia = compor.id_competencia
     LEFT JOIN tacticos_x_planeacion txp ON txp.id_planeacion = plan.id_planeacion
     LEFT JOIN tactico tact ON txp.id_tactico = tact.id_tactico
     LEFT JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
     LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
     LEFT JOIN registros_x_planeacion rxp ON rxp.id_planeacion = plan.id_planeacion
-    WHERE plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2
-    ORDER BY plan.id_planeacion ASC";
+    WHERE plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2";
+
+    if ($zona != 'all') {
+        $sql .= " OR zon.id_zona = $zona";
+    }
+
+    $sql .= " ORDER BY plan.id_planeacion ASC";
 
     return executeQuery($con, $sql);
 }
@@ -382,11 +467,58 @@ function getSubtemasXTemaQuery($con, $id_tema)
     return executeQuery($con, $sql);
 }
 
-function getPlaneacionesEjecutadosOEnEjecucionQuery($con)
+function coberturaEstrategiaQuery($con)
+{
+    $sql = "SELECT estrategia, SUM(cantidad_participantes)
+    FROM cobertura
+    GROUP BY estrategia";
+
+    return executeQuery($con, $sql);
+}
+
+function coberturaActividadQuery($con)
+{
+    $sql = "SELECT tipo_actividad, SUM(cantidad_participantes)
+    FROM cobertura
+    WHERE tipo_actividad IN ('Evento', 'Proceso')
+    GROUP BY tipo_actividad";
+
+    return executeQuery($con, $sql);
+}
+
+function coberturaZonaQuery($con)
+{
+    $sql = "SELECT zona, SUM(cantidad_participantes)
+    FROM cobertura
+    GROUP BY zona";
+
+    return executeQuery($con, $sql);
+}
+
+function coberturaCompetenciaQuery($con)
+{
+    $sql = "SELECT competencia, SUM(cantidad_participantes)
+    FROM cobertura
+    GROUP BY competencia";
+
+    return executeQuery($con, $sql);
+}
+
+function coberturaMunQuery($con, $zona)
+{
+    $sql = "SELECT municipio, SUM(cantidad_participantes)
+    FROM cobertura
+    WHERE zona = '$zona'
+    GROUP BY municipio";
+
+    return executeQuery($con, $sql);
+}
+
+function getPlaneacionesEjecutadosOEnEjecucionQuery($con, $zona)
 {
     $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio,
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
-	per.nombres || ' ' || per.apellidos as nombre, plan.estado, hora, etapa_planeacion, plan.solicitud_interventora, rxp.url
+	per.nombres || ' ' || per.apellidos as nombre, plan.estado, hora, etapa_planeacion, plan.solicitud_interventora, rxp.url, foc.id_tipo_gestion
     FROM planeacion plan
     LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
     LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
@@ -412,10 +544,14 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con)
     WHERE fecha_plan BETWEEN '2019-01-01' AND now() AND plan.estado = 'En Ejecución'
     OR plan.estado = 'Ejecutado' OR rxp.id_tipo_registro = 2";
 
+    if ($zona != 'all') {
+        $sql .= " OR zon.id_zona = $zona";
+    }
+
     return executeQuery($con, $sql);
 }
 
-function getNovedadesNoEjecucionQuery($con)
+function getNovedadesNoEjecucionQuery($con, $zona)
 {
     $sql = "SELECT DISTINCT ON (plan.id_planeacion) plan.id_planeacion, nne.fecha_no_ejecutada, fecha_plan, jornada, lugar_encuentro, mun.municipio,
     foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos,
@@ -443,8 +579,13 @@ function getNovedadesNoEjecucionQuery($con)
         JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
         JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
         WHERE plan.id_planeacion IN(SELECT id_planeacion FROM novedad_no_ejecucion WHERE estado_novedad = 'No ejecutado')
-        AND plan.id_planeacion NOT IN (SELECT id_planeacion FROM ejecucion)
-        ORDER BY plan.id_planeacion, fecha_no_ejecutada DESC NULLS LAST";
+        AND plan.id_planeacion NOT IN (SELECT id_planeacion FROM ejecucion)";
+
+    if ($zona != 'all') {
+        $sql .= " OR zon.id_zona = $zona";
+    }
+
+    $sql .= " ORDER BY plan.id_planeacion, fecha_no_ejecutada DESC NULLS LAST";
 
     return executeQuery($con, $sql);
 }
@@ -555,7 +696,7 @@ function getUrlArchivosPlanQuery($con, $id_plan, $id_tipo_registro)
     FROM registros_x_planeacion
     WHERE id_planeacion = $id_plan";
 
-    if(!empty($id_tipo_registro)){
+    if (!empty($id_tipo_registro)) {
         $sql .= " AND id_tipo_registro = $id_tipo_registro";
     }
 

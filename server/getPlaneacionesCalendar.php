@@ -7,7 +7,7 @@ $api = new gestionEducativa();
 if (isset($_POST)) {
 
     if (isset($_POST['no_ejec'])) {
-        $json = $api->getNovedadesNoEjecucion();
+        $json = $api->getNovedadesNoEjecucion($_POST['id_zona']);
 
         foreach ($json as $key => $value) {
 
@@ -30,6 +30,10 @@ if (isset($_POST)) {
                 'color' => '#a2a1a0',
                 'textColor' => "white",
                 'zona' => $value['zonas'],
+                'id_zona' => $value['id_zona'],
+                'municipio' => $value['municipio'],
+                'tema' => $value['temas'],
+                'estrategia' => $value['nombre_estrategia']
             );
         }
 
@@ -38,7 +42,7 @@ if (isset($_POST)) {
     /* -------------------------------------------------------------------------------- */
 
     if (isset($_POST['planEjec_cal'])) {
-        $json = $api->getPlaneacionesEjecutadosOEnEjecucion();
+        $json = $api->getPlaneacionesEjecutadosOEnEjecucion($_POST['id_zona']);
 
         $newArray = array();
         $n = 0;
@@ -55,9 +59,11 @@ if (isset($_POST)) {
                     "municipio" => $value['municipio'],
                     "comportamientos" => $value['comportamientos'],
                     "competencia" => $value['competencia'],
+                    "id_zona" => $value['id_zona'],
                     "zonas" => $value['zonas'],
                     "nombre_estrategia" => $value['nombre_estrategia'],
                     "tacticos" => [],
+                    "tipo_gestion" => $value['id_tipo_gestion'],
                     "temas" => $value['temas'],
                     "gestor" => $value['nombre'],
                     "url_solicitud" => $value['url'],
@@ -201,6 +207,11 @@ if (isset($_POST)) {
                 'color' => $color,
                 'textColor' => "white",
                 'zona' => $value['zonas'],
+                'id_zona' => $value['id_zona'],
+                'tipo_gestion' => $value['tipo_gestion'],
+                'municipio' => $value['municipio'],
+                'tema' => $value['temas'],
+                'estrategia' => $value['nombre_estrategia'],
 
                 'estado' =>
 
@@ -248,7 +259,7 @@ if (isset($_POST)) {
 
         $arrayPlaneaciones = $_POST['plan_cal'];
 
-        $json = $api->getPlaneacionesCalendar();
+        $json = $api->getPlaneacionesCalendar($_POST['id_zona']);
 
         if (empty($json)) {
             $json = array("message" => "No hay nada planeado", "error" => 1);
@@ -268,6 +279,8 @@ if (isset($_POST)) {
                         "municipio" => $value['municipio'],
                         "comportamientos" => $value['comportamientos'],
                         "competencia" => $value['competencia'],
+                        "id_zona" => $value['id_zona'],
+                        "tipo_gestion" => $value['id_tipo_gestion'],
                         "zonas" => $value['zonas'],
                         "nombre_estrategia" => $value['nombre_estrategia'],
                         "tacticos" => [],
@@ -330,6 +343,11 @@ if (isset($_POST)) {
                     'color' => $color,
                     'textColor' => "white",
                     'zona' => $value['zonas'],
+                    'id_zona' => $value['id_zona'],
+                    'tipo_gestion' => $value['tipo_gestion'],
+                    'municipio' => $value['municipio'],
+                    'tema' => $value['temas'],
+                    'estrategia' => $value['nombre_estrategia']
                 );
             }
 

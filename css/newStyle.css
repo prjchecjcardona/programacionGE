@@ -65,7 +65,7 @@ body {
 }
 
 .card-body img {
-  width: 20em;
+  height: 8em;
 }
 
 .imgSesion>.row {
@@ -320,7 +320,7 @@ a {
 
 .indicadoresCalendar {
   height: 30px;
-  width: auto;
+  width: 0px;
   margin: 10px;
   border-radius: 25px;
   padding: 19px;
@@ -342,7 +342,6 @@ a {
 	color: black !important;
 	border: solid green 2px;
 	transition: 0.3s;
-	font-size: medium;
 	font-weight: 900;
 }
 
@@ -541,6 +540,20 @@ a {
 
 #cerrarDetalleModal {
   margin-top: 30px;
+}
+
+.details{
+  display: flex;
+  width: 100%;
+  border: solid 1px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+#modalCalendarFilters .custom-select{
+  width: 100%;
+  margin-bottom: 10px; 
 }
 
 #intervencion,
@@ -1024,10 +1037,6 @@ main {
   margin: 0%;
 }
 
-#calendarSelect {
-  width: auto;
-}
-
 .contentLogIn>.row {
   padding: 0% !important;
 }
@@ -1123,13 +1132,19 @@ nav#tabs{
   text-transform: uppercase;
 }
 
+.chartContainer{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
 /* INFORMES */
 
-div#chart1 {
-  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
-  border-radius: 7px;
+div#chart1, #chart2, #chart3, #chart4, #chart5, #chart6, #chart7, #chart8, #chart9 {
+	-webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.55);
+	border-radius: 10px;
 }
 
 /*  */

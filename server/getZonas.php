@@ -10,4 +10,4 @@ if(isset($_POST)){
   $json = "No se recibieron adecuadamente los datos";
 }
 
-echo json_encode($json);
+echo json_encode($json);  

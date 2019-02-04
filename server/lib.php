@@ -12,13 +12,19 @@ class gestionEducativa
 
     public function connectDB()
     {
-        //DEV
+        /* //DEV
         $database = "d4asqdqb9dlt9p";
         $uid = "ntafkvnrqqlbig";
         $pwd = "300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1";
-        $host = "ec2-54-197-233-123.compute-1.amazonaws.com";
+        $host = "ec2-54-197-233-123.compute-1.amazonaws.com"; */
 
-        /*//PRODUCCION
+        //DEV
+        $database = "NEWGE";
+        $uid = "postgres";
+        $pwd = "1234";
+        $host = "localhost";
+
+        /* //PRODUCCION
         $database = "gestjjlg_gestion_educativa";
         $uid = "gestjjlg_usr_gestion";
         $pwd = "r!Hh7XNv22E(";
@@ -97,9 +103,9 @@ class gestionEducativa
         return getPlaneacionesXFocalizacionQuery($this->con, $foc);
     }
 
-    public function getPlaneacionesCalendar()
+    public function getPlaneacionesCalendar($zona)
     {
-        return getPlaneacionesCalendarQuery($this->con);
+        return getPlaneacionesCalendarQuery($this->con, $zona);
     }
 
     public function getDetallePlaneacionEjecucion($id_plan)
@@ -202,14 +208,14 @@ class gestionEducativa
         return insertNovedadNoEjecucionQuery($this->con, $id_planeacion, $descripcion, $fecha_aplazamiento, $fecha_plan);
     }
 
-    public function getPlaneacionesEjecutadosOEnEjecucion()
+    public function getPlaneacionesEjecutadosOEnEjecucion($zona)
     {
-        return getPlaneacionesEjecutadosOEnEjecucionQuery($this->con);
+        return getPlaneacionesEjecutadosOEnEjecucionQuery($this->con, $zona);
     }
 
-    public function getNovedadesNoEjecucion()
+    public function getNovedadesNoEjecucion($zona)
     {
-        return getNovedadesNoEjecucionQuery($this->con);
+        return getNovedadesNoEjecucionQuery($this->con, $zona);
     }
 
     public function getContactos($mun)
@@ -257,9 +263,9 @@ class gestionEducativa
         return insertRegistrosQuery($this->con, $tipo_registro, $id_plan, $url);
     }
 
-    public function getInformes()
+    public function getInformes($comportamiento, $municipio, $estrategia, $tactico, $tipo, $zona)
     {
-        return getInformesQuery($this->con);
+        return getInformesQuery($this->con, $comportamiento, $municipio, $estrategia, $tactico, $tipo, $zona);
     }
 
     public function getEtapaPlaneacion($id_plan)
@@ -275,6 +281,31 @@ class gestionEducativa
     public function insertGeoLocation($lat, $long, $fecha, $hora, $id_plan, $etapa_plan)
     {
         return insertGeoLocationQuery($this->con, $lat, $long, $fecha, $hora, $id_plan, $etapa_plan);
+    }
+
+    public function coberturaEstrategia()
+    {
+        return coberturaEstrategiaQuery($this->con);
+    }
+
+    public function coberturaZona()
+    {
+        return coberturaZonaQuery($this->con);
+    }
+
+    public function coberturaMun($zona)
+    {
+        return coberturaMunQuery($this->con, $zona);
+    }
+
+    public function coberturaCompetencia()
+    {
+        return coberturaCompetenciaQuery($this->con);
+    }
+
+    public function coberturaActividad()
+    {
+        return coberturaActividadQuery($this->con);
     }
 
     public function checkFocalizacion($id_mun, $comp)

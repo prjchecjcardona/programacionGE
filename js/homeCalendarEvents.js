@@ -1,5 +1,10 @@
 $(function () {
-  var containerEl = $("#calendar");
+
+  getMunicipiosXZ($('#calendarZona').val());
+  getEstrategiasCalendar();
+  getTemasCalendar();
+
+  var containerEl = $(".myCalendar");
   getPlaneacionesCalendar();
   containerEl.fullCalendar({
     themeSystem: "bootstrap4",
@@ -9,11 +14,17 @@ $(function () {
         click: function () {
           $("#modalCalendarDetails").modal("toggle");
         }
+      },
+      filtros: {
+        text: "Filtros",
+        click: () => {
+          $('#modalCalendarFilters').modal("toggle");
+        }
       }
     },
     height: getCalendarHeight(),
     header: {
-      left: "prev,next, today, detalles",
+      left: "prev,next, today, detalles, filtros",
       center: "title",
       right: "month,listWeek,agendaDay"
     },
@@ -23,7 +34,11 @@ $(function () {
     eventLimit: true, // allow "more" link when too many events
 
     eventRender: function eventRender(event, element, view) {
-      return ["0", event.zona].indexOf($("#calendarSelect").val()) >= 0;
+      return (["0", String(event.id_zona)].indexOf($("#calendarZona").val()) >= 0) &&
+        (["0", String(event.municipio)].indexOf($('#calendarMunicipio').val()) >= 0) &&
+        (["0", String(event.tema)].indexOf($('#calendarTema').val()) >= 0) &&
+        (["0", String(event.estrategia)].indexOf($('#calendarEstrategia').val()) >= 0) &&
+        (["0", String(event.tipo_gestion)].indexOf($('#calendarTipoG').val()) >= 0)
     },
     eventClick: function (event, jsEvent, view) {
       document.getElementById(
@@ -48,8 +63,13 @@ $(function () {
   calendar.className += " showNone";
 });
 
+$('#calendarZona').change(() => {
+  getMunicipiosXZ($('#calendarZona').val());
+});
+
 /* PARAMETERS */
 id_zona = getParam("id_zona");
+user = getParam("user");
 
 function getParam(param) {
   param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -66,7 +86,8 @@ function getPlaneacionesCalendar() {
     type: "POST",
     url: "server/getPlaneacionesCalendar.php",
     data: {
-      planEjec_cal: ""
+      planEjec_cal: "",
+      id_zona: id_zona
     },
     dataType: "json",
     success: function (dataEjecutado) {
@@ -76,7 +97,8 @@ function getPlaneacionesCalendar() {
         type: "POST",
         url: "server/getPlaneacionesCalendar.php",
         data: {
-          no_ejec: ""
+          no_ejec: "",
+          id_zona: id_zona
         },
         dataType: "json",
         success: function (dataNoEjecutado) {
@@ -91,7 +113,8 @@ function getPlaneacionesCalendar() {
             type: "POST",
             url: "server/getPlaneacionesCalendar.php",
             data: {
-              plan_cal: fullArrayPlans
+              plan_cal: fullArrayPlans,
+              id_zona : id_zona
             },
             dataType: "json",
             success: function (dataPlans) {
@@ -101,6 +124,8 @@ function getPlaneacionesCalendar() {
               getTrabajoAdministrativo();
             }
           });
+
+          checkZonaFilterCalendar();
         }
       });
     }
@@ -122,19 +147,7 @@ function getTrabajoAdministrativo() {
       $("#calendar").removeClass("showNone");
       $("#loaderCalendar").fadeOut();
 
-      /* Append filter for calendar to choose specific zones */
-      $(".fc-left").append(
-        `<select class="custom-select" id="calendarSelect">
-          <option value="0" selected>Todos</option>
-          <option value="Centro">Centro</option>
-          <option value="Suroccidente">Suroccidente</option>
-          <option value="Occidente">Occidente</option>
-          <option value="Noroccidente">Noroccidente</option>
-          <option value="Oriente">Oriente</option>
-        </select>`
-      );
-
-      $("#calendarSelect").on("change", function () {
+      $("#calendarZona, #calendarMunicipio, #calendarEstrategia, #calendarTema, #calendarTipoG").on("change", function () {
         $("#calendar").fullCalendar("rerenderEvents");
       });
 
@@ -158,12 +171,12 @@ function getCalendarEventsZona() {
       5: "Oriente"
     }
 
-    $('#calendarSelect').val(zonas[id_zona]);
+    $('#calendarZona').val(zonas[id_zona]);
     $("#calendar").fullCalendar("rerenderEvents");
   }
 }
 
-function setModal(color){
+function setModal(color) {
   if (color != '#edbe00' && color != '#269226') {
     if (!$("#modalEventDescription #left").hasClass('planeado')) {
       $("#modalEventDescription #left").addClass('planeado');
@@ -175,4 +188,87 @@ function setModal(color){
       $("#modalEventDescription #right").removeClass('showNone');
     }
   }
+}
+
+function getMunicipiosXZ(zona) {
+  $('#calendarMunicipio').prop("disabled", true);
+  $.ajax({
+    type: "POST",
+    url: "server/getMunicipios.php",
+    data: {
+      zona: zona
+    },
+    dataType: "json",
+    success: function (response) {
+      $('#calendarMunicipio').html(
+        `<option value="0" selected>Todos</option>`
+      );
+      response.forEach(element => {
+        $('#calendarMunicipio').append(
+          `<option value="${element.municipio}">${element.municipio}</option>`
+        );
+      });
+    }
+  }).done(() => {
+    $('#calendarMunicipio').prop("disabled", false);
+  });
+}
+
+function getEstrategiasCalendar() {
+  $.ajax({
+    type: "POST",
+    url: "server/getEstrategias.php",
+    data: '',
+    dataType: "json",
+    success: function (response) {
+      $('#calendarEstrategia').html(
+        `<option value="0" selected>Todos</option>`
+      );
+      response.forEach(element => {
+        $('#calendarEstrategia').append(
+          `<option value="${element.nombre_estrategia}">${element.nombre_estrategia}</option>`
+        );
+      });
+    }
+  });
+}
+
+function getTacticosXEstrategias(estrat) {
+  $.ajax({
+    type: "POST",
+    url: "server/getEstrategias.php",
+    data: '',
+    dataType: "json",
+    success: function (response) {
+      $('#calendarEstrategia').html(
+        `<option value="0" selected>Todos</option>`
+      );
+      response.forEach(element => {
+        $('#calendarEstrategia').append(
+          `<option value="${element.nombre_estrategia}">${element.nombre_estrategia}</option>`
+        );
+      });
+    }
+  });
+}
+
+function getTemasCalendar() {
+  $.ajax({
+    type: "POST",
+    url: "server/getTemas.php",
+    data: {
+      comportamiento: ""
+    },
+    dataType: "json",
+    success: function (response) {
+      $('#calendarTema').html(
+        `<option value="0" selected>Todos</option>`
+      );
+      response.forEach(element => {
+        $('#calendarTema').append(
+          `<option value="${element.temas}">${element.temas}</option>`
+        );
+      });
+    }
+  });
 }

@@ -54,6 +54,7 @@
           <div id="homeBreadCrumbs" class="animated showNone">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
+                <li>Inicio</li>
               </ol>
             </nav>
             <a id="returnMunicipio" class="returnBtn showNone" class="btn btn-success" onClick="returnMunicipio()">
@@ -92,14 +93,21 @@
           </div>
           <nav id="tabs">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" id="calendar-tab" data-toggle="tab" href="#calendarTab" role="tab" aria-controls="calendarTab" aria-selected="true">Calendario</a>
-              <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Mapa</a>
-              <a class="nav-item nav-link" id="ejecucion-tab" data-toggle="tab" href="#plan_hoy" role="tab" aria-controls="plan_hoy" aria-selected="false">Actividades Diarias</a>
+              <a class="nav-item nav-link active" id="calendar-tab" data-toggle="tab" href="#calendarTab" role="tab"
+                aria-controls="calendarTab" aria-selected="true">Calendario</a>
+              <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">Mapa</a>
+              <a class="nav-item nav-link" id="ejecucion-tab" data-toggle="tab" href="#plan_hoy" role="tab"
+                aria-controls="plan_hoy" aria-selected="false">Actividades Diarias</a>
             </div>
           </nav>
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="calendarTab" role="tabpanel" aria-labelledby="calendar-tab"><div id="calendar"></div></div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><div id="map"></div></div>
+            <div class="tab-pane fade show active" id="calendarTab" role="tabpanel" aria-labelledby="calendar-tab">
+              <div id="calendar" class="myCalendar"></div>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <div id="map"></div>
+            </div>
             <div class="tab-pane fade" id="plan_hoy" role="tabpanel" aria-labelledby="ejecucion-tab"></div>
           </div>
         </div>
@@ -188,64 +196,64 @@
 
     <!-- MODAL CARGAR ARCHIVO -->
     <div class="modal fade bd-example-modal-lg" id="uploadRegistrosModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
 
-        <div id="modalLoader" class="showNone">
-          <div class="center" id="loaderList">
-            <div class="pulse">
-              <img src="img/logo-min.png" alt="">
+          <div id="modalLoader" class="showNone">
+            <div class="center" id="loaderList">
+              <div class="pulse">
+                <img src="img/logo-min.png" alt="">
+              </div>
             </div>
           </div>
-        </div>
 
-        <div id="detalleCard">
-          <div id="headerModalTAdmin">
-            <i class="fas fa-laptop"></i>
-            <h2>Subir Archivo</h2>
-          </div>
-          <div id="tAdmin" class="trabajoAdmin">
-            <form id="formTAdmin" enctype="multipart/form-data">
-              <div class="row showNone" id="getPlan"></div>
-              <div class="row formRows">
-                <div class="col-lg-4 col-md-12 col-sm-12" >
-                  <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" id="acta" name="registros" class="custom-control-input">
-                    <label class="custom-control-label" for="acta">Actas</label>
+          <div id="detalleCard">
+            <div id="headerModalTAdmin">
+              <i class="fas fa-laptop"></i>
+              <h2>Subir Archivo</h2>
+            </div>
+            <div id="tAdmin" class="trabajoAdmin">
+              <form id="formTAdmin" enctype="multipart/form-data">
+                <div class="row showNone" id="getPlan"></div>
+                <div class="row formRows">
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                      <input type="checkbox" id="acta" name="registros" class="custom-control-input">
+                      <label class="custom-control-label" for="acta">Actas</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                      <input type="checkbox" id="asistencias" name="registros" class="custom-control-input">
+                      <label class="custom-control-label" for="asistencias">Asistencias</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                      <input type="checkbox" id="fotografias" name="registros" class="custom-control-input">
+                      <label class="custom-control-label" for="fotografias">Evidencias Fotográficas</label>
+                    </div>
                   </div>
                 </div>
-
-                <div class="col-lg-4 col-md-12 col-sm-12" >
-                  <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" id="asistencias" name="registros" class="custom-control-input">
-                    <label class="custom-control-label" for="asistencias">Asistencias</label>
+                <div class="row formRows">
+                  <div class="col-lg-12 col-md-12 col-sm-12 showNone" id="colEvidencias">
+                    <label for="evidenciasFotograficas">Evidencias Fotográficas <label for="actaReunion" class="obligatorio">*</label></label>
+                    <div class="custom-file-container" data-upload-id="evidenciasFotograficas">
+                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
+                          title="Clear Image">&times;</a></label>
+                      <label class="custom-file-container__custom-file">
+                        <input type="file" id="fotograficas" class="custom-file-container__custom-file__custom-file-input"
+                          accept="*" multiple name="fotograficas">
+                        <span class="custom-file-container__custom-file__custom-file-control"></span>
+                      </label>
+                      <div class="custom-file-container__image-preview"></div>
+                    </div>
                   </div>
-                </div>
 
-                <div class="col-lg-4 col-md-12 col-sm-12" >
-                  <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" id="fotografias" name="registros" class="custom-control-input">
-                    <label class="custom-control-label" for="fotografias">Evidencias Fotográficas</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row formRows">
-                <div class="col-lg-12 col-md-12 col-sm-12 showNone" id="colEvidencias">
-                  <label for="evidenciasFotograficas">Evidencias Fotográficas <label for="actaReunion" class="obligatorio">*</label></label>
-                  <div class="custom-file-container" data-upload-id="evidenciasFotograficas">
-                    <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
-                        title="Clear Image">&times;</a></label>
-                    <label class="custom-file-container__custom-file">
-                      <input type="file" id="fotograficas" class="custom-file-container__custom-file__custom-file-input"
-                        accept="*" multiple name="fotograficas">
-                      <span class="custom-file-container__custom-file__custom-file-control"></span>
-                    </label>
-                    <div class="custom-file-container__image-preview"></div>
-                  </div>
-                </div>
-
-                <div class="col-lg-12 col-md-12 col-sm-12 showNone" id="colAsistencia">
+                  <div class="col-lg-12 col-md-12 col-sm-12 showNone" id="colAsistencia">
                     <label for="evidenciasFotograficas">Asistencias <label for="actaReunion" class="obligatorio">*</label></label>
                     <div class="custom-file-container" data-upload-id="evidenciasAsistencia">
                       <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
@@ -257,36 +265,37 @@
                       </label>
                       <div class="custom-file-container__image-preview"></div>
                     </div>
-                </div>
+                  </div>
 
-                <div class="col-lg 12 col-md-12 col-sm-12 showNone" id="colActaReunion">
-                  <label for="actaReunion">Acta de reunión <label for="actaReunion" class="obligatorio">*</label></label>
-                  <div class="custom-file-container" data-upload-id="actasReunion">
-                    <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
-                        title="Clear Image">&times;</a></label>
-                    <label class="custom-file-container__custom-file">
-                      <input type="file" id="actas" class="custom-file-container__custom-file__custom-file-input"
-                        accept="*" multiple name="actas[]">
-                      <span class="custom-file-container__custom-file__custom-file-control"></span>
-                    </label>
-                    <div class="custom-file-container__image-preview"></div>
+                  <div class="col-lg 12 col-md-12 col-sm-12 showNone" id="colActaReunion">
+                    <label for="actaReunion">Acta de reunión <label for="actaReunion" class="obligatorio">*</label></label>
+                    <div class="custom-file-container" data-upload-id="actasReunion">
+                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
+                          title="Clear Image">&times;</a></label>
+                      <label class="custom-file-container__custom-file">
+                        <input type="file" id="actas" class="custom-file-container__custom-file__custom-file-input"
+                          accept="*" multiple name="actas[]">
+                        <span class="custom-file-container__custom-file__custom-file-control"></span>
+                      </label>
+                      <div class="custom-file-container__image-preview"></div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div id="rowBtnTAdmin" class="row rowForms modal-footer">
-                <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
-                  <button id="btnCancelarUpload" data-toggle="modal" data-target="#uploadRegistrosModal" type="button" class="btn btn-danger">Cancelar</button>
+                <div id="rowBtnTAdmin" class="row rowForms modal-footer">
+                  <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
+                    <button id="btnCancelarUpload" data-toggle="modal" data-target="#uploadRegistrosModal" type="button"
+                      class="btn btn-danger">Cancelar</button>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
+                    <button id="btnUpload" type="button" class="btn btn-success" onclick="uploadAsistencias()">Cargar</button>
+                  </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
-                  <button id="btnUpload" type="button" class="btn btn-success" onclick="uploadAsistencias()">Cargar</button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
 
     <!-- MODAL CALENDAR EVENT DETAILS -->
@@ -314,20 +323,91 @@
     </div>
 
     <!-- MODAL CALENDAR DETAILS -->
-    <div class="modal fade bd-example-modal-lg" id="modalCalendarDetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+    <div class="modal fade bd-example-modal-md" id="modalCalendarDetails" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-md">
         <div class="modal-content">
           <div style="height: auto; padding: 20px">
-            <div class="indicadoresCalendar" id="planeado">Evento Planeado</div>
-            <div class="indicadoresCalendar" id="enejecucion">Evento en Ejecución</div>
-            <div class="indicadoresCalendar" id="ejecutado">Evento Ejecutado</div>
-            <div class="indicadoresCalendar" id="tadmin">Tarea Administrativa</div>
-            <div class="indicadoresCalendar" id="noejecutado">Evento no Ejecutado</div>
+            <div class="details">
+              <div class="indicadoresCalendar" id="planeado"></div>
+              <h1>Evento Planeado</h1>
+            </div>
+            <div class="details">
+              <div class="indicadoresCalendar" id="enejecucion"></div>
+              <h1>Evento en Ejecución</h1>
+            </div>
+            <div class="details">
+              <div class="indicadoresCalendar" id="ejecutado"></div>
+              <h1>Evento Ejecutado</h1>
+            </div>
+            <div class="details">
+              <div class="indicadoresCalendar" id="tadmin"></div>
+              <h1>Tareas Administrativas</h1>
+            </div>
+            <div class="details">
+              <div class="indicadoresCalendar" id="noejecutado"></div>
+              <h1>Eventos No Ejecutados</h1>
+            </div>
           </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL CALENDAR DETAILS -->
+    <div class="modal fade bd-example-modal-md" id="modalCalendarFilters" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+          <div style="width: 100%; padding: 10px 40px 0px 40px">
+            <div class="row">
+              <label for="calendarZona">Zona:</label>
+              <select class="custom-select" id="calendarZona">
+                <option value="0" selected>Todos</option>
+                <option value="1">Centro</option>
+                <option value="2">Suroccidente</option>
+                <option value="3">Occidente</option>
+                <option value="4">Noroccidente</option>
+                <option value="5">Oriente</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <label for="calendarMunicipio">Municipio: </label>
+              <select class="custom-select" id="calendarMunicipio"></select>
+            </div>
+
+            <div class="row">
+              <label for="calendarEstrategia">Estrategia:</label>
+              <select class="custom-select" id="calendarEstrategia"></select>
+            </div>
+
+            <div class="row showNone">
+              <label for="calendarTacticos">Tacticos:</label>
+              <select class="custom-select" id="calendarTacticos"></select>
+            </div>
+
+            <div class="row">
+              <label for="calendarTema">Tema:</label>
+              <select class="custom-select" id="calendarTema"></select>
+            </div>
+
+            <div class="row">
+              <label for="calendarTipoG">Tipo Gestión:</label>
+              <select class="custom-select" id="calendarTipoG">
+                <option value="0">Todos</option>
+                <option value="1">Formativa</option>
+                <option value="2">Institucional</option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-danger">Remover Filtros</button>
           </div>
         </div>
       </div>

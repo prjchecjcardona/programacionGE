@@ -375,6 +375,7 @@ function getSubtemasList(id_tema) {
     dataType: "json",
     success: function(response) {
       response.forEach(element => {
+        
         arraySubtemas = element.subtemas.split("&");
 
         $("#divSubtemas").append(
@@ -386,7 +387,7 @@ function getSubtemasList(id_tema) {
               <label class="custom-control-label" for="customCheck${
                 element.id_subtema
               }">
-                <ul>
+                <ul id="${element.id_subtema}">
 
                 </ul>
               </label>
@@ -394,8 +395,8 @@ function getSubtemasList(id_tema) {
           </div>`
         );
 
-        arraySubtemas.forEach(element => {
-          $("label ul").append(`<li>${element}</li>`);
+        arraySubtemas.forEach(el => {
+          $(`label ul#${element.id_subtema}`).append(`<li>${el}</li>`);
         });
       });
 

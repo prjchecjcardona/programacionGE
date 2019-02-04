@@ -107,22 +107,22 @@ button:hover {
 }
 
 .nav {
-	display: flex;
-	justify-content: space-between;
-	position: relative;
-	width: 100%;
-	height: 60px;
-	z-index: 2;
-	padding: 0px 20px 0px 30px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: 60px;
+  z-index: 2;
+  padding: 0px 20px 0px 30px;
 }
 
-#nombre{
+#nombre {
   display: flex;
   align-items: center;
   height: 100%;
 }
 
-#nombre h3{
+#nombre h3 {
   color: #fff;
   font-family: checfont1;
 }
@@ -136,25 +136,25 @@ button:hover {
   cursor: pointer;
 }
 
-#icons{
+#icons {
   display: flex;
   align-items: center;
 }
 
-.alert{
+.alert {
   font-family: checfont1;
   text-align: center;
 }
 
-.nav .fas:hover{
+.nav .fas:hover {
   color: rgb(212, 211, 211);
 }
 
-.hide{
+.hide {
   display: none !important;
 }
 
-#returnBtn{
+#returnBtn {
   width: auto;
   margin: 0;
   box-shadow: 1px 1px rgba(114, 112, 112, 0.685);
@@ -162,6 +162,26 @@ button:hover {
   font-weight: 900;
 }
 
-#nombre h3{
+#nombre h3 {
   margin: 0%;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+
+  #list {
+    background-color: #fff;
+    width: calc(100% - 50px) !important;
+    height: auto;
+    border-radius: 10px;
+    margin: 75px 10px 10px 10px !important;
+  }
+
+  #zona div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: auto !important;
+    height: auto;
+    padding: 30px;
+  }
 }

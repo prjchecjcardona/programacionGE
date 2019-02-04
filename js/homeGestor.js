@@ -28,7 +28,7 @@ $(function () {
           <img src="img/logo-min.png" alt="">
         </div>
       </div>
-      <div id="calendar" style="margin-top: 30px;"></div>`
+      <div id="calendar" class="myCalendar" style="margin-top: 30px;"></div>`
     );
   }
 
@@ -200,15 +200,14 @@ function getFocalizacionesXZona(mun, nom_mun) {
             `<div>
               <div class="card">
                 <div class="card-header">
-                Registro: ${element.fecha}
+                ${element.competencia}
                 <button type="button" class="btn btn-primary">
                   Planeaciones <span class="badge badge-light">${element.total}</span>
                 </button>
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title">${element.comportamientos} - ${
-              element.competencia
-            }</h5>
+                  <h5 class="card-title">${element.comportamientos}</h5>
+                  <h6>Registro: ${element.fecha}</h6>
                   <a href="registrarPlaneacionG.html?id_zona=${
                     element.id_zona
                   }&id_mun=${element.id_municipio}&id_foc=${
@@ -274,12 +273,12 @@ function getPlaneacionesXFocalizacion(foc, comp) {
             <div class="card">
               <div class="card-header">
                 Fecha de planeación : ${element.fecha_plan} </br>
-                Fecha de registro : ${element.fecha_registro}
               </div>
               <div class="card-body">
                 <h5 class="card-title"> ${element.nombre_estrategia}</h5>
                 <p>Tipo : ${element.tipo_gestion}</p>
                 <p>Tema : ${element.temas}</p>
+                <p>Fecha de registro : ${element.fecha_registro}</p>
                 ${element.ejecucion}
                 <button class="btn" data-toggle="modal" data-target="#uploadRegistrosModal" onclick="getPlan(${element.id_planeacion})">
                   <i class="fas fa-plus crear"></i> Subir archivo
@@ -634,5 +633,12 @@ function showRegistrosInput(){
         }
         break;
     }
+  }
+}
+
+function checkZonaFilterCalendar(){
+  if (user == 3) {
+    $('#calendarZona').val(id_zona);
+    $('#calendarZona').prop('disabled', true);
   }
 }
