@@ -7,16 +7,18 @@ date_default_timezone_set("America/Bogota");
 
 if(isset($_POST['estado'])){
   $sql = $api->getEtapaPlaneacion($_POST['estado']);
-  
+
   if(!empty($sql)){
-    if(count($sql) < 1){
+    if(count($sql) <= 1){
       $estado = "En Ejecución";
     }else{
       $estado = "Ejecutado";
     }
-  }
 
-  $json = array('sql' => $sql, 'estado' => $estado);
+    $json = array('sql' => $sql, 'estado' => $estado);
+  }else{
+    $json = "No iniciado";
+  }
 }
 
 if(isset($_POST['geo'])){
@@ -38,6 +40,16 @@ if(isset($_POST['geo'])){
   }
 
   $sql = $api->insertGeoLocation($lat, $long, $fecha, $hora, $id_plan, $etapa_plan);
+
+  $estado = $api->getEtapaPlaneacion($id_plan);
+
+  if(count($estado) <= 1){
+    $etapa_plan = "Iniciada";
+    $estado = "En Ejecución";
+  }else{
+    $etapa_plan = "Finalizada";
+    $estado = "En Ejecución";
+  }
 
   if($sql['error'] != 1){
     $sql = $api->updateEstadoPlaneacion($estado, $id_plan);

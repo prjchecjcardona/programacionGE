@@ -6,7 +6,7 @@ $api = new gestionEducativa();
 
 if (isset($_POST)) {
 
-    $fechaReg = (string) date("m-d-Y");
+    $fechaReg = (string) date("Y-m-d");
 
     if (isset($_POST['fecha']) && isset($_POST['jornada']) && isset($_POST['lugarEncuentro'])
         && isset($_POST['entidad']) && isset($_POST['id_foc'])) {
@@ -14,7 +14,7 @@ if (isset($_POST)) {
         #Create datetime of $_POST['fecha']
         $newDate = date_create($_POST['fecha']);
         #Change new date format
-        $fechaPlan = date_format($newDate, "m-d-Y");
+        $fechaPlan = date_format($newDate, "Y-m-d");
         $jornada = $_POST['jornada'];
         $lugarEncuentro = $_POST['lugarEncuentro'];
         $entidad = $_POST['entidad'];

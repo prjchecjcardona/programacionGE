@@ -13,6 +13,11 @@ $(function () {
     showRegistrosInput();
   })
 
+  $('#removerFiltros').click(() => {
+    $('#modalCalendarFilters select').val('0');
+    $('#calendar').fullCalendar("rerenderEvents");
+  })
+
   $(".imgProfile img").click(function () {
     if ($(".profileDropdown").hasClass("activeProfile")) {
       $(".profileDropdown").removeClass("activeProfile");
@@ -22,14 +27,8 @@ $(function () {
   });
 
   if (user == 3 || user == "Gestor") {
-    $("#rightPortion").html(
-      `<div class="center" id="loaderCalendar">
-        <div class="pulse">
-          <img src="img/logo-min.png" alt="">
-        </div>
-      </div>
-      <div id="calendar" class="myCalendar" style="margin-top: 30px;"></div>`
-    );
+    $('#ejecucion-tab').addClass('showNone');
+    $('#profile-tab').addClass('showNone');
   }
 
   $("#logOut a").click(function () {

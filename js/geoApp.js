@@ -43,7 +43,11 @@ function getZonas() {
 }
 
 function getPlaneaciones(zona) {
-  $('#planeaciones div').html('');
+  $('#planeaciones div').html(
+    `<div class="alert alert-warning" role="alert">
+      <a class="btn btn-success" onclick="rtnBtn()" id="returnBtn">Regresar</a>
+    </div>`
+  );
   $('#zona').addClass('hide');
   $.ajax({
     type: "POST",
@@ -78,11 +82,14 @@ function getPlaneaciones(zona) {
               <div class="card-body">
                 <h5 class="card-title">${element.comportamientos} - ${element.competencia}</h5>
                 <p class="card-text">${element.nombre_estrategia}</p>
-                <a class="btn btn-primary">Ver detalles <i class="fas fa-info-circle"></i></a>
+                <p class="card-text">${element.nombre_entidad}</p>
+                <a class="btn btn-primary" data-toggle="modal" data-target="#detalle_${element.id_planeacion}">Ver detalles <i class="fas fa-info-circle"></i></a>
                 <a id="${element.id_planeacion}" onclick="getLocalizacion(${element.id_planeacion})" class="btn btn-success geoloc"> Iniciar actividad <i class="fas fa-map-marker-alt"></i></a>
                 </div>
             </div>`
           );
+
+          getDetallePlaneacion(element.id_planeacion);
 
           getEtapaPlaneacion(element.id_planeacion);
 
@@ -96,6 +103,7 @@ function getPlaneaciones(zona) {
 }
 
 function getLocalizacion(id_plan) {
+  $(".loader").fadeIn();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
       $.ajax({
@@ -113,13 +121,15 @@ function getLocalizacion(id_plan) {
           if (response.etapa == "Iniciada") {
             $(`#${id_plan}`).addClass('en-ejecucion');
             $(`#${id_plan}`).html('Finalizar actividad <i class="fas fa-map-marker-alt"></i>');
+            $(".loader").fadeOut();
           } else if (response.etapa == "Finalizada") {
             $(`#${id_plan}`).remove();
-            $(`#card${element.id_planeacion} .card-body`).append(
+            $(`#card${id_plan} .card-body`).append(
               `<div class="alert alert-success" role="alert">
               <i class="fas fa-check-circle" style="font-size: 2em;"></i>
               </div>`
             );
+            $(".loader").fadeOut();
           }
         }
       });
@@ -185,6 +195,109 @@ function getEtapaPlaneacion(id_plan) {
             </div>`
           );
           break;
+      }
+    }
+  });
+}
+
+function getDetallePlaneacion(id_plan) {
+  $.ajax({
+    type: "POST",
+    url: "server/getPlaneaciones.php",
+    data: {
+      detallePlaneacion: id_plan
+    },
+    dataType: "json",
+    success: function (response) {
+      $('body').append(
+        `<div id="detalle_${id_plan}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+          aria-hidden="true" id="detalleEjecModal">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div id="detalleCard">
+                <div id="headerDetalleModal">
+                  <h2>Detalle Planeación</h2>
+                </div>
+                <div id="detalleEjecModalBody${id_plan}" class="detalleEjec detalleModal">
+                  <div id="detalleCardContentGI">
+                    <div class="row">
+                      <h5 class="title">
+                        Fecha de la planeación: &nbsp;<h6 id="fechaDetallePlan"> ${response[1].fecha}</h6>
+                      </h5>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <h5 class="title">
+                        Gestor: <h6> &nbsp; ${response[1].gestor}</h6>
+                      </h5>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <h5 class="title">
+                        Zona: <h6> &nbsp; ${response[1].zona}</h6>
+                      </h5>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <h5 class="title">
+                        Municipio: <h6> &nbsp; ${response[1].mun}</h6>
+                      </h5>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <h5 class="title">
+                        Entidad: <h6> &nbsp; ${response[1].entidad}</h6>
+                      </h5>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <h5 class="title">
+                        Comportamiento / Competencia: <h6> &nbsp; ${response[1].compor} / ${response[1].compe}</h6>
+                      </h5>
+                    </div>
+                  </div>
+                  <hr>
+                  <div id="detalleCardContentGF">
+                    <div class="row">
+                      <h5 class="title">
+                        Estrategias: <h6> &nbsp; ${response[1].estrategias}</h6>
+                      </h5>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <h5 class="title">
+                        Tacticos: <h6 id="tacticosList${id_plan}"> &nbsp; <ul></ul></h6>
+                      </h5>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <h5 class="title">
+                        Temas: <h6> &nbsp; ${response[1].temas}</h6>
+                      </h5>
+                    </div>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`
+      )
+
+      $(`#detalleEjecModalBody${id_plan}`).append(
+        `<div class="row rowForms">
+          <div class="col-lg-12 col-md-12 col-sm-12 colBtnDetalle">
+            <button id="cerrarDetalleModal" data-toggle="modal" data-target="#detalle_${id_plan}" type="button" class="btn btn-danger">Cerrar</button>
+          </div>
+        </div>`
+      )
+
+      var tactic = response[1].tacticos;
+      for (let index = 0; index < tactic.length; index++) {
+        const element = tactic[index];
+        $(`#tacticosList${id_plan} ul`).append(
+          `<li>${element}</li>`
+        )
       }
     }
   });

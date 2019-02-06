@@ -3,11 +3,16 @@
   src: url("../fonts/VAGRoundedStd-Light.otf");
 }
 
+html{
+  background-color: #269226;
+}
+
 html,
 body {
   margin: 0px;
   padding: 0px;
   height: 100%;
+  font-family: checfont1;
 }
 
 .main {
@@ -78,7 +83,7 @@ h1 {
   height: 100%;
 }
 
-a.btn {
+.card-body .btn {
   width: 100%;
   margin-bottom: 10px;
   color: white !important;
@@ -95,7 +100,7 @@ button.zona {
   border: green 5px solid;
 }
 
-button:hover {
+.btn.zona:hover {
   border: #000 5px solid;
   background-color: #269226 !important;
   color: #fff !important;
@@ -166,14 +171,132 @@ button:hover {
   margin: 0%;
 }
 
+#headerDetalleModal,
+#headerModalTAdmin {
+  width: 100%;
+  background-color: green;
+  border-radius: 3px 3px 0px 0px;
+  height: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.detalleEjec,
+.trabajoAdmin {
+  border-radius: 3px !important;
+  -webkit-box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75) !important;
+  -moz-box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75) !important;
+  box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.75) !important;
+  border: 0 !important;
+}
+
+#detalleCardContentGI > .row,
+#detalleCardContentGF > .row {
+  padding: 0px 30px;
+}
+
+hr {
+  margin: 0px 0px 10px 0px;
+}
+
+.title {
+  color: rgb(133, 40, 40);
+}
+
+.detalleModal {
+  padding: 30px 50px 8px 50px !important;
+}
+
+/* PULSE LOADER ANIMATION */
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loader {
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  z-index: 45;
+  height: 100%;
+  position: absolute;
+}
+
+.pulse {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  background-color: #9cc12b;
+  border-radius: 50%;
+  animation: animate 1s linear infinite;
+}
+
+.pulse>img {
+  width: 65%;
+  height: 65%;
+}
+
+#loaderCalendar>.pulse {
+  animation: animate2 1s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 254, 0.3);
+  }
+
+  40% {
+    box-shadow: 0 0 0 50px rgba(255, 255, 254, 0);
+  }
+
+  80% {
+    box-shadow: 0 0 0 50px rgba(255, 255, 254, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 254, 0);
+  }
+}
+
+@keyframes animate2 {
+  0% {
+    box-shadow: 0 0 0 0 rgba(10, 124, 7, 0.3);
+  }
+
+  40% {
+    box-shadow: 0 0 0 50px rgba(10, 124, 7, 0);
+  }
+
+  80% {
+    box-shadow: 0 0 0 50px rgba(10, 124, 7, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(10, 124, 7, 0);
+  }
+}
+
 @media screen and (min-width: 320px) and (max-width: 767px) {
+  html {
+    background-color: #269226;
+    overflow-x: hidden;
+  }
+
+  .nav {
+    margin-bottom: 15px;
+  }
 
   #list {
     background-color: #fff;
-    width: calc(100% - 50px) !important;
+    width: calc(100% - 10px) !important;
     height: auto;
     border-radius: 10px;
-    margin: 75px 10px 10px 10px !important;
   }
 
   #zona div {
@@ -183,5 +306,23 @@ button:hover {
     width: auto !important;
     height: auto;
     padding: 30px;
+  }
+
+  #zona,
+  #planeaciones {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 20px,
+  }
+
+  #content {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0px 0px 0px 10px;
   }
 }

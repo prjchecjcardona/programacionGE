@@ -5,7 +5,7 @@ include 'lib.php';
 $api = new gestionEducativa();
 
 if(isset($_POST)){
-  if(isset($_POST['tacticos']) && isset($_POST['id_plan']) && isset($_POST['contactos']) && isset($_POST['subtemas'])){
+  if(isset($_POST['tacticos']) || isset($_POST['id_plan']) || isset($_POST['contactos']) || isset($_POST['subtemas']) || isset($_POST['comportamientos'])){
 
     $id_plan = $_POST['id_plan'];
 
@@ -24,11 +24,17 @@ if(isset($_POST)){
       $json = $api->insertXPlaneacion($value, $id_plan, $name);
     }
 
-    foreach ($_POST['subtemas'] as $key => $value) {
-      $name = $_POST['subtemas'][$key]['name'];
-      $value = $_POST['subtemas'][$key]['value'];
+    if(!empty($_POST['subtemas'])){
+      foreach ($_POST['subtemas'] as $key => $value) {
+        $name = $_POST['subtemas'][$key]['name'];
+        $value = $_POST['subtemas'][$key]['value'];
 
-      $json = $api->insertXPlaneacion($value, $id_plan, $name);
+        $json = $api->insertXPlaneacion($value, $id_plan, $name);
+      }
+    }
+
+    if(!empty($_POST['comportamientos'])){
+      $json = $api->insertPlaneacionInstitucional($id_plan, $_POST['comportamientos']);
     }
 
   }else{

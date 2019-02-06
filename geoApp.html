@@ -14,6 +14,14 @@
 
 <body>
 
+  <div class="loader" style="display: none">
+    <div class="center" id="loaderList">
+      <div class="pulse">
+        <img src="img/logo-min.png" alt="">
+      </div>
+    </div>
+  </div>
+
   <div class="main">
     <div id="opaque"></div>
     <div class="nav">
@@ -37,7 +45,21 @@
         </div>
         <div id="planeaciones" class="hide">
           <div id="divPlan">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true" id="detalleEjecModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div id="detalleCard">
+          <div id="headerDetalleModal">
+            <h2>Detalle Planeación</h2>
+          </div>
+          <div id="detalleEjecModalBody" class="detalleEjec detalleModal">
           </div>
         </div>
       </div>
@@ -48,6 +70,8 @@
   <script src="js/includes/popper.min.js"></script>
   <script src="js/includes/bootstrap.min.js"></script>
   <script src="js/includes/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
   <script src="js/geoApp.js"></script>
 </body>
 

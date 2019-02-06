@@ -12,17 +12,17 @@ class gestionEducativa
 
     public function connectDB()
     {
-        /* //DEV
+        //DEV
         $database = "d4asqdqb9dlt9p";
         $uid = "ntafkvnrqqlbig";
         $pwd = "300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1";
-        $host = "ec2-54-197-233-123.compute-1.amazonaws.com"; */
+        $host = "ec2-54-197-233-123.compute-1.amazonaws.com";
 
-        //DEV
+        /* //DEV
         $database = "NEWGE";
         $uid = "postgres";
         $pwd = "1234";
-        $host = "localhost";
+        $host = "localhost"; */
 
         /* //PRODUCCION
         $database = "gestjjlg_gestion_educativa";
@@ -266,6 +266,16 @@ class gestionEducativa
     public function getInformes($comportamiento, $municipio, $estrategia, $tactico, $tipo, $zona)
     {
         return getInformesQuery($this->con, $comportamiento, $municipio, $estrategia, $tactico, $tipo, $zona);
+    }
+
+    public function checkGestion($id_foc)
+    {
+        return checkGestionQuery($this->con, $id_foc);
+    }
+
+    public function insertPlaneacionInstitucional($id_plan, $compor)
+    {
+        return insertPlaneacionInstitucionalQuery($this->con, $id_plan, $compor);
     }
 
     public function getEtapaPlaneacion($id_plan)

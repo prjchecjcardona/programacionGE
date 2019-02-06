@@ -159,7 +159,7 @@
                     <div class="form-group">
                       <label for="selectEntidad">Entidad <label for="selectEntidad" class="obligatorio">*</label></label>
                       <select class="custom-select required" name="entidad" id="selectEntidad">
-                        <option value="" selected>Seleccione</option>
+                        <option value="" disabled>Seleccione</option>
                       </select>
                     </div>
                   </div>
@@ -176,8 +176,14 @@
                   <div class="col-lg-6 col-md-6 col-sm-12" style="border-right: solid 1px #80808066;">
                     <div class="form-group">
                       <label for="selectTema">Tema <label for="selectTema" class="obligatorio">*</label></label>
-                      <select class="custom-select required" name="tema" id="selectTema">
-                        <option selected>Seleccione</option>
+                      <select class="custom-select" name="tema" id="selectTema">
+                        <option disabled>Seleccione</option>
+                      </select>
+                    </div>
+                    <div class="form-group showNone">
+                      <label for="selectCompetencia">Competencia <label for="selectCompetencia" class="obligatorio">*</label></label>
+                      <select class="custom-select" name="competencia" id="selectCompetencia">
+                        <option value="" disabled>Seleccione</option>
                       </select>
                     </div>
                     <div id="divSubtemas">
@@ -189,14 +195,14 @@
                     <div class="form-group">
                       <label for="selectEstrategia">Estrategia <label for="selectEstrategia" class="obligatorio">*</label></label>
                       <select class="custom-select required" name="estrategia" id="selectEstrategia" aria-describedby="selectHelpEstrategia">
-                        <option selected>Seleccione</option>
+                        <option disabled>Seleccione</option>
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="selectTactico">Tactico <label for="selectTactico" class="obligatorio">*</label></label>
                       <select class="custom-select required" name="tactico[]" id="selectTactico" aria-describedby="selectHelpTactico"
                         multiple>
-                        <option selected>Seleccione</option>
+                        <option disabled>Seleccione</option>
                       </select>
                       <small id="selectHelpTactico" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd> para
                         seleccionar mas de un tactico</small>

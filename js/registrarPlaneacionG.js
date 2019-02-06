@@ -3,6 +3,8 @@ $(document).ready(function() {
   checkLogged();
 
   executeAll();
+  getCompetencias();
+  checkGestionInstitucional();
   showTab(currentTab); // Display the current tab
   $("#vereda").hide();
   $("#comunaObarrio").hide();
@@ -31,7 +33,7 @@ $(document).ready(function() {
     },
     columns: [
       {
-        data: "cedula"
+        data: "id_contacto"
       },
       {
         data: "nombre"
@@ -375,7 +377,7 @@ function getSubtemasList(id_tema) {
     dataType: "json",
     success: function(response) {
       response.forEach(element => {
-        
+
         arraySubtemas = element.subtemas.split("&");
 
         $("#divSubtemas").append(
@@ -596,6 +598,9 @@ function insertXPlaneacion() {
       /* GET SELECTED TACTICOS */
       tacticos = $("#selectTactico").serializeArray();
 
+      /* GET SELECTED COMPORTAMIENTOS */
+      comportamientos = $('#selectCompetencia').val();
+
       $.ajax({
         type: "POST",
         url: "server/insertXPlaneacion.php",
@@ -603,6 +608,7 @@ function insertXPlaneacion() {
           tacticos: tacticos,
           subtemas: subtemas,
           contactos: contactos,
+          comportamientos : comportamientos,
           id_plan: id_plan
         },
         dataType: "json",
@@ -662,4 +668,41 @@ function reloadContactos() {
       .DataTable()
       .ajax.reload();
   }, 1000);
+}
+
+function checkGestionInstitucional(){
+  $.ajax({
+    type: "POST",
+    url: "server/getFocalizaciones.php",
+    data: {
+      check_gestion : id_foc
+    },
+    dataType: "json",
+    success: function (response) {
+      if(response[0].id_tipo_gestion == 2){
+        var temas = document.getElementById('selectTema').parentElement
+        var competencias = document.getElementById('selectCompetencia').parentElement
+        var indicadores = document.getElementById('indicadores').parentElement
+        temas.classList.add('showNone');
+        competencias.classList.remove('showNone');
+        indicadores.classList.add('showNone')
+      }
+    }
+  });
+}
+
+function getCompetencias(){
+  $.ajax({
+    type: "POST",
+    url: "server/getComportamientos.php",
+    data: "",
+    dataType: "json",
+    success: function (response) {
+      response.forEach(element => {
+        $('#selectCompetencia').append(
+          `<option value="${element.id_comportamientos}"> ${element.comportamientos} </option>`
+        )
+      });
+    }
+  });
 }

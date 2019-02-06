@@ -370,15 +370,15 @@ function getDetallePlaneacionEjecucionQuery($con, $id_plan)
     LEFT JOIN tactico tact ON txp.id_tactico = tact.id_tactico
     LEFT JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
     LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
-	JOIN municipios mun ON mun.id_municipio = foc.id_municipio
-	JOIN zonas zon ON mun.id_zona = zon.id_zona
-	JOIN asignar_zonas az ON az.id_zona = zon.id_zona
-	JOIN personas per ON per.cedula = az.cedula_asignado
-	JOIN entidades ent ON pl.id_entidad = ent.id_entidad
-	JOIN indicadores_chec_x_focalizacion ixf ON ixf.id_focalizacion = foc.id_focalizacion
-	JOIN indicadores_chec ic ON ic.id_indicador = ixf.id_indicador
-	JOIN comportamientos compor ON ic.id_comportamiento = compor.id_comportamientos
-	JOIN competencias compe ON compor.id_competencia = compe.id_competencia
+	LEFT JOIN municipios mun ON mun.id_municipio = foc.id_municipio
+	LEFT JOIN zonas zon ON mun.id_zona = zon.id_zona
+	LEFT JOIN asignar_zonas az ON az.id_zona = zon.id_zona
+	LEFT JOIN personas per ON per.cedula = az.cedula_asignado
+	LEFT JOIN entidades ent ON pl.id_entidad = ent.id_entidad
+	LEFT JOIN indicadores_chec_x_focalizacion ixf ON ixf.id_focalizacion = foc.id_focalizacion
+	LEFT JOIN indicadores_chec ic ON ic.id_indicador = ixf.id_indicador
+	LEFT JOIN comportamientos compor ON ic.id_comportamiento = compor.id_comportamientos OR tem.id_comportamiento = compor.id_comportamientos
+	LEFT JOIN competencias compe ON compor.id_competencia = compe.id_competencia
     WHERE pl.id_planeacion = $id_plan";
 
     return executeQuery($con, $sql);
@@ -418,6 +418,7 @@ function getPlaneacionesCalendarQuery($con, $zona)
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
 	per.nombres || ' ' || per.apellidos as nombre, solicitud_interventora, rxp.url, foc.id_tipo_gestion
     FROM planeacion plan
+    LEFT JOIN planeacion_institucional plani ON plani.id_planeacion = plan.id_planeacion
     LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
     LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
     LEFT JOIN veredas ver ON ver.id_veredas = plan.id_vereda
@@ -431,17 +432,18 @@ function getPlaneacionesCalendarQuery($con, $zona)
     LEFT JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = plan.id_planeacion
 	LEFT JOIN subtemas sutem ON sutem.id_subtema = sxp.id_subtema
     LEFT JOIN temas tem ON tem.id_temas = sutem.id_temas
-    LEFT JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento OR compor.id_comportamientos = tem.id_comportamiento
+    LEFT JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
+    OR compor.id_comportamientos = tem.id_comportamiento OR plani.id_comportamiento = compor.id_comportamientos
     LEFT JOIN competencias compe ON compe.id_competencia = compor.id_competencia
     LEFT JOIN tacticos_x_planeacion txp ON txp.id_planeacion = plan.id_planeacion
     LEFT JOIN tactico tact ON txp.id_tactico = tact.id_tactico
     LEFT JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
     LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
     LEFT JOIN registros_x_planeacion rxp ON rxp.id_planeacion = plan.id_planeacion
-    WHERE plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2";
+    WHERE fecha_plan BETWEEN '2019-01-01' AND now() AND plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2";
 
     if ($zona != 'all') {
-        $sql .= " OR zon.id_zona = $zona";
+        $sql .= " AND zon.id_zona = $zona";
     }
 
     $sql .= " ORDER BY plan.id_planeacion ASC";
@@ -520,21 +522,23 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con, $zona)
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
 	per.nombres || ' ' || per.apellidos as nombre, plan.estado, hora, etapa_planeacion, plan.solicitud_interventora, rxp.url, foc.id_tipo_gestion
     FROM planeacion plan
+    LEFT JOIN planeacion_institucional plani ON plani.id_planeacion = plan.id_planeacion
     LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
     LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
     LEFT JOIN veredas ver ON ver.id_veredas = plan.id_vereda
-    LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
     LEFT JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion
     LEFT JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion = foc.id_focalizacion
+    LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio OR foc.id_municipio = mun.id_municipio
     LEFT JOIN indicadores_chec ic ON ic.id_indicador = icxf.id_indicador
-    LEFT JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
-    LEFT JOIN competencias compe ON compe.id_competencia = compor.id_competencia
     LEFT JOIN zonas zon ON zon.id_zona = mun.id_zona
 	LEFT JOIN asignar_zonas az ON az.id_zona = zon.id_zona
     LEFT JOIN personas per ON per.cedula = az.cedula_asignado
 	LEFT JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = plan.id_planeacion
 	LEFT JOIN subtemas sutem ON sutem.id_subtema = sxp.id_subtema
     LEFT JOIN temas tem ON tem.id_temas = sutem.id_temas
+    LEFT JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
+    OR compor.id_comportamientos = tem.id_comportamiento OR plani.id_comportamiento = compor.id_comportamientos
+    LEFT JOIN competencias compe ON compe.id_competencia = compor.id_competencia
     LEFT JOIN tacticos_x_planeacion txp ON txp.id_planeacion = plan.id_planeacion
     LEFT JOIN tactico tact ON txp.id_tactico = tact.id_tactico
     LEFT JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
@@ -545,7 +549,7 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con, $zona)
     OR plan.estado = 'Ejecutado' OR rxp.id_tipo_registro = 2";
 
     if ($zona != 'all') {
-        $sql .= " OR zon.id_zona = $zona";
+        $sql .= " AND zon.id_zona = $zona";
     }
 
     return executeQuery($con, $sql);
@@ -558,6 +562,7 @@ function getNovedadesNoEjecucionQuery($con, $zona)
     compe.competencia, zon.zonas, zon.id_zona, per.nombres || ' ' || per.apellidos as nombre,
     temas, nombre_estrategia
         FROM planeacion plan
+        LEFT JOIN planeacion_institucional plani ON plani.id_planeacion = plan.id_planeacion
         JOIN novedad_no_ejecucion nne ON plan.id_planeacion = nne.id_planeacion
         LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
         LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
@@ -566,14 +571,15 @@ function getNovedadesNoEjecucionQuery($con, $zona)
         JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion
         JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion = foc.id_focalizacion
         JOIN indicadores_chec ic ON ic.id_indicador = icxf.id_indicador
-        JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
-        JOIN competencias compe ON compe.id_competencia = compor.id_competencia
         JOIN zonas zon ON zon.id_zona = mun.id_zona
         JOIN asignar_zonas az ON az.id_zona = zon.id_zona
         JOIN personas per ON per.cedula = az.cedula_asignado
         JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = plan.id_planeacion
 	    JOIN subtemas sutem ON sutem.id_subtema = sxp.id_subtema
         JOIN temas tem ON tem.id_temas = sutem.id_temas
+        LEFT JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
+        OR compor.id_comportamientos = tem.id_comportamiento OR plani.id_comportamiento = compor.id_comportamientos
+        JOIN competencias compe ON compe.id_competencia = compor.id_competencia
         JOIN tacticos_x_planeacion txp ON txp.id_planeacion = plan.id_planeacion
         JOIN tactico tact ON txp.id_tactico = tact.id_tactico
         JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
@@ -582,7 +588,7 @@ function getNovedadesNoEjecucionQuery($con, $zona)
         AND plan.id_planeacion NOT IN (SELECT id_planeacion FROM ejecucion)";
 
     if ($zona != 'all') {
-        $sql .= " OR zon.id_zona = $zona";
+        $sql .= " AND zon.id_zona = $zona";
     }
 
     $sql .= " ORDER BY plan.id_planeacion, fecha_no_ejecutada DESC NULLS LAST";
@@ -613,23 +619,25 @@ function getPlaneacionesGeoAppQuery($con, $zona)
 
     $sql = "SELECT DISTINCT pl.id_planeacion, fecha_plan, municipio, nombres || ' ' || apellidos as nombre, zonas, nombre_entidad, comportamientos, competencia, nombre_estrategia, temas, nombre_tactico, pl.estado
 	FROM planeacion pl
+    LEFT JOIN planeacion_institucional plani ON plani.id_planeacion = pl.id_planeacion
     JOIN focalizacion foc ON pl.id_focalizacion = foc.id_focalizacion
     LEFT JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = pl.id_planeacion
 	LEFT JOIN subtemas sutem ON sutem.id_subtema = sxp.id_subtema
     LEFT JOIN temas tem ON tem.id_temas = sutem.id_temas
-    JOIN tacticos_x_planeacion txp ON txp.id_planeacion = pl.id_planeacion
-    JOIN tactico tact ON txp.id_tactico = tact.id_tactico
-    JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
-    JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
-	JOIN municipios mun ON mun.id_municipio = foc.id_municipio
-	JOIN zonas zon ON mun.id_zona = zon.id_zona
-	JOIN asignar_zonas az ON az.id_zona = zon.id_zona
-	JOIN personas per ON per.cedula = az.cedula_asignado
-	JOIN entidades ent ON pl.id_entidad = ent.id_entidad
-	JOIN indicadores_chec_x_focalizacion ixf ON ixf.id_focalizacion = foc.id_focalizacion
-	JOIN indicadores_chec ic ON ic.id_indicador = ixf.id_indicador
-	JOIN comportamientos compor ON ic.id_comportamiento = compor.id_comportamientos
-	JOIN competencias compe ON compor.id_competencia = compe.id_competencia
+    LEFT JOIN tacticos_x_planeacion txp ON txp.id_planeacion = pl.id_planeacion
+    LEFT JOIN tactico tact ON txp.id_tactico = tact.id_tactico
+    LEFT JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
+    LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
+	LEFT JOIN municipios mun ON mun.id_municipio = foc.id_municipio
+	LEFT JOIN zonas zon ON mun.id_zona = zon.id_zona
+	LEFT JOIN asignar_zonas az ON az.id_zona = zon.id_zona
+	LEFT JOIN personas per ON per.cedula = az.cedula_asignado
+	LEFT JOIN entidades ent ON pl.id_entidad = ent.id_entidad
+	LEFT JOIN indicadores_chec_x_focalizacion ixf ON ixf.id_focalizacion = foc.id_focalizacion
+	LEFT JOIN indicadores_chec ic ON ic.id_indicador = ixf.id_indicador
+	LEFT JOIN comportamientos compor ON ic.id_comportamiento = compor.id_comportamientos
+    OR tem.id_comportamiento = compor.id_comportamientos OR plani.id_comportamiento = compor.id_comportamientos
+	LEFT JOIN competencias compe ON compor.id_competencia = compe.id_competencia
     WHERE fecha_plan = '$current_date' ";
 
     if (!empty($zona)) {
@@ -643,6 +651,15 @@ function getUserRolQuery($con)
 {
     $sql = "SELECT email, usuario, id_rol
     FROM personas";
+
+    return executeQuery($con, $sql);
+}
+
+function checkGestionQuery($con, $id_foc)
+{
+    $sql = "SELECT id_tipo_gestion
+    FROM focalizacion
+    WHERE id_focalizacion = $id_foc";
 
     return executeQuery($con, $sql);
 }
@@ -866,6 +883,15 @@ function insertGeoLocationQuery($con, $lat, $long, $fecha, $hora, $id_plan, $eta
     $sql = "INSERT INTO public.registro_ubicacion(
     id_registro, latitud, longitud, fecha, hora, id_planeacion, etapa_planeacion)
     VALUES (nextval('seq_registro_ubicacion'), $lat, $long, '$fecha', '$hora', $id_plan, '$etapa_plan');";
+
+    return insertQuery($con, $sql);
+}
+
+function insertPlaneacionInstitucionalQuery($con, $id_plan, $compor)
+{
+    $sql = "INSERT INTO public.planeacion_institucional(
+    id_planeacion, id_comportamiento)
+    VALUES ($id_plan, $compor)";
 
     return insertQuery($con, $sql);
 }
