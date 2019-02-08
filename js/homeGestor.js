@@ -433,6 +433,7 @@ function insertLaboresXTAdmin() {
         complete: function () {
           $("#modalLoader").fadeOut();
           $("#modalLoader").addClass("showNone");
+          $("#calendar").fullCalendar('removeEvents')
           getPlaneacionesCalendar();
         }
       });

@@ -75,13 +75,10 @@
           </div>
 
           <div class="zonas showNone homeCard" id="zonas"></div>
-
           <div class="municipios showNone homeCard" id="municipios"></div>
-
           <div class="focalizaciones showNone homeCard" id="focalizaciones"></div>
+          <div class="planeaciones showNone animated homeCard" id="planeaciones"></div>
 
-          <div class="planeaciones showNone animated homeCard" id="planeaciones">
-          </div>
         </div>
 
         <div class="col-sm-12 col-md-6 col-lg-8" id="rightPortion">
@@ -108,7 +105,11 @@
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <div id="map"></div>
             </div>
-            <div class="tab-pane fade" id="plan_hoy" role="tabpanel" aria-labelledby="ejecucion-tab"></div>
+            <div class="tab-pane fade" id="plan_hoy" role="tabpanel" aria-labelledby="ejecucion-tab">
+              <div class="sectionFilter">
+                <a class="btn btn-success"></a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -360,7 +361,9 @@
     <div class="modal fade bd-example-modal-md" id="modalCalendarFilters" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-md">
         <div class="modal-content">
-
+          <div class="headerModal">
+            Seleccione las opciones de planeaciones de acuerdo a sus necesidades
+          </div>
           <div style="width: 100%; padding: 10px 40px 0px 40px">
             <div class="row">
               <label for="calendarZona">Zona:</label>
@@ -412,6 +415,65 @@
         </div>
       </div>
     </div>
+
+        <!-- MODAL CALENDAR DETAILS -->
+        <div class="modal fade bd-example-modal-md" id="modalPlanDiariasFilter" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                <div class="headerModal">
+                  Seleccione las opciones de planeaciones de acuerdo a sus necesidades
+                </div>
+                <div style="width: 100%; padding: 10px 40px 0px 40px">
+                  <div class="row">
+                    <label for="calendarZona">Zona:</label>
+                    <select class="custom-select" id="calendarZona">
+                      <option value="0" selected>Todos</option>
+                      <option value="1">Centro</option>
+                      <option value="2">Suroccidente</option>
+                      <option value="3">Occidente</option>
+                      <option value="4">Noroccidente</option>
+                      <option value="5">Oriente</option>
+                    </select>
+                  </div>
+
+                  <div class="row">
+                    <label for="calendarMunicipio">Municipio: </label>
+                    <select class="custom-select" id="calendarMunicipio"></select>
+                  </div>
+
+                  <div class="row">
+                    <label for="calendarEstrategia">Estrategia:</label>
+                    <select class="custom-select" id="calendarEstrategia"></select>
+                  </div>
+
+                  <div class="row showNone">
+                    <label for="calendarTacticos">Tacticos:</label>
+                    <select class="custom-select" id="calendarTacticos"></select>
+                  </div>
+
+                  <div class="row">
+                    <label for="calendarTema">Tema:</label>
+                    <select class="custom-select" id="calendarTema"></select>
+                  </div>
+
+                  <div class="row">
+                    <label for="calendarTipoG">Tipo Gestión:</label>
+                    <select class="custom-select" id="calendarTipoG">
+                      <option value="0">Todos</option>
+                      <option value="1">Formativa</option>
+                      <option value="2">Institucional</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="button" id="removerFiltros" class="btn btn-danger">Remover Filtros</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
   </main>
 

@@ -223,7 +223,7 @@ hr {
   width: 100%;
   z-index: 45;
   height: 100%;
-  position: absolute;
+  position: fixed;
 }
 
 .pulse {

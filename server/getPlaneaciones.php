@@ -64,6 +64,10 @@ if (isset($_POST['geoAppPlan'])) {
                     $etapa_plan = "Finalizado";
                 }
 
+                if(empty($value['temas'])){
+                    $value['temas'] = "Gestión Institucional";
+                }
+
                 $newArray[$value['id_planeacion']] = [
                     "id_planeacion" => $value['id_planeacion'],
                     "fecha_plan" => $value['fecha_plan'],

@@ -7,6 +7,8 @@ $(function () {
   var containerEl = $(".myCalendar");
   getPlaneacionesCalendar();
   containerEl.fullCalendar({
+    monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
     themeSystem: "bootstrap4",
     customButtons: {
       detalles: {
@@ -16,7 +18,7 @@ $(function () {
         }
       },
       filtros: {
-        text: "Filtros",
+        text: "Aplicar filtros",
         click: () => {
           $('#modalCalendarFilters').modal("toggle");
         }

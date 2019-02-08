@@ -706,3 +706,7 @@ function getCompetencias(){
     }
   });
 }
+
+function editarContacto(){
+  
+}
