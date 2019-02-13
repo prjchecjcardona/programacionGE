@@ -43,6 +43,7 @@ body {
   align-items: center;
   min-width: 100%;
   min-height: 100%;
+  padding: 0px 15px 0px 15px;
 }
 
 .opciones{
@@ -62,7 +63,7 @@ body {
   border-radius: 5px;
   min-height: 50%;
   background-color: white;
-  padding: 25px 10px 35px 10px;
+  padding: 22px 0px 35px 0px;
 }
 
 .welcome {
@@ -148,7 +149,7 @@ h3 {
 
   #welcome2,
   #welcome1 {
-    min-width: 80%;
+    min-width: 96%;
     min-height: 70%;
   }
 
