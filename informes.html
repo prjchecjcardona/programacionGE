@@ -17,72 +17,6 @@
 
 <body>
 
-  <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <div class="accordion" id="accordionFiltros">
-      <div class="card">
-        <div class="card-header" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-              aria-controls="collapseOne">
-              FILTROS EJE Y - Consolidado Cobertura
-            </button>
-          </h5>
-        </div>
-
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionFiltros">
-          <div class="card-body">
-            <label for="comportamiento">Comportamiento</label>
-            <select id="comportamiento" multiple="multiple">
-              <option value="1. PRESERVACIÓN- Uso responsable y disfrute del servicio de energía">
-                Uso responsable y disfrute del servicio de energía
-              </option>
-              <option value="2. CORRESPONSABILIDAD- Cultura de pago">
-                Cultura de pago
-              </option>
-              <option value="3. CONFIANZA- Uso de canales vanguardistas">
-                Uso de canales vanguardistas
-              </option>
-            </select>
-
-            <label for="estrategia">Estrategia</label>
-            <select id="estrategia" multiple="multiple"></select>
-
-            <label for="tactico">Tactico</label>
-            <select id="tactico" multiple="multiple" disabled="true"></select>
-
-            <label for="tipo">Tipo</label>
-            <select id="tipo" multiple="multiple">
-              <option value="Evento">Evento</option>
-              <option value="Proceso">Proceso</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header" id="headingTwo">
-          <h5 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-              aria-controls="collapseOne">
-              FILTROS EJE X - Consolidado Cobertura
-            </button>
-          </h5>
-        </div>
-
-        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionFiltros">
-          <div class="card-body">
-            <label for="zona">Zona</label>
-            <select id="zona" multiple="multiple"></select>
-
-            <label for="municipio">Municipio</label>
-            <select id="municipio" multiple="multiple"></select>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
 
   <div class="main">
     <!-- NAVBAR PART -->
@@ -95,32 +29,100 @@
       <li class="nav-item"></li>
 
       <li class="nav-item" id="lastSideNav">
-        <a id="homeBtn" class="nav-link"><i class="fas fa-home"></i></a>
-        <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
-        <a class="nav-link" onclick="openNav()"><i class="fas fa-filter"></i></a>
+        <a class="nav-link" target="_blank" href="banco/"><i class="fas fa-book"></i></a>
       </li>
     </ul>
 
-    <div class="chartContainer" style="width: 100%">
-      <div id="chart1" style="width: 95%; height: 500px; margin: 15px;"></div>
-    </div>
-    <div class="chartContainer" style="width: 100%">
-      <div id="chart2" style="width: 46%; height: 500px; margin: 15px;"></div>
-      <div id="chart3" style="width: 46%; height: 500px; margin: 15px;"></div>
-    </div>
-    <div class="chartContainer" style="width: 100%">
-      <div id="chart4" style="width: 46%; height: 500px; margin: 15px;"></div>
-      <div id="chart5" style="width: 46%; height: 500px; margin: 15px;"></div>
-    </div>
-    <div class="chartContainer" style="width: 100%">
-      <div id="chart6" style="width: 46%; height: 500px; margin: 15px;"></div>
-      <div id="chart7" style="width: 46%; height: 500px; margin: 15px;"></div>
-    </div>
-    <div class="chartContainer" style="width: 100%">
-      <div id="chart8" style="width: 95%; height: 500px; margin-top: 15px;"></div>
-    </div>
-    <div class="chartContainer" style="width: 100%">
-        <div id="chart9" style="width: 95%; height: 500px; margin-top: 15px;"></div>
+
+    <div class="row" style="width: 100%">
+      <div class="col-sm-12 col-md-3 col-lg-3">
+        <div class="accordion" id="accordionFiltros" style="margin: 15px;">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                  aria-controls="collapseOne">
+                  FILTROS EJE Y - Consolidado Cobertura
+                </button>
+              </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionFiltros">
+              <form id="formInformes">
+                <div class="card-body">
+
+                  <label for="zona">Mes</label>
+                  <select id="mes" name="mes[]" multiple="multiple">
+                    <option value="'1'">Enero</option>
+                    <option value="'2'">Febrero</option>
+                    <option value="'3'">Marzo</option>
+                    <option value="'4'">Abril</option>
+                    <option value="'5'">Mayo</option>
+                    <option value="'6'">June</option>
+                    <option value="'7'">Julio</option>
+                    <option value="'8'">Agosto</option>
+                    <option value="'9'">Septiembre</option>
+                    <option value="'10'">Octubre</option>
+                    <option value="'11'">Noviembre</option>
+                    <option value="'12'">Diciembre</option>
+                  </select>
+
+                  <label for="tipo">Tipo de actividad</label>
+                  <select id="tipo" name="tipo[]" multiple="multiple">
+                    <option value="'Evento'">Evento</option>
+                    <option value="'Proceso'">Proceso</option>
+                    <option value="'GI'">Gestión Institucional</option>
+                  </select>
+
+                  <label for="zona">Zona</label>
+                  <select id="zona" name="zona[]" multiple="multiple">
+                    <option value="'Centro'">Centro</option>
+                    <option value="'Suroccidente'">Suroccidente</option>
+                    <option value="'Occidente'">Occidente</option>
+                    <option value="'Noroccidente'">Noroccidente</option>
+                    <option value="'Oriente'">Oriente</option>
+                  </select>
+
+                  <label for="competencia">Comportamiento</label>
+                  <select id="competencia" name="competencia[]" multiple="multiple">
+                    <option value="'1'">
+                      Uso responsable y disfrute del servicio de energía
+                    </option>
+                    <option value="'2'">
+                      Cultura de pago
+                    </option>
+                    <option value="'3'">
+                      Uso de canales vanguardistas
+                    </option>
+                  </select>
+
+                  <label for="estrategia">Estrategia</label>
+                  <select id="estrategia" name="estrategia[]" multiple="multiple">
+
+                    <option value="'2'">Aprendiendo con energía en Comunidad</option>
+                    <option value="'1'">Aprendiendo con energía en el Cole</option>
+                    <option value="'3'">Aprendiendo con energía en Familia</option>
+                    <option value="'4'">Aprendiendo con energía en mi Empresa</option>
+                    <option value="'5'">Aprendiendo con energía en Gobierno</option>
+
+                  </select>
+
+                  <label for="tactico">Tactico</label>
+                  <select id="tactico" multiple="multiple" disabled="true">
+
+                  </select>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-9 col-lg-9">
+        <div class="chartContainer" style="width: 100%">
+          <div id="chart1" style="width: 95%; height: 500px; margin: 15px;"></div>
+        </div>
+      </div>
     </div>
   </div>
 </body>

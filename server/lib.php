@@ -12,23 +12,23 @@ class gestionEducativa
 
     public function connectDB()
     {
-        //DEV
+        /* //DEV
         $database = "d4asqdqb9dlt9p";
         $uid = "ntafkvnrqqlbig";
         $pwd = "300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1";
-        $host = "ec2-54-197-233-123.compute-1.amazonaws.com";
+        $host = "ec2-54-197-233-123.compute-1.amazonaws.com"; */
 
-        /* //DEV
-        $database = "NEWGE";
+        //DEV
+        $database = "GE10";
         $uid = "postgres";
         $pwd = "1234";
-        $host = "localhost"; */
+        $host = "localhost";
 
         /* //PRODUCCION
         $database = "gestjjlg_gestion_educativa";
         $uid = "gestjjlg_usr_gestion";
         $pwd = "r!Hh7XNv22E(";
-        $host = "127.0.0.1";  */
+        $host = "127.0.0.1"; */
 
         //establecer la conexión
         $this->con = new PDO("pgsql:host=$host;port=5432;dbname=$database;user=$uid;password=$pwd");
@@ -136,6 +136,11 @@ class gestionEducativa
     public function getMaxIdFoc()
     {
         return getMaxIdFocQuery($this->con);
+    }
+
+    public function getTacticosInformes($estrategia)
+    {
+        return getTacticosInformesQuery($this->con, $estrategia);
     }
 
     public function getMaxPlanFoc()
@@ -263,14 +268,24 @@ class gestionEducativa
         return insertRegistrosQuery($this->con, $tipo_registro, $id_plan, $url);
     }
 
-    public function getInformes($comportamiento, $municipio, $estrategia, $tactico, $tipo, $zona)
+    public function getInformes($comportamiento, $temas, $municipio, $estrategia, $tactico, $tipo, $zona, $month)
     {
-        return getInformesQuery($this->con, $comportamiento, $municipio, $estrategia, $tactico, $tipo, $zona);
+        return getInformesQuery($this->con, $comportamiento, $temas, $municipio, $estrategia, $tactico, $tipo, $zona, $month);
     }
 
     public function checkGestion($id_foc)
     {
         return checkGestionQuery($this->con, $id_foc);
+    }
+
+    public function getTacticosPorEstrategiaCobertura($estrategia)
+    {
+        return getTacticosPorEstrategiaCoberturaQuery($this->con, $estrategia);
+    }
+
+    public function getTemasPorComportamientoCobertura($competencia)
+    {
+        return  getTemasPorComportamientoCoberturaQuery($this->con, $competencia);
     }
 
     public function insertPlaneacionInstitucional($id_plan, $compor)
@@ -293,29 +308,9 @@ class gestionEducativa
         return insertGeoLocationQuery($this->con, $lat, $long, $fecha, $hora, $id_plan, $etapa_plan);
     }
 
-    public function coberturaEstrategia()
+    public function checkCompetenciasFocalizacion($mun)
     {
-        return coberturaEstrategiaQuery($this->con);
-    }
-
-    public function coberturaZona()
-    {
-        return coberturaZonaQuery($this->con);
-    }
-
-    public function coberturaMun($zona)
-    {
-        return coberturaMunQuery($this->con, $zona);
-    }
-
-    public function coberturaCompetencia()
-    {
-        return coberturaCompetenciaQuery($this->con);
-    }
-
-    public function coberturaActividad()
-    {
-        return coberturaActividadQuery($this->con);
+        return checkCompetenciasFocalizacionQuery($this->con, $mun);
     }
 
     public function checkFocalizacion($id_mun, $comp)
@@ -328,9 +323,9 @@ class gestionEducativa
         return ejecucion_planeacionQuery($this->con, $id_plan);
     }
 
-    public function checkRegistros($id_plan)
+    public function checkRegistros($id_plan, $tipo)
     {
-        return checkRegistrosQuery($this->con, $id_plan);
+        return checkRegistrosQuery($this->con, $id_plan, $tipo);
     }
 
     public function getMaxIdEjec()

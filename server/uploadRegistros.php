@@ -18,9 +18,9 @@ if (isset($_POST)) {
         $actas_cant = count($actas['name']);
 
         for ($i = 0; $i < $actas_cant; $i++) {
-            $url = '../registros/actas/' . $actas['name'][$i];
+            $url = '../registros/actas/' . $actas['name'][$i] . '_' . $id_plan;
 
-            if (file_exists('../registros/actas/' . $actas['name'][$i])) {
+            if (file_exists('../registros/actas/' . $actas['name'][$i] . '_' . $id_plan)) {
 
                 $exists = true;
                 move_uploaded_file($actas['tmp_name'][$i], $url);
@@ -49,9 +49,9 @@ if (isset($_POST)) {
         $num_asis = count($asistencias['name']);
 
         for ($i = 0; $i < $num_asis; $i++) {
-            $url = '../registros/asistencias/' . $asistencias['name'][$i];
+            $url = '../registros/asistencias/' . $asistencias['name'][$i] . '_' . $id_plan;
 
-            if (file_exists('../registros/asistencias/' . $asistencias['name'][$i])) {
+            if (file_exists('../registros/asistencias/' . $asistencias['name'][$i] . '_' . $id_plan)) {
 
                 $exists = true;
                 move_uploaded_file($asistencias['tmp_name'][$i], $url);
@@ -80,9 +80,9 @@ if (isset($_POST)) {
         $num_ev = count($evidenciasFot['name']);
 
         for ($i = 0; $i < $num_ev; $i++) {
-            $url = '../registros/evidencias/' . $evidenciasFot['name'][$i];
+            $url = '../registros/evidencias/' . $evidenciasFot['name'][$i] . '_' . $id_plan;
 
-            if (file_exists('../registros/evidencias/' . $evidenciasFot['name'][$i])) {
+            if (file_exists('../registros/evidencias/' . $evidenciasFot['name'][$i] . '_' . $id_plan)) {
 
                 $exists = true;
                 move_uploaded_file($evidenciasFot['tmp_name'][$i], $url);

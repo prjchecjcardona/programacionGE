@@ -58,7 +58,7 @@
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <label for="selectMunicipio">Municipio</label>
                     <label for="selectMunicipio" class="obligatorio">*</label>
-                    <select class="custom-select" id="selectMunicipio" name="municipio">
+                    <select class="custom-select" id="selectMunicipio" name="municipio" disabled>
                       <option value="" selected>Seleccione</option>
                     </select>
                   </div>
@@ -123,6 +123,7 @@
 
             <div style="overflow:auto; margin: 50px 0px 0px 0px;">
               <div style="float:right;">
+                <button class="btn btn-danger" type="button" id="cancelar">Cancelar</button>
                 <button class="btn btn-success" type="button" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
                 <button class="btn btn-success" type="button" id="submitInstit" style="display: none">Guardar</button>
                 <button class="btn btn-success" type="button" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>

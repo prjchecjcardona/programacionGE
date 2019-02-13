@@ -993,10 +993,10 @@
         filterAcceptOnEnter: false,
         hideOptgroupCheckboxes: false,
 
-        selectAllText: 'Select all',
-        allSelected: 'All selected',
-        countSelected: '# of % selected',
-        noMatchesFound: 'No matches found',
+        selectAllText: 'Seleccionar Todos',
+        allSelected: 'Todos seleccionados',
+        countSelected: '# de % seleccionados',
+        noMatchesFound: 'No se encontraron coincidencias',
 
         styler: function () {
             return false;

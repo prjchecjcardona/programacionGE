@@ -91,6 +91,9 @@
                           <label class="obligatorio" for="duracion">*</label>
                         </label>
                         <input class="required" id="horaFin" name="horaFin" />
+                        <div class="alert alert-danger showNone" role="alert" id="horaAlert">
+                           La hora de finalización debe ser menor a la de inicio.
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -308,6 +311,7 @@
 
             <div style="overflow:auto; margin: 0px 0px 0px 0px;">
               <div style="float:right;">
+                <button class="btn btn-danger" type="button" id="cancelar">Cancelar</button>
                 <button class="btn btn-success" type="button" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
                 <button class="btn btn-success" type="button" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
               </div>

@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
   <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css">
   <link rel="stylesheet" href="css/fullcalendar.min.css">
   <link rel="stylesheet" href="css/newStyle.css">
@@ -41,8 +42,8 @@
           </div>
         </div>
         <a id="homeBtn" class="nav-link" href=""><i class="fas fa-home"></i></a>
-        <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
-        <a class="nav-link" href="informes.html"><i class="fas fa-chart-line"></i></a>
+        <a class="nav-link" target="_blank" href="banco/"><i class="fas fa-book"></i></a>
+        <a class="nav-link" target="_blank" href="informes.html"><i class="fas fa-chart-line"></i></a>
         <a id="menu" class="nav-link" href=""><i class="fas fa-bars"></i></a>
       </li>
     </ul>
@@ -145,17 +146,24 @@
                     </label>
                     <input class="required" id="datepicker" placeholder="Fecha" name="fecha" readonly required />
                   </div>
-                  <div class="col-lg-4 col-md-12 col-sm-12">
-                    <label for="duracion">Hora inicio
-                      <label class="obligatorio" for="duracion">*</label>
-                    </label>
-                    <input class="form-control required" type="time" id="duracionInicio" name="horaInicio" required>
-                  </div>
-                  <div class="col-lg-4 col-md-12 col-sm-12">
-                    <label for="duracion">Hora finalización
-                      <label class="obligatorio" for="duracion">*</label>
-                    </label>
-                    <input class="form-control required" type="time" id="duracionFin" name="horaFin" required>
+                  <div class="col-lg-8 col-md-12 col-sm-12">
+                    <div class="row">
+                      <div class="col-lg-6 col-md-12 col-sm-12">
+                        <label for="duracion">Hora inicio
+                          <label class="obligatorio" for="datetimepicker3">*</label>
+                        </label>
+                        <input class="required" id="horaInicio" name="horaInicio" />
+                      </div>
+                      <div class="col-lg-6 col-md-12 col-sm-12">
+                        <label for="duracion">Hora finalización
+                          <label class="obligatorio" for="duracion">*</label>
+                        </label>
+                        <input class="required" id="horaFin" name="horaFin" />
+                        <div class="alert alert-danger showNone" role="alert" id="horaAlert">
+                           La hora de finalización debe ser menor a la de inicio.
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -405,6 +413,16 @@
                 <option value="2">Institucional</option>
               </select>
             </div>
+
+            <div class="row">
+              <label for="estadoPlaneacion">Estado Planeación:</label>
+              <select class="custom-select" id="estadoPlaneacion">
+                <option value="0">Todos</option>
+                <option value="Planeado">Planeado</option>
+                <option value="En Ejecución">En Ejecución</option>
+                <option value="Ejecutado">Ejecutado</option>
+              </select>
+            </div>
           </div>
 
 
@@ -490,6 +508,7 @@
   <script src="js/includes/fullcalendar/es.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
   <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
   <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
   <script src="https://unpkg.com/file-upload-with-preview"></script>

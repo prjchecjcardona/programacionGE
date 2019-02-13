@@ -50,9 +50,6 @@ if (isset($_POST)) {
         $pass = "";
 
         $json = $api->logIn($mailuid, $pass);
-
-        header("Location: ../opciones.html?user=4&id_zona=all");
-        exit();
     }
 } else {
 

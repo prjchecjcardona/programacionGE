@@ -40,7 +40,8 @@ $(function () {
         (["0", String(event.municipio)].indexOf($('#calendarMunicipio').val()) >= 0) &&
         (["0", String(event.tema)].indexOf($('#calendarTema').val()) >= 0) &&
         (["0", String(event.estrategia)].indexOf($('#calendarEstrategia').val()) >= 0) &&
-        (["0", String(event.tipo_gestion)].indexOf($('#calendarTipoG').val()) >= 0)
+        (["0", String(event.tipo_gestion)].indexOf($('#calendarTipoG').val()) >= 0) &&
+        (["0", String(event.status)].indexOf($('#estadoPlaneacion').val()) >= 0)
     },
     eventClick: function (event, jsEvent, view) {
       document.getElementById(
@@ -116,7 +117,7 @@ function getPlaneacionesCalendar() {
             url: "server/getPlaneacionesCalendar.php",
             data: {
               plan_cal: fullArrayPlans,
-              id_zona : id_zona
+              id_zon : id_zona
             },
             dataType: "json",
             success: function (dataPlans) {
@@ -149,7 +150,7 @@ function getTrabajoAdministrativo() {
       $("#calendar").removeClass("showNone");
       $("#loaderCalendar").fadeOut();
 
-      $("#calendarZona, #calendarMunicipio, #calendarEstrategia, #calendarTema, #calendarTipoG").on("change", function () {
+      $("#calendarZona, #calendarMunicipio, #calendarEstrategia, #calendarTema, #calendarTipoG, #estadoPlaneacion").on("change", function () {
         $("#calendar").fullCalendar("rerenderEvents");
       });
 
@@ -165,15 +166,8 @@ function getCalendarHeight() {
 
 function getCalendarEventsZona() {
   if (id_zona != "all") {
-    var zonas = {
-      1: "Centro",
-      2: "Suroccidente",
-      3: "Occidente",
-      4: "Noroccidente",
-      5: "Oriente"
-    }
 
-    $('#calendarZona').val(zonas[id_zona]);
+    $('#calendarZona').val(id_zona);
     $("#calendar").fullCalendar("rerenderEvents");
   }
 }

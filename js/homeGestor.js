@@ -1,5 +1,6 @@
 $(function () {
   checkLogged();
+  checkInvitado();
   getPlaneacionesHoy();
   showRegistrosInput();
 
@@ -7,6 +8,14 @@ $(function () {
     locale: "es-es",
     uiLibrary: "bootstrap4",
     format: "dd-mm-yyyy"
+  });
+
+  $('#horaInicio').timepicker({
+    uiLibrary: 'bootstrap4'
+  });
+
+  $('#horaFin').timepicker({
+    uiLibrary: 'bootstrap4'
   });
 
   $('input[name=registros]').change(() => {
@@ -37,6 +46,21 @@ $(function () {
 
   $("#btnCancelarTAdmin").click(function () {
     $("#modalTAdmin").modal("toggle");
+  });
+
+  $('#horaInicio, #horaFin').change(() => {
+    if($('#horainicio, #horaFin').val() != ""){
+      if($('#horaInicio').val() > $('#horaFin').val()){
+        $('#horaFin').val("");
+        if($('#horaAlert').is(':hidden')){
+          $('#horaAlert').removeClass('showNone');
+        }
+      }else{
+        if($('#horaAlert').is(':visible')){
+          $('#horaAlert').addClass('showNone');
+        }
+      }
+    }
   });
 });
 
@@ -120,13 +144,13 @@ function getMunicipioXZona(zona, nombre_zona) {
                     Focalizaciones <span class="badge badge-light">${element.total}</span>
                   </button>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="body_${element.municipio}">
                   <h5 class="card-title">${element.zonas}</h5>
                   <a href="registrarFocalizacionG.html?id_zona=${
                     element.id_zona
                   }&id_mun=${
             element.id_municipio
-          }" class="btn"><i class="fas fa-plus crear"></i> Focalizar</a>
+          }" class="btn focalizar"><i class="fas fa-plus crear"></i> Focalizar</a>
                   <a onclick="trabajoAdministrativo(${
                     element.id_municipio
                   })" class="btn"><i class="fas fa-plus crear"></i> Trabajo Administrativo</a>
@@ -137,6 +161,10 @@ function getMunicipioXZona(zona, nombre_zona) {
           }, '${element.municipio}')"><i class="fas fa-arrow-circle-right arrow"></i></a>
             </div>`
         );
+
+        if(element.total == 4){
+          $(`#body_${element.municipio} .focalizar`).addClass('showNone');
+        }
       });
     },
     complete: function () {
@@ -277,6 +305,7 @@ function getPlaneacionesXFocalizacion(foc, comp) {
                 <h5 class="card-title"> ${element.nombre_estrategia}</h5>
                 <p>Tipo : ${element.tipo_gestion}</p>
                 <p>Tema : ${element.temas}</p>
+                <p>Entidad : ${element.nombre_entidad}</p>
                 <p>Fecha de registro : ${element.fecha_registro}</p>
                 ${element.ejecucion}
                 <button class="btn" data-toggle="modal" data-target="#uploadRegistrosModal" onclick="getPlan(${element.id_planeacion})">
@@ -335,6 +364,10 @@ function checkLogged() {
             <input id="pCompleta" type="checkbox" checked data-on="Activado" data-off="Desactivado">
         </div>`
       );
+
+      if(data.rol == 4){
+        $('#modoSeguimiento').addClass('showNone');
+      }
 
       $("#pCompleta").bootstrapToggle("off");
 
@@ -640,5 +673,22 @@ function checkZonaFilterCalendar(){
   if (user == 3) {
     $('#calendarZona').val(id_zona);
     $('#calendarZona').prop('disabled', true);
+  }
+}
+
+function checkInvitado(){
+  if(user == 4){
+    $("#leftPortion").fadeOut();
+    $("#leftPortion").addClass("showNone");
+    $("#rightPortion").switchClass("col-md-6", "col-md-12",
+      200,
+      "linear"
+    );
+    $("#rightPortion").switchClass(
+      "col-lg-7",
+      "col-lg-12",
+      200,
+      "linear"
+    );
   }
 }

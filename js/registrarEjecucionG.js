@@ -70,10 +70,37 @@ $(document).ready(function () {
       getTotal(element, index);
     });
 
-  // When time input changes
-  $("input[type=time]").change(function () {
-    calcularDuracion();
-  });
+    $('#horaInicio, #horaFin').change(() => {
+      if($('#horainicio, #horaFin').val() != ""){
+        if($('#horaInicio').val() > $('#horaFin').val()){
+          $('#horaFin').val("");
+          if($('#horaAlert').is(':hidden')){
+            $('#horaAlert').removeClass('showNone');
+          }
+        }else{
+          if($('#horaAlert').is(':visible')){
+            $('#horaAlert').addClass('showNone');
+          }
+        }
+      }
+    });
+
+    $('#cancelar').click(() => {
+      swal({
+        type: "warning",
+        title: "Vas a cancelar",
+        text: "¿Seguro?",
+        showCancelButton: true,
+        cancelButtonText: 'No',
+        cancelButtonColor: '#d33',
+        confirmButtonColor: '#28a745',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.value) {
+          window.location.href = $('#homeBtn').attr('href');
+        }
+      })
+    });
 
   //When window resizes
   $(window)
@@ -106,6 +133,8 @@ function getTipoGestion() {
       if (response[0].id_tipo_gestion != 1) {
         $("#detalleCardContentGF").addClass("showNone");
         $("#colPoblacion").addClass("showNone");
+        $("#colEvidencias").addClass("showNone");
+        $("#asistencias").addClass("showNone");
       } else {
         $("#colActaReunion").addClass("showNone");
 
@@ -334,25 +363,21 @@ function insertEjecucion() {
     dataType: "json",
     success: function (response) {
       if (response.error != 1) {
-        type = "success";
-        text = "";
-        function callback(){
-          $(".loader").fadeOut();
-          window.location.href = $('#homeBtn').attr('href');
-        }
+        uploadAsistencias();
       }else{
         type = "error";
         text = response.error_message;
         function callback(){
         }
+
+        swal({
+          type: type,
+          title: response.message,
+          text: text
+        }).then(function () {
+          callback();
+        });
       }
-      swal({
-        type: type,
-        title: response.message,
-        text: text
-      }).then(function () {
-        callback();
-      });
     }
   });
 }

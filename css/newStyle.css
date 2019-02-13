@@ -962,6 +962,15 @@ hr {
   padding-right: 60px;
 }
 
+.custom-file-container__custom-file__custom-file-control:empty::after {
+	box-sizing: border-box;
+	content: "Seleccionar archivo..." !important;
+}
+
+.custom-file-container__custom-file__custom-file-control::before {
+	content: "Buscar" !important;
+}
+
 /* Universal homeNAV */
 
 #navGE {
@@ -1001,6 +1010,10 @@ hr {
   -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.gj-picker-bootstrap .selected {
+  color: #228c02 !important;
 }
 
 main {

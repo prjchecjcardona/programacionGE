@@ -20,7 +20,9 @@ function logIn($con, $sql, $pass)
         session_start();
 
         $_SESSION['guest'] = array("nombre" => "invitado", "rol" => 4, "zona" => "all");
-        $data = array("error" => 1, "user" => $_SESSION['user']);
+        $data = array("error" => 1, "user" => $_SESSION['guest']);
+
+        header("Location: ../opciones.html?user=" . $_SESSION['guest']['rol'] . "&id_zona=" . $_SESSION['guest']['zona']);
         exit();
     } else {
         if ($result = $con->query($sql)) {
@@ -137,90 +139,60 @@ function getFocalizacionesXZonaQuery($con, $mun)
     return executeQuery($con, $sql);
 }
 
-function getInformesQuery($con, $comportamiento, $municipio, $estrategia, $tactico, $tipo, $zona)
+function getInformesQuery($con, $comportamiento, $temas, $municipio, $estrategia, $tactico, $tipo, $zona, $month)
 {
-    $ejex = array();
-    $where = false;
-    $w = '';
-    if (!empty($comportamiento)) {
-        $where = true;
-        $c = true;
-        array_push($ejex, 'competencia');
-        $comps = implode(",", $comportamiento);
-        $result_string = "'" . str_replace(",", "','", $comps) . "'";
-        $w = "WHERE competencia IN ($result_string)";
-    }
+    if (!empty($comportamiento) && !empty($zona)) {
 
-    if (!empty($estrategia)) {
-        array_push($ejex, 'estrategia');
-        $estr = implode(",", $estrategia);
-        $result_string = "'" . str_replace(",", "','", $estr) . "'";
-        if ($where) {
-            $w .= " AND estrategia IN ($result_string)";
+        $comportamientos = implode(', ', $comportamiento);
+
+        if (is_array($zona)) {
+            $sql = "SELECT competencia, zona, SUM(cantidad_participantes) ";
+            $group = "GROUP BY zona, competencia ";
+            $order = "ORDER BY zona, competencia ";
+            $sql .= "FROM cobertura
+                    WHERE competencia IN ($comportamientos)
+                    AND zona IN (". implode(', ', $zona) .") ";
         } else {
-            $w .= "WHERE estrategia IN ($result_string)";
-            $where = true;
+            $sql = "SELECT municipio, SUM(cantidad_participantes) ";
+            $group = "GROUP BY municipio, competencia";
+            $order = "ORDER BY zona, competencia ";
         }
-    }
 
-    if (!empty($tactico)) {
-        array_push($ejex, 'tactico');
-        $tact = implode(",", $tactico);
-        $result_string = "'" . str_replace(",", "','", $tact) . "'";
-        if ($where) {
-            $w .= " AND tactico IN ($result_string)";
-        } else {
-            $w .= "WHERE tactico IN ($result_string)";
-            $where = true;
+
+
+
+        if (!empty($temas)) {
+            $tem = implode(', ', $temas);
+            $sql .= "AND contenido_tematico IN ($tem) ";
         }
-    }
 
-    if (!empty($tipo)) {
-        array_push($ejex, 'tipo_actividad');
-        $tip = implode(",", $tipo);
-        $result_string = "'" . str_replace(",", "','", $tip) . "'";
-        if ($where) {
-            $w .= " AND tipo_actividad IN ($result_string)";
-        } else {
-            $w .= "WHERE tipo_actividad IN ($result_string)";
-            $where = true;
+        if (!empty($tipo)) {
+            $tipo = implode(', ', $tipo);
+            $sql .= "AND tipo_actividad IN ($tipo) ";
         }
-    }
 
-    if (!empty($zona)) {
-        array_push($ejex, 'zona');
-        $zona = implode(",", $zona);
-        $result_string = "'" . str_replace(",", "','", $zona) . "'";
-        if ($where) {
-            $w .= " AND zona IN ($result_string)";
-        } else {
-            $w .= "WHERE zona IN ($result_string)";
-            $where = true;
+        if (!empty($month)) {
+            $month = implode(', ', $month);
+            $sql .= "AND date_part('month', fechas) IN ($month) ";
         }
+
+        $sql .= $group;
+        $sql .= $order;
     }
 
-    if (!empty($municipio)) {
-        array_push($ejex, 'municipio');
-        $municipio = implode(", ", $municipio);
-        $result_string = "'" . str_replace(",", "','", $municipio) . "'";
-        if ($where) {
-            $w .= " AND municipio IN ('$result_string')";
-        } else {
-            $w .= "WHERE municipio IN ('$result_string')";
-            $where = true;
+    if (!empty($estrategia) && !empty($zona)) {
+        $estrategia = implode(', ', $estrategia);
+        $sql = "SELECT municipio, SUM(cantidad_participantes)
+        FROM cobertura
+        WHERE estrategia IN ($estrategia)";
+
+        if (!empty($tactico)) {
+            $tact = implode(', ', $tactico);
+            $sql .= "AND tactico IN ($tact) ";
         }
-    }
 
-    if (empty($ejex)) {
-        $cons = "zona";
-    } else {
-        $cons = implode(", ", $ejex);
+        $sql .= "GROUP BY " . $group;
     }
-
-    $sql = "SELECT $cons, SUM(cantidad_participantes)
-    FROM cobertura
-    $w
-    GROUP BY $cons";
 
     return executeQuery($con, $sql);
 }
@@ -237,7 +209,7 @@ function getMunicipioInformeQuery($con)
 function getPlaneacionesXFocalizacionQuery($con, $foc)
 {
     $sql = "SELECT DISTINCT pl.id_planeacion, tg.tipo_gestion, estrat.nombre_estrategia,
-    tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona,
+    tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona, ent.nombre_entidad,
     pl.id_focalizacion, COUNT(eje.id_ejecucion) as ejecucion
 	FROM planeacion pl
     LEFT JOIN focalizacion foc ON pl.id_focalizacion = foc.id_focalizacion
@@ -249,11 +221,12 @@ function getPlaneacionesXFocalizacionQuery($con, $foc)
     LEFT JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
     LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
 	LEFT JOIN municipios mun ON mun.id_municipio = foc.id_municipio
+    LEFT JOIN entidades ent ON pl.id_entidad = ent.id_entidad
 	LEFT JOIN zonas zon ON mun.id_zona = zon.id_zona
 	LEFT JOIN ejecucion eje ON eje.id_planeacion = pl.id_planeacion
     WHERE pl.id_focalizacion = '$foc'
 	GROUP BY pl.id_planeacion, tg.tipo_gestion, estrat.nombre_estrategia,
-    tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona, pl.id_focalizacion
+    tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona, pl.id_focalizacion, ent.nombre_entidad
     ORDER BY pl.fecha_plan DESC";
 
     return executeQuery($con, $sql);
@@ -412,9 +385,26 @@ function getMaxIdTAdminQuery($con)
     return executeQuery($con, $sql);
 }
 
+/* INFORMES  */
+function getTacticosPorEstrategiaCoberturaQuery($con, $estrategia)
+{
+    $sql = "SELECT estrategia FROM cobertura WHERE estrategia = '$estrategia'";
+
+    return executeQuery($con, $sql);
+}
+
+function getTemasPorComportamientoCoberturaQuery($con, $competencia)
+{
+    $sql = "SELECT tema FROM cobertura WHERE competencia = '$competencia'";
+
+    return executeQuery($con, $sql);
+}
+
+/* ////////// */
+
 function getPlaneacionesCalendarQuery($con, $zona)
 {
-    $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio,
+    $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio, plan.estado,
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
 	per.nombres || ' ' || per.apellidos as nombre, solicitud_interventora, rxp.url, foc.id_tipo_gestion
     FROM planeacion plan
@@ -440,11 +430,7 @@ function getPlaneacionesCalendarQuery($con, $zona)
     LEFT JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
     LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
     LEFT JOIN registros_x_planeacion rxp ON rxp.id_planeacion = plan.id_planeacion
-    WHERE fecha_plan BETWEEN '2019-01-01' AND now() AND plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2";
-
-    if ($zona != 'all') {
-        $sql .= " AND zon.id_zona = $zona";
-    }
+    WHERE fecha_plan BETWEEN '2019-01-01' AND now() + interval '1 year' AND plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2";
 
     $sql .= " ORDER BY plan.id_planeacion ASC";
 
@@ -469,49 +455,20 @@ function getSubtemasXTemaQuery($con, $id_tema)
     return executeQuery($con, $sql);
 }
 
-function coberturaEstrategiaQuery($con)
+function checkCompetenciasFocalizacionQuery($con, $mun)
 {
-    $sql = "SELECT estrategia, SUM(cantidad_participantes)
-    FROM cobertura
-    GROUP BY estrategia";
-
-    return executeQuery($con, $sql);
-}
-
-function coberturaActividadQuery($con)
-{
-    $sql = "SELECT tipo_actividad, SUM(cantidad_participantes)
-    FROM cobertura
-    WHERE tipo_actividad IN ('Evento', 'Proceso')
-    GROUP BY tipo_actividad";
-
-    return executeQuery($con, $sql);
-}
-
-function coberturaZonaQuery($con)
-{
-    $sql = "SELECT zona, SUM(cantidad_participantes)
-    FROM cobertura
-    GROUP BY zona";
-
-    return executeQuery($con, $sql);
-}
-
-function coberturaCompetenciaQuery($con)
-{
-    $sql = "SELECT competencia, SUM(cantidad_participantes)
-    FROM cobertura
-    GROUP BY competencia";
-
-    return executeQuery($con, $sql);
-}
-
-function coberturaMunQuery($con, $zona)
-{
-    $sql = "SELECT municipio, SUM(cantidad_participantes)
-    FROM cobertura
-    WHERE zona = '$zona'
-    GROUP BY municipio";
+    $sql = "SELECT DISTINCT id_comportamientos, comportamientos, competencia
+    FROM comportamientos compor
+    JOIN competencias compe ON compe.id_competencia = compor.id_comportamientos
+    JOIN indicadores_chec ic ON ic.id_comportamiento = compor.id_comportamientos
+    JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_indicador = ic.id_indicador
+    JOIN focalizacion foc ON foc.id_focalizacion = icxf.id_focalizacion
+    WHERE compor.id_comportamientos NOT IN (SELECT compor.id_comportamientos
+                                            FROM focalizacion foc
+                                            JOIN indicadores_chec_x_focalizacion icxf ON foc.id_focalizacion = icxf.id_focalizacion
+                                            JOIN indicadores_chec ic ON icxf.id_indicador = ic.id_indicador
+                                            JOIN comportamientos compor ON ic.id_comportamiento = compor.id_comportamientos
+                                            WHERE id_municipio = $mun)";
 
     return executeQuery($con, $sql);
 }
@@ -545,7 +502,7 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con, $zona)
     LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
     LEFT JOIN registro_ubicacion ru ON ru.id_planeacion = plan.id_planeacion
 	LEFT JOIN registros_x_planeacion rxp ON rxp.id_planeacion = plan.id_planeacion
-    WHERE fecha_plan BETWEEN '2019-01-01' AND now() AND plan.estado = 'En Ejecución'
+    WHERE fecha_plan BETWEEN '2019-01-01' AND now() + interval '1 year' AND plan.estado = 'En Ejecución'
     OR plan.estado = 'Ejecutado' OR rxp.id_tipo_registro = 2";
 
     if ($zona != 'all') {
@@ -647,6 +604,20 @@ function getPlaneacionesGeoAppQuery($con, $zona)
     return executeQuery($con, $sql);
 }
 
+function getTacticosInformesQuery($con, $estrategia)
+{
+    $sql = "SELECT DISTINCT tactico
+    FROM cobertura";
+
+    if (!empty($estrategia)) {
+        $sql .= " WHERE estrategia IN ('$estrategia')";
+    }
+
+    $sql .= " ORDER BY tactico ASC";
+
+    return executeQuery($con, $sql);
+}
+
 function getUserRolQuery($con)
 {
     $sql = "SELECT email, usuario, id_rol
@@ -687,12 +658,16 @@ function ejecucion_planeacionQuery($con, $id_plan)
     return executeQuery($con, $sql);
 }
 
-function checkRegistrosQuery($con, $id_plan)
+function checkRegistrosQuery($con, $id_plan, $tipo)
 {
+    if (is_array($tipo)) {
+        $tipo = implode(', ', $tipo);
+    }
+
     $sql = "SELECT DISTINCT rp.id_planeacion, tr.id_tipo_registro
     FROM registros_x_planeacion rp
     JOIN tipo_registro tr ON tr.id_tipo_registro = rp.id_tipo_registro
-    WHERE id_planeacion = $id_plan AND rp.id_tipo_registro IN (1, 3, 4, 5)";
+    WHERE id_planeacion = $id_plan AND rp.id_tipo_registro IN ($tipo)";
 
     return executeQuery($con, $sql);
 }
@@ -880,7 +855,7 @@ function getEtapaPlaneacionQuery($con, $id_plan)
 
 function insertGeoLocationQuery($con, $lat, $long, $fecha, $hora, $id_plan, $etapa_plan)
 {
-    $sql = "INSERT INTO public.registro_ubicacion(
+    $sql = "INSERT INTO registro_ubicacion(
     id_registro, latitud, longitud, fecha, hora, id_planeacion, etapa_planeacion)
     VALUES (nextval('seq_registro_ubicacion'), $lat, $long, '$fecha', '$hora', $id_plan, '$etapa_plan');";
 

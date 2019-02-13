@@ -9,4 +9,8 @@ if (isset($_POST)) {
     $json = "No se recibieron los datos de manera adecuada";
 }
 
+if(isset($_POST['checkComportamientos'])){
+    $json = $api->checkCompetenciasFocalizacion($_POST['checkComportamientos']);
+}
+
 echo json_encode($json);

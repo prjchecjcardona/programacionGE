@@ -186,6 +186,7 @@
                         <option value="" disabled>Seleccione</option>
                       </select>
                     </div>
+                    <label for="divSubtemas">Seleccione el grupo de subtemas por tema seleccionado <label for="selectCompetencia" class="obligatorio">*</label></label>
                     <div id="divSubtemas">
                       <ul></ul>
                     </div>
@@ -201,11 +202,11 @@
                     <div class="form-group">
                       <label for="selectTactico">Tactico <label for="selectTactico" class="obligatorio">*</label></label>
                       <select class="custom-select required" name="tactico[]" id="selectTactico" aria-describedby="selectHelpTactico"
-                        multiple>
+                        multiple disabled>
                         <option disabled>Seleccione</option>
                       </select>
-                      <small id="selectHelpTactico" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd> para
-                        seleccionar mas de un tactico</small>
+                      <h6 id="selectHelpTactico" class="form-text text-muted">Deje presionado <kbd>ctrl</kbd> para
+                        seleccionar mas de un tactico</h6>
                     </div>
                   </div>
                 </div>
@@ -294,6 +295,7 @@
 
             <div style="overflow:auto; margin: 50px 0px 0px 0px;">
               <div style="float:right;">
+                <button class="btn btn-danger" type="button" id="cancelar">Cancelar</button>
                 <button class="btn btn-success" type="button" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
                 <button class="btn btn-success" type="button" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
               </div>

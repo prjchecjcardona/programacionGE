@@ -2,6 +2,8 @@ $(function () {
   /* Set  */
   userRol();
   checkParam();
+
+  $('#btnIngresarInvitado')
 });
 
 let userArray;
@@ -15,6 +17,10 @@ function getParam(param) {
     ? ""
     : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+$('#btnIngresarInvitado').click(() => {
+	$('.form-signin input').prop('required', false);
+})
 
 
 //Change functions

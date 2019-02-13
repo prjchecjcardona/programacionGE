@@ -27,6 +27,23 @@ $(document).ready(function () {
       insertFocalizacion();
     });
   });
+
+  $('#cancelar').click(() => {
+    swal({
+      type: "warning",
+      title: "Vas a cancelar",
+      text: "¿Seguro?",
+      showCancelButton: true,
+      cancelButtonText: 'No',
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#28a745',
+      confirmButtonText: 'Si'
+    }).then((result) => {
+      if (result.value) {
+        window.location.href = $('#homeBtn').attr('href');
+      }
+    })
+  });
 });
 
 $("#selectComportamiento").change(function () {
@@ -130,14 +147,11 @@ function determineTipoGestion() {
   var radioTipoGestion = $("input[name=tipoGestion]:checked");
 
   if (radioTipoGestion.val() == "2") {
-    $("#selectComportamiento").prop("disabled", true);
-    $("#selectTipoInt").prop("disabled", true);
-
+    $("#comportamiento").addClass('showNone');
     $("#nextBtn").hide();
     $("#submitInstit").show();
   } else {
-    $("#selectComportamiento").prop("disabled", false);
-    $("#selectTipoInt").prop("disabled", false);
+    $("#comportamiento").removeClass('showNone');
 
     $("#nextBtn").show();
     $("#submitInstit").hide();
@@ -159,7 +173,9 @@ function executeAll() {
     {
       select: "selectComportamiento",
       url: "server/getComportamientos.php",
-      data: ""
+      data: {
+        checkComportamientos : id_mun
+      }
     }
   ];
 
@@ -191,6 +207,11 @@ function primaryAjax(tag, url, dat) {
             elementArray[2]
           }</option>`
         );
+
+        if(elementArray == ""){
+          document.getElementById('gInstitucional').checked = true;
+          determineTipoGestion();
+        }
       }
 
       $('#selectMunicipio').val(id_mun);

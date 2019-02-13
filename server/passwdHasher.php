@@ -26,7 +26,8 @@ $arrayPasswd = [
     '1053766384' => password_hash('1053766384GIkkU2Eeyw1@!8', PASSWORD_DEFAULT),
     '30239536' => password_hash('30239536GIkkU2Eeyw1@!8', PASSWORD_DEFAULT),
     '1007006223' => password_hash('magnetic67GIkkU2Eeyw1@!8', PASSWORD_DEFAULT),
-    '111111111' => password_hash('1234GIkkU2Eeyw1@!8', PASSWORD_DEFAULT)
+    '111111111' => password_hash('1234GIkkU2Eeyw1@!8', PASSWORD_DEFAULT),
+    '41924693' => password_hash('41924693GIkkU2Eeyw1@!8', PASSWORD_DEFAULT)
 
 ];
 

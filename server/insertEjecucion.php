@@ -10,6 +10,10 @@ if (isset($_POST['fecha']) && isset($_POST['horaInicio']) &&
 
     $desc = 'null';
     $id_resultado = 'null';
+    #Create datetime of $_POST['fecha']
+    $newDate = date_create($_POST['fecha']);
+    #Change new date format
+    $fechaPlan = date_format($newDate, "Y-m-d");
 
     if (isset($_POST['resultadoEjecucion']) && isset($_POST['descResultado'])) {
         if (!is_null($_POST['descResultado'])) {
@@ -32,7 +36,7 @@ if (isset($_POST['fecha']) && isset($_POST['horaInicio']) &&
     $id_planeacion = $_POST['id_plan'];
     $tipo_ejecucion = $_POST['tipoEjecucion'];
 
-    $json = $api->insertEjecucion($fecha, $hora_inicio, $hora_fin, $id_resultado, $desc, $id_planeacion, $total_asist, $tipo_ejecucion);
+    $json = $api->insertEjecucion($fechaPlan, $hora_inicio, $hora_fin, $id_resultado, $desc, $id_planeacion, $total_asist, $tipo_ejecucion);
 
     if ($json['error'] != 1) {
         $max = $api->getMaxIdEjec();

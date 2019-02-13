@@ -128,6 +128,23 @@ $(document).ready(function() {
     getSubtemasList(id_tema);
   });
 
+  $('#cancelar').click(() => {
+    swal({
+      type: "warning",
+      title: "Vas a cancelar",
+      text: "¿Seguro?",
+      showCancelButton: true,
+      cancelButtonText: 'No',
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#28a745',
+      confirmButtonText: 'Si'
+    }).then((result) => {
+      if (result.value) {
+        window.location.href = $('#homeBtn').attr('href');
+      }
+    })
+  });
+
   $(
     "#formCrearContacto input, #planForm input, #formRegistrarEntidad input"
   ).focusout(function() {
@@ -357,10 +374,18 @@ function primaryAjax(url, tag, data) {
         $(`#${tag}`).append(
           `<option value="${elementArray[0]}">${elementArray[0]}</option>`
         );
+        
+        if($(`#${tag}`).prop('disabled')){
+          $(`#${tag}`).prop('disabled', false);
+        }
       } else {
         $(`#${tag}`).append(
           `<option value="${elementArray[0]}">${elementArray[1]}</option>`
         );
+
+        if($(`#${tag}`).prop('disabled')){
+          $(`#${tag}`).prop('disabled', false);
+        }
       }
     });
   });
@@ -708,5 +733,5 @@ function getCompetencias(){
 }
 
 function editarContacto(){
-  
+
 }

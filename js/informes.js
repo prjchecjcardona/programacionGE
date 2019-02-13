@@ -1,10 +1,18 @@
 $(function () {
-  getMunicipiosCobertura();
-  getZonasCobertura();
+  getInforme();
+
+  $('#estrategia').change(() => {
+    getTacticos($('#estrategia').val()[0]);
+  });
+
+  $('select').multipleSelect();
 
   $('.chartContainer').resize(() => {
     myChart.reflow();
-    myChart2.reflow();
+  });
+
+  $('#formInformes select').change(() => {
+    getInforme();
   });
 });
 
@@ -39,274 +47,31 @@ Highcharts.setOptions({
 
 var myChart = Highcharts.chart("chart1", {
   chart: {
-    type: "bar",
-    events: {
-      load: getInformes
-    }
+    type: 'bar'
   },
   title: {
-    text: "Consolidado Cobertura"
+      text: 'Cobertura de competencias por zona'
   },
   xAxis: {
-    categories: ["Participantes"]
+      categories: ['Preservacion', 'Corresponsabilidad', 'Confianza']
   },
   yAxis: {
-    title: {
-      text: "Zona"
-    }
-  }
-});
-
-var myChart2 = Highcharts.chart("chart2", {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie',
-    events: {
-      load: getCobEstrategia
-    }
-  },
-  title: {
-    text: "Cobertura de participantes por estrategia"
-  },
-  tooltip: {
-    pointFormat: '{series.name}: <b>{point.y} - {point.percentage:.1f}%</b>'
-  },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: false
-      },
-      showInLegend: true
-    }
-  }
-});
-
-var myChart3 = Highcharts.chart("chart3", {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie',
-    events: {
-      load: getCobMunicipio('Occidente', 3)
-    }
-  },
-  title: {
-    text: "Cobertura de participantes por municipio en Zona Occidente"
-  },
-  tooltip: {
-    pointFormat: '{series.name}: <b>{point.y} - {point.percentage:.1f}%</b>'
-  },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: false
-      },
-      showInLegend: true
-    }
-  }
-});
-
-var myChart4 = Highcharts.chart("chart4", {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie',
-    events: {
-      load: getCobMunicipio('Centro', 4)
-    }
-  },
-  title: {
-    text: "Cobertura de participantes por municipio en Zona Centro"
-  },
-  tooltip: {
-    pointFormat: '{series.name}: <b>{point.y} - {point.percentage:.1f}%</b>'
-  },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: false
-      },
-      showInLegend: true
-    }
-  }
-});
-
-var myChart5 = Highcharts.chart("chart5", {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie',
-    events: {
-      load: getCobMunicipio('Noroccidente', 5)
-    }
-  },
-  title: {
-    text: "Cobertura de participantes por municipio en Zona Noroccidente"
-  },
-  tooltip: {
-    pointFormat: '{series.name}: <b>{point.y} - {point.percentage:.1f}%</b>'
-  },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: false
-      },
-      showInLegend: true
-    }
-  }
-});
-
-var myChart6 = Highcharts.chart("chart6", {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie',
-    events: {
-      load: getCobMunicipio('Suroccidente', 6)
-    }
-  },
-  title: {
-    text: "Cobertura de participantes por municipio en Zona Suroccidente"
-  },
-  tooltip: {
-    pointFormat: '{series.name}: <b>{point.y} - {point.percentage:.1f}%</b>'
-  },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: false
-      },
-      showInLegend: true
-    }
-  }
-});
-
-var myChart7 = Highcharts.chart("chart7", {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie',
-    events: {
-      load: getCobMunicipio('Oriente', 7)
-    }
-  },
-  title: {
-    text: "Cobertura de participantes por municipio en Zona Oriente"
-  },
-  tooltip: {
-    pointFormat: '{series.name}: <b>{point.y} - {point.percentage:.1f}%</b>'
-  },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: false
-      },
-      showInLegend: true
-    }
-  }
-});
-
-var myChart8 = Highcharts.chart('chart8', {
-  chart: {
-      plotBackgroundColor: null,
-      plotBorderWidth: 0,
-      plotShadow: false,
-      events: {
-        load: getCobComportamientos
+      min: 0,
+      title: {
+          text: 'Zonas'
       }
   },
-  title: {
-      text: 'Cobertura<br>por<br>competencia',
-      align: 'center',
-      verticalAlign: 'middle',
-      y: 40
-  },
-  tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+  legend: {
+      reversed: true
   },
   plotOptions: {
-      pie: {
-          dataLabels: {
-              enabled: false,
-          },
-          startAngle: -90,
-          endAngle: 90,
-          center: ['50%', '75%'],
-          size: '110%',
-          showInLegend: true
+      series: {
+          stacking: 'normal'
       }
   }
 });
 
-var myChart9 = Highcharts.chart("chart9", {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie',
-    events: {
-      load: getCobAct
-    }
-  },
-  title: {
-    text: "Cobertura de participantes por tipo de actividad"
-  },
-  tooltip: {
-    pointFormat: '{series.name}: <b>{point.y} - {point.percentage:.1f}%</b>'
-  },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: false
-      },
-      showInLegend: true
-    }
-  }
-});
-
-
-/* var myChart3 = Highcharts.chart("chart3", {
-  chart: {
-    type: "bar",
-    events: {
-      load: getInformes
-    }
-  },
-  title: {
-    text: "Consolidado Cobertura"
-  },
-  xAxis: {
-    categories: ["Participantes"]
-  },
-  yAxis: {
-    title: {
-      text: "Participantes por zona"
-    }
-  }
-}); */
-
-function getInformes() {
+/* function getInformes() {
   $.ajax({
     type: "POST",
     url: "server/getInformes.php",
@@ -324,196 +89,7 @@ function getInformes() {
     },
     cache: false
   })
-}
-
-function getCobAct(){
-  $.ajax({
-    type: "POST",
-    url: "server/getInformes.php",
-    data: {
-      cobAct: ""
-    },
-    dataType: "json",
-    success: function (response) {
-      myChart9.addSeries({
-        name: 'Participantes',
-        colorByPoint: true,
-        data: response
-      });
-    },
-    cache: false
-  })
-}
-
-function getCobMunicipio(zona, chart){
-  $.ajax({
-    type: "POST",
-    url: "server/getInformes.php",
-    data: {
-      cobMun: zona
-    },
-    dataType: "json",
-    success: function (response) {
-      if(chart == 4){
-        myChart4.addSeries({
-          name: 'Participantes',
-          colorByPoint: true,
-          data: response
-        });
-      }
-
-      if(chart == 5){
-        myChart5.addSeries({
-          name: 'Participantes',
-          colorByPoint: true,
-          data: response
-        });
-      }
-
-      if(chart == 3){
-        myChart3.addSeries({
-          name: 'Participantes',
-          colorByPoint: true,
-          data: response
-        });
-      }
-
-      if(chart == 6){
-        myChart6.addSeries({
-          name: 'Participantes',
-          colorByPoint: true,
-          data: response
-        });
-      }
-
-      if(chart == 7){
-        myChart7.addSeries({
-          name: 'Participantes',
-          colorByPoint: true,
-          data: response
-        });
-      }
-    },
-    cache: false
-  })
-}
-
-function getCobComportamientos(){
-  $.ajax({
-    type: "POST",
-    url: "server/getInformes.php",
-    data: {
-      cobComp: ""
-    },
-    dataType: "json",
-    success: function (response) {
-      myChart8.addSeries({
-        type: 'pie',
-        name: 'Participantes',
-        innerSize: '50%',
-        data: response
-      });
-    },
-    cache: false
-  })
-}
-
-function getCobEstrategia() {
-  $.ajax({
-    type: "POST",
-    url: "server/getInformes.php",
-    data: {
-      cobEstrategia: ""
-    },
-    dataType: "json",
-    success: function (response) {
-      myChart2.addSeries({
-        name: 'Participantes',
-        colorByPoint: true,
-        data: response
-      });
-    },
-    cache: false
-  })
-}
-
-function getMunicipiosCobertura() {
-  $.ajax({
-    type: "POST",
-    url: "server/getMunicipios.php",
-    data: {
-      zona: "all"
-    },
-    dataType: "json",
-    success: function (response) {
-      response.forEach(element => {
-        $('#municipio').append(
-          `<option value="${element.id_municipio}">${element.municipio}</option>`
-        )
-      });
-    }
-  }).done(() => {
-    $('select').multipleSelect();
-  });
-}
-
-function getZonasCobertura() {
-  $.ajax({
-    type: "POST",
-    url: "server/getZonas.php",
-    data: '',
-    dataType: "json",
-    success: function (response) {
-      response.forEach(element => {
-        $('#zona').append(
-          `<option value="${element.zonas}">${element.zonas}</option>`
-        )
-      });
-    }
-  }).done(() => {
-    $('select').multipleSelect();
-  });
-}
-
-function getEstrategiasCobertura() {
-  $.ajax({
-    type: "POST",
-    url: "server/getInformes.php",
-    data: '',
-    dataType: "json",
-    success: function (response) {
-      response.forEach(element => {
-        $('#zona').append(
-          `<option value="${element.id_estrategia}">${element.nombre_estrategia}</option>`
-        )
-      });
-    }
-  }).done(() => {
-    $('select').multipleSelect();
-  });
-}
-
-function getTacticosCobertura(estrategia) {
-  $('#zona').prop("disabled", true);
-  $.ajax({
-    type: "POST",
-    url: "server/getInformes.php",
-    data: {
-      estrategia: estrategia
-    },
-    dataType: "json",
-    success: function (response) {
-      response.forEach(element => {
-        $('#zona').append(
-          `<option value="${element.id_tactico}">${element.nombre_tactico}</option>`
-        )
-      });
-    }
-  }).done(() => {
-    $('select').multipleSelect();
-    $('#zona').prop("disabled", false);
-  });
-}
+} */
 
 function getConsultaFilters(filter) {
   $.ajax({
@@ -543,18 +119,47 @@ function getConsultaFilters(filter) {
   });
 }
 
-function openNav() {
-  document.getElementById("mySidenav").style.width = "450px";
-  document.getElementsByClassName("main")[0].style.marginLeft = "450px";
-  setTimeout(() => {
-    $('.chartContainer').resize();
-  }, 800);
+function getInforme(){
+  var formInformes =
+  $.ajax({
+    type: "POST",
+    url: "server/getInformes.php",
+    data: $('#formInformes').serialize(),
+    dataType: "json",
+    success: function (response) {
+      var chart = $('#chart1').highcharts();
+      var seriesLength = chart.series.length;
+      for(var i = seriesLength -1; i > -1; i--) {
+          chart.series[i].remove();
+      }
+      response.forEach(element => {
+        myChart.addSeries({
+          name: element.name,
+          data: element.data.map(Number)
+        });
+      });
+    }
+  });
 }
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-  document.getElementsByClassName("main")[0].style.marginLeft = "0";
-  setTimeout(() => {
-    $('.chartContainer').resize();
-  }, 800);
+function getTacticos(estrat){
+  $('#tactico').html('');
+  $.ajax({
+    type: "POST",
+    url: "server/getInformes.php",
+    data: {
+      getTact : estrat
+    },
+    dataType: "json",
+    success: function (response) {
+      response.forEach(element => {
+        $('#tactico').append(
+          `<option value="${element.tactico}">${element.tactico}</option>`
+        );
+      });
+    }
+  }).done(() => {
+    $('#tactico').prop('disabled', false);
+    $('#tactico').multipleSelect();
+  })
 }

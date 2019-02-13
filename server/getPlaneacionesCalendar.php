@@ -68,6 +68,7 @@ if (isset($_POST)) {
                     "gestor" => $value['nombre'],
                     "url_solicitud" => $value['url'],
                     "hora" => [],
+                    "tipo_gestion" => $value['id_tipo_gestion'],
                     "estado" => $value['estado'],
                     "evidencias" => [],
                     "actas" => [],
@@ -116,7 +117,6 @@ if (isset($_POST)) {
                     $validReg = false;
                 } else {
                     $ejecuciones = $api->ejecucion_planeacion($value['id_planeacion']);
-                    $registros = $api->checkRegistros($value['id_planeacion']);
 
                     if (empty($ejecuciones)) {
                         array_push($requisitos, 'Registrar la ejecución de la actividad');
@@ -125,33 +125,40 @@ if (isset($_POST)) {
                         $validEjec = true;
                     }
 
-                    if (empty($registros)) {
-                        $validReg = false;
-                        array_push($requisitos, 'Adjuntar evidencias');
-                        array_push($requisitos, 'Adjuntar asistencia');
-                        array_push($requisitos, 'Adjuntar acta');
-                    } else {
+                    $tipo = $newArray[$value['id_planeacion']]['tipo_gestion'];
 
-                        $rgtros_array = array();
+                    if($tipo == 2){
+                        $registros = $api->checkRegistros($value['id_planeacion'], 4);
 
-                        for ($i = 0; $i < count($registros); $i++) {
-                            array_push($rgtros_array, $registros[$i]['id_tipo_registro']);
-                        }
-
-                        $unique = array_unique($rgtros_array);
-
-                        if (!in_array(1, $unique)) {
-                            array_push($requisitos, 'Adjuntar evidencias');
-                        }
-
-                        if (!in_array(3, $unique)) {
-                            array_push($requisitos, 'Adjuntar asistencia');
-                        }
-
-                        if (!in_array(4, $unique)) {
+                        if (empty($registros)) {
+                            $validReg = false;
                             array_push($requisitos, 'Adjuntar acta');
                         }
+                    }
 
+                    $rgtros_array = array();
+                    if($tipo == 1){
+                        $registros = $api->checkRegistros($value['id_planeacion'], [1, 3]);
+
+                        if (empty($registros)) {
+                            $validReg = false;
+                            array_push($requisitos, 'Adjuntar evidencias');
+                            array_push($requisitos, 'Adjuntar asistencia');
+                        }else{
+                            for ($i = 0; $i < count($registros); $i++) {
+                                array_push($rgtros_array, $registros[$i]['id_tipo_registro']);
+                            }
+
+                            $unique = array_unique($rgtros_array);
+
+                            if (!in_array(1, $unique)) {
+                                array_push($requisitos, 'Adjuntar evidencias');
+                            }
+
+                            if (!in_array(3, $unique)) {
+                                array_push($requisitos, 'Adjuntar asistencia');
+                            }
+                        }
                     }
 
                     if(empty($requisitos)){
@@ -212,6 +219,7 @@ if (isset($_POST)) {
                 'municipio' => $value['municipio'],
                 'tema' => $value['temas'],
                 'estrategia' => $value['nombre_estrategia'],
+                'status' => $value['estado'],
 
                 'estado' =>
 
@@ -259,7 +267,7 @@ if (isset($_POST)) {
 
         $arrayPlaneaciones = $_POST['plan_cal'];
 
-        $json = $api->getPlaneacionesCalendar($_POST['id_zona']);
+        $json = $api->getPlaneacionesCalendar($_POST['id_zon']);
 
         if (empty($json)) {
             $json = array("message" => "No hay nada planeado", "error" => 1);
@@ -284,6 +292,7 @@ if (isset($_POST)) {
                         "zonas" => $value['zonas'],
                         "nombre_estrategia" => $value['nombre_estrategia'],
                         "tacticos" => [],
+                        "estado" => $value['estado'],
                         "temas" => $value['temas'],
                         "gestor" => $value['nombre'],
                         "solicitud_interventora" => $value['solicitud_interventora'],
@@ -341,6 +350,7 @@ if (isset($_POST)) {
                     'editable' => false,
 
                     'color' => $color,
+                    'status' => $value['estado'],
                     'textColor' => "white",
                     'zona' => $value['zonas'],
                     'id_zona' => $value['id_zona'],
