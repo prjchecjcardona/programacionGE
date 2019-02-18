@@ -53,6 +53,8 @@ body {
   background-color: #56ab2f;
   color: #fff;
   transition: all 0.2s;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #colInicarSesion {
@@ -65,7 +67,8 @@ body {
 }
 
 .card-body img {
-  height: 8em;
+	height: 15%;
+	width: 50%;
 }
 
 .imgSesion > .row {
@@ -241,7 +244,7 @@ a {
 }
 
 .card-header {
-  font-size: 1.5em;
+  font-size: 1.1em;
   color: green;
   font-weight: 600;
 }
@@ -1012,8 +1015,11 @@ hr {
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
-.gj-picker-bootstrap .selected {
-  color: #228c02 !important;
+.gj-picker-bootstrap div[role="mode"] .selected {
+  background-color: green;
+  border-radius: 3px;
+  padding: 2px;
+  color: white !important;
 }
 
 main {

@@ -477,7 +477,7 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con, $zona)
 {
     $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio,
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
-	per.nombres || ' ' || per.apellidos as nombre, plan.estado, hora, etapa_planeacion, plan.solicitud_interventora, rxp.url, foc.id_tipo_gestion
+	per.nombres || ' ' || per.apellidos as nombre, plan.estado, hora, etapa_planeacion, plan.solicitud_interventora, rxp.url, foc.id_tipo_gestion, ejec.hora_inicio, ejec.hora_fin
     FROM planeacion plan
     LEFT JOIN planeacion_institucional plani ON plani.id_planeacion = plan.id_planeacion
     LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
@@ -502,12 +502,27 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con, $zona)
     LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
     LEFT JOIN registro_ubicacion ru ON ru.id_planeacion = plan.id_planeacion
 	LEFT JOIN registros_x_planeacion rxp ON rxp.id_planeacion = plan.id_planeacion
+    LEFT JOIN ejecucion ejec ON ejec.id_planeacion = plan.id_planeacion
     WHERE fecha_plan BETWEEN '2019-01-01' AND now() + interval '1 year' AND plan.estado = 'En Ejecución'
     OR plan.estado = 'Ejecutado' OR rxp.id_tipo_registro = 2";
 
     if ($zona != 'all') {
         $sql .= " AND zon.id_zona = $zona";
     }
+
+    return executeQuery($con, $sql);
+}
+
+function getDetalleEjecucionQuery($con, $id_plan)
+{
+    $sql = "SELECT DISTINCT ejec.id_ejecucion, fecha, hora_inicio, hora_fin, tipo_ejecucion, resultado_ejecucion, descripcion_resultado, tipo, caracteristica, cpxe.total, tpxe.total, total_asistentes
+    FROM ejecucion ejec
+    LEFT JOIN resultado_ejecucion rejec ON rejec.id_resultado_ejecucion = ejec.id_resultado_ejecucion
+    JOIN tipo_poblacion_x_ejecucion tpxe ON tpxe.id_ejecucion = ejec.id_ejecucion
+    JOIN tipo_poblacion tp ON tp.id_tipo = tpxe.id_tipo
+    JOIN caracteristicas_poblacion_x_ejecucion cpxe ON cpxe.id_ejecucion = ejec.id_ejecucion
+    JOIN caracteristicas_poblacion cp ON cp.id_caracteristica = cpxe.id_caracteristica
+    WHERE id_planeacion = $id_plan";
 
     return executeQuery($con, $sql);
 }

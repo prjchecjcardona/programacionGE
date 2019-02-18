@@ -8,13 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
     crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
     crossorigin="anonymous">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
   <link rel="stylesheet" href="css/fileinput.min.css">
   <link rel="stylesheet" href="css/fileinput-rtl.min.css">
   <link rel="stylesheet" href="css/newStyle.css">
-
+  <link rel="icon" href="img/chec-logo.png">
 <body>
 
   <div class="loader" style="display: none">
@@ -27,22 +27,22 @@
 
   <div class="main">
 
-        <!-- NAVBAR PART -->
-        <ul class="nav justify-content-end" id="navGE">
-            <li class="nav-item imgsNav">
-              <img src="img/logo-min.png" alt="" class="navImg">
-              <img src="img/Universidad-de-manizales.png" alt="" class="navImg">
-            </li>
+    <!-- NAVBAR PART -->
+    <ul class="nav justify-content-end" id="navGE">
+      <li class="nav-item imgsNav">
+        <img src="img/logo-min.png" alt="" class="navImg">
+        <img src="img/Universidad-de-manizales.png" alt="" class="navImg">
+      </li>
 
-            <li class="nav-item">
+      <li class="nav-item">
 
-            </li>
+      </li>
 
-            <li class="nav-item" id="lastSideNav">
-              <a id="homeBtn" class="nav-link"><i class="fas fa-home"></i></a>
-              <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
-            </li>
-          </ul>
+      <li class="nav-item" id="lastSideNav">
+        <a id="homeBtn" class="nav-link"><i class="fas fa-home"></i></a>
+        <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
+      </li>
+    </ul>
 
     <div id="createInter" class="row justify-content-center">
       <div id="colCreateInter" class="col-lg-9 col-md-12 col-sm-12">
@@ -58,7 +58,7 @@
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <label for="selectMunicipio">Municipio</label>
                     <label for="selectMunicipio" class="obligatorio">*</label>
-                    <select class="custom-select" id="selectMunicipio" name="municipio" disabled>
+                    <select class="custom-select" id="selectMunicipio" name="municipio">
                       <option value="" selected>Seleccione</option>
                     </select>
                   </div>
@@ -80,7 +80,7 @@
 
                 <!-- Tipo de intervención -->
                 <div class="row formRows" style="display: flex; justify-content: center">
-<!--                   <div id="tipoIntervencion" class="col-sm-6">
+                  <!--                   <div id="tipoIntervencion" class="col-sm-6">
                     <label for="selectTipoInt">Tipo de Focalización</label>
                     <label for="selectTipoInt" class="obligatorio">*</label>
                     <select class="custom-select" id="selectTipoInt" name="tipoFocalizacion">

@@ -1,9 +1,9 @@
 $(document).ready(function () {
   /* Functions */
+  checkLogged();
   executeAll();
   determineTipoGestion();
   showTab(currentTab); // Display the current tab
-  checkLogged();
 
   if (
     $("select").change(function () {

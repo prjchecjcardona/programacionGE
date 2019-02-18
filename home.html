@@ -19,6 +19,7 @@
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css">
   <link rel="stylesheet" href="css/fullcalendar.min.css">
   <link rel="stylesheet" href="css/newStyle.css">
+  <link rel="icon" href="img/chec-logo.png">
 </head>
 
 <body>
@@ -160,7 +161,7 @@
                         </label>
                         <input class="required" id="horaFin" name="horaFin" />
                         <div class="alert alert-danger showNone" role="alert" id="horaAlert">
-                           La hora de finalización debe ser menor a la de inicio.
+                          La hora de finalización debe ser menor a la de inicio.
                         </div>
                       </div>
                     </div>
@@ -434,64 +435,64 @@
       </div>
     </div>
 
-        <!-- MODAL CALENDAR DETAILS -->
-        <div class="modal fade bd-example-modal-md" id="modalPlanDiariasFilter" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-md">
-              <div class="modal-content">
-                <div class="headerModal">
-                  Seleccione las opciones de planeaciones de acuerdo a sus necesidades
-                </div>
-                <div style="width: 100%; padding: 10px 40px 0px 40px">
-                  <div class="row">
-                    <label for="calendarZona">Zona:</label>
-                    <select class="custom-select" id="calendarZona">
-                      <option value="0" selected>Todos</option>
-                      <option value="1">Centro</option>
-                      <option value="2">Suroccidente</option>
-                      <option value="3">Occidente</option>
-                      <option value="4">Noroccidente</option>
-                      <option value="5">Oriente</option>
-                    </select>
-                  </div>
+    <!-- MODAL CALENDAR DETAILS -->
+    <div class="modal fade bd-example-modal-md" id="modalPlanDiariasFilter" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="headerModal">
+            Seleccione las opciones de planeaciones de acuerdo a sus necesidades
+          </div>
+          <div style="width: 100%; padding: 10px 40px 0px 40px">
+            <div class="row">
+              <label for="calendarZona">Zona:</label>
+              <select class="custom-select" id="calendarZona">
+                <option value="0" selected>Todos</option>
+                <option value="1">Centro</option>
+                <option value="2">Suroccidente</option>
+                <option value="3">Occidente</option>
+                <option value="4">Noroccidente</option>
+                <option value="5">Oriente</option>
+              </select>
+            </div>
 
-                  <div class="row">
-                    <label for="calendarMunicipio">Municipio: </label>
-                    <select class="custom-select" id="calendarMunicipio"></select>
-                  </div>
+            <div class="row">
+              <label for="calendarMunicipio">Municipio: </label>
+              <select class="custom-select" id="calendarMunicipio"></select>
+            </div>
 
-                  <div class="row">
-                    <label for="calendarEstrategia">Estrategia:</label>
-                    <select class="custom-select" id="calendarEstrategia"></select>
-                  </div>
+            <div class="row">
+              <label for="calendarEstrategia">Estrategia:</label>
+              <select class="custom-select" id="calendarEstrategia"></select>
+            </div>
 
-                  <div class="row showNone">
-                    <label for="calendarTacticos">Tacticos:</label>
-                    <select class="custom-select" id="calendarTacticos"></select>
-                  </div>
+            <div class="row showNone">
+              <label for="calendarTacticos">Tacticos:</label>
+              <select class="custom-select" id="calendarTacticos"></select>
+            </div>
 
-                  <div class="row">
-                    <label for="calendarTema">Tema:</label>
-                    <select class="custom-select" id="calendarTema"></select>
-                  </div>
+            <div class="row">
+              <label for="calendarTema">Tema:</label>
+              <select class="custom-select" id="calendarTema"></select>
+            </div>
 
-                  <div class="row">
-                    <label for="calendarTipoG">Tipo Gestión:</label>
-                    <select class="custom-select" id="calendarTipoG">
-                      <option value="0">Todos</option>
-                      <option value="1">Formativa</option>
-                      <option value="2">Institucional</option>
-                    </select>
-                  </div>
-                </div>
-
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <button type="button" id="removerFiltros" class="btn btn-danger">Remover Filtros</button>
-                </div>
-              </div>
+            <div class="row">
+              <label for="calendarTipoG">Tipo Gestión:</label>
+              <select class="custom-select" id="calendarTipoG">
+                <option value="0">Todos</option>
+                <option value="1">Formativa</option>
+                <option value="2">Institucional</option>
+              </select>
             </div>
           </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" id="removerFiltros" class="btn btn-danger">Remover Filtros</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </main>
 

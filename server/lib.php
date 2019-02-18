@@ -19,10 +19,16 @@ class gestionEducativa
         $host = "ec2-54-197-233-123.compute-1.amazonaws.com"; */
 
         //DEV
+        $database = "d9om12i7bb5imh";
+        $uid = "dmldxxackjdyjy";
+        $pwd = "117bb8bc08addca06bfbd6d7244f77f96387b241397aa15c69b7e6851199da5b";
+        $host = "ec2-107-22-238-186.compute-1.amazonaws.com";
+
+        /* //DEV
         $database = "GE10";
         $uid = "postgres";
         $pwd = "1234";
-        $host = "localhost";
+        $host = "localhost"; */
 
         /* //PRODUCCION
         $database = "gestjjlg_gestion_educativa";
@@ -246,6 +252,11 @@ class gestionEducativa
     public function getSubtemasXTema($id_tema)
     {
         return getSubtemasXTemaQuery($this->con, $id_tema);
+    }
+
+    public function getDetalleEjecucion($id_plan)
+    {
+        return getDetalleEjecucionQuery($this->con, $id_plan);
     }
 
     public function getMunicipioInforme()

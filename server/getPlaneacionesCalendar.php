@@ -49,6 +49,8 @@ if (isset($_POST)) {
 
         foreach ($json as $key => $value) {
 
+            if($value)
+
             if (!isset($newArray[$value['id_planeacion']])) {
 
                 $newArray[$value['id_planeacion']] = [
@@ -99,7 +101,10 @@ if (isset($_POST)) {
                 } else {
                     $newArray[$value['id_planeacion']]['hora']['hora_fin'] = $value['hora'];
                 }
-            } else {
+            }elseif(!empty($value['hora_inicio'])){
+                $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = $value['hora_inicio'];
+                $newArray[$value['id_planeacion']]['hora']['hora_fin'] = $value['hora_fin'];
+            }else{
                 $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = '--:--:--';
                 $newArray[$value['id_planeacion']]['hora']['hora_fin'] = '--:--:--';
             }
