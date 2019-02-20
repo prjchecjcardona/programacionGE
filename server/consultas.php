@@ -515,7 +515,7 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con, $zona)
 
 function getDetalleEjecucionQuery($con, $id_plan)
 {
-    $sql = "SELECT DISTINCT ejec.id_ejecucion, fecha, hora_inicio, hora_fin, tipo_ejecucion, resultado_ejecucion, descripcion_resultado, tipo, caracteristica, cpxe.total, tpxe.total, total_asistentes
+    $sql = "SELECT DISTINCT ejec.id_ejecucion, fecha, hora_inicio, hora_fin, tipo_ejecucion, resultado_ejecucion, descripcion_resultado, tipo, tpxe.total as total_tipo, caracteristica, cpxe.total as total_caract
     FROM ejecucion ejec
     LEFT JOIN resultado_ejecucion rejec ON rejec.id_resultado_ejecucion = ejec.id_resultado_ejecucion
     JOIN tipo_poblacion_x_ejecucion tpxe ON tpxe.id_ejecucion = ejec.id_ejecucion
