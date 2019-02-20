@@ -2,8 +2,7 @@ $(function(){
 
 });
 
-let id_zona = getParam("id_zona");
-let id_ejec = getParam("id_ejec");
+let id_plan = getParam("id_plan");
 
 function getParam(param) {
   param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -24,7 +23,7 @@ function getDetallesEjecucion(){
     },
     dataType: "json",
     success: function (response) {
-      
+      console.log(response);
     }
   });
 }
