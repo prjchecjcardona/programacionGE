@@ -66,7 +66,10 @@ function getPlaneaciones(zona) {
           );
         } else {
           $('#planeaciones div').html(
-            `<div class="alert alert-warning" role="alert">
+            `<div class="alert alert-war  $.ajax({
+              type: "POST",
+              url: "server/checkLog.php",
+              data: {ning" role="alert">
               No hay planeaciones digitadas para hoy!
             </div>`
           );

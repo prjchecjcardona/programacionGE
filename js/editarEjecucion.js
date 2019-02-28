@@ -1,5 +1,16 @@
 $(function(){
+  
+  $('#horaInicio').timepicker({
+    uiLibrary: 'bootstrap4'
+  });
 
+  $('#horaFin').timepicker({
+    uiLibrary: 'bootstrap4'
+  })
+
+  $("#datepicker").datepicker({
+    uiLibrary: "bootstrap4"
+  });
 });
 
 let id_plan = getParam("id_plan");
@@ -23,7 +34,7 @@ function getDetallesEjecucion(){
     },
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      
     }
   });
 }

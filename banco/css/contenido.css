@@ -46,8 +46,10 @@ body {
 }
 
 .main {
-  margin-left: 270px; /* Same as the width of the sidenav */
-  font-size: 28px; /* Increased text to enable scrolling */
+  margin-left: 270px;
+  /* Same as the width of the sidenav */
+  font-size: 28px;
+  /* Increased text to enable scrolling */
   padding: 0px 10px;
 }
 
@@ -107,7 +109,7 @@ div#header-generalidades {
   -moz-box-shadow: 0px 5px 22px 0px rgba(41, 41, 41, 1);
 }
 
-div#content-generalidades {
+div#content-generalidades, #content-objetivos {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,7 +118,7 @@ div#content-generalidades {
   background-color: rgba(26, 125, 23, 0.5);
   font-family: checfont1;
   color: black;
-  padding: 3%;
+  padding: 2%;
   overflow-y: auto;
   flex-wrap: wrap;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(41, 41, 41, 1);
@@ -155,6 +157,29 @@ button#generalidades-button:hover {
   border-color: white;
   background-color: #253611 !important;
   color: white;
+}
+
+#content-generalidades h4 {
+  text-align: center;
+  font-family: checfont1;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 5px;
+}
+
+#content-objetivos h4 {
+  text-align: justify;
+  font-family: checfont1;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 5px;
+}
+
+#content-generalidades img{
+  margin-bottom: 10px;
+}
+
+.accordion-item img{
+  margin-bottom: 20px;
 }
 
 .swal-text {
@@ -230,7 +255,7 @@ div#recursos {
 button.recursos-button,
 .ficheros-button {
   background-color: #253611 !important;
-  color: #fff !important ;
+  color: #fff !important;
   transition: 0.3s;
   align-self: center;
   font-family: checfont1;
@@ -239,11 +264,11 @@ button.recursos-button,
   width: 48%;
 }
 
-.hide{
+.hide {
   display: none;
 }
 
-.show{
+.show {
   display: block;
 }
 
@@ -254,7 +279,7 @@ button.recursos-button:hover {
 }
 
 div #subir-archivo.reveal,
-#subir-fichero {
+#subir-fichero, #ver-estructura {
   font-family: checfont1;
   padding: 0;
   text-align: center;
@@ -272,7 +297,7 @@ div#form-ficheros {
   margin: 10px;
 }
 
-#form-recursos{
+#form-recursos {
   padding: 30px;
 }
 
@@ -289,7 +314,7 @@ div#header-modal {
 
 #button-subir {
   background-color: #253611 !important;
-  color: #fff !important ;
+  color: #fff !important;
   width: 50%;
   transition: 0.3s;
   align-self: center;
@@ -368,7 +393,7 @@ div#filtros-herramientas {
   align-items: center;
 }
 
-div#filtros-herramientas > .row > label {
+div#filtros-herramientas>.row>label {
   color: white;
 }
 
@@ -490,11 +515,11 @@ div.botones-pdf {
   padding: 7px;
 }
 
-div.botones-pdf > a {
+div.botones-pdf>a {
   width: 100%;
 }
 
-div.botones-pdf > a > button {
+div.botones-pdf>a>button {
   width: 95%;
 }
 
@@ -532,7 +557,7 @@ div#gc {
   margin: 1em 0em 1em auto;
 }
 
-#gc > button {
+#gc>button {
   margin: 0%;
 }
 
@@ -558,6 +583,7 @@ input#codigo {
   -webkit-transform: rotateZ(45deg);
   -moz-transform: rotateZ(45deg);
 }
+
 .cssload-thecube .cssload-cube {
   position: relative;
   transform: rotateZ(45deg);
@@ -566,6 +592,7 @@ input#codigo {
   -webkit-transform: rotateZ(45deg);
   -moz-transform: rotateZ(45deg);
 }
+
 .cssload-thecube .cssload-cube {
   float: left;
   width: 50%;
@@ -577,6 +604,7 @@ input#codigo {
   -webkit-transform: scale(1.1);
   -moz-transform: scale(1.1);
 }
+
 .cssload-thecube .cssload-cube:before {
   content: "";
   position: absolute;
@@ -596,6 +624,7 @@ input#codigo {
   -webkit-transform-origin: 100% 100%;
   -moz-transform-origin: 100% 100%;
 }
+
 .cssload-thecube .cssload-c2 {
   transform: scale(1.1) rotateZ(90deg);
   -o-transform: scale(1.1) rotateZ(90deg);
@@ -603,6 +632,7 @@ input#codigo {
   -webkit-transform: scale(1.1) rotateZ(90deg);
   -moz-transform: scale(1.1) rotateZ(90deg);
 }
+
 .cssload-thecube .cssload-c3 {
   transform: scale(1.1) rotateZ(180deg);
   -o-transform: scale(1.1) rotateZ(180deg);
@@ -610,6 +640,7 @@ input#codigo {
   -webkit-transform: scale(1.1) rotateZ(180deg);
   -moz-transform: scale(1.1) rotateZ(180deg);
 }
+
 .cssload-thecube .cssload-c4 {
   transform: scale(1.1) rotateZ(270deg);
   -o-transform: scale(1.1) rotateZ(270deg);
@@ -617,6 +648,7 @@ input#codigo {
   -webkit-transform: scale(1.1) rotateZ(270deg);
   -moz-transform: scale(1.1) rotateZ(270deg);
 }
+
 .cssload-thecube .cssload-c2:before {
   animation-delay: 0.35s;
   -o-animation-delay: 0.35s;
@@ -624,6 +656,7 @@ input#codigo {
   -webkit-animation-delay: 0.35s;
   -moz-animation-delay: 0.35s;
 }
+
 .cssload-thecube .cssload-c3:before {
   animation-delay: 0.69s;
   -o-animation-delay: 0.69s;
@@ -631,6 +664,7 @@ input#codigo {
   -webkit-animation-delay: 0.69s;
   -moz-animation-delay: 0.69s;
 }
+
 .cssload-thecube .cssload-c4:before {
   animation-delay: 1.04s;
   -o-animation-delay: 1.04s;
@@ -640,16 +674,19 @@ input#codigo {
 }
 
 @keyframes cssload-fold-thecube {
+
   0%,
   10% {
     transform: perspective(136px) rotateX(-180deg);
     opacity: 0;
   }
+
   25%,
   75% {
     transform: perspective(136px) rotateX(0deg);
     opacity: 1;
   }
+
   90%,
   100% {
     transform: perspective(136px) rotateY(180deg);
@@ -658,16 +695,19 @@ input#codigo {
 }
 
 @-o-keyframes cssload-fold-thecube {
+
   0%,
   10% {
     -o-transform: perspective(136px) rotateX(-180deg);
     opacity: 0;
   }
+
   25%,
   75% {
     -o-transform: perspective(136px) rotateX(0deg);
     opacity: 1;
   }
+
   90%,
   100% {
     -o-transform: perspective(136px) rotateY(180deg);
@@ -676,16 +716,19 @@ input#codigo {
 }
 
 @-ms-keyframes cssload-fold-thecube {
+
   0%,
   10% {
     -ms-transform: perspective(136px) rotateX(-180deg);
     opacity: 0;
   }
+
   25%,
   75% {
     -ms-transform: perspective(136px) rotateX(0deg);
     opacity: 1;
   }
+
   90%,
   100% {
     -ms-transform: perspective(136px) rotateY(180deg);
@@ -694,16 +737,19 @@ input#codigo {
 }
 
 @-webkit-keyframes cssload-fold-thecube {
+
   0%,
   10% {
     -webkit-transform: perspective(136px) rotateX(-180deg);
     opacity: 0;
   }
+
   25%,
   75% {
     -webkit-transform: perspective(136px) rotateX(0deg);
     opacity: 1;
   }
+
   90%,
   100% {
     -webkit-transform: perspective(136px) rotateY(180deg);
@@ -712,16 +758,19 @@ input#codigo {
 }
 
 @-moz-keyframes cssload-fold-thecube {
+
   0%,
   10% {
     -moz-transform: perspective(136px) rotateX(-180deg);
     opacity: 0;
   }
+
   25%,
   75% {
     -moz-transform: perspective(136px) rotateX(0deg);
     opacity: 1;
   }
+
   90%,
   100% {
     -moz-transform: perspective(136px) rotateY(180deg);
@@ -734,6 +783,7 @@ input#codigo {
   .sidenav {
     padding-top: 15px;
   }
+
   .sidenav a {
     font-size: 18px;
   }

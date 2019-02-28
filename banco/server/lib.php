@@ -12,13 +12,19 @@ class geBanco
 
     public function connectDB()
     {
-        //DEV
+        /* //DEV
         $database = "d4asqdqb9dlt9p";
         $uid = "ntafkvnrqqlbig";
         $pwd = "300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1";
-        $host = "ec2-54-197-233-123.compute-1.amazonaws.com";
+        $host = "ec2-54-197-233-123.compute-1.amazonaws.com"; */
 
-/*         //PRODUCCION
+        //DEV
+        $database = "GE243";
+        $uid = "postgres";
+        $pwd = "1234";
+        $host = "localhost";
+
+        /* //PRODUCCION
         $database = "gestjjlg_gestion_educativa";
         $uid = "gestjjlg_usr_gestion";
         $pwd = "r!Hh7XNv22E(";

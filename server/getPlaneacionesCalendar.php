@@ -6,7 +6,9 @@ $api = new gestionEducativa();
 
 if (isset($_POST)) {
 
-    if (isset($_POST['no_ejec'])) {
+    $planeaciones = array('no_ejecutados' => '', 'en_ejecucion_ejecutados' => '', 'en_planeacion' => '');
+
+    if (isset($_POST['getPlans'])) {
         $json = $api->getNovedadesNoEjecucion($_POST['id_zona']);
 
         foreach ($json as $key => $value) {
@@ -33,52 +35,73 @@ if (isset($_POST)) {
                 'id_zona' => $value['id_zona'],
                 'municipio' => $value['municipio'],
                 'tema' => $value['temas'],
-                'estrategia' => $value['nombre_estrategia']
+                'estrategia' => $value['nombre_estrategia'],
             );
         }
 
-    }
+        $planeaciones['no_ejecutados'] = $json;
 
-    /* -------------------------------------------------------------------------------- */
+        /* ------------------------ En ejecución o ejecutados ---------------------------- */
 
-    if (isset($_POST['planEjec_cal'])) {
         $json = $api->getPlaneacionesEjecutadosOEnEjecucion($_POST['id_zona']);
-
         $newArray = array();
-        $n = 0;
+        $requisitos = array();
+        $eliminar_ejec = "";
+        $list = "";
+        $array = array();
 
         foreach ($json as $key => $value) {
 
-            if($value)
-
             if (!isset($newArray[$value['id_planeacion']])) {
 
-                $newArray[$value['id_planeacion']] = [
-                    "id_planeacion" => $value['id_planeacion'],
-                    "fecha_plan" => $value['fecha_plan'],
-                    "jornada" => $value['jornada'],
-                    "lugar_encuentro" => $value['lugar_encuentro'],
-                    "municipio" => $value['municipio'],
-                    "comportamientos" => $value['comportamientos'],
-                    "competencia" => $value['competencia'],
-                    "id_zona" => $value['id_zona'],
-                    "zonas" => $value['zonas'],
-                    "nombre_estrategia" => $value['nombre_estrategia'],
-                    "tacticos" => [],
-                    "tipo_gestion" => $value['id_tipo_gestion'],
-                    "temas" => $value['temas'],
-                    "gestor" => $value['nombre'],
-                    "url_solicitud" => $value['url'],
-                    "hora" => [],
-                    "tipo_gestion" => $value['id_tipo_gestion'],
-                    "estado" => $value['estado'],
-                    "evidencias" => [],
-                    "actas" => [],
-                    "asistencias" => [],
-                ];
+                
+
+                $newArray[$value['id_planeacion']] = array(
+
+                    'id' => $value['id_planeacion'],
+                    'title' => $value['comportamientos'] . ' - ' . $value['municipio'],
+                    'municipio' => $value['municipio'],
+                    'start' => $value['fecha_plan'],
+                    'id_zona' => $value['id_zona'],
+
+                    'descripcion' => [
+                        'fecha' => $value['fecha_plan'],
+                        'zona' => $value['zonas'],
+                        'jornada' => $value['jornada'],
+                        'comportamiento' => $value['comportamientos'],
+                        'competencia' => $value['competencia'],
+                        'estrategia' => $value['nombre_estrategia'],
+                        'gestion' => $value['tipo_gestion'],
+                        'tema' => $value['temas'],
+                        'gestor' => $value['nombre'],
+                        'jornada' => $value['jornada'],
+                        'lugar' => $value['lugar_encuentro'],
+                    ],
+
+                    'total_participantes' => '',
+
+                    'tacticos' => array(),
+                    'tipo_gestion' => $value['id_tipo_gestion'],
+                    'hora' => array(),
+                    'url_solicitud' => $value['url'],
+                    'status' => $value['estado'],
+                    'evidencias' => array(),
+                    'actas' => array(),
+                    'asistencias' => array(),
+                    'etapa_planeacion' => $value['etapa_planeacion'],
+                    'valid_ejec' => true,
+                    'color' => '',
+                    'icon' => '',
+                    'editable' => false,
+                    'requisitos' => array(),
+                );
+
             }
 
+
+
             if (empty($newArray[$value['id_planeacion']]['tacticos'])) {
+                $newArray[$value['id_planeacion']]['tacticos'] = array();
                 array_push($newArray[$value['id_planeacion']]['tacticos'], $value['nombre_tactico']);
             } else {
                 $valid = true;
@@ -94,285 +117,167 @@ if (isset($_POST)) {
                 }
             }
 
-            /* Set time */
             if (!empty($value['etapa_planeacion'])) {
-                if ($value['etapa_planeacion'] == "Iniciada") {
-                    $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = $value['hora'];
+                if (!empty($value['etapa_planeacion'])) {
+                    if ($value['etapa_planeacion'] == "Iniciada") {
+                        $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = $value['hora'];
+                    } else {
+                        $newArray[$value['id_planeacion']]['hora']['hora_fin'] = $value['hora'];
+                    }
+                } elseif (!empty($value['hora_inicio'])) {
+                    $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = $value['hora_inicio'];
+                    $newArray[$value['id_planeacion']]['hora']['hora_fin'] = $value['hora_fin'];
                 } else {
-                    $newArray[$value['id_planeacion']]['hora']['hora_fin'] = $value['hora'];
+                    $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = '--:--:--';
+                    $newArray[$value['id_planeacion']]['hora']['hora_fin'] = '--:--:--';
                 }
-            }elseif(!empty($value['hora_inicio'])){
-                $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = $value['hora_inicio'];
-                $newArray[$value['id_planeacion']]['hora']['hora_fin'] = $value['hora_fin'];
-            }else{
+            } else {
                 $newArray[$value['id_planeacion']]['hora']['hora_inicio'] = '--:--:--';
                 $newArray[$value['id_planeacion']]['hora']['hora_fin'] = '--:--:--';
             }
-        }
 
-        /* Set variables for when planeacion is fully executed */
-        $requisitos = array();
-        $list = "";
-        foreach ($newArray as $key => $value) {
+            if (!isset($requisitos[$value['id_planeacion']])) {
+                $requisitos[$value['id_planeacion']] = [];
+                $registros = [];
+                $rgtros_array = [];
+                $validReg = true;
 
-            if ($value['estado'] != 'Ejecutado') {
-                if (empty($value['hora']['hora_fin'])) {
-                    $value['hora']['hora_fin'] = '--:--';
-                    $validEjec = false;
+                if (is_null($value['id_ejecucion'])) {
+                    $valid_ejec = 0;
+                    $newArray[$value['id_planeacion']]['valid_ejec'] = 0;
                     $validReg = false;
+                    //$newArray[$value['id_planeacion']] = false;
+                    array_push($requisitos[$value['id_planeacion']], '<li> Registrar la ejecución de la actividad </li>');
+                }
+
+                if($newArray[$value['id_planeacion']]['valid_ejec'] && $newArray[$value['id_planeacion']]['tipo_gestion'] == 1){
+                    $total = $api->getTotalAsistentes($value['id_planeacion']);
+                    $newArray[$value['id_planeacion']]['total_participantes'] = $total;
+                }
+
+                if ($value['id_tipo_gestion'] == 2) {
+                    $registros = $api->checkRegistros($value['id_planeacion'], 4);
+
+                    if (empty($registros)) {
+                        $validReg = false;
+                        array_push($requisitos[$value['id_planeacion']], '<li> Adjuntar acta </li>');
+                    }
                 } else {
-                    $ejecuciones = $api->ejecucion_planeacion($value['id_planeacion']);
+                    $registros = $api->checkRegistros($value['id_planeacion'], [1, 3]);
 
-                    if (empty($ejecuciones)) {
-                        array_push($requisitos, 'Registrar la ejecución de la actividad');
-                        $validEjec = false;
+                    if (empty($registros)) {
+                        $validReg = false;
+                        array_push($requisitos[$value['id_planeacion']], '<li> Adjuntar evidencias </li>');
+                        array_push($requisitos[$value['id_planeacion']], '<li> Adjuntar asistencias </li>');
                     } else {
-                        $validEjec = true;
-                    }
+                        for ($i = 0; $i < count($registros); $i++) {
+                            array_push($rgtros_array, $registros[$i]['id_tipo_registro']);
+                        }
 
-                    $tipo = $newArray[$value['id_planeacion']]['tipo_gestion'];
+                        $unique = array_unique($rgtros_array);
 
-                    if($tipo == 2){
-                        $registros = $api->checkRegistros($value['id_planeacion'], 4);
-
-                        if (empty($registros)) {
+                        if (!in_array(1, $unique)) {
                             $validReg = false;
-                            array_push($requisitos, 'Adjuntar acta');
+                            array_push($requisitos[$value['id_planeacion']], '<li> Adjuntar evidencias </li>');
                         }
-                    }
 
-                    $rgtros_array = array();
-                    if($tipo == 1){
-                        $registros = $api->checkRegistros($value['id_planeacion'], [1, 3]);
-
-                        if (empty($registros)) {
+                        if (!in_array(3, $unique)) {
                             $validReg = false;
-                            array_push($requisitos, 'Adjuntar evidencias');
-                            array_push($requisitos, 'Adjuntar asistencia');
-                        }else{
-                            for ($i = 0; $i < count($registros); $i++) {
-                                array_push($rgtros_array, $registros[$i]['id_tipo_registro']);
-                            }
-
-                            $unique = array_unique($rgtros_array);
-
-                            if (!in_array(1, $unique)) {
-                                array_push($requisitos, 'Adjuntar evidencias');
-                            }
-
-                            if (!in_array(3, $unique)) {
-                                array_push($requisitos, 'Adjuntar asistencia');
-                            }
+                            array_push($requisitos[$value['id_planeacion']], '<li> Adjuntar asistencias </li>');
                         }
                     }
+                }
 
-                    if(empty($requisitos)){
-                        if($value['estado'] != 'Ejecutado'){
-                            $value['estado'] = 'Ejecutado';
-                            $update = $api->updateEstadoPlaneacion('Ejecutado', $value['id_planeacion']);
-                        }
-                    }else{
-                        for ($i = 0; $i < count($requisitos); $i++) {
-                            $list .= '<li>' . $requisitos[$i] . '</li>';
-                        }
+                $newArray[$value['id_planeacion']]['requisitos'] = $requisitos[$value['id_planeacion']];
+
+                if ($validReg) {
+                    $newArray[$value['id_planeacion']]['color'] = '#269226';
+                    $newArray[$value['id_planeacion']]['icon'] = 'fas fa-check-circle';
+                    if ($value['estado'] != 'Ejecutado') {
+                        $update = $api->updateEstadoPlaneacion('Ejecutado', $value['id_planeacion']);
                     }
-
+                } else {
+                    $newArray[$value['id_planeacion']]['color'] = '#edbe00';
+                    $newArray[$value['id_planeacion']]['icon'] = 'fas fa-minus-circle';
+                    if ($value['estado'] != 'En Ejecución') {
+                        $update = $api->updateEstadoPlaneacion('En Ejecución', $value['id_planeacion']);
+                    }
                 }
             }
 
-            $solicitud = "";
-            if(!empty($value['url'])){
-                $solicitud = $value['url'];
-            }
-
-            if ($value['estado'] != 'Ejecutado') {
-                $color = '#edbe00';
-                $icon = 'fas fa-minus-circle';
-            } else {
-                $color = '#269226';
-                $icon = 'fas fa-check-circle';
-            }
-
-            $tacticos = implode(", ", $value['tacticos']);
-
-            $newArray[$key] = array(
-
-                'id' => $value['id_planeacion'],
-                'title' => $value['comportamientos'] . ' - ' . $value['municipio'],
-                'start' => $value['fecha_plan'],
-
-                'description' =>
-                '<ul>' .
-                '<li> Fecha : ' . $value['fecha_plan'] . '</li>' .
-                '<li> Jornada : ' . $value['jornada'] . '</li>' .
-                '<li> Lugar de encuentro : ' . $value['lugar_encuentro'] . '</li>' .
-                '<li> Municipio : ' . $value['municipio'] . '</li>' .
-                '<li> Estrategias : ' . $value['nombre_estrategia'] . '</li>' .
-                '<li> Tacticos : ' . $tacticos . '</li>' .
-                '<li> Temas : ' . $value['temas'] . '</li>' .
-                '<li> Zona : ' . $value['zonas'] . '</li>' .
-                '<li> Gestor : ' . $value['gestor'] . '</li>' .
-                 $solicitud .
-                '</ul>',
-
-                'editable' => false,
-                'color' => $color,
-                'textColor' => "white",
-                'zona' => $value['zonas'],
-                'id_zona' => $value['id_zona'],
-                'tipo_gestion' => $value['tipo_gestion'],
-                'municipio' => $value['municipio'],
-                'tema' => $value['temas'],
-                'estrategia' => $value['nombre_estrategia'],
-                'status' => $value['estado'],
-
-                'estado' =>
-
-                '<i class="' . $icon . '" style="font-size: 3em;color: ' . $color . ';align-self: center;"></i>' .
-                '<div>' .
-                '<div class="row">' .
-                '<h4>Hora de Inicio: </h4>' .
-                '<h3>  ' . $value['hora']['hora_inicio'] . '</h3>' .
-                '</div>' .
-                '<div class="row">' .
-                '<h4>Hora de Finalización: </h4>' .
-                '<h3> ' . $value['hora']['hora_fin'] . ' </h3>' .
-                '</div>' .
-                '</div>' .
-                '<div class="accordion" id="requisitosPlan">' .
-                '<div class="card">' .
-                '<div class="card-header" id="headingOne">' .
-                ' <h2 class="mb-0">' .
-                '<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Mira lo que falta para ejecutar por completo la planeación</button>' .
-                '</h2>' .
-                '</div>' .
-
-                '<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#requisitosPlan">' .
-                '<div class="card-body">' .
-                '<ul>' .
-                $list .
-                '</ul>' .
-                '</div>' .
-                '</div>' .
-                '</div>' .
-                '</div>',
-
-            );
-
-            $requisitos = array();
-            $list = "";
         }
 
         $json = array_values($newArray);
-    }
 
-    /* ------------------------------------------------------------------------------------------------------- */
+        $planeaciones['en_ejecucion_ejecutados'] = $json;
 
-    if (isset($_POST['plan_cal'])) {
+        /* ---------------------------- Planeados -----------------------------------  */
 
-        $arrayPlaneaciones = $_POST['plan_cal'];
+        $json = $api->getPlaneacionesCalendar($_POST['id_zona']);
 
-        $json = $api->getPlaneacionesCalendar($_POST['id_zon']);
+        $newArray = array();
 
-        if (empty($json)) {
-            $json = array("message" => "No hay nada planeado", "error" => 1);
-        } else {
-            $newArray = array();
-            $n = 0;
+        foreach ($json as $key => $value) {
 
-            foreach ($json as $key => $value) {
+            if (!isset($newArray[$value['id_planeacion']])) {
 
-                if (!isset($newArray[$value['id_planeacion']])) {
+                $newArray[$value['id_planeacion']] = array(
 
-                    $newArray[$value['id_planeacion']] = [
-                        "id_planeacion" => $value['id_planeacion'],
-                        "fecha_plan" => $value['fecha_plan'],
-                        "jornada" => $value['jornada'],
-                        "lugar_encuentro" => $value['lugar_encuentro'],
-                        "municipio" => $value['municipio'],
-                        "comportamientos" => $value['comportamientos'],
-                        "competencia" => $value['competencia'],
-                        "id_zona" => $value['id_zona'],
-                        "tipo_gestion" => $value['id_tipo_gestion'],
-                        "zonas" => $value['zonas'],
-                        "nombre_estrategia" => $value['nombre_estrategia'],
-                        "tacticos" => [],
-                        "estado" => $value['estado'],
-                        "temas" => $value['temas'],
-                        "gestor" => $value['nombre'],
-                        "solicitud_interventora" => $value['solicitud_interventora'],
-                        "url_solicitud" => $value['url'],
-                    ];
-                }
+                    'id' => $value['id_planeacion'],
+                    'title' => $value['comportamientos'] . ' - ' . $value['municipio'],
+                    'municipio' => $value['municipio'],
+                    'start' => $value['fecha_plan'],
+
+                    'descripcion' => [
+                        'fecha' => $value['fecha_plan'],
+                        'zona' => $value['zonas'],
+                        'jornada' => $value['jornada'],
+                        'comportamiento' => $value['comportamientos'],
+                        'competencia' => $value['competencia'],
+                        'estrategia' => $value['nombre_estrategia'],
+                        'gestion' => $value['tipo_gestion'],
+                        'tema' => $value['temas'],
+                        'gestor' => $value['nombre'],
+                        'jornada' => $value['jornada'],
+                        'lugar' => $value['lugar_encuentro'],
+                    ],
+
+                    'id_zona' => $value['id_zona'],
+                    'tacticos' => array(),
+                    'tipo_gestion' => $value['id_tipo_gestion'],
+                    'url_solicitud' => $value['url'],
+                    'status' => $value['estado'],
+                    'color' => '#ff0000',
+                    'icon' => 'fas fa-minus-circle',
+                    'editable' => false,
+                );
+
+            } else {
 
                 if (empty($newArray[$value['id_planeacion']]['tacticos'])) {
                     array_push($newArray[$value['id_planeacion']]['tacticos'], $value['nombre_tactico']);
                 } else {
+                    $valid = true;
                     foreach ($newArray[$value['id_planeacion']]['tacticos'] as $k => $val) {
-                        if ($val != $value['nombre_tactico']) {
-                            array_push($newArray[$value['id_planeacion']]['tacticos'], $value['nombre_tactico']);
+                        if ($val == $value['nombre_tactico']) {
+                            $valid = false;
+                            break;
                         }
                     }
-                }
 
+                    if ($valid) {
+                        array_push($newArray[$value['id_planeacion']]['tacticos'], $value['nombre_tactico']);
+                    }
+                }
             }
-
-            foreach ($newArray as $key => $value) {
-
-                $tacticos = implode(", ", $value['tacticos']);
-
-                if ($value['solicitud_interventora']) {
-                    $color = "#7704df";
-                } else {
-                    $color = "red";
-                }
-
-                $solicitud = "";
-                if($value['solicitud_interventora'] == "true"){
-                    $solicitud = '<li> <a target="_blank" href="' . $value['url_solicitud'] . '"> Ver solicitud </a> </li>';
-                }
-
-                $newArray[$key] = array(
-
-                    'id' => $value['id_planeacion'],
-                    'title' => $value['comportamientos'] . ' - ' . $value['municipio'],
-                    'start' => $value['fecha_plan'],
-
-                    'description' =>
-                    '<ul>' .
-                    '<li> Fecha : ' . $value['fecha_plan'] . '</li>' .
-                    '<li> Jornada : ' . $value['jornada'] . '</li>' .
-                    '<li> Lugar de encuentro : ' . $value['lugar_encuentro'] . '</li>' .
-                    '<li> Municipio : ' . $value['municipio'] . '</li>' .
-                    '<li> Estrategias : ' . $value['nombre_estrategia'] . '</li>' .
-                    '<li> Tacticos : ' . $tacticos . '</li>' .
-                    '<li> Temas : ' . $value['temas'] . '</li>' .
-                    '<li> Zona : ' . $value['zonas'] . '</li>' .
-                    '<li> Gestor : ' . $value['gestor'] . '</li>' .
-                    $solicitud .
-                    '</ul>',
-
-                    'editable' => false,
-
-                    'color' => $color,
-                    'status' => $value['estado'],
-                    'textColor' => "white",
-                    'zona' => $value['zonas'],
-                    'id_zona' => $value['id_zona'],
-                    'tipo_gestion' => $value['tipo_gestion'],
-                    'municipio' => $value['municipio'],
-                    'tema' => $value['temas'],
-                    'estrategia' => $value['nombre_estrategia']
-                );
-            }
-
-            $json = array_values($newArray);
         }
 
+        $json = array_values($newArray);
+        $planeaciones['en_planeacion'] = $json;
     }
 
 } else {
     $json = "No se recibieron los datos de manera adecuada";
 }
 
-echo json_encode($json);
+echo json_encode($planeaciones);

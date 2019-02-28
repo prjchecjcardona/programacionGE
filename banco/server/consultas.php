@@ -42,7 +42,7 @@ function getRecursosQuery($con)
 function getFicherosQuery($con, $competencia, $tema)
 {
 
-    $sql = "SELECT CONCAT(rec.recurso_url,'/', nombre,'.pdf') AS fichero_url, nombre, rec.icon, tem.temas 
+    $sql = "SELECT rec.recurso_url || '/' || nombre || '.pdf' AS fichero_url, nombre, rec.icon, tem.temas 
     FROM guias as gui
     JOIN subtemas stm ON stm.id_subtema = gui.id_subtema
     JOIN temas tem ON tem.id_temas = stm.id_temas
@@ -61,10 +61,10 @@ function getFicherosQuery($con, $competencia, $tema)
     }
     if (!is_null($tema)) {
         if ($is_where) {
-            $sql .= " WHERE tem.id_tema = $tema";
+            $sql .= " WHERE tem.id_temas = $tema";
             $is_where = false;
         } else {
-            $sql .= " AND tem.id_tema = $tema";
+            $sql .= " AND tem.id_temas = $tema";
         }
     }
 

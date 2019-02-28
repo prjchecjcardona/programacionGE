@@ -18,17 +18,23 @@ class gestionEducativa
         $pwd = "300113b0978731b5003f9916b2684ec44d7eafdeb2f3a36dca99bfcd115f33f1";
         $host = "ec2-54-197-233-123.compute-1.amazonaws.com"; */
 
-        //DEV
+        /* //DEV
         $database = "d9om12i7bb5imh";
         $uid = "dmldxxackjdyjy";
         $pwd = "117bb8bc08addca06bfbd6d7244f77f96387b241397aa15c69b7e6851199da5b";
-        $host = "ec2-107-22-238-186.compute-1.amazonaws.com";
+        $host = "ec2-107-22-238-186.compute-1.amazonaws.com"; */
 
         /* //DEV
         $database = "GE10";
         $uid = "postgres";
         $pwd = "1234";
         $host = "localhost"; */
+
+        //DEV
+        $database = "GE243";
+        $uid = "postgres";
+        $pwd = "1234";
+        $host = "localhost";
 
         /* //PRODUCCION
         $database = "gestjjlg_gestion_educativa";
@@ -42,6 +48,10 @@ class gestionEducativa
             die('error de conexión');
         }
 
+        $this->con2 = pg_connect("host=$host port=5432 dbname=$database user=$uid password=$pwd");
+        if (!$this->con2) {
+            die('error de conexión');
+        }
     }
 
     public function getComportamientos()
@@ -72,6 +82,16 @@ class gestionEducativa
     public function getFicheros()
     {
         return getFicherosQuery($this->con);
+    }
+
+    public function eliminarEjecucion($id_plan)
+    {
+        return eliminarEjecucionQuery($this->con2, $id_plan);
+    }
+
+    public function eliminarPlaneacion($id_plan)
+    {
+        return eliminarPlaneacionQuery($this->con2, $id_plan);
     }
 
     public function getIndicadoresGEXSubtema($id_subtema)
@@ -107,6 +127,11 @@ class gestionEducativa
     public function getPlaneacionesXFocalizacion($foc)
     {
         return getPlaneacionesXFocalizacionQuery($this->con, $foc);
+    }
+
+    public function getTotalAsistentes($id_plan)
+    {
+        return getTotalAsistentesQuery($this->con, $id_plan);
     }
 
     public function getPlaneacionesCalendar($zona)

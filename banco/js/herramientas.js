@@ -258,9 +258,9 @@ function getIndicadores() {
 
 /* Llama ficheros de acuerdo a los filtros y los imprime en el menú */
 function getFicheros(competencia, tema) {
-  $("#area-ficheros").html(
-    `<img id="codificacion-img" src="img/codificacion.PNG" alt="">`
-  );
+/*   $("#area-ficheros").html(
+    `<button class="hollow button ficheros-button" data-open="ver-estructura">Ver estructura tématica</button>`
+  ); */
   $("#pdf").html("");
   $.ajax({
     type: "POST",
@@ -302,7 +302,6 @@ function fichas() {
     }
     var url = $(this).attr('href');
     var urrl = url.substr(1);
-    console.log(urrl);
     $("#pdf").html(
       `<embed src="${urrl}" type="application/pdf" width="90%" height="90%">`
     );

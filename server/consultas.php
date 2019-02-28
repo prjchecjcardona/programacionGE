@@ -61,6 +61,16 @@ function insertQuery($con, $sql)
     }
 }
 
+function eliminateQuery($con, $sql)
+{
+    $result = pg_query($con, $sql);
+    if ($result) {
+        return $data = array("message" => "Guardado con exito!", "error" => 0);
+    } else {
+        return $data = array("message" => "No se guardó", "error" => 1, "error_message" => pg_result_error($result));
+    }
+}
+
 /* CONSULTAS */
 
 function getMunicipiosXZonaQuery($con, $zona)
@@ -290,7 +300,9 @@ function getTacticosQuery($con, $estrat)
 {
     $sql = "SELECT id_tactico, nombre_tactico
     FROM tactico
-    WHERE id_estrategia = $estrat";
+    WHERE id_estrategia = $estrat
+    AND id_tactico NOT IN(2,8,9,13,16,17,18,20,
+    21,23,24,30,31,32,33,34,3,15)";
 
     return executeQuery($con, $sql);
 }
@@ -330,6 +342,32 @@ function getIndicadoresChecQuery($con, $comp)
 
     return executeQuery($con, $sql);
 }
+
+function eliminarEjecucionQuery($con, $id_plan)
+{
+    $sqlbase = "SELECT id_ejecucion 
+    FROM ejecucion
+    WHERE id_planeacion = $id_plan";
+
+    $sql = "DELETE FROM tipo_poblacion_x_ejecucion tpxe WHERE tpxe.id_ejecucion IN ($sqlbase);
+    DELETE FROM caracteristicas_poblacion_x_ejecucion cpxe WHERE cpxe.id_ejecucion IN ($sqlbase);
+    DELETE FROM ejecucion WHERE id_ejecucion IN ($sqlbase);";
+
+    return eliminateQuery($con, $sql);
+}
+
+function eliminarPlaneacionQuery($con, $id_plan)
+{
+    $sql = "DELETE FROM registro_ubicacion WHERE id_planeacion IN ($id_plan);
+    DELETE FROM tacticos_x_planeacion WHERE id_planeacion IN ($id_plan);
+    DELETE FROM subtemas_x_planeacion WHERE id_planeacion IN ($id_plan);
+    DELETE FROM planeacion_institucional WHERE id_planeacion IN ($id_plan);
+    DELETE FROM contactos_x_planeacion WHERE id_planeacion IN ($id_plan);
+    DELETE FROM registros_x_planeacion WHERE id_planeacion IN ($id_plan);";
+
+    return eliminateQuery($con, $sql);
+}
+
 
 function getDetallePlaneacionEjecucionQuery($con, $id_plan)
 {
@@ -404,7 +442,7 @@ function getTemasPorComportamientoCoberturaQuery($con, $competencia)
 
 function getPlaneacionesCalendarQuery($con, $zona)
 {
-    $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio, plan.estado,
+    $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio, plan.estado, tg.tipo_gestion,
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
 	per.nombres || ' ' || per.apellidos as nombre, solicitud_interventora, rxp.url, foc.id_tipo_gestion
     FROM planeacion plan
@@ -433,6 +471,10 @@ function getPlaneacionesCalendarQuery($con, $zona)
     WHERE fecha_plan BETWEEN '2019-01-01' AND now() + interval '1 year' AND plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2";
 
     $sql .= " ORDER BY plan.id_planeacion ASC";
+
+    if ($zona != 'all') {
+        $sql .= " AND zon.id_zona = $zona";
+    }
 
     return executeQuery($con, $sql);
 }
@@ -476,8 +518,8 @@ function checkCompetenciasFocalizacionQuery($con, $mun)
 function getPlaneacionesEjecutadosOEnEjecucionQuery($con, $zona)
 {
     $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio,
-	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
-	per.nombres || ' ' || per.apellidos as nombre, plan.estado, hora, etapa_planeacion, plan.solicitud_interventora, rxp.url, foc.id_tipo_gestion, ejec.hora_inicio, ejec.hora_fin
+	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas, tg.tipo_gestion,
+	per.nombres || ' ' || per.apellidos as nombre, plan.estado, hora, etapa_planeacion, plan.solicitud_interventora, rxp.url, foc.id_tipo_gestion, ejec.hora_inicio, ejec.hora_fin, ejec.id_ejecucion
     FROM planeacion plan
     LEFT JOIN planeacion_institucional plani ON plani.id_planeacion = plan.id_planeacion
     LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
@@ -509,6 +551,8 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con, $zona)
     if ($zona != 'all') {
         $sql .= " AND zon.id_zona = $zona";
     }
+
+    $sql .= " ORDER BY plan.id_planeacion ASC";
 
     return executeQuery($con, $sql);
 }
@@ -579,6 +623,16 @@ function getTrabajosAdministrativosCalendarQuery($con)
 	JOIN asignar_zonas az ON az.id_zona = zon.id_zona
 	JOIN personas per ON per.cedula = az.cedula_asignado";
 
+    return executeQuery($con, $sql);
+}
+
+function getTotalAsistentesQuery($con, $id_plan)
+{
+    $sql = "SELECT tipo, total
+	FROM tipo_poblacion_x_ejecucion tpxe
+	JOIN tipo_poblacion tp ON tp.id_tipo = tpxe.id_tipo
+    WHERE id_ejecucion IN (SELECT id_ejecucion FROM ejecucion WHERE id_planeacion = $id_plan)";
+    
     return executeQuery($con, $sql);
 }
 
@@ -697,6 +751,11 @@ function getGuiasPlaneacionQuery($con, $subtema)
     return executeQuery($con, $sql);
 }
 
+/* function getGuias($con, $id_plan)
+{
+    $sql = ""
+}
+ */
 function getUrlArchivosPlanQuery($con, $id_plan, $id_tipo_registro)
 {
     $sql = "SELECT id_registro, url, id_tipo_registro
@@ -767,8 +826,8 @@ function insertContactosXEntidadQuery($con, $cedula, $entidad)
 function insertEjecucionQuery($con, $fecha, $hora_inicio, $hora_fin, $id_resultado, $descripcion, $id_planeacion, $total_asist, $tipo_ejecucion)
 {
     $sql = "INSERT INTO public.ejecucion(
-    fecha, hora_inicio, hora_fin, id_resultado_ejecucion, descripcion_resultado, id_planeacion, total_asistentes, tipo_ejecucion)
-    VALUES ('$fecha', '$hora_inicio', '$hora_fin', $id_resultado, '$descripcion', $id_planeacion, $total_asist, '$tipo_ejecucion');";
+    id_ejecucion, fecha, hora_inicio, hora_fin, id_resultado_ejecucion, descripcion_resultado, id_planeacion, total_asistentes, tipo_ejecucion)
+    VALUES (nextval('seq_ejecucion'), '$fecha', '$hora_inicio', '$hora_fin', $id_resultado, '$descripcion', $id_planeacion, $total_asist, '$tipo_ejecucion');";
 
     return insertQuery($con, $sql);
 }
