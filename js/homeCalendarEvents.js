@@ -61,6 +61,9 @@ $(function () {
     eventLimit: true, // allow "more" link when too many events
 
     eventRender: function eventRender(event, element, view) {
+      if(event.adjunto == 1){
+        element.find('.fc-title').prepend('<i class="fas fa-paperclip"></i>&nbsp');
+      }
       return (
         ["0", String(event.id_zona)].indexOf($("#calendarZona").val()) >= 0 && ["0", String(event.municipio)].indexOf($("#calendarMunicipio").val()) >=
         0 && ["0", String(event.tema)].indexOf($("#calendarTema").val()) >= 0 && ["0", String(event.estrategia)].indexOf(
@@ -348,7 +351,7 @@ function generateModal(event) {
 
   header.style.cssText = `background-color: ${event.color} !important`;
   $('#modalEventsCalendar').val(event.id);
-  $('#modalEventTitle').html(event.title);
+  $('#modalEventTitle').html(`<i id="adjunto_" class="fas fa-paperclip"></i> ${event.title}`);
   $("#modalEventTitle").css('color', 'white');
 
 

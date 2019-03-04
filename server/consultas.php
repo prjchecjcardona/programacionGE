@@ -733,7 +733,7 @@ function checkRegistrosQuery($con, $id_plan, $tipo)
         $tipo = implode(', ', $tipo);
     }
 
-    $sql = "SELECT DISTINCT rp.id_planeacion, tr.id_tipo_registro
+    $sql = "SELECT DISTINCT rp.id_planeacion, tr.id_tipo_registro, url
     FROM registros_x_planeacion rp
     JOIN tipo_registro tr ON tr.id_tipo_registro = rp.id_tipo_registro
     WHERE id_planeacion = $id_plan AND rp.id_tipo_registro IN ($tipo)";

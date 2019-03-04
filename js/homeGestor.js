@@ -299,7 +299,7 @@ function getPlaneacionesXFocalizacion(foc, comp) {
           `<div>
             <div class="card">
               <div class="card-header">
-                Fecha de planeación : ${element.fecha_plan} </br>
+                Fecha de programada : ${element.fecha_plan} </br>
               </div>
               <div class="card-body">
                 <h5 class="card-title"> ${element.nombre_estrategia}</h5>

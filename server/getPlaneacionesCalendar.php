@@ -54,8 +54,6 @@ if (isset($_POST)) {
 
             if (!isset($newArray[$value['id_planeacion']])) {
 
-                
-
                 $newArray[$value['id_planeacion']] = array(
 
                     'id' => $value['id_planeacion'],
@@ -81,6 +79,7 @@ if (isset($_POST)) {
                     'total_participantes' => '',
 
                     'tacticos' => array(),
+                    'adjunto' => 0,
                     'tipo_gestion' => $value['id_tipo_gestion'],
                     'hora' => array(),
                     'url_solicitud' => $value['url'],
@@ -97,8 +96,6 @@ if (isset($_POST)) {
                 );
 
             }
-
-
 
             if (empty($newArray[$value['id_planeacion']]['tacticos'])) {
                 $newArray[$value['id_planeacion']]['tacticos'] = array();
@@ -150,7 +147,7 @@ if (isset($_POST)) {
                     array_push($requisitos[$value['id_planeacion']], '<li> Registrar la ejecución de la actividad </li>');
                 }
 
-                if($newArray[$value['id_planeacion']]['valid_ejec'] && $newArray[$value['id_planeacion']]['tipo_gestion'] == 1){
+                if ($newArray[$value['id_planeacion']]['valid_ejec'] && $newArray[$value['id_planeacion']]['tipo_gestion'] == 1) {
                     $total = $api->getTotalAsistentes($value['id_planeacion']);
                     $newArray[$value['id_planeacion']]['total_participantes'] = $total;
                 }
@@ -161,6 +158,12 @@ if (isset($_POST)) {
                     if (empty($registros)) {
                         $validReg = false;
                         array_push($requisitos[$value['id_planeacion']], '<li> Adjuntar acta </li>');
+                    } else {
+                        $newArray[$value['id_planeacion']]['adjunto'] = 1;
+                        
+                        for ($i = 0; $i < count($registros); $i++) {
+                            array_push($newArray[$value['id_planeacion']]['actas'], $registros[$i]['url']);
+                        }
                     }
                 } else {
                     $registros = $api->checkRegistros($value['id_planeacion'], [1, 3]);
@@ -170,8 +173,14 @@ if (isset($_POST)) {
                         array_push($requisitos[$value['id_planeacion']], '<li> Adjuntar evidencias </li>');
                         array_push($requisitos[$value['id_planeacion']], '<li> Adjuntar asistencias </li>');
                     } else {
+                        $newArray[$value['id_planeacion']]['adjunto'] = 1;
                         for ($i = 0; $i < count($registros); $i++) {
                             array_push($rgtros_array, $registros[$i]['id_tipo_registro']);
+                            if ($registros[$i]['id_tipo_registro'] == 1) {
+                                array_push($newArray[$value['id_planeacion']]['evidencias'], $registros[$i]['url']);
+                            } else {
+                                array_push($newArray[$value['id_planeacion']]['asistencias'], $registros[$i]['url']);
+                            }
                         }
 
                         $unique = array_unique($rgtros_array);
