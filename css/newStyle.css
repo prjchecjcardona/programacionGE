@@ -1026,6 +1026,38 @@ main {
   height: 100%;
 }
 
+#right #adjuntos {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  margin-top: 45px !important;
+}
+
+#adjuntos div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#adjuntos i {
+  font-size: 5em;
+  cursor: pointer;
+}
+
+#adjuntos i:hover{
+  color: grey;
+}
+
+.img-adjuntos {
+  width: 700px !important;
+  height: 600px !important;
+  object-fit: scale-down !important;
+}
+
+.carousel-inner{
+  background-color: darkgray;
+}
+
 .content {
   height: calc(100% - 60px);
 }
@@ -1048,11 +1080,11 @@ div.primaryDivEdit>div:nth-child(2) {
   width: 80%;
 }
 
-.modal-footer{
+.modal-footer {
   justify-content: space-between !important;
 }
 
-#editar_borrar .btn{
+#editar_borrar .btn {
   margin: 2px;
 }
 

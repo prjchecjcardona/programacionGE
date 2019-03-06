@@ -470,11 +470,11 @@ function getPlaneacionesCalendarQuery($con, $zona)
     LEFT JOIN registros_x_planeacion rxp ON rxp.id_planeacion = plan.id_planeacion
     WHERE fecha_plan BETWEEN '2019-01-01' AND now() + interval '1 year' AND plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2";
 
-    $sql .= " ORDER BY plan.id_planeacion ASC";
-
     if ($zona != 'all') {
         $sql .= " AND zon.id_zona = $zona";
     }
+
+    $sql .= " ORDER BY plan.id_planeacion ASC";
 
     return executeQuery($con, $sql);
 }

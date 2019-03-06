@@ -61,8 +61,10 @@ $(function () {
     eventLimit: true, // allow "more" link when too many events
 
     eventRender: function eventRender(event, element, view) {
-      if(event.adjunto == 1){
-        element.find('.fc-title').prepend('<i class="fas fa-paperclip"></i>&nbsp');
+      if (event.adjunto == 1) {
+        element
+          .find(".fc-title")
+          .prepend('<i class="fas fa-paperclip"></i>&nbsp');
       }
       return (
         ["0", String(event.id_zona)].indexOf($("#calendarZona").val()) >= 0 && ["0", String(event.municipio)].indexOf($("#calendarMunicipio").val()) >=
@@ -78,8 +80,9 @@ $(function () {
   });
 
   //
-  $(window).resize(function () {
+  $(window).resize(() => {
     $("#calendar").fullCalendar("option", "height", getCalendarHeight());
+    widthCarousel();
   });
 
   //Adds showNone to calendar class when created.
@@ -116,14 +119,17 @@ function testCalendar() {
     type: "POST",
     url: "server/getPlaneacionesCalendar.php",
     data: {
-      getPlans: '',
+      getPlans: "",
       id_zona: id_zona
     },
     dataType: "json",
     success: function (response) {
-      $('#calendar').fullCalendar("addEventSource", response.no_ejecutados);
-      $('#calendar').fullCalendar("addEventSource", response.en_ejecucion_ejecutados);
-      $('#calendar').fullCalendar("addEventSource", response.en_planeacion);
+      $("#calendar").fullCalendar("addEventSource", response.no_ejecutados);
+      $("#calendar").fullCalendar(
+        "addEventSource",
+        response.en_ejecucion_ejecutados
+      );
+      $("#calendar").fullCalendar("addEventSource", response.en_planeacion);
       getTrabajoAdministrativo();
     }
   });
@@ -266,13 +272,13 @@ function eliminarPlaneacion(id_plan, type) {
         dataType: "json",
         success: function (response) {
           if (response.error == 0) {
-            id = $('#modalEventsCalendar').val();
-            $('#calendar').fullCalendar('removeEvents', id);
-            $('#modalEventsCalendar').modal('hide');
+            id = $("#modalEventsCalendar").val();
+            $("#calendar").fullCalendar("removeEvents", id);
+            $("#modalEventsCalendar").modal("hide");
             swalWithBootstrapButtons.fire(
-              'Eliminado!',
-              'Planeación eliminado con éxito',
-              'success'
+              "Eliminado!",
+              "Planeación eliminado con éxito",
+              "success"
             );
           } else {
             swalWithBootstrapButtons.fire(
@@ -313,15 +319,14 @@ function eliminarEjecucion(id_plan, type) {
         dataType: "json",
         success: function (response) {
           if (response.error == 0) {
-
             returnToEjecucion();
 
-            $(`#editarejec_${id_plan}`).css('display', 'none');
-            $(`#eliminarejec_${id_plan}`).css('display', 'none');
+            $(`#editarejec_${id_plan}`).css("display", "none");
+            $(`#eliminarejec_${id_plan}`).css("display", "none");
             swalWithBootstrapButtons.fire(
-              'Eliminado!',
+              "Eliminado!",
               "Ejecución eliminado con éxito",
-              'success'
+              "success"
             );
           } else {
             swalWithBootstrapButtons.fire(
@@ -342,25 +347,29 @@ function eliminarEjecucion(id_plan, type) {
 }
 
 function generateModal(event) {
-  $('#right').html('');
+  $("#right").html("");
   var header = document.getElementById("modalEventHeader");
-  var tacticos = $.map(event.tacticos, (v) => {
+  var tacticos = $.map(event.tacticos, v => {
     return v;
-  }).join(', ');
-
+  }).join(", ");
 
   header.style.cssText = `background-color: ${event.color} !important`;
-  $('#modalEventsCalendar').val(event.id);
-  $('#modalEventTitle').html(`<i id="adjunto_" class="fas fa-paperclip"></i> ${event.title}`);
-  $("#modalEventTitle").css('color', 'white');
+  $("#modalEventsCalendar").val(event.id);
 
+  if (event.adjunto == 0) {
+    $("#modalEventTitle").html(`${event.title}`);
+  } else {
+    $('#modalEventTitle').html(`<i class="fas fa-paperclip" ></i> ${event.title}`);
+  }
 
-  if(event.color == '#a2a1a0' || event.color == 'blue'){
-    $('#modalEventDescription #left').html(event.description);
-    $('#modalEventsCalendar>.modal-dialog').css('width', '45%');
-  }else{
-    $('#modalEventsCalendar>.modal-dialog').css('width', '75%');
-    $('#left').html(
+  $("#modalEventTitle").css("color", "white");
+
+  if (event.color == "#a2a1a0" || event.color == "blue") {
+    $("#modalEventDescription #left").html(event.description);
+    $("#modalEventsCalendar>.modal-dialog").css("width", "45%");
+  } else {
+    $("#modalEventsCalendar>.modal-dialog").css("width", "75%");
+    $("#left").html(
       `<ul>
         <li>Fecha: ${event.descripcion.fecha}</li>  
         <li>Jornada: ${event.descripcion.jornada}</li>  
@@ -383,17 +392,18 @@ function generateModal(event) {
     );
   }
 
-  if(event.color == '#269226' || event.color == '#edbe00'){
+  if (event.color == "#269226" || event.color == "#edbe00") {
+    $("#right").show();
+    $("#left").css("width", "48%");
 
-    $('#right').show();
-    $('#left').css('width', '48%');
-
-    var requisitos = $.map(event.requisitos, (v) => {
+    var requisitos = $.map(event.requisitos, v => {
       return v;
-    }).join(' ');
+    }).join(" ");
 
-    $('#right').html(
-      `<i class="${event.icon}" style="font-size: 3em;color: ${event.color};align-self: center;"></i>
+    $("#right").html(
+      `<i class="${event.icon}" style="font-size: 3em;color: ${
+        event.color
+      };align-self: center;"></i>
       <div>
         <div class="row">
           <h4>Hora de Inicio: </h4>
@@ -424,19 +434,28 @@ function generateModal(event) {
         </div>
       </div>`
     );
-  }else{
-    $('#right').hide();
-    $('#left').css('width', '100%');
+
+    if (requisitos == "") {
+      $('#requisitosPlan').hide();
+    }
+  } else {
+    $("#right").hide();
+    $("#left").css("width", "100%");
   }
 
-  var ejec = '';
-  if(event.valid_ejec){
-    ejec = 
-      `<button type="button" id="editarejec_${event.id}" class="btn btn-success"><i class="fas fa-edit"></i> Ejecución</button>
-        <button type="button" id="eliminarejec_${event.id}" onclick=eliminarEjecucion(${event.id},1) class="btn btn-danger"><i class="fas fa-trash-alt"></i> Ejecución</button>`;
+  var ejec = "";
+  if (event.valid_ejec) {
+    ejec = `<button type="button" id="editarejec_${
+      event.id
+    }" class="btn btn-success"><i class="fas fa-edit"></i> Ejecución</button>
+        <button type="button" id="eliminarejec_${
+          event.id
+        }" onclick=eliminarEjecucion(${
+      event.id
+    },1) class="btn btn-danger"><i class="fas fa-trash-alt"></i> Ejecución</button>`;
 
-    if(event.tipo_gestion == 1){
-      $('#right').append(
+    if (event.tipo_gestion == 1) {
+      $("#right").append(
         `<hr>
         <div class="accordion" id="totalAsistentes">
           <div class="card">
@@ -465,43 +484,80 @@ function generateModal(event) {
           </div>
         </div>`
       );
-  
+
       var sum = 0;
       event.total_participantes.forEach(element => {
         sum += element.total;
-        $('#totalBody').append(
+        $("#totalBody").append(
           `<tr>
             <td>${element.tipo}</td>
             <td>${element.total}</td>
           </tr>`
-        )
+        );
       });
-  
-      $('#totalBody').append(
+
+      $("#totalBody").append(
         `<tr>
           <td>Total</td>
           <td>${sum}</td>
         </tr>`
-      )
+      );
     }
   }
 
-  if(event.color == '#a2a1a0' || event.color == 'blue'){
-    $('#modalEventsCalendar .modal-footer').html(
+  $('#right').append(
+    `<div id="adjuntos"></div>`
+  );
+
+  if (event.adjunto == 1) {
+    if (event.tipo_gestion == 2) {
+      $('#right').append(
+        `<div id="adjuntos">
+          <div>
+            <i class="fas fa-folder" onclick="generateCarousel(1)"></i>
+            <h3>Actas</h3>
+          </div>
+        </div>`
+      );
+    } else {
+      if (event.evidencias != "") {
+        $('#adjuntos').append(
+          ` <div>
+              <i class="fas fa-folder" onclick="generateCarousel(2)"></i>
+              <h3>Evidencias</h3>
+            </div>`
+        );
+      }
+
+      if (event.asistencias != "") {
+        $('#adjuntos').append(
+          ` <div>
+              <i class="fas fa-folder" onclick="generateCarousel(3)"></i>
+              <h3>Asistencias</h3>
+            </div>`
+        );
+      }
+    }
+  }
+
+  if (event.color == "#a2a1a0" || event.color == "blue") {
+    $("#modalEventsCalendar .modal-footer").html(
       `<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>`
     );
-  }else{
-    $('#modalEventsCalendar .modal-footer').html(
+  } else {
+    $("#modalEventsCalendar #footer-detail").html(
       `<div id="editar_borrar">
       <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Planeación</button>
-      <button type="button" onclick=eliminarPlaneacion(${event.id},0) class="btn btn-danger"><i class="fas fa-trash-alt"></i> Planeación</button>
+      <button type="button" onclick=eliminarPlaneacion(${
+        event.id
+      },0) class="btn btn-danger"><i class="fas fa-trash-alt"></i> Planeación</button>
       ${ejec}
       </div>
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>`
     );
   }
 
-  $('#modalEventsCalendar').modal();
+  $("#modalEventsCalendar").modal();
 }
 
 function getTemasCalendar() {
@@ -523,13 +579,122 @@ function getTemasCalendar() {
   });
 }
 
-function returnToEjecucion(){
-  var id = $('#modalEventsCalendar').val();
-  var event = $('#calendar').fullCalendar('clientEvents', id);
-  event[0].color = '#edbe00';
-  event[0].icon = 'fas fa-minus-circle'
+function generateCarousel(type) {
+  var is_img = true;
+  let id = $('#modalEventsCalendar').val();
+  let resource = $('#calendar').fullCalendar('clientEvents', id);
+  
+  if (type == 1) {
+    let img = resource[0].actas;
+    img.forEach(element => {
+      if(element.split('.').pop().slice(0, 3) == 'pdf'){
+        $('.carousel-inner').html(
+          `<iframe src="${element.substr(3)}" class="img-adjuntos" frameborder="0" width="655" height="550" marginheight="0" marginwidth="0" id="pdf"  
+          ></iframe>`
+        )
+        is_img = false;
+      }else{
+        $('.carousel-inner').html(
+          `<div class="carousel-item active">
+            <img src="${element.substr(3)}" class="d-block w-100 img-adjuntos" alt="">
+          </div>`
+        );
+      }
+    });
+  }
+
+  if(type != 1){
+
+    $('.carousel-inner').html('');
+
+    if(type == 2){
+      var i = 0;
+      let img = resource[0].evidencias;
+
+      img.forEach(element => {
+        if(i <= 0){
+          $('.carousel-inner').append(
+            `<div class="carousel-item active">
+              <img src="${element.substr(3)}" class="d-block w-100 img-adjuntos" alt="">
+            </div>`
+          );
+          i++;
+        }else{
+          $('.carousel-inner').append(
+            `<div class="carousel-item">
+              <img src="${element.substr(3)}" class="d-block w-100 img-adjuntos" alt="">
+            </div>`
+          );
+        }
+      });
+
+    }else{
+      let img = resource[0].asistencias;
+
+      img.forEach(element => {
+        if(element.split('.').pop().slice(0, 3) == 'pdf'){
+          $('.carousel-inner').html(
+            `<iframe src="${element.substr(3)}" class="img-adjuntos" frameborder="0" width="655" height="550" marginheight="0" marginwidth="0" id="pdf"  
+            ></iframe>`
+          )
+          is_img = false;
+        }else{
+          $('.carousel-inner').append(
+            `<div class="carousel-item active">
+              <img src="${element.substr(3)}" class="d-block w-100 img-adjuntos" alt="">
+            </div>`
+          );
+        }
+      })
+    }
+
+    if(is_img){
+      $('.carousel-control-prev').show();
+      $('.carousel-control-next').show();
+    }else{
+      $('.carousel-control-prev').hide();
+      $('.carousel-control-next').hide();
+    }
+  }
+
+
+  showImages();
+}
+
+function showImages() {
+  $('#right, #left').hide();
+  $('.carousel').removeClass('showNone');
+  widthCarousel();
+  $('#footer-detail').hide();
+  $('#footer-image').removeClass('showNone');
+}
+
+function removeImages() {
+  $('#right, #left').show();
+  $('.carousel').addClass('showNone');
+  $('#footer-detail').show();
+  $('#footer-image').addClass('showNone');
+}
+
+function returnToEjecucion() {
+  var id = $("#modalEventsCalendar").val();
+  var event = $("#calendar").fullCalendar("clientEvents", id);
+  event[0].color = "#edbe00";
+  event[0].icon = "fas fa-minus-circle";
   event[0].valid_ejec = false;
-  event[0].requisitos.push('<li> Registrar la ejecución de la actividad </li>');
-  $('#calendar').fullCalendar('updateEvent', event[0]);
+  event[0].requisitos.push("<li> Registrar la ejecución de la actividad </li>");
+  $("#calendar").fullCalendar("updateEvent", event[0]);
   generateModal(event[0]);
+}
+
+function widthCarousel() {
+  var body_width = $('.modal-body').width();
+  var body_height = $('.modal-body').height();
+
+  var imgs = document.getElementsByClassName('img-adjuntos');
+
+  for (let i = 0; i < imgs.length; i++) {
+    let element = imgs[i];
+    element.style.cssText = `width: ${body_width}px !important; height: ${body_height}px !important`;
+  }
 }
