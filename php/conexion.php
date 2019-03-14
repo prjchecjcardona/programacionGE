@@ -20,12 +20,11 @@ $host = "127.0.0.1"; */
 //pgsql:host=$host; port=5432;dbname = $database", $uid, $pwd
 
 //establecer la conexión
-$con = new PDO( "pgsql:host=$host;port=5432;dbname=$database;user=$uid;password=$pwd");
-if( $con ) {
-	
-}else{
-	echo "Conexión no se pudo establecer.<br />";
-	// die( print_r( sqlsrv_errors(), true));
+try {
+	$con = new PDO( "pgsql:host=$host;port=5432;dbname=$database;user=$uid;password=$pwd");
+    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Falló la conexión: ' . $e->getMessage();
 }
 
 
