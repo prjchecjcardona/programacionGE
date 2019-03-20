@@ -614,7 +614,7 @@ function getPlaneacionesHoy() {
           }
 
           $('#plan_hoy').append(
-            `<div class="card text-center cardPlanHoy">
+            `<div class="card text-center cardPlanHoy">Ejecucion
               <div class="card-header">
                 ${element.municipio} - ${element.nombre} - ${element.zonas}
               </div>
@@ -692,5 +692,6 @@ function checkInvitado(){
       200,
       "linear"
     );
+    $('.edit').remove();
   }
 }

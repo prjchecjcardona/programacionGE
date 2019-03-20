@@ -14,8 +14,7 @@
   <link rel="stylesheet" href="css/fileinput.min.css">
   <link rel="stylesheet" href="css/fileinput-rtl.min.css">
   <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/file-upload-with-preview@3.2.7/dist/file-upload-with-preview.min.css">  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css">
   <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="css/newStyle.css">
   <link rel="icon" href="img/chec-logo.png">
@@ -187,7 +186,8 @@
                         <option value="" disabled>Seleccione</option>
                       </select>
                     </div>
-                    <label for="divSubtemas">Seleccione el grupo de subtemas por tema seleccionado <label for="selectCompetencia" class="obligatorio">*</label></label>
+                    <label for="divSubtemas">Seleccione el grupo de subtemas por tema seleccionado <label for="selectCompetencia"
+                        class="obligatorio">*</label></label>
                     <div id="divSubtemas">
                       <ul></ul>
                     </div>
@@ -201,7 +201,25 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="selectTactico">Tactico <label for="selectTactico" class="obligatorio">*</label></label>
+                      <label for="tipoEjecucion">Los tacticos son de cercanía <label class="obligatorio" for="tipoEjecucion">*</label></label>
+                      <div id="tipoEjecucion" class="row formRows">
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                          <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radioCercaniaSi" name="esCercania"
+                              required value="1">
+                            <label class="custom-control-label" for="radioCercaniaSi">Si</label>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                          <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radioCercaniaNo" name="esCercania"
+                              required value="0" checked>
+                            <label class="custom-control-label" for="radioCercaniaNo">No</label>
+                          </div>
+                        </div>
+                      </div>
+                      
                       <select class="custom-select required" name="tactico[]" id="selectTactico" aria-describedby="selectHelpTactico"
                         multiple disabled>
                         <option disabled>Seleccione</option>
@@ -373,7 +391,8 @@
                     class="custom-select required" required>
                     <option value="" selected>Seleccione</option>
                   </select>
-                  <a id="createEntidadContacto" data-toggle="modal" data-target="#modalRegistrarEntidad"><i class="fas fa-plus-square" style="font-size: 41px; color: #28a745"></i></a>
+                  <a id="createEntidadContacto" data-toggle="modal" data-target="#modalRegistrarEntidad"><i class="fas fa-plus-square"
+                      style="font-size: 41px; color: #28a745"></i></a>
                 </div>
               </div>
             </div>
@@ -473,11 +492,12 @@
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
   <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-  <script src="https://unpkg.com/file-upload-with-preview"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
   <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/messages/messages.es-es.js" type="text/javascript"></script>
+  <script src="https://unpkg.com/file-upload-with-preview@3.2.7/dist/file-upload-with-preview.min.js"></script>
   <script src="js/registrarPlaneacionG.js"></script>
 </body>
 

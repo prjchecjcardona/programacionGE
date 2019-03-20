@@ -66,7 +66,12 @@ if (isset($_POST)) {
             $cargo = "null";
         }
 
-        $json = $api->insertContacto($cedula, $nombres, $apellidos, $email, $telefono, $celular, $cargo, $entidad);
+        if (isset($_POST['id_contacto'])) {
+            $id_contacto = $_POST['id_contacto'];
+            $json = $api->editarContactoQuery($con, $id_contacto, $cedula, $nombres, $apellidos, $email, $telefono, $celular, $cargo, $entidad);
+        }else {
+            $json = $api->insertContacto($cedula, $nombres, $apellidos, $email, $telefono, $celular, $cargo, $entidad);
+        }
     
         //$query = $api->insertContactosXEntidad($cedula, $entidad);
     }

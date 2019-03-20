@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+  <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="css/newStyle.css">
+  <link rel="icon" href="img/chec-logo.png">
+  <title>Editar</title>
+</head>
+
+<body>
+  <main>
+
+    <!-- NAVBAR PART -->
+    <ul class="nav justify-content-end" id="navGE">
+      <li class="nav-item imgsNav">
+        <img src="img/logo-min.png" alt="" class="navImg">
+        <img src="img/Universidad-de-manizales.png" alt="" class="navImg">
+      </li>
+
+      <li class="nav-item">
+
+      </li>
+
+      <li class="nav-item" id="lastSideNav">
+        <a id="homeBtn" class="nav-link"><i class="fas fa-home"></i></a>
+        <a class="nav-link" href="banco/"><i class="fas fa-book"></i></a>
+      </li>
+    </ul>
+    <!-- NAVBAR PART -->
+
+    <div id="divEditar">
+      <div class="row">
+          <h5><span id="tipo_gestion"></span></h5>
+      </div>
+      <form id="editarEjecucion">
+        <div id="modificaciones">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                      aria-expanded="true" aria-controls="collapseOne">
+                      Fecha - Hora de inicio y finalización
+                    </button>
+                  </h5>
+                </div>
+  
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="primaryDivEdit">
+                          <div>
+                            <h5>Fecha: &nbsp;<span class="span_edit" id="fecha_ejec"></span></h5>
+                          </div>
+                          <div>
+                            <input class="required" id="datepicker" placeholder="Fecha" name="fecha" readonly />
+                            <a class="btn btn-success guardarModificacion" onclick="updateEjecucion(this)">Guardar</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="primaryDivEdit">
+                          <div>
+                            <h5>Hora de inicio: &nbsp;<span class="span_edit" id="hora_inicio"></span></h5>
+                          </div>
+                          <div>
+                            <input class="required" id="horaInicio" name="hora_inicio" />
+                            <a class="btn btn-success guardarModificacion" onclick="updateEjecucion(this)">Guardar</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="primaryDivEdit">
+                          <div>
+                            <h5>Hora de finalización: &nbsp;<span class="span_edit" id="hora_fin"></span></h5>
+                          </div>
+                          <div>
+                            <input class="required" id="horaFin" name="hora_fin" />
+                            <a class="btn btn-success guardarModificacion" onclick="updateEjecucion(this)">Guardar</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card" id="cardPoblacion">
+                <div class="card-header" id="headingThree">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"
+                      aria-expanded="false" aria-controls="collapseThree">
+                      Conteo de tipo y caracteristicas de población
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6 col-lg-6">
+                        <table class="table">
+                          <thead class="thead-light">
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Tipo de población</th>
+                              <th scope="col">Total</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Niños</td>
+                              <td><input class="form-control" type="number" name="ninios" id="ninios" value="0"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>Jovenes</td>
+                              <td><input class="form-control" type="number" name="jovenes" id="jovenes" value="0"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>Adultos</td>
+                              <td><input class="form-control" type="number" name="adultos" id="adultos" value="0"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-sm-12 col-md-6 col-lg-6">
+                        <table class="table">
+                          <thead class="thead-light">
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Caracteristicas de población</th>
+                              <th scope="col">Total</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Comunidad Afro</td>
+                              <td><input class="form-control" type="number" name="afro" id="afro" value="0"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>Comunidad Indígena</td>
+                              <td><input class="form-control" type="number" name="indi" id="indi" value="0"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>En situación de desplazamiento</td>
+                              <td><input class="form-control" type="number" name="sdes" id="sdes" value="0"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>En situación de discapacidad</td>
+                              <td><input class="form-control" type="number" name="sdis" id="sdis" value="0"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">5</th>
+                              <td>Ninguno</td>
+                              <td><input class="form-control" type="number" name="ninguno" id="ninguno" value="0"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <a class="btn btn-success" id="guardarPoblacion">Guardar</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour"
+                      aria-expanded="false" aria-controls="collapseFour">
+                      Tipo de actividad - Descripción del resultado
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6 col-lg-4" id="tipEjecucion">
+                        <div class="primaryDivEdit">
+                          <div>
+                            <h5>Tipo de ejecución: &nbsp;<span class="span_edit" id="tipoEjecucion"></span></h5>
+                          </div>
+                          <div>
+                            <div id="tipoEjecucion" class="row formRows">
+                              <div class="col-lg-6 col-md-12 col-sm-12">
+                                <div class="custom-control custom-radio">
+                                  <input type="radio" class="custom-control-input" id="radioEvento" name="tipo_ejecucion"
+                                    required value="Evento">
+                                  <label class="custom-control-label" for="radioEvento">Evento</label>
+                                </div>
+                              </div>
+  
+                              <div class="col-lg-6 col-md-12 col-sm-12">
+                                <div class="custom-control custom-radio">
+                                  <input type="radio" class="custom-control-input" id="radioProceso" name="tipo_ejecucion"
+                                    required value="Proceso">
+                                  <label class="custom-control-label" for="radioProceso">Proceso</label>
+                                </div>
+                              </div>
+                            </div>
+                            <a class="btn btn-success guardarModificacion" onclick="updateEjecucion(this)">Guardar</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6 col-lg-4" id="resEjecucion">
+                        <div class="primaryDivEdit">
+                          <div>
+                            <h5>Resultado de la ejecución: &nbsp;<span class="span_edit" id="resultadoEjec"></span></h5>
+                          </div>
+                          <div>
+                            <div id="resultadoEjecucion" class="row formRows">
+                              <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="custom-control custom-radio">
+                                  <input type="radio" class="custom-control-input" id="radioEnProceso" name="resultado_ejecucion"
+                                    required value="1">
+                                  <label class="custom-control-label" for="radioEnProceso">En proceso</label>
+                                </div>
+                              </div>
+  
+                              <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="custom-control custom-radio">
+                                  <input type="radio" class="custom-control-input" id="radioEfectivo" name="resultado_ejecucion"
+                                    required value="2">
+                                  <label class="custom-control-label" for="radioEfectivo">Efectivo</label>
+                                </div>
+                              </div>
+  
+                              <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="custom-control custom-radio">
+                                  <input type="radio" class="custom-control-input" id="radioNoEfectivo" name="resultado_ejecucion"
+                                    required value="3">
+                                  <label class="custom-control-label" for="radioNoEfectivo">No efectivo</label>
+                                </div>
+                              </div>
+                            </div>
+                            <a class="btn btn-success guardarModificacion" onclick="updateEjecucion(this)">Guardar</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6 col-lg-4" id="desEjecucion">
+                        <div class="primaryDivEdit">
+                          <div>
+                            <h5>Descripción de la ejecución: <br>
+                            </h5>
+                          </div>
+                          <div>
+                            <div class="row formRows">
+                              <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                  <textarea class="form-control" id="desResultadoEjecucion" rows="3" name="descripcion_resultado"
+                                    style="margin-top: 8px"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <a class="btn btn-success guardarModificacion" onclick="updateEjecucion(this)">Guardar</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingContactos">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseContactos"
+                      aria-expanded="false" aria-controls="collapseContactos">
+                      Contactos
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseContactos" class="collapse" aria-labelledby="headingContactos" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Nombre Completo</th>
+                          <th scope="col">Correo</th>
+                          <th scope="col">Celular</th>
+                          <th scope="col">Cargo</th>
+                          <th scope="col">Opciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="col-lg-12 col-md-12 col-sm-12 colBtnContacto">
+        <button id="btnRegresar" type="button" onclick="checkInputs()" class="btn btn-danger">Regresar</button>
+        <button id="btnLimpiar" type="button" onclick="limpiarDatos()" class="btn btn-success">Limpiar</button>
+      </div>
+    </div>
+
+    <div class="modal fade" id="editarContactoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #28a745 !important;"
+            <h5 class="modal-title" id="exampleModalLongTitle">Editar Contacto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="formCrearContacto" action="">
+              <div class="row rowForms">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                  <label for="nombreContacto">Nombres<label class="obligatorio">*</label></label>
+                  <input type="text" placeholder="Nombres" id="nombreContacto" name="nombres" aria-label="Nombres del contacto"
+                    class="form-control required" required>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                  <label for="apellidoContacto">Apellidos<label class="obligatorio">*</label></label>
+                  <input type="text" placeholder="Apellidos" id="apellidoContacto" name="apellidos" aria-label="Apellidos del contacto"
+                    class="form-control required" required>
+                </div>
+              </div>
+              <div class="row rowForms">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <label for="cedulaContacto">Cédula</label>
+                  <input type="text" placeholder="Cédula" id="cedulaContacto" name="cedula" aria-label="Cedula del contacto"
+                    class="form-control ">
+                </div>
+              </div>
+              <div class="row rowForms">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                  <label for="TelefonoContacto">Telefono</label>
+                  <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefono" aria-label="Telefono del contacto"
+                    class="form-control ">
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                  <label for="celularContacto">Celular</label>
+                  <input type="text" placeholder="Celular" id="celularContacto" name="celular" aria-label="Celular del contacto"
+                    class="form-control ">
+                </div>
+              </div>
+              <div class="row rowForms">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <label for="correoContacto">Correo electronico</label>
+                  <input type="text" placeholder="Correo" id="correoContacto" name="email" aria-label="Correo electronico del contacto"
+                    class="form-control ">
+                </div>
+              </div>
+              <div class="row rowForms">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <label for="entidadContacto">Entidad<label class="obligatorio">*</label></label>
+                  <div id="rowEntidadContacto">
+                    <select type="text" placeholder="Entidad" id="entidadContacto" name="entidad" aria-label="Entidad del contacto"
+                      class="custom-select required" required>
+                      <option value="" selected>Seleccione</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row rowForms">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <label for="cargoContacto">Cargo</label>
+                  <input type="text" placeholder="Cargo" id="cargoContacto" name="cargo" aria-label="Cargo del contacto"
+                    class="form-control">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="cancelarEditarContacto" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="guardarEditarContacto" class="btn btn-success">Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/messages/messages.es-es.js" type="text/javascript"></script>
+  <script src="js/editarEjecucion.js"></script>
+</body>
+
+</html>

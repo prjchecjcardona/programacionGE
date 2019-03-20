@@ -296,13 +296,26 @@ function getFicherosQuery($con)
     return executeQuery($con, $sql);
 }
 
-function getTacticosQuery($con, $estrat)
+function getTacticosQuery($con, $estrat, $cercania)
 {
     $sql = "SELECT id_tactico, nombre_tactico
     FROM tactico
     WHERE id_estrategia = $estrat
     AND id_tactico NOT IN(2,8,9,13,16,17,18,20,
-    21,23,24,30,31,32,33,34,3,15)";
+    21,23,24,30,31,32,33,34,3,15)
+    AND cercania = $cercania";
+
+    return executeQuery($con, $sql);
+}
+
+function getTacticosCercania($con, $estrat)
+{
+    $sql = "SELECT id_tactico, nombre_tactico
+    FROM tactico
+    WHERE id_estrategia = $estrat
+    AND id_tactico NOT IN(2,8,9,13,16,17,18,20,
+    21,23,24,30,31,32,33,34,3,15)
+    AND cercania = true";
 
     return executeQuery($con, $sql);
 }
@@ -352,6 +365,14 @@ function eliminarEjecucionQuery($con, $id_plan)
     $sql = "DELETE FROM tipo_poblacion_x_ejecucion tpxe WHERE tpxe.id_ejecucion IN ($sqlbase);
     DELETE FROM caracteristicas_poblacion_x_ejecucion cpxe WHERE cpxe.id_ejecucion IN ($sqlbase);
     DELETE FROM ejecucion WHERE id_ejecucion IN ($sqlbase);";
+
+    return eliminateQuery($con, $sql);
+}
+
+function eliminarContactoQuery($con, $id_contacto)
+{
+    $sql = "DELETE FROM contactos_x_planeacion WHERE id_contacto = $id_contacto;
+    DELETE FROM contacto WHERE id_contacto = $id_contacto;";
 
     return eliminateQuery($con, $sql);
 }
@@ -434,6 +455,25 @@ function getTacticosPorEstrategiaCoberturaQuery($con, $estrategia)
 function getTemasPorComportamientoCoberturaQuery($con, $competencia)
 {
     $sql = "SELECT tema FROM cobertura WHERE competencia = '$competencia'";
+
+    return executeQuery($con, $sql);
+}
+
+function getPoblacionXEjecucionQuery($con, $id_plan) {
+
+    $sql = "SELECT id_tipo, total
+    FROM tipo_poblacion_x_ejecucion tpxe
+    JOIN ejecucion eje ON eje.id_ejecucion = tpxe.id_ejecucion
+    WHERE eje.id_planeacion = $id_plan";
+
+    return executeQuery($con, $sql);
+}
+
+function getCaracteristicasXEjecucionQuery($con, $id_plan) {
+    $sql = "SELECT id_caracteristica, total
+    FROM caracteristicas_poblacion_x_ejecucion cpxe
+    JOIN ejecucion eje ON eje.id_ejecucion = cpxe.id_ejecucion
+    WHERE eje.id_planeacion = $id_plan";
 
     return executeQuery($con, $sql);
 }
@@ -559,14 +599,41 @@ function getPlaneacionesEjecutadosOEnEjecucionQuery($con, $zona)
 
 function getDetalleEjecucionQuery($con, $id_plan)
 {
-    $sql = "SELECT DISTINCT ejec.id_ejecucion, fecha, hora_inicio, hora_fin, tipo_ejecucion, resultado_ejecucion, descripcion_resultado, tipo, tpxe.total as total_tipo, caracteristica, cpxe.total as total_caract
+    $sql = "SELECT DISTINCT ejec.id_ejecucion, ejec.fecha, hora_inicio, hora_fin, tipo_ejecucion, resultado_ejecucion, descripcion_resultado, tipo_gestion, foc.id_tipo_gestion
     FROM ejecucion ejec
     LEFT JOIN resultado_ejecucion rejec ON rejec.id_resultado_ejecucion = ejec.id_resultado_ejecucion
-    JOIN tipo_poblacion_x_ejecucion tpxe ON tpxe.id_ejecucion = ejec.id_ejecucion
-    JOIN tipo_poblacion tp ON tp.id_tipo = tpxe.id_tipo
-    JOIN caracteristicas_poblacion_x_ejecucion cpxe ON cpxe.id_ejecucion = ejec.id_ejecucion
-    JOIN caracteristicas_poblacion cp ON cp.id_caracteristica = cpxe.id_caracteristica
+    JOIN planeacion plan ON plan.id_planeacion = ejec.id_planeacion
+    JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion 
+    LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
+    WHERE plan.id_planeacion = $id_plan";
+
+    return executeQuery($con, $sql);
+}
+
+function editarContactoQuery($con, $id_contacto, $cedula, $nombres, $apellidos, $email, $telefono, $celular, $cargo, $entidad)
+{
+    $sql = "UPDATE public.contacto
+	SET cedula='$cedula', nombres='$nombres', apellidos='$apellidos', correo='$email', telefono='$telefono', celular='$telefono', cargo='$cargo', id_entidad=$entidad
+    WHERE id_contacto = $id_contacto; ";
+    
+    return executeQuery($con, $sql);
+}
+
+function getContactosXPlaneacionQuery($con, $id_plan) 
+{
+    $sql = "SELECT con.id_contacto, nombres, apellidos, correo, celular, cargo
+    FROM contacto con
+    JOIN contactos_x_planeacion cxp ON con.id_contacto = cxp.id_contacto
     WHERE id_planeacion = $id_plan";
+
+    return executeQuery($con, $sql);
+}
+
+function getContactoEditarQuery($con, $id_contacto) {
+    $sql = "SELECT con.*, ent.nombre_entidad
+    FROM contacto con
+    LEFT JOIN entidades ent ON ent.id_entidad = con.id_entidad
+    WHERE con.id_contacto = $id_contacto";
 
     return executeQuery($con, $sql);
 }
@@ -959,6 +1026,24 @@ function insertCaractPoblacionXEjecucionQuery($con, $id_caract, $id_ejec, $total
     $sql = "INSERT INTO public.caracteristicas_poblacion_x_ejecucion(
     id_caracteristica, id_ejecucion, total)
     VALUES ($id_caract, $id_ejec, $total)";
+
+    return insertQuery($con, $sql);
+}
+
+/* UPDATES ------------------------------*/
+
+function editarEjecucionQuery($con, $id_ejec, $column_name, $arg)
+{
+    $sql = "UPDATE ejecucion SET $column_name = '$arg' 
+    WHERE id_planeacion = $id_ejec";
+
+    return insertQuery($con, $sql);
+}
+
+function editarPlaneacionQuery($con, $id_ejec, $column_name, $arg)
+{
+    $sql = "UPDATE ejecucion SET $column_name = '$arg' 
+    WHERE id_planeacion = $id_ejec";
 
     return insertQuery($con, $sql);
 }

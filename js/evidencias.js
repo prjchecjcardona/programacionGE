@@ -1,8 +1,8 @@
 $(function() {});
 
-let uploadEF = new FileUploadWithPreview("evidenciasFotograficas");
-let uploadAsis = new FileUploadWithPreview("evidenciasAsistencia");
-let uploadActas = new FileUploadWithPreview("actasReunion");
+let uploadEF = new FileUploadWithPreview.default("evidenciasFotograficas");
+let uploadAsis = new FileUploadWithPreview.default("evidenciasAsistencia");
+let uploadActas = new FileUploadWithPreview.default("actasReunion");
      
 function uploadAsistencias() {
   let form = new FormData();

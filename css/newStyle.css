@@ -256,7 +256,7 @@ a {
 
 #formCrearContacto,
 #formRegistrarEntidad {
-  padding: 0% 15%;
+  padding: 0% 5%;
   margin-bottom: 30px;
 }
 
@@ -351,7 +351,6 @@ a {
 
 .card-body .btn {
   color: black !important;
-  border: solid green 2px;
   transition: 0.3s;
   font-weight: 900;
 }
@@ -454,11 +453,11 @@ a {
   background-color: #269226;
 }
 
-.card-body .btn:hover {
+/* .card-body .btn:hover {
   color: #fff !important;
   background-color: green;
   border: solid white 2px;
-}
+} */
 
 #ejecutado,
 .ejecutado {
@@ -1102,6 +1101,10 @@ div.primaryDivEdit>div:nth-child(1) p {
   padding: 10px;
 }
 
+#divEditar {
+  height: calc(100% - 60px);
+  padding: 100px;
+}
 
 #modificaciones h5>span {
   background-color: green;
@@ -1533,9 +1536,9 @@ div#chart1,
 }
 
 @media screen and (min-width: 1172px) {
-  .gj-datepicker {
+  /* .gj-datepicker {
     width: 85% !important;
-  }
+  } */
 
   #colDatepicker {
     display: flex;

@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
   getMunicipiosXZ($("#calendarZona").val());
   getEstrategiasCalendar();
   getTemasCalendar();
@@ -38,7 +38,7 @@ $(function () {
     customButtons: {
       detalles: {
         text: "Indicador Calendario",
-        click: function () {
+        click: function() {
           $("#modalCalendarDetails").modal("toggle");
         }
       },
@@ -67,14 +67,19 @@ $(function () {
           .prepend('<i class="fas fa-paperclip"></i>&nbsp');
       }
       return (
-        ["0", String(event.id_zona)].indexOf($("#calendarZona").val()) >= 0 && ["0", String(event.municipio)].indexOf($("#calendarMunicipio").val()) >=
-        0 && ["0", String(event.tema)].indexOf($("#calendarTema").val()) >= 0 && ["0", String(event.estrategia)].indexOf(
+        ["0", String(event.id_zona)].indexOf($("#calendarZona").val()) >= 0 &&
+        ["0", String(event.municipio)].indexOf($("#calendarMunicipio").val()) >=
+          0 &&
+        ["0", String(event.tema)].indexOf($("#calendarTema").val()) >= 0 &&
+        ["0", String(event.estrategia)].indexOf(
           $("#calendarEstrategia").val()
-        ) >= 0 && ["0", String(event.tipo_gestion)].indexOf($("#calendarTipoG").val()) >=
-        0 && ["0", String(event.status)].indexOf($("#estadoPlaneacion").val()) >= 0
+        ) >= 0 &&
+        ["0", String(event.tipo_gestion)].indexOf($("#calendarTipoG").val()) >=
+          0 &&
+        ["0", String(event.status)].indexOf($("#estadoPlaneacion").val()) >= 0
       );
     },
-    eventClick: function (event, jsEvent, view) {
+    eventClick: function(event, jsEvent, view) {
       generateModal(event);
     }
   });
@@ -108,9 +113,9 @@ function getParam(param) {
   param = param.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
   var regex = new RegExp("[\\?&]" + param + "=([^&#]*)");
   var results = regex.exec(location.search);
-  return results === null ?
-    "" :
-    decodeURIComponent(results[1].replace(/\+/g, " "));
+  return results === null
+    ? ""
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 function testCalendar() {
@@ -123,7 +128,7 @@ function testCalendar() {
       id_zona: id_zona
     },
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       $("#calendar").fullCalendar("addEventSource", response.no_ejecutados);
       $("#calendar").fullCalendar(
         "addEventSource",
@@ -141,18 +146,18 @@ function getTrabajoAdministrativo() {
     url: "server/getTAdministrativos.php",
     data: "",
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       $("#calendar").fullCalendar("addEventSource", response);
       $("#calendar").fullCalendar("rerenderEvents");
     },
-    complete: function () {
+    complete: function() {
       $("#calendar").fadeIn();
       $("#calendar").removeClass("showNone");
       $("#loaderCalendar").fadeOut();
 
       $(
         "#calendarZona, #calendarMunicipio, #calendarEstrategia, #calendarTema, #calendarTipoG, #estadoPlaneacion"
-      ).on("change", function () {
+      ).on("change", function() {
         $("#calendar").fullCalendar("rerenderEvents");
       });
 
@@ -196,7 +201,7 @@ function getMunicipiosXZ(zona) {
       zona: zona
     },
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       $("#calendarMunicipio").html(`<option value="0" selected>Todos</option>`);
       response.forEach(element => {
         $("#calendarMunicipio").append(
@@ -215,7 +220,7 @@ function getEstrategiasCalendar() {
     url: "server/getEstrategias.php",
     data: "",
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       $("#calendarEstrategia").html(
         `<option value="0" selected>Todos</option>`
       );
@@ -236,7 +241,7 @@ function getTacticosXEstrategias(estrat) {
     url: "server/getEstrategias.php",
     data: "",
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       $("#calendarEstrategia").html(
         `<option value="0" selected>Todos</option>`
       );
@@ -270,7 +275,7 @@ function eliminarPlaneacion(id_plan, type) {
           type: type
         },
         dataType: "json",
-        success: function (response) {
+        success: function(response) {
           if (response.error == 0) {
             id = $("#modalEventsCalendar").val();
             $("#calendar").fullCalendar("removeEvents", id);
@@ -317,7 +322,7 @@ function eliminarEjecucion(id_plan, type) {
           type: type
         },
         dataType: "json",
-        success: function (response) {
+        success: function(response) {
           if (response.error == 0) {
             returnToEjecucion();
 
@@ -359,7 +364,9 @@ function generateModal(event) {
   if (event.adjunto == 0) {
     $("#modalEventTitle").html(`${event.title}`);
   } else {
-    $('#modalEventTitle').html(`<i class="fas fa-paperclip" ></i> ${event.title}`);
+    $("#modalEventTitle").html(
+      `<i class="fas fa-paperclip" ></i> ${event.title}`
+    );
   }
 
   $("#modalEventTitle").css("color", "white");
@@ -436,7 +443,7 @@ function generateModal(event) {
     );
 
     if (requisitos == "") {
-      $('#requisitosPlan').hide();
+      $("#requisitosPlan").hide();
     }
   } else {
     $("#right").hide();
@@ -445,14 +452,10 @@ function generateModal(event) {
 
   var ejec = "";
   if (event.valid_ejec) {
-    ejec = `<button type="button" id="editarejec_${
-      event.id
-    }" class="btn btn-success"><i class="fas fa-edit"></i> Ejecución</button>
-        <button type="button" id="eliminarejec_${
-          event.id
-        }" onclick=eliminarEjecucion(${
-      event.id
-    },1) class="btn btn-danger"><i class="fas fa-trash-alt"></i> Ejecución</button>`;
+    ejec = 
+    `<button type="button" onclick="editarEjecucion(${event.id})" id="editarejec_${event.id}" class="btn btn-success edit edit_plan"><i class="fas fa-edit"></i> Ejecución</button>
+      <button type="button" id="eliminarejec_${event.id}" onclick=eliminarEjecucion(${event.id},1) class="btn btn-danger edit eliminarEvent"><i class="fas fa-trash-alt"></i> Ejecución</button>
+    `;
 
     if (event.tipo_gestion == 1) {
       $("#right").append(
@@ -505,13 +508,11 @@ function generateModal(event) {
     }
   }
 
-  $('#right').append(
-    `<div id="adjuntos"></div>`
-  );
+  $("#right").append(`<div id="adjuntos"></div>`);
 
   if (event.adjunto == 1) {
     if (event.tipo_gestion == 2) {
-      $('#right').append(
+      $("#right").append(
         `<div id="adjuntos">
           <div>
             <i class="fas fa-folder" onclick="generateCarousel(1)"></i>
@@ -521,7 +522,7 @@ function generateModal(event) {
       );
     } else {
       if (event.evidencias != "") {
-        $('#adjuntos').append(
+        $("#adjuntos").append(
           ` <div>
               <i class="fas fa-folder" onclick="generateCarousel(2)"></i>
               <h3>Evidencias</h3>
@@ -530,7 +531,7 @@ function generateModal(event) {
       }
 
       if (event.asistencias != "") {
-        $('#adjuntos').append(
+        $("#adjuntos").append(
           ` <div>
               <i class="fas fa-folder" onclick="generateCarousel(3)"></i>
               <h3>Asistencias</h3>
@@ -547,14 +548,20 @@ function generateModal(event) {
   } else {
     $("#modalEventsCalendar #footer-detail").html(
       `<div id="editar_borrar">
-      <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Planeación</button>
-      <button type="button" onclick=eliminarPlaneacion(${
-        event.id
-      },0) class="btn btn-danger"><i class="fas fa-trash-alt"></i> Planeación</button>
+      <button type="button" class="btn btn-success"><i class="fas fa-edit edit edit_plan"></i> Planeación</button>
+      <button type="button" onclick=eliminarPlaneacion(${event.id},0) class="btn btn-danger edit eliminarEvent"><i class="fas fa-trash-alt"></i> Planeación</button>
       ${ejec}
       </div>
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>`
     );
+  }
+
+  // Remover los botones de eliminar planeacion/ejecucion si el usuario es gestor
+  if (user == 3) {
+    $('.eliminarEvent').remove();
+  }else if (user == 4) {
+  // Remover todos los botones de eliminar y editar si el usuario es invitado
+    $('.edit').remove();
   }
 
   $("#modalEventsCalendar").modal();
@@ -568,7 +575,7 @@ function getTemasCalendar() {
       comportamiento: ""
     },
     dataType: "json",
-    success: function (response) {
+    success: function(response) {
       $("#calendarTema").html(`<option value="0" selected>Todos</option>`);
       response.forEach(element => {
         $("#calendarTema").append(
@@ -580,21 +587,24 @@ function getTemasCalendar() {
 }
 
 function generateCarousel(type) {
-  var is_img = true;
-  let id = $('#modalEventsCalendar').val();
-  let resource = $('#calendar').fullCalendar('clientEvents', id);
-  
+  let is_img = true;
+  let id = $("#modalEventsCalendar").val();
+  let resource = $("#calendar").fullCalendar("clientEvents", id);
+
   if (type == 1) {
     let img = resource[0].actas;
     img.forEach(element => {
-      if(element.split('.').pop().slice(0, 3) == 'pdf'){
-        $('.carousel-inner').html(
-          `<iframe src="${element.substr(3)}" class="img-adjuntos" frameborder="0" width="655" height="550" marginheight="0" marginwidth="0" id="pdf"  
-          ></iframe>`
-        )
+      if (
+        element.split(".").pop().slice(0, 3) == "pdf"
+      ) {
+        $(".carousel-inner").html(
+          `<iframe src="${element.substr(3)}" class="img-adjuntos" frameborder="0" 
+          width="655" height="550" marginheight="0" marginwidth="0" id="pdf">
+          </iframe>`
+        );
         is_img = false;
-      }else{
-        $('.carousel-inner').html(
+      } else {
+        $(".carousel-inner").html(
           `<div class="carousel-item active">
             <img src="${element.substr(3)}" class="d-block w-100 img-adjuntos" alt="">
           </div>`
@@ -603,77 +613,77 @@ function generateCarousel(type) {
     });
   }
 
-  if(type != 1){
+  if (type != 1) {
+    $(".carousel-inner").html("");
 
-    $('.carousel-inner').html('');
-
-    if(type == 2){
+    if (type == 2) {
       var i = 0;
       let img = resource[0].evidencias;
 
       img.forEach(element => {
-        if(i <= 0){
-          $('.carousel-inner').append(
+        if (i <= 0) {
+          $(".carousel-inner").append(
             `<div class="carousel-item active">
               <img src="${element.substr(3)}" class="d-block w-100 img-adjuntos" alt="">
             </div>`
           );
           i++;
-        }else{
-          $('.carousel-inner').append(
+        } else {
+          $(".carousel-inner").append(
             `<div class="carousel-item">
               <img src="${element.substr(3)}" class="d-block w-100 img-adjuntos" alt="">
             </div>`
           );
         }
       });
-
-    }else{
+    } else {
       let img = resource[0].asistencias;
 
       img.forEach(element => {
-        if(element.split('.').pop().slice(0, 3) == 'pdf'){
-          $('.carousel-inner').html(
-            `<iframe src="${element.substr(3)}" class="img-adjuntos" frameborder="0" width="655" height="550" marginheight="0" marginwidth="0" id="pdf"  
-            ></iframe>`
-          )
+        if (
+          element.split(".").pop().slice(0, 3) == "pdf"
+        ) {
+          $(".carousel-inner").html(
+            `<iframe src="${element.substr(3)}" class="img-adjuntos" frameborder="0" 
+            width="655" height="550" marginheight="0" marginwidth="0" id="pdf">
+            </iframe>`
+          );
           is_img = false;
-        }else{
-          $('.carousel-inner').append(
+        } else {
+          $(".carousel-inner").append(
             `<div class="carousel-item active">
               <img src="${element.substr(3)}" class="d-block w-100 img-adjuntos" alt="">
             </div>`
           );
         }
-      })
-    }
-
-    if(is_img){
-      $('.carousel-control-prev').show();
-      $('.carousel-control-next').show();
-    }else{
-      $('.carousel-control-prev').hide();
-      $('.carousel-control-next').hide();
+      });
     }
   }
 
+  if (is_img) {
+    $(".carousel-control-prev").show();
+    $(".carousel-control-next").show();
+  } else {
+    $(".carousel-control-prev").hide();
+    $(".carousel-control-next").hide();
+  }
 
   showImages();
 }
 
 function showImages() {
-  $('#right, #left').hide();
-  $('.carousel').removeClass('showNone');
+  $("#right, #left").hide();
+  $(".carousel").removeClass("showNone");
   widthCarousel();
-  $('#footer-detail').hide();
-  $('#footer-image').removeClass('showNone');
+  $("#footer-detail").hide();
+  $("#footer-image").removeClass("showNone");
 }
 
 function removeImages() {
-  $('#right, #left').show();
-  $('.carousel').addClass('showNone');
-  $('#footer-detail').show();
-  $('#footer-image').addClass('showNone');
+  $("#right, #left").show();
+  $(".carousel").addClass("showNone");
+  $("#footer-detail").show();
+  $("#footer-image").addClass("showNone");
 }
 
 function returnToEjecucion() {
@@ -687,11 +697,15 @@ function returnToEjecucion() {
   generateModal(event[0]);
 }
 
-function widthCarousel() {
-  var body_width = $('.modal-body').width();
-  var body_height = $('.modal-body').height();
+function editarEjecucion(editar) {
+  window.location.href = `editarEjecucion.html?id_zona=${id_zona}&id_plan=${editar}`
+}
 
-  var imgs = document.getElementsByClassName('img-adjuntos');
+function widthCarousel() {
+  var body_width = $(".modal-body").width();
+  var body_height = $(".modal-body").height();
+
+  var imgs = document.getElementsByClassName("img-adjuntos");
 
   for (let i = 0; i < imgs.length; i++) {
     let element = imgs[i];

@@ -99,9 +99,9 @@ class gestionEducativa
         return getIndicadoresGEXSubtemaQuery($this->con, $id_subtema);
     }
 
-    public function getTacticos($estrat)
+    public function getTacticos($estrat, $cercania)
     {
-        return getTacticosQuery($this->con, $estrat);
+        return getTacticosQuery($this->con, $estrat, $cercania);
     }
 
     public function getTemas($compor)
@@ -152,6 +152,31 @@ class gestionEducativa
     public function getGuiasPlaneacion($subtema)
     {
         return getGuiasPlaneacionQuery($this->con, $subtema);
+    }
+
+    public function eliminarContacto($id_contacto)
+    {
+        return eliminarContactoQuery($this->con, $id_contacto);
+    }
+
+    public function getContactoEditar($id_contacto)
+    {
+        return getContactoEditarQuery($this->con, $id_contacto);
+    }
+
+    public function getPoblacionXEjecucion($ejec)
+    {
+        return getPoblacionXEjecucionQuery($this->con, $ejec);
+    }
+
+    public function getCaracteristicasXEjecucion($ejec)
+    {
+        return getCaracteristicasXEjecucionQuery($this->con, $ejec);
+    }
+
+    public function getContactosXPlaneacion($id_plan)
+    {
+        return getContactosXPlaneacionQuery($this->con, $id_plan);
     }
 
     public function insertFocalizacion($id_mun, $id_tipoGestion, $fecha)
@@ -289,6 +314,11 @@ class gestionEducativa
         return getMunicipioInformeQuery($this->con);
     }
 
+    public function getEjecucion($type)
+    {
+        return getEjecucionQuery($this->con, $type);     
+    }
+
     public function getUserRol()
     {
         return getUserRolQuery($this->con);
@@ -377,5 +407,10 @@ class gestionEducativa
     public function insertCaractPoblacionXEjecucion($id_caract, $id_ejec, $total)
     {
         return insertCaractPoblacionXEjecucionQuery($this->con, $id_caract, $id_ejec, $total);
+    }
+
+    public function editarEjecucion($id_ejec, $column_name, $arg)
+    {
+        return editarEjecucionQuery($this->con, $id_ejec, $column_name, $arg);
     }
 }

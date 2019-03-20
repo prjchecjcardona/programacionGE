@@ -4,10 +4,17 @@ include 'lib.php';
 $api = new gestionEducativa();
 
 if (isset($_POST)) {
-    if (isset($_POST['estrategia'])) {
+    if (isset($_POST['estrategia']) && isset($_POST['cercania'])) {
         $id_estrat = $_POST['estrategia'];
+        $cercania = $_POST['cercania'];
 
-        $json = $api->getTacticos($id_estrat);
+        if($cercania == 1) {
+            $cercania = 'true';
+        } else {
+            $cercania = 'false';
+        }
+
+        $json = $api->getTacticos($id_estrat, $cercania);
 
     } else {
         $json = "No se recibieron los datos de manera adecuada";
