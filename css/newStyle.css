@@ -349,7 +349,8 @@ a {
   text-align: center;
 }
 
-.card-body .btn {
+#leftPortion .card-body .btn {
+  border: 2px solid green;
   color: black !important;
   transition: 0.3s;
   font-weight: 900;
@@ -453,11 +454,11 @@ a {
   background-color: #269226;
 }
 
-/* .card-body .btn:hover {
+#leftPortion .card-body .btn:hover {
   color: #fff !important;
   background-color: green;
   border: solid white 2px;
-} */
+}
 
 #ejecutado,
 .ejecutado {
