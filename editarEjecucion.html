@@ -54,7 +54,7 @@
                     </button>
                   </h5>
                 </div>
-  
+
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                   <div class="card-body">
                     <div class="row">
@@ -120,17 +120,22 @@
                             <tr>
                               <th scope="row">1</th>
                               <td>Niños</td>
-                              <td><input class="form-control" type="number" name="ninios" id="ninios" value="0"></td>
+                              <td><input class="form-control tpob" type="number" name="ninios" id="ninios" value="0"></td>
                             </tr>
                             <tr>
                               <th scope="row">2</th>
                               <td>Jovenes</td>
-                              <td><input class="form-control" type="number" name="jovenes" id="jovenes" value="0"></td>
+                              <td><input class="form-control tpob" type="number" name="jovenes" id="jovenes" value="0"></td>
                             </tr>
                             <tr>
                               <th scope="row">3</th>
                               <td>Adultos</td>
-                              <td><input class="form-control" type="number" name="adultos" id="adultos" value="0"></td>
+                              <td><input class="form-control tpob" type="number" name="adultos" id="adultos" value="0"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>Total</td>
+                              <td><span id="tipoTotal" class="totales">&nbsp; 0</span></td>
                             </tr>
                           </tbody>
                         </table>
@@ -148,33 +153,38 @@
                             <tr>
                               <th scope="row">1</th>
                               <td>Comunidad Afro</td>
-                              <td><input class="form-control" type="number" name="afro" id="afro" value="0"></td>
+                              <td><input class="form-control cpob" type="number" name="afro" id="afro" value="0"></td>
                             </tr>
                             <tr>
                               <th scope="row">2</th>
                               <td>Comunidad Indígena</td>
-                              <td><input class="form-control" type="number" name="indi" id="indi" value="0"></td>
+                              <td><input class="form-control cpob" type="number" name="indi" id="indi" value="0"></td>
                             </tr>
                             <tr>
                               <th scope="row">3</th>
                               <td>En situación de desplazamiento</td>
-                              <td><input class="form-control" type="number" name="sdes" id="sdes" value="0"></td>
+                              <td><input class="form-control cpob" type="number" name="sdes" id="sdes" value="0"></td>
                             </tr>
                             <tr>
                               <th scope="row">4</th>
                               <td>En situación de discapacidad</td>
-                              <td><input class="form-control" type="number" name="sdis" id="sdis" value="0"></td>
+                              <td><input class="form-control cpob" type="number" name="sdis" id="sdis" value="0"></td>
                             </tr>
                             <tr>
                               <th scope="row">5</th>
                               <td>Ninguno</td>
-                              <td><input class="form-control" type="number" name="ninguno" id="ninguno" value="0"></td>
+                              <td><input class="form-control cpob" type="number" name="ninguno" id="ninguno" value="0" disabled></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">6</th>
+                              <td>Total</td>
+                              <td><span id="caractTotal" class="totales">&nbsp; 0</span></td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
                     </div>
-                    <a class="btn btn-success" id="guardarPoblacion">Guardar</a>
+                    <a class="btn btn-success" id="guardarPoblacion" onclick="editarPoblacion()">Guardar</a>
                   </div>
                 </div>
               </div>
@@ -204,7 +214,7 @@
                                   <label class="custom-control-label" for="radioEvento">Evento</label>
                                 </div>
                               </div>
-  
+
                               <div class="col-lg-6 col-md-12 col-sm-12">
                                 <div class="custom-control custom-radio">
                                   <input type="radio" class="custom-control-input" id="radioProceso" name="tipo_ejecucion"
@@ -231,7 +241,7 @@
                                   <label class="custom-control-label" for="radioEnProceso">En proceso</label>
                                 </div>
                               </div>
-  
+
                               <div class="col-lg-4 col-md-12 col-sm-12">
                                 <div class="custom-control custom-radio">
                                   <input type="radio" class="custom-control-input" id="radioEfectivo" name="resultado_ejecucion"
@@ -239,7 +249,7 @@
                                   <label class="custom-control-label" for="radioEfectivo">Efectivo</label>
                                 </div>
                               </div>
-  
+
                               <div class="col-lg-4 col-md-12 col-sm-12">
                                 <div class="custom-control custom-radio">
                                   <input type="radio" class="custom-control-input" id="radioNoEfectivo" name="resultado_ejecucion"

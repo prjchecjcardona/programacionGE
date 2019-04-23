@@ -99,6 +99,10 @@ $("#calendarZona").change(() => {
   getMunicipiosXZ($("#calendarZona").val());
 });
 
+$("#calendarZonaConsulta").change(() => {
+  getMunicipiosXZ($("#calendarZonaConsulta").val());
+});
+
 /* PARAMETERS */
 id_zona = getParam("id_zona");
 user = getParam("user");
@@ -203,9 +207,15 @@ function getMunicipiosXZ(zona) {
     dataType: "json",
     success: function(response) {
       $("#calendarMunicipio").html(`<option value="0" selected>Todos</option>`);
+      $("#calendarMunicipioConsulta").html(`<option value="0" selected>Todos</option>`);
+
       response.forEach(element => {
         $("#calendarMunicipio").append(
           `<option value="${element.municipio}">${element.municipio}</option>`
+        );
+
+        $("#calendarMunicipioConsulta").append(
+          `<option value="${element.id_municipio}">${element.municipio}</option>`
         );
       });
     }
@@ -221,12 +231,21 @@ function getEstrategiasCalendar() {
     data: "",
     dataType: "json",
     success: function(response) {
-      $("#calendarEstrategia").html(
+      $("#calendarEstrategia, #calendarEstrategiaConsulta").html(
+        `<option value="0" selected>Todos</option>`
+      );
+      $("#calendarEstrategiaConsulta").html(
         `<option value="0" selected>Todos</option>`
       );
       response.forEach(element => {
         $("#calendarEstrategia").append(
           `<option value="${element.nombre_estrategia}">${
+            element.nombre_estrategia
+          }</option>`
+        );
+
+        $("#calendarEstrategiaConsulta").append(
+          `<option value="${element.id_estrategia}">${
             element.nombre_estrategia
           }</option>`
         );
@@ -378,22 +397,22 @@ function generateModal(event) {
     $("#modalEventsCalendar>.modal-dialog").css("width", "75%");
     $("#left").html(
       `<ul>
-        <li>Fecha: ${event.descripcion.fecha}</li>  
-        <li>Jornada: ${event.descripcion.jornada}</li>  
+        <li>Fecha: ${event.descripcion.fecha}</li>
+        <li>Jornada: ${event.descripcion.jornada}</li>
         <hr>
-        <li>Comportamiento: ${event.descripcion.comportamiento}</li> 
-        <li>Competencia: ${event.descripcion.competencia}</li> 
-        <li>Tema: ${event.descripcion.tema}</li> 
+        <li>Comportamiento: ${event.descripcion.comportamiento}</li>
+        <li>Competencia: ${event.descripcion.competencia}</li>
+        <li>Tema: ${event.descripcion.tema}</li>
         <hr>
         <li>Zona: ${event.descripcion.zona}</li>
         <li>Municipio: ${event.municipio}</li>
         <li>Lugar de encuentro: ${event.descripcion.lugar}</li>
         <hr>
-        <li>Estrategia: ${event.descripcion.estrategia}</li>  
-        <li>Tacticos: ${tacticos}</li> 
+        <li>Estrategia: ${event.descripcion.estrategia}</li>
+        <li>Tacticos: ${tacticos}</li>
         <hr>
-        <li>Tipo de gestión: ${event.descripcion.gestion}</li>  
-        <li>Estado: ${event.status}</li> 
+        <li>Tipo de gestión: ${event.descripcion.gestion}</li>
+        <li>Estado: ${event.status}</li>
         <li>Gestor: ${event.descripcion.gestor}</li>
       </ul>`
     );
@@ -430,7 +449,7 @@ function generateModal(event) {
                 planeación</button>
             </h2>
           </div>
-  
+
           <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#requisitosPlan">
             <div class="card-body">
               <ul>
@@ -452,7 +471,7 @@ function generateModal(event) {
 
   var ejec = "";
   if (event.valid_ejec) {
-    ejec = 
+    ejec =
     `<button type="button" onclick="editarEjecucion(${event.id})" id="editarejec_${event.id}" class="btn btn-success edit edit_plan"><i class="fas fa-edit"></i> Ejecución</button>
       <button type="button" id="eliminarejec_${event.id}" onclick=eliminarEjecucion(${event.id},1) class="btn btn-danger edit eliminarEvent"><i class="fas fa-trash-alt"></i> Ejecución</button>
     `;
@@ -468,7 +487,7 @@ function generateModal(event) {
                   aria-expanded="false" aria-controls="total">Total Asistentes</button>
               </h2>
             </div>
-  
+
             <div id="total" class="collapse" aria-labelledby="headingOne" data-parent="#totalAsistentes">
               <div class="card-body">
                 <table class="table">
@@ -479,7 +498,7 @@ function generateModal(event) {
                     </tr>
                   </thead>
                   <tbody id="totalBody">
-  
+
                   </tbody>
                 </table>
               </div>
@@ -577,9 +596,14 @@ function getTemasCalendar() {
     dataType: "json",
     success: function(response) {
       $("#calendarTema").html(`<option value="0" selected>Todos</option>`);
+      $("#calendarTemaConsulta").html(`<option value="0" selected>Todos</option>`);
       response.forEach(element => {
         $("#calendarTema").append(
           `<option value="${element.temas}">${element.temas}</option>`
+        );
+
+        $("#calendarTemaConsulta").append(
+          `<option value="${element.id_tema}">${element.temas}</option>`
         );
       });
     }
@@ -598,7 +622,7 @@ function generateCarousel(type) {
         element.split(".").pop().slice(0, 3) == "pdf"
       ) {
         $(".carousel-inner").html(
-          `<iframe src="${element.substr(3)}" class="img-adjuntos" frameborder="0" 
+          `<iframe src="${element.substr(3)}" class="img-adjuntos" frameborder="0"
           width="655" height="550" marginheight="0" marginwidth="0" id="pdf">
           </iframe>`
         );
@@ -644,7 +668,7 @@ function generateCarousel(type) {
           element.split(".").pop().slice(0, 3) == "pdf"
         ) {
           $(".carousel-inner").html(
-            `<iframe src="${element.substr(3)}" class="img-adjuntos" frameborder="0" 
+            `<iframe src="${element.substr(3)}" class="img-adjuntos" frameborder="0"
             width="655" height="550" marginheight="0" marginwidth="0" id="pdf">
             </iframe>`
           );
@@ -699,6 +723,14 @@ function returnToEjecucion() {
 
 function editarEjecucion(editar) {
   window.location.href = `editarEjecucion.html?id_zona=${id_zona}&id_plan=${editar}`
+}
+
+function generateDescargable() {
+  $.ajax({
+    type: "POST",
+    url: "server/generateExcel.php",
+    data: $('#generateExcelForm').serialize()
+  });
 }
 
 function widthCarousel() {

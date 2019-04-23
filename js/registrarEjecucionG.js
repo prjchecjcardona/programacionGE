@@ -382,16 +382,46 @@ function insertEjecucion() {
   });
 }
 
+function getNodos() {
+  $.ajax({
+    type: "POST",
+    url: "",
+    data: {
+      id_plan: id_plan
+    },
+    dataType: "dataType",
+    success: function (response) {
+      $('#nodo').html(`option selected>Seleccione</option>`);
+      if(response.length > 0) {
+        response.forEach(e => {
+          $('#nodo').append(
+            `<option value="${e.id_nodo}">${e.nodo}</option>`
+          );
+        });
+      }
+    }
+  });
+}
+
+function addNodo() {
+  $.ajax({
+    type: "POST",
+    url: "",
+    data: "data",
+    dataType: "dataType",
+    success: function (response) {
+
+    }
+  });
+}
+
 function insertNoEjecucion() {
   var fechaPlan = $("#fechaDetallePlan").html().trim();
 
-  if (
-    $("textarea[name=descripcionNovedad]").val() == "" ||
-    $("input[name=fechaAplazada]").val() == "") {
-
+  if ($("textarea[name=descripcionNovedad]").val() == "") {
     swal({
       type: "error",
-      title: "Debe digitar todos los campos para continuar"
+      title: "Debe digitar todos los campos obligatorios para continuar"
     });
   } else {
     $(".loader").fadeIn();

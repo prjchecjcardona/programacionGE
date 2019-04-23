@@ -17,12 +17,12 @@ if (isset($_POST)) {
                 'id' => $value['id_planeacion'],
                 'title' => 'No ejecucion / ' . $value['comportamientos'] . ' - ' . $value['competencia'],
                 'start' => $value['fecha_no_ejecutada'],
-                'proximo' => $value['fecha_plan'],
+                'proximo' => $value['fecha_aplazamiento'],
 
                 'description' =>
                 'Municipio : ' . $value['municipio'] . '</br>' .
                 'Fecha de la actividad no ejecutada : ' . $value['fecha_no_ejecutada'] . '</br>' .
-                'Nueva fecha para la ejecución de la actividad : ' . $value['fecha_plan'] . '</br>' .
+                'Nueva fecha para la ejecución de la actividad : ' . $value['fecha_aplazamiento'] . '</br>' .
                 'Zona : ' . $value['zonas'] . '</br>' .
                 'Gestor : ' . $value['nombre'] . '</br>' .
                 'Tema : ' . $value['temas'] . '</br>' .
@@ -160,7 +160,7 @@ if (isset($_POST)) {
                         array_push($requisitos[$value['id_planeacion']], '<li> Adjuntar acta </li>');
                     } else {
                         $newArray[$value['id_planeacion']]['adjunto'] = 1;
-                        
+
                         for ($i = 0; $i < count($registros); $i++) {
                             array_push($newArray[$value['id_planeacion']]['actas'], $registros[$i]['url']);
                         }

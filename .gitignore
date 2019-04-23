@@ -5,3 +5,4 @@ banco/recursos/*
 banco/*
 node_modules/*
 registros/*
+phpspreadsheet/*

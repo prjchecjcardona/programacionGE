@@ -242,7 +242,20 @@ function validateForm() {
     for (i = 0; i < y.length; i++) {
       // If a field is empty...
       if (y[i].parentElement.parentElement.style.display != "none") {
-        if (y[i].value == "") {
+        if (y[i].multiple) {
+          let sum = 0;
+          for (let k=0; k < y[i].length; k++) {
+            if (y[i][k].selected){
+              sum++;
+            }
+          }
+
+          if(sum == 0) {
+            y[i].className += " invalid";
+            valid = false;
+          }
+        }
+        else if (y[i].value == "") {
           // add an "invalid" class to the field:
           y[i].className += " invalid";
           // and set the current valid status to false:
@@ -296,7 +309,7 @@ function checkSolicitudEducativa() {
 
   if (solicitudRadio.val() == "true") {
     $("#subirSolicitud").toggle();
-    
+
   } else {
     if ($("#subirSolicitud").is(":visible")) {
       $("#subirSolicitud").toggle();
@@ -357,7 +370,7 @@ function executeAll() {
 }
 
 function primaryAjax(url, tag, data) {
-  $(`#${tag}`).html('<option value="" disabled>Seleccione</option>');
+  $(`#${tag}`).html('<option value="" disabled selected>Seleccione</option>');
   $.ajax({
     type: "POST",
     url: `server/${url}`,
@@ -729,7 +742,7 @@ function getCompetencias() {
   });
 }
 
-function getTacticos() { 
+function getTacticos() {
   estrategia = $("#selectEstrategia").val();
   cercania = $("input[name=esCercania]:checked").val();
   primaryAjax("getTacticos.php", "selectTactico", {

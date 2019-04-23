@@ -356,6 +356,10 @@ a {
   font-weight: 900;
 }
 
+.planeaciones p{
+  margin-bottom: 0.3em !important;
+}
+
 .form-signin .btn {
   color: white !important;
 }

@@ -6,15 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Ejecución</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
   <link rel="stylesheet" href="css/fileinput.min.css">
   <link rel="stylesheet" href="css/fileinput-rtl.min.css">
   <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/file-upload-with-preview@3.2.7/dist/file-upload-with-preview.min.css">  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://unpkg.com/file-upload-with-preview@3.2.7/dist/file-upload-with-preview.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css">
   <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="css/newStyle.css">
@@ -63,7 +65,8 @@
               <div class="row formRows" id="rowNovedad">
                 <div id="divNoEjecucionDad">
                   <div id="divNoEjecucion" class="custom-control custom-radio">
-                    <input type="radio" id="noEjecucion" name="noEjecucion" class="custom-control-input" onclick="getChecked()">
+                    <input type="radio" id="noEjecucion" name="noEjecucion" class="custom-control-input"
+                      onclick="getChecked()">
                     <label class="custom-control-label" for="noEjecucion">Novedad de no ejecución</label>
                   </div>
                 </div>
@@ -81,20 +84,32 @@
                   </div>
                   <div class="col-lg-8 col-md-12 col-sm-12">
                     <div class="row">
-                      <div class="col-lg-6 col-md-12 col-sm-12">
+                      <div class="col-lg-3 col-md-12 col-sm-12">
                         <label for="duracion">Hora inicio
                           <label class="obligatorio" for="datetimepicker3">*</label>
                         </label>
                         <input class="required" id="horaInicio" name="horaInicio" />
                       </div>
-                      <div class="col-lg-6 col-md-12 col-sm-12">
+                      <div class="col-lg-3 col-md-12 col-sm-12">
                         <label for="duracion">Hora finalización
                           <label class="obligatorio" for="duracion">*</label>
                         </label>
                         <input class="required" id="horaFin" name="horaFin" />
                         <div class="alert alert-danger showNone" role="alert" id="horaAlert">
-                           La hora de finalización debe ser menor a la de inicio.
+                          La hora de finalización debe ser menor a la de inicio.
                         </div>
+                      </div>
+                      <div class="col-lg-4 col-md-12 col-sm-12">
+                        <label for="nodo">Nodo</label>
+                        <div class="form-group">
+                          <select class="custom-select" name="nodo" id="nodo">
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-1 col-md-12 col-sm-12" id="colRegistrarEntidad">
+                        <button id="btnRegistrarEntidad" type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#modalCrearNodo"><i class="fas fa-plus" id="iconRegistrarNodo"></i></i>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -121,15 +136,15 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="jovenes">Jovenes</span>
                             </div>
-                            <input type="number" name="jovenes" class="tipo form-control required" placeholder="Cantidad"
-                              aria-label="Username" aria-describedby="jovenes" value="0" min="0">
+                            <input type="number" name="jovenes" class="tipo form-control required"
+                              placeholder="Cantidad" aria-label="Username" aria-describedby="jovenes" value="0" min="0">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="adultos">Adultos</span>
                             </div>
-                            <input type="number" name="adultos" class="tipo form-control required" placeholder="Cantidad"
-                              aria-label="Username" aria-describedby="adultos" value="0" min="0">
+                            <input type="number" name="adultos" class="tipo form-control required"
+                              placeholder="Cantidad" aria-label="Username" aria-describedby="adultos" value="0" min="0">
                           </div>
                           <div>
                             <span>
@@ -145,7 +160,8 @@
                               <span class="input-group-text" id="discapacidad">Situación de discapacidad</span>
                             </div>
                             <input type="number" class="caracteristicas form-control required" placeholder="Cantidad"
-                              aria-label="Username" aria-describedby="discapacidad" value="0" name="discapacidad" min="0">
+                              aria-label="Username" aria-describedby="discapacidad" value="0" name="discapacidad"
+                              min="0">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -192,7 +208,8 @@
 
               <div class="tab">
 
-                <label for="tipoEjecucion">Tipo de ejecución <label class="obligatorio" for="tipoEjecucion">*</label></label>
+                <label for="tipoEjecucion">Tipo de ejecución <label class="obligatorio"
+                    for="tipoEjecucion">*</label></label>
                 <div id="tipoEjecucion" class="row formRows">
                   <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="custom-control custom-radio">
@@ -214,7 +231,8 @@
 
                 <div id="resultadosInstitucional">
                   <hr>
-                  <label for="resultadoEjecucion">Resultado de la ejecución <label class="obligatorio" for="resultadoEjecucion">*</label></label>
+                  <label for="resultadoEjecucion">Resultado de la ejecución <label class="obligatorio"
+                      for="resultadoEjecucion">*</label></label>
                   <div id="resultadoEjecucion" class="row formRows">
                     <div class="col-lg-4 col-md-12 col-sm-12">
                       <div class="custom-control custom-radio">
@@ -247,7 +265,8 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                       <div class="form-group">
                         <label for="desResultadoEjecucion">Descripción del resultado de la ejecución</label>
-                        <textarea class="form-control" id="desResultadoEjecucion" rows="3" name="descResultado"></textarea>
+                        <textarea class="form-control" id="desResultadoEjecucion" rows="3"
+                          name="descResultado"></textarea>
                       </div>
                     </div>
                   </div>
@@ -259,38 +278,43 @@
               <div class="tab">
                 <div class="row formRows">
                   <div class="col-lg-12 col-md-12 col-sm-12" id="colEvidencias">
-                    <label for="evidenciasFotograficas">Evidencias Fotográficas <label for="actaReunion" class="obligatorio">*</label></label>
+                    <label for="evidenciasFotograficas">Evidencias Fotográficas <label for="actaReunion"
+                        class="obligatorio">*</label></label>
                     <div class="custom-file-container" data-upload-id="evidenciasFotograficas">
-                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
-                          title="Clear Image">&times;</a></label>
+                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)"
+                          class="custom-file-container__image-clear" title="Clear Image">&times;</a></label>
                       <label class="custom-file-container__custom-file">
-                        <input type="file" id="fotograficas" class="custom-file-container__custom-file__custom-file-input"
-                          accept="*" multiple name="fotograficas">
+                        <input type="file" id="fotograficas"
+                          class="custom-file-container__custom-file__custom-file-input" accept="*" multiple
+                          name="fotograficas">
                         <span class="custom-file-container__custom-file__custom-file-control"></span>
                       </label>
                       <div class="custom-file-container__image-preview"></div>
                     </div>
 
-                    <label for="evidenciasFotograficas">Asistencias <label for="actaReunion" class="obligatorio">*</label></label>
+                    <label for="evidenciasFotograficas">Asistencias <label for="actaReunion"
+                        class="obligatorio">*</label></label>
                     <div class="custom-file-container" data-upload-id="evidenciasAsistencia">
-                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
-                          title="Clear Image">&times;</a></label>
+                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)"
+                          class="custom-file-container__image-clear" title="Clear Image">&times;</a></label>
                       <label class="custom-file-container__custom-file">
-                        <input type="file" id="asistencias" class="custom-file-container__custom-file__custom-file-input"
-                          accept="*" multiple name="asistencias[]">
+                        <input type="file" id="asistencias"
+                          class="custom-file-container__custom-file__custom-file-input" accept="*" multiple
+                          name="asistencias[]">
                         <span class="custom-file-container__custom-file__custom-file-control"></span>
                       </label>
                       <div class="custom-file-container__image-preview"></div>
                     </div>
                   </div>
                   <div class="col-lg 12 col-md-6 col-sm-6" id="colActaReunion">
-                    <label for="actaReunion">Acta de reunión <label for="actaReunion" class="obligatorio">*</label></label>
+                    <label for="actaReunion">Acta de reunión <label for="actaReunion"
+                        class="obligatorio">*</label></label>
                     <div class="custom-file-container" data-upload-id="actasReunion">
-                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)" class="custom-file-container__image-clear"
-                          title="Clear Image">&times;</a></label>
+                      <label>Limpiar todos los archivos cargados <a href="javascript:void(0)"
+                          class="custom-file-container__image-clear" title="Clear Image">&times;</a></label>
                       <label class="custom-file-container__custom-file">
-                        <input type="file" multiple id="actas[]" class="custom-file-container__custom-file__custom-file-input"
-                          accept="*" name="actas">
+                        <input type="file" multiple id="actas[]"
+                          class="custom-file-container__custom-file__custom-file-input" accept="*" name="actas">
                         <span class="custom-file-container__custom-file__custom-file-control"></span>
                       </label>
                       <div class="custom-file-container__image-preview"></div>
@@ -304,7 +328,8 @@
 
             <div class="row formRows">
               <div class="col-lg-12 col-md-12 col-sm-12 colBtnContacto">
-                <button id="btnVerDetalle" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Ver
+                <button id="btnVerDetalle" type="button" class="btn btn-primary" data-toggle="modal"
+                  data-target=".bd-example-modal-lg">Ver
                   detalle
                 </button>
               </div>
@@ -365,29 +390,88 @@
               <div class="form-group">
                 <label for="descripcionNovedad">Describa porque no se dío la ejecución <label for="descripcionNovedad"
                     class="obligatorio">*</label></label>
-                <textarea class="form-control" name="descripcionNovedad" id="descripcionNovedad" rows="5" cols="10"></textarea>
+                <textarea class="form-control" name="descripcionNovedad" id="descripcionNovedad" rows="5"
+                  cols="10"></textarea>
               </div>
               <label for="datepicker">Seleccione la fecha aplazada del evento no ejecutado
-                <label class="obligatorio" for="datepicker">*</label>
               </label>
-              <input class="required" id="datepickerNoEjecucion" placeholder="Fecha" name="fechaAplazada" readonly />
+              <input id="datepickerNoEjecucion" placeholder="Fecha" name="fechaAplazada" readonly />
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="getChecked()">Cancelar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              onclick="getChecked()">Cancelar</button>
             <button type="button" class="btn btn-success" onclick="insertNoEjecucion()">Guardar</button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para registrar un nodo -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modalCrearNodo">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <form id="formRegistrarNodo" action="">
+            <div class="row rowForms">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <label for="nombreEntidad">Nombre nodo <label class="obligatorio">*</label></label>
+                <input type="text" placeholder="Nombre" id="nodo" name="nodo" aria-label="Nodo"
+                  class="form-control required" required>
+              </div>
+            </div>
+
+            <hr>
+
+            <label for="colDireccion">Municipio <label for="colDireccion" class="obligatorio">*</label></label>
+            <div class="row rowForms">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <input type="text" class="form-control" name="direccion" id="direccionEntidad" placeholder="Dirección"
+                  required>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row rowForms">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <label for="TelefonoContacto">Telefono</label>
+                <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefono" aria-label="Telefono del contacto"
+                  class="form-control">
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row rowForms">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <label for="TelefonoContacto">Telefono</label>
+                <input type="text" placeholder="Telefono" id="TelefonoContacto" name="telefono" aria-label="Telefono del contacto"
+                  class="form-control">
+              </div>
+            </div>
+
+            <div id="rowBtnContacto" class="row rowForms">
+              <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
+                <button type="submit" id="btnRegistrarNodo" class="btn btn-success">Registrar</button>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 colBtnContacto">
+                <button id="btnCancelarNodo" type="button" class="btn btn-danger" data-toggle="dismiss">Cancelar</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
   <!-- JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>

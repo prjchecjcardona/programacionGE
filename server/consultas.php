@@ -81,7 +81,7 @@ function getMunicipiosXZonaQuery($con, $zona)
     JOIN zonas zna ON mn.id_zona = zna.id_zona";
 
     if ($zona != "all") {
-        $sql .= " WHERE mn.id_zona = $zona";
+        $sql .= " WHERE mn.id_zona = $zona OR mn.id_municipio IN (SELECT id_municipio FROM municipio_x_cercania WHERE " . '"año"' . " = 2019)";
     }
 
     $sql .= " GROUP BY mn.id_municipio, municipio, zna.zonas, zna.id_zona
@@ -218,9 +218,9 @@ function getMunicipioInformeQuery($con)
 
 function getPlaneacionesXFocalizacionQuery($con, $foc)
 {
-    $sql = "SELECT DISTINCT pl.id_planeacion, tg.tipo_gestion, estrat.nombre_estrategia,
-    tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona, ent.nombre_entidad,
-    pl.id_focalizacion, COUNT(eje.id_ejecucion) as ejecucion
+    $sql = "SELECT DISTINCT pl.id_planeacion, tg.tipo_gestion, estrat.nombre_estrategia, pl.lugar_encuentro,
+    tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona, ent.nombre_entidad, foc.id_tipo_gestion,
+    pl.id_focalizacion, COUNT(eje.id_ejecucion) as ejecucion, competencia
 	FROM planeacion pl
     LEFT JOIN focalizacion foc ON pl.id_focalizacion = foc.id_focalizacion
     LEFT JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = pl.id_planeacion
@@ -234,9 +234,13 @@ function getPlaneacionesXFocalizacionQuery($con, $foc)
     LEFT JOIN entidades ent ON pl.id_entidad = ent.id_entidad
 	LEFT JOIN zonas zon ON mun.id_zona = zon.id_zona
 	LEFT JOIN ejecucion eje ON eje.id_planeacion = pl.id_planeacion
+    LEFT JOIN planeacion_institucional pli ON pli.id_planeacion = pl.id_planeacion
+	LEFT JOIN comportamientos compor ON pli.id_comportamiento = compor.id_comportamientos
+	LEFT JOIN competencias compe ON compor.id_competencia = compe.id_competencia
     WHERE pl.id_focalizacion = '$foc'
 	GROUP BY pl.id_planeacion, tg.tipo_gestion, estrat.nombre_estrategia,
-    tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona, pl.id_focalizacion, ent.nombre_entidad
+    tem.temas, pl.fecha_plan, pl.fecha_registro, zon.id_zona, pl.id_focalizacion, ent.nombre_entidad,
+    pl.lugar_encuentro, foc.id_tipo_gestion, competencia
     ORDER BY pl.fecha_plan DESC";
 
     return executeQuery($con, $sql);
@@ -358,7 +362,7 @@ function getIndicadoresChecQuery($con, $comp)
 
 function eliminarEjecucionQuery($con, $id_plan)
 {
-    $sqlbase = "SELECT id_ejecucion 
+    $sqlbase = "SELECT id_ejecucion
     FROM ejecucion
     WHERE id_planeacion = $id_plan";
 
@@ -384,7 +388,9 @@ function eliminarPlaneacionQuery($con, $id_plan)
     DELETE FROM subtemas_x_planeacion WHERE id_planeacion IN ($id_plan);
     DELETE FROM planeacion_institucional WHERE id_planeacion IN ($id_plan);
     DELETE FROM contactos_x_planeacion WHERE id_planeacion IN ($id_plan);
-    DELETE FROM registros_x_planeacion WHERE id_planeacion IN ($id_plan);";
+    DELETE FROM registros_x_planeacion WHERE id_planeacion IN ($id_plan);
+    DELETE FROM ejecucion WHERE id_planeacion IN ($id_plan);
+    DELETE FROM planeacion WHERE id_planeacion IN ($id_plan)";
 
     return eliminateQuery($con, $sql);
 }
@@ -482,6 +488,8 @@ function getCaracteristicasXEjecucionQuery($con, $id_plan) {
 
 function getPlaneacionesCalendarQuery($con, $zona)
 {
+    $where = FALSE;
+
     $sql = "SELECT DISTINCT plan.id_planeacion, fecha_plan, jornada, lugar_encuentro, mun.municipio, plan.estado, tg.tipo_gestion,
 	foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos, compe.competencia, zon.zonas, zon.id_zona, nombre_estrategia, nombre_tactico, temas,
 	per.nombres || ' ' || per.apellidos as nombre, solicitud_interventora, rxp.url, foc.id_tipo_gestion
@@ -507,12 +515,19 @@ function getPlaneacionesCalendarQuery($con, $zona)
     LEFT JOIN tactico tact ON txp.id_tactico = tact.id_tactico
     LEFT JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
     LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
-    LEFT JOIN registros_x_planeacion rxp ON rxp.id_planeacion = plan.id_planeacion
-    WHERE fecha_plan BETWEEN '2019-01-01' AND now() + interval '1 year' AND plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2";
+    LEFT JOIN registros_x_planeacion rxp ON rxp.id_planeacion = plan.id_planeacion";
 
     if ($zona != 'all') {
-        $sql .= " AND zon.id_zona = $zona";
+        $sql .= " WHERE zon.id_zona = $zona";
+        $where = TRUE;
     }
+
+    if($where) {
+        $sql .= " AND fecha_plan BETWEEN '2019-01-01' AND now() + interval '1 year' AND plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2";
+    }else {
+        $sql .= " WHERE fecha_plan BETWEEN '2019-01-01' AND now() + interval '1 year' AND plan.estado = 'Planeado' OR rxp.id_tipo_registro = 2";
+    }
+
 
     $sql .= " ORDER BY plan.id_planeacion ASC";
 
@@ -603,7 +618,7 @@ function getDetalleEjecucionQuery($con, $id_plan)
     FROM ejecucion ejec
     LEFT JOIN resultado_ejecucion rejec ON rejec.id_resultado_ejecucion = ejec.id_resultado_ejecucion
     JOIN planeacion plan ON plan.id_planeacion = ejec.id_planeacion
-    JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion 
+    JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion
     LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
     WHERE plan.id_planeacion = $id_plan";
 
@@ -615,11 +630,11 @@ function editarContactoQuery($con, $id_contacto, $cedula, $nombres, $apellidos, 
     $sql = "UPDATE public.contacto
 	SET cedula='$cedula', nombres='$nombres', apellidos='$apellidos', correo='$email', telefono='$telefono', celular='$telefono', cargo='$cargo', id_entidad=$entidad
     WHERE id_contacto = $id_contacto; ";
-    
+
     return executeQuery($con, $sql);
 }
 
-function getContactosXPlaneacionQuery($con, $id_plan) 
+function getContactosXPlaneacionQuery($con, $id_plan)
 {
     $sql = "SELECT con.id_contacto, nombres, apellidos, correo, celular, cargo
     FROM contacto con
@@ -640,26 +655,26 @@ function getContactoEditarQuery($con, $id_contacto) {
 
 function getNovedadesNoEjecucionQuery($con, $zona)
 {
-    $sql = "SELECT DISTINCT ON (plan.id_planeacion) plan.id_planeacion, nne.fecha_no_ejecutada, fecha_plan, jornada, lugar_encuentro, mun.municipio,
+    $sql = "SELECT DISTINCT ON (plan.id_planeacion) plan.id_planeacion, nne.fecha_no_ejecutada, nne.fecha_aplazamiento, jornada, lugar_encuentro, mun.municipio,
     foc.id_focalizacion, bar.barrio, ver.vereda, compor.comportamientos,
     compe.competencia, zon.zonas, zon.id_zona, per.nombres || ' ' || per.apellidos as nombre,
     temas, nombre_estrategia
         FROM planeacion plan
         LEFT JOIN planeacion_institucional plani ON plani.id_planeacion = plan.id_planeacion
-        JOIN novedad_no_ejecucion nne ON plan.id_planeacion = nne.id_planeacion
+        LEFT JOIN novedad_no_ejecucion nne ON plan.id_planeacion = nne.id_planeacion
         LEFT JOIN barrios bar ON bar.id_barrio = plan.id_barrio
         LEFT JOIN comunas com ON bar.id_comuna = com.id_comuna
         LEFT JOIN veredas ver ON ver.id_veredas = plan.id_vereda
         LEFT JOIN municipios mun ON mun.id_municipio = com.id_municipio OR mun.id_municipio = ver.id_municipio
-        JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion
-        JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion = foc.id_focalizacion
-        JOIN indicadores_chec ic ON ic.id_indicador = icxf.id_indicador
-        JOIN zonas zon ON zon.id_zona = mun.id_zona
+        LEFT JOIN focalizacion foc ON foc.id_focalizacion = plan.id_focalizacion
+        LEFT JOIN indicadores_chec_x_focalizacion icxf ON icxf.id_focalizacion = foc.id_focalizacion
+        LEFT JOIN indicadores_chec ic ON ic.id_indicador = icxf.id_indicador
+        LEFT JOIN zonas zon ON zon.id_zona = mun.id_zona
         JOIN asignar_zonas az ON az.id_zona = zon.id_zona
         JOIN personas per ON per.cedula = az.cedula_asignado
-        JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = plan.id_planeacion
-	    JOIN subtemas sutem ON sutem.id_subtema = sxp.id_subtema
-        JOIN temas tem ON tem.id_temas = sutem.id_temas
+        LEFT JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = plan.id_planeacion
+	    LEFT JOIN subtemas sutem ON sutem.id_subtema = sxp.id_subtema
+        LEFT JOIN temas tem ON tem.id_temas = sutem.id_temas
         LEFT JOIN comportamientos compor ON compor.id_comportamientos = ic.id_comportamiento
         OR compor.id_comportamientos = tem.id_comportamiento OR plani.id_comportamiento = compor.id_comportamientos
         JOIN competencias compe ON compe.id_competencia = compor.id_competencia
@@ -699,7 +714,7 @@ function getTotalAsistentesQuery($con, $id_plan)
 	FROM tipo_poblacion_x_ejecucion tpxe
 	JOIN tipo_poblacion tp ON tp.id_tipo = tpxe.id_tipo
     WHERE id_ejecucion IN (SELECT id_ejecucion FROM ejecucion WHERE id_planeacion = $id_plan)";
-    
+
     return executeQuery($con, $sql);
 }
 
@@ -882,6 +897,27 @@ function insertContactoQuery($con, $cedula, $nombres, $apellidos, $correo, $tele
     return insertQuery($con, $sql);
 }
 
+function getNodosQuery($con, $id_plan)
+{
+    $sql = "SELECT nod.*
+    FROM nodo nod
+    WHERE nod.id_municipio IN (SELECT foc.id_municipio
+        FROM focalizacion foc
+        JOIN planeacion plan ON plan.id_focalizacion = foc.id_focalizacion
+        WHERE id_planeacion = $id_plan)";
+
+    return executeQuery($con, $sql);
+}
+
+function addNodosQuery($con, $nodo, $latitud, $longitud, $id_municipio)
+{
+    $sql = "INSERT INTO public.nodo(
+    id_nodo, nodo, latitud, longitud, id_municipio)
+    VALUES ((nextval('seq_nodo'), '$nodo', '$latitud', '$longitud', $id_municipio);";
+
+    return insertQuery($con, $sql);
+}
+
 function insertContactosXEntidadQuery($con, $cedula, $entidad)
 {
     $sql = "INSERT INTO public.contactos_x_entidad(cedula, id_entidad)
@@ -890,11 +926,11 @@ function insertContactosXEntidadQuery($con, $cedula, $entidad)
     return insertQuery($con, $sql);
 }
 
-function insertEjecucionQuery($con, $fecha, $hora_inicio, $hora_fin, $id_resultado, $descripcion, $id_planeacion, $total_asist, $tipo_ejecucion)
+function insertEjecucionQuery($con, $fecha, $hora_inicio, $hora_fin, $id_resultado, $descripcion, $id_planeacion, $total_asist, $tipo_ejecucion, $nodo)
 {
     $sql = "INSERT INTO public.ejecucion(
-    id_ejecucion, fecha, hora_inicio, hora_fin, id_resultado_ejecucion, descripcion_resultado, id_planeacion, total_asistentes, tipo_ejecucion)
-    VALUES (nextval('seq_ejecucion'), '$fecha', '$hora_inicio', '$hora_fin', $id_resultado, '$descripcion', $id_planeacion, $total_asist, '$tipo_ejecucion');";
+    id_ejecucion, fecha, hora_inicio, hora_fin, id_resultado_ejecucion, descripcion_resultado, id_planeacion, total_asistentes, tipo_ejecucion, id_nodo)
+    VALUES (nextval('seq_ejecucion'), '$fecha', '$hora_inicio', '$hora_fin', $id_resultado, '$descripcion', $id_planeacion, $total_asist, '$tipo_ejecucion', '$nodo');";
 
     return insertQuery($con, $sql);
 }
@@ -950,9 +986,15 @@ function insertLaborXTrabajoAdministrativoQuery($con, $id_labor, $id_ta)
 
 function insertNovedadNoEjecucionQuery($con, $id_planeacion, $descripcion, $fecha_aplazamiento, $fecha_plan)
 {
-    $sql = "INSERT INTO public.novedad_no_ejecucion(
-    id_planeacion, descripcion, fecha_aplazamiento, estado_novedad, fecha_no_ejecutada)
-    VALUES ($id_planeacion, '$descripcion', '$fecha_aplazamiento', 'No ejecutado', '$fecha_plan');";
+    if(empty($fecha_aplazamiento)){
+        $sql = "INSERT INTO public.novedad_no_ejecucion(
+            id_planeacion, descripcion, estado_novedad, fecha_no_ejecutada)
+            VALUES ($id_planeacion, '$descripcion', 'No ejecutado', '$fecha_plan');";
+    }else {
+        $sql = "INSERT INTO public.novedad_no_ejecucion(
+            id_planeacion, descripcion, fecha_aplazamiento, estado_novedad, fecha_no_ejecutada)
+            VALUES ($id_planeacion, '$descripcion', '$fecha_aplazamiento', 'No ejecutado', '$fecha_plan');";
+    }
 
     return insertQuery($con, $sql);
 }
@@ -990,6 +1032,84 @@ function getEtapaPlaneacionQuery($con, $id_plan)
     $sql = "SELECT etapa_planeacion
     FROM registro_ubicacion
     WHERE id_planeacion = $id_plan";
+
+    return executeQuery($con, $sql);
+}
+
+function getConsultaExcelQuery($con, $zona, $municipio, $estrategia, $tema, $tipo_gestion, $estado_planeacion)
+{
+
+    $sql = "SELECT DISTINCT fecha_plan, municipio, zonas, lugar_encuentro, nombre_entidad, comportamientos, competencia, temas, nombre_estrategia, nombre_tactico, nombres || ' ' || apellidos as nombre, pl.estado
+	FROM planeacion pl
+    JOIN focalizacion foc ON pl.id_focalizacion = foc.id_focalizacion
+    LEFT JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = pl.id_planeacion
+	LEFT JOIN subtemas sutem ON sutem.id_subtema = sxp.id_subtema
+    LEFT JOIN temas tem ON tem.id_temas = sutem.id_temas
+    LEFT JOIN tacticos_x_planeacion txp ON txp.id_planeacion = pl.id_planeacion
+    LEFT JOIN tactico tact ON txp.id_tactico = tact.id_tactico
+    LEFT JOIN estrategias estrat ON estrat.id_estrategia = tact.id_estrategia
+    LEFT JOIN tipo_gestion tg ON tg.id_tipo_gestion = foc.id_tipo_gestion
+	LEFT JOIN municipios mun ON mun.id_municipio = foc.id_municipio
+	LEFT JOIN zonas zon ON mun.id_zona = zon.id_zona
+	LEFT JOIN asignar_zonas az ON az.id_zona = zon.id_zona
+	LEFT JOIN personas per ON per.cedula = az.cedula_asignado
+	LEFT JOIN entidades ent ON pl.id_entidad = ent.id_entidad
+	LEFT JOIN indicadores_chec_x_focalizacion ixf ON ixf.id_focalizacion = foc.id_focalizacion
+	LEFT JOIN indicadores_chec ic ON ic.id_indicador = ixf.id_indicador
+	LEFT JOIN comportamientos compor ON ic.id_comportamiento = compor.id_comportamientos OR tem.id_comportamiento = compor.id_comportamientos
+    LEFT JOIN competencias compe ON compor.id_competencia = compe.id_competencia ";
+
+    $where = FALSE;
+
+    if (!empty($zona)) {
+        $sql .= " WHERE mun.id_zona = $zona ";
+        $where = TRUE;
+    }
+
+    if (!empty($municipio)) {
+        if ($where) {
+            $sql .= " AND foc.id_municipio = $municipio ";
+        }else {
+            $sql .= " WHERE foc.id_municipio = $municipio ";
+            $where = TRUE;
+        }
+    }
+
+    if (!empty($estrategia)) {
+        if ($where) {
+            $sql .= " AND tact.id_estrategia = $estrategia ";
+        }else {
+            $sql .= " WHERE tact.id_estrategia = $estrategia ";
+            $where = TRUE;
+        }
+    }
+
+    if (!empty($tema)) {
+        if ($where) {
+            $sql .= "AND sutem.id_temas = $tema ";
+        }else {
+            $sql .= " WHERE sutem.id_temas = $tema ";
+            $where = TRUE;
+        }
+    }
+
+    if (!empty($tipo_gestion)) {
+        if ($where) {
+            $sql .= " AND foc.id_tipo_gestion = $tipo_gestion ";
+        }else {
+            $sql .= " WHERE foc.id_tipo_gestion = $tipo_gestion ";
+            $where = TRUE;
+        }
+    }
+
+    if (!empty($estado_planeacion)) {
+        if ($where) {
+            $sql .= " AND estado_planeacion = $estado_planeacion ";
+        }else {
+            $sql .= " WHERE estado_planeacion = $estado_planeacion ";
+            $where = TRUE;
+        }
+    }
 
     return executeQuery($con, $sql);
 }
@@ -1034,7 +1154,7 @@ function insertCaractPoblacionXEjecucionQuery($con, $id_caract, $id_ejec, $total
 
 function editarEjecucionQuery($con, $id_ejec, $column_name, $arg)
 {
-    $sql = "UPDATE ejecucion SET $column_name = '$arg' 
+    $sql = "UPDATE ejecucion SET $column_name = '$arg'
     WHERE id_planeacion = $id_ejec";
 
     return insertQuery($con, $sql);
@@ -1042,7 +1162,7 @@ function editarEjecucionQuery($con, $id_ejec, $column_name, $arg)
 
 function editarPlaneacionQuery($con, $id_ejec, $column_name, $arg)
 {
-    $sql = "UPDATE ejecucion SET $column_name = '$arg' 
+    $sql = "UPDATE ejecucion SET $column_name = '$arg'
     WHERE id_planeacion = $id_ejec";
 
     return insertQuery($con, $sql);

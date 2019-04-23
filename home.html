@@ -44,7 +44,7 @@
         </div>
         <a id="homeBtn" class="nav-link" href=""><i class="fas fa-home"></i></a>
         <a class="nav-link" target="_blank" href="banco/"><i class="fas fa-book"></i></a>
-        <a class="nav-link" target="_blank" href="informes.html"><i class="fas fa-chart-line"></i></a>
+        <a class="nav-link" data-toggle="modal" data-target="#modalConsultas"><i class="fas fa-download"></i></a>
         <a id="menu" class="nav-link" href=""><i class="fas fa-bars"></i></a>
       </li>
     </ul>
@@ -503,6 +503,77 @@
             <button type="button" id="removerFiltros" class="btn btn-danger">Remover Filtros</button>
           </div>
         </div>
+      </div>
+    </div>
+
+        <!-- MODAL CALENDAR DETAILS -->
+    <div class="modal fade bd-example-modal-md" id="modalConsultas" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-md">
+        <form id="generateExcelForm">
+          <div class="modal-content">
+            <div class="headerModal">
+              Seleccione las opciones de planeaciones de acuerdo a sus necesidades
+            </div>
+            <div style="width: 100%; padding: 10px 40px 0px 40px">
+              <div class="row">
+                <label for="calendarZona">Zona:</label>
+                <select class="custom-select" id="calendarZonaConsulta" name="zona">
+                  <option value="0" selected>Todos</option>
+                  <option value="1">Centro</option>
+                  <option value="2">Suroccidente</option>
+                  <option value="3">Occidente</option>
+                  <option value="4">Noroccidente</option>
+                  <option value="5">Oriente</option>
+                </select>
+              </div>
+
+              <div class="row">
+                <label for="calendarMunicipio">Municipio: </label>
+                <select class="custom-select" id="calendarMunicipioConsulta" name="municipio"></select>
+              </div>
+
+              <div class="row">
+                <label for="calendarEstrategia">Estrategia:</label>
+                <select class="custom-select" id="calendarEstrategiaConsulta" name="estrategia"></select>
+              </div>
+
+              <div class="row showNone">
+                <label for="calendarTacticos">Tacticos:</label>
+                <select class="custom-select" id="calendarTacticosConsulta" name="tactico"></select>
+              </div>
+
+              <div class="row">
+                <label for="calendarTema">Tema:</label>
+                <select class="custom-select" id="calendarTemaConsulta" name="tema"></select>
+              </div>
+
+              <div class="row">
+                <label for="estadoPlaneacion">Estado Planeación:</label>
+                <select class="custom-select" id="estadoPlaneacion" name="estado">
+                  <option value="0">Todos</option>
+                  <option value="Planeado">Planeado</option>
+                  <option value="En Ejecución">En Ejecución</option>
+                  <option value="Ejecutado">Ejecutado</option>
+                </select>
+              </div>
+
+              <div class="row">
+                <label for="calendarTipoG">Tipo Gestión:</label>
+                <select class="custom-select" id="calendarTipoG" name="tipo">
+                  <option value="0">Todos</option>
+                  <option value="1">Formativa</option>
+                  <option value="2">Institucional</option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="modal-footer">
+              <button type="button" id="removerFiltrosDescargable" class="btn btn-danger">Remover Filtros</button>
+              <button type="button" id="generarDescargable" onclick="generateDescargable()" class="btn btn-success">Generar <i class="fas fa-download"></i></button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
 

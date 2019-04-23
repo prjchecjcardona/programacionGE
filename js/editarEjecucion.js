@@ -16,6 +16,15 @@ $(function () {
   $("#datepicker").datepicker({
     uiLibrary: "bootstrap4"
   });
+
+  $('.cpob').change(() => {
+    $()
+    updateTotal();
+  })
+
+  $('.tpob').change(() => {
+    updateTotal();
+  })
 });
 
 let id_plan = getParam("id_plan");
@@ -63,16 +72,46 @@ function getDetallesEjecucion() {
       $('#hora_fin').html(detalle.hora_fin);
       $('#tipoEjecucion').html(detalle.tipo_ejecucion);
       $('#resultadoEjec').html(detalle.resultado_ejecucion);
-      $('#ninios').val(tipo[0].total);
-      $('#jovenes').val(tipo[1].total);
-      $('#adultos').val(tipo[2].total);
-      $('#afro').val(caracteristicas[0].total);
-      $('#indi').val(caracteristicas[1].total);
-      $('#sdes').val(caracteristicas[2].total);
-      $('#sdis').val(caracteristicas[3].total);
-      $('#ninguno').val(caracteristicas[4].total);
+
+      if (tipo != "") {
+        $('#ninios').val(tipo[0].total);
+        $('#jovenes').val(tipo[1].total);
+        $('#adultos').val(tipo[2].total);
+      }
+
+      if(caracteristicas != "") {
+        $('#afro').val(caracteristicas[0].total);
+        $('#indi').val(caracteristicas[1].total);
+        $('#sdes').val(caracteristicas[2].total);
+        $('#sdis').val(caracteristicas[3].total);
+        $('#ninguno').val(caracteristicas[4].total);
+      }
     }
   });
+}
+
+function updateTotal() {
+  let tpob = document.getElementsByClassName('tpob');
+  let cpob = document.getElementsByClassName('cpob');
+  let totaltp = 0;
+  let totalcp = 0;
+
+  for (let i = 0; i < tpob.length; i++) {
+    totaltp += parseInt(tpob[i].value);
+  }
+
+  document.getElementById('tipoTotal').innerHTML = totaltp;
+  document.getElementById('ninguno').value = totaltp;
+
+  for (let i = 0; i < cpob.length; i++) {
+    totalcp += parseInt(cpob[i].value);
+  }
+
+  document.getElementById('caractTotal').innerHTML = totalcp;
+}
+
+function editarPoblacion() {
+
 }
 
 function getContactosXPlaneacion() {
@@ -246,4 +285,5 @@ function checkLogged() {
 function limpiarDatos() {
   let editar = document.getElementById('editarEjecucion');
   editar.reset();
+  updateTotal();
 }

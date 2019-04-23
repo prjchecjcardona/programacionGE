@@ -147,7 +147,7 @@ function getMunicipioXZona(zona, nombre_zona) {
                 <div class="card-body" id="body_${element.municipio}">
                   <h5 class="card-title">${element.zonas}</h5>
                   <a href="registrarFocalizacionG.html?id_zona=${
-                    element.id_zona
+                    id_zona
                   }&id_mun=${
             element.id_municipio
           }" class="btn focalizar"><i class="fas fa-plus crear"></i> Focalizar</a>
@@ -211,7 +211,7 @@ function getFocalizacionesXZona(mun, nom_mun) {
                 <div class="card-body">
                   <h5 class="card-title">Gestión Institucional</h5>
                   <a href="registrarPlaneacionG.html?id_zona=${
-                    element.id_zona
+                    id_zona
                   }&id_mun=${element.id_municipio}&id_foc=${
               element.id_focalizacion
             }" class="btn"><i class="fas fa-plus crear"></i> Planear</a>
@@ -236,7 +236,7 @@ function getFocalizacionesXZona(mun, nom_mun) {
                   <h5 class="card-title">${element.comportamientos}</h5>
                   <h6>Registro: ${element.fecha}</h6>
                   <a href="registrarPlaneacionG.html?id_zona=${
-                    element.id_zona
+                    id_zona
                   }&id_mun=${element.id_municipio}&id_foc=${
               element.id_focalizacion
             }&comport=${
@@ -286,13 +286,32 @@ function getPlaneacionesXFocalizacion(foc, comp) {
           element.ejecucion =
           `<button class="btn ejecutado">
             <i class="fas fa-check-circle"></i>
+          </button>
+          <button class="btn" data-toggle="modal" data-target="#uploadRegistrosModal" onclick="getPlan(${element.id_planeacion})">
+            <i class="fas fa-plus crear"></i> Subir archivo
           </button>`;
         }else{
           element.ejecucion =
           `<button onclick=window.location.href="registrarEjecucionG.html?id_plan=${
             element.id_planeacion
-          }&id_zona=${element.id_zona}&id_foc=${element.id_focalizacion}"
+          }&id_zona=${id_zona}&id_foc=${element.id_focalizacion}"
           class="btn" ${element.ejecucion}><i class="fas fa-plus crear"></i> Ejecutar</button>`;
+        }
+
+        let body = '';
+        if (element.id_tipo_gestion == 2) {
+          body = `<h5 class="card-title"> ${element.nombre_estrategia}</h5>
+          <p>Tipo : ${element.tipo_gestion}</p>
+          <p>Lugar de encuentro : ${element.lugar_encuentro}</p>
+          <p>Entidad : ${element.nombre_entidad}</p>
+          <p>Competencia : ${element.competencia}</p>
+          <p>Fecha de registro : ${element.fecha_registro}</p>`
+        }else {
+          body = `<h5 class="card-title"> ${element.nombre_estrategia}</h5>
+          <p>Tipo : ${element.tipo_gestion}</p>
+          <p>Tema : ${element.temas}</p>
+          <p>Entidad : ${element.nombre_entidad}</p>
+          <p>Fecha de registro : ${element.fecha_registro}</p>`
         }
 
         $(".planeaciones").append(
@@ -302,15 +321,9 @@ function getPlaneacionesXFocalizacion(foc, comp) {
                 Fecha de programada : ${element.fecha_plan} </br>
               </div>
               <div class="card-body">
-                <h5 class="card-title"> ${element.nombre_estrategia}</h5>
-                <p>Tipo : ${element.tipo_gestion}</p>
-                <p>Tema : ${element.temas}</p>
-                <p>Entidad : ${element.nombre_entidad}</p>
-                <p>Fecha de registro : ${element.fecha_registro}</p>
+                ${body}
+                <hr>
                 ${element.ejecucion}
-                <button class="btn" data-toggle="modal" data-target="#uploadRegistrosModal" onclick="getPlan(${element.id_planeacion})">
-                  <i class="fas fa-plus crear"></i> Subir archivo
-                </button>
               </div>
             </div>
           </div>`
@@ -575,7 +588,7 @@ function showReturnBtn(btn) {
       }
     }
   }else{
-    
+
   }
 }
 

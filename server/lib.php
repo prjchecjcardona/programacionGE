@@ -316,7 +316,7 @@ class gestionEducativa
 
     public function getEjecucion($type)
     {
-        return getEjecucionQuery($this->con, $type);     
+        return getEjecucionQuery($this->con, $type);
     }
 
     public function getUserRol()
@@ -394,9 +394,24 @@ class gestionEducativa
         return checkRegistrosQuery($this->con, $id_plan, $tipo);
     }
 
+    public function getConsultaExcel($zona, $municipio, $estrategia, $tema, $tipo_gestion, $estado_planeacion)
+    {
+        return getConsultaExcelQuery($this->con, $zona, $municipio, $estrategia, $tema, $tipo_gestion, $estado_planeacion);
+    }
+
     public function getMaxIdEjec()
     {
         return getMaxIdEjecQuery($this->con);
+    }
+
+    public function getNodos($id_plan)
+    {
+        return getNodosQuery($this->con, $id_plan);
+    }
+
+    public function addNodos($nodo, $latitud, $longitud, $id_municipio)
+    {
+        return addNodosQuery($this->con, $nodo, $latitud, $longitud, $id_municipio);
     }
 
     public function insertTipoPoblacionXEjecucion($id_tipo, $id_ejec, $total)
