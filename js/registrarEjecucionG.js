@@ -406,8 +406,10 @@ function getNodos() {
 function addNodo() {
   $.ajax({
     type: "POST",
-    url: "",
-    data: "data",
+    url: "getNodos.php",
+    data: {
+      
+    },
     dataType: "dataType",
     success: function (response) {
 

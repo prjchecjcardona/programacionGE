@@ -8,6 +8,23 @@ if(isset($_POST['id_plan'])) {
 }
 else if(isset($_POST['add'])) {
 
+  $nodo = $_POST['nodo'];
+
+  if (isset($_POST['latitud'])) {
+    $latitud = $_POST['latitud'];
+  }else {
+    $latitud = '';
+  }
+
+  if (isset($_POST['longitud'])) {
+    $longitud = $_POST['longitud'];
+  }else {
+    $longitud = '';
+  }
+
+  $municipio = $api->
+
+  $json = $api->addNodos($nodo, $latitud, $longitud);
 }
 
 echo json_encode($json);
