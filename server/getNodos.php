@@ -22,9 +22,11 @@ else if(isset($_POST['add'])) {
     $longitud = '';
   }
 
-  $municipio = $api->
+  $municipio = $api->getMunicipioIdPlan($_POST['id_plan']);
 
-  $json = $api->addNodos($nodo, $latitud, $longitud);
+  print_r($municipio);
+
+  $json = $api->addNodos($nodo, $latitud, $longitud, $municipio[0]);
 }
 
 echo json_encode($json);

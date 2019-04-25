@@ -897,6 +897,16 @@ function insertContactoQuery($con, $cedula, $nombres, $apellidos, $correo, $tele
     return insertQuery($con, $sql);
 }
 
+function getMunicipioIdPlanQuery($con, $id_plan)
+{
+    $sql = "SELECT foc.id_municipio
+    FROM focalizacion foc
+    JOIN planeacion plan ON plan.id_focalizacion = foc.id_focalizacion
+    WHERE id_planeacion = $id_plan";
+
+    return executeQuery($con, $sql);
+}
+
 function getNodosQuery($con, $id_plan)
 {
     $sql = "SELECT nod.*
@@ -1039,7 +1049,7 @@ function getEtapaPlaneacionQuery($con, $id_plan)
 function getConsultaExcelQuery($con, $zona, $municipio, $estrategia, $tema, $tipo_gestion, $estado_planeacion)
 {
 
-    $sql = "SELECT DISTINCT fecha_plan, municipio, zonas, lugar_encuentro, nombre_entidad, comportamientos, competencia, temas, nombre_estrategia, nombre_tactico, nombres || ' ' || apellidos as nombre, pl.estado
+    $sql = "SELECT DISTINCT fecha_plan, municipio, zonas, lugar_encuentro, nombre_entidad, tipo_gestion, comportamientos, competencia, temas, nombre_estrategia, nombre_tactico, nombres || ' ' || apellidos as nombre, pl.estado, ejec.total_asistentes
 	FROM planeacion pl
     JOIN focalizacion foc ON pl.id_focalizacion = foc.id_focalizacion
     LEFT JOIN subtemas_x_planeacion sxp ON sxp.id_planeacion = pl.id_planeacion
@@ -1057,7 +1067,8 @@ function getConsultaExcelQuery($con, $zona, $municipio, $estrategia, $tema, $tip
 	LEFT JOIN indicadores_chec_x_focalizacion ixf ON ixf.id_focalizacion = foc.id_focalizacion
 	LEFT JOIN indicadores_chec ic ON ic.id_indicador = ixf.id_indicador
 	LEFT JOIN comportamientos compor ON ic.id_comportamiento = compor.id_comportamientos OR tem.id_comportamiento = compor.id_comportamientos
-    LEFT JOIN competencias compe ON compor.id_competencia = compe.id_competencia ";
+    LEFT JOIN competencias compe ON compor.id_competencia = compe.id_competencia
+    LEFT JOIN ejecucion ejec ON ejec.id_planeacion = pl.id_planeacion ";
 
     $where = FALSE;
 
@@ -1104,12 +1115,14 @@ function getConsultaExcelQuery($con, $zona, $municipio, $estrategia, $tema, $tip
 
     if (!empty($estado_planeacion)) {
         if ($where) {
-            $sql .= " AND estado_planeacion = $estado_planeacion ";
+            $sql .= " AND pl.estado = '$estado_planeacion' ";
         }else {
-            $sql .= " WHERE estado_planeacion = $estado_planeacion ";
+            $sql .= " WHERE pl.estado = '$estado_planeacion' ";
             $where = TRUE;
         }
     }
+
+    $sql .= " ORDER BY tipo_gestion ASC";
 
     return executeQuery($con, $sql);
 }

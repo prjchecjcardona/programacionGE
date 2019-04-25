@@ -603,7 +603,7 @@ function getTemasCalendar() {
         );
 
         $("#calendarTemaConsulta").append(
-          `<option value="${element.id_tema}">${element.temas}</option>`
+          `<option value="${element.id_temas}">${element.temas}</option>`
         );
       });
     }
@@ -730,6 +730,9 @@ function generateDescargable() {
     type: "POST",
     url: "server/generateExcel.php",
     data: $('#generateExcelForm').serialize()
+  }).done(function(data){
+    dat = JSON.parse(data);
+    window.open(`server/${dat.name}`, '_blank');
   });
 }
 

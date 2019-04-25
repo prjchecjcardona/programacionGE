@@ -23,7 +23,10 @@ $(document).ready(function () {
     uiLibrary: "bootstrap4"
   });
 
-
+  $("#btnRegistrarNodo").click(function (e) {
+    e.preventDefault();
+    addNodo();
+  });
 
   if (
     $("select").change(function () {
@@ -385,11 +388,11 @@ function insertEjecucion() {
 function getNodos() {
   $.ajax({
     type: "POST",
-    url: "",
+    url: "server/getNodos.php",
     data: {
       id_plan: id_plan
     },
-    dataType: "dataType",
+    dataType: "json",
     success: function (response) {
       $('#nodo').html(`option selected>Seleccione</option>`);
       if(response.length > 0) {
@@ -406,13 +409,21 @@ function getNodos() {
 function addNodo() {
   $.ajax({
     type: "POST",
-    url: "getNodos.php",
-    data: {
-      
-    },
-    dataType: "dataType",
-    success: function (response) {
-
+    url: "server/getNodos.php",
+    data: `${$("#formRegistrarNodo").serialize()}&id_plan=${id_plan}&add=`,
+    dataType: "json"
+  }).done(function(response){
+    if (response.error == 0){
+      swal({
+        type: "success",
+        title: response.message
+      });
+    }else{
+      swal({
+        type: "error",
+        title: response.message
+      });
+      console.log(response.error_message);
     }
   });
 }

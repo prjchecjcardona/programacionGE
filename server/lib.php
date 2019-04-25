@@ -30,17 +30,17 @@ class gestionEducativa
         $pwd = "1234";
         $host = "localhost"; */
 
-        //DEV
+        /* //DEV
         $database = "GE243";
         $uid = "postgres";
         $pwd = "1234";
-        $host = "localhost";
+        $host = "localhost"; */
 
-        /* //PRODUCCION
+        //PRODUCCION
         $database = "gestjjlg_gestion_educativa";
         $uid = "gestjjlg_usr_gestion";
         $pwd = "r!Hh7XNv22E(";
-        $host = "127.0.0.1"; */
+        $host = "127.0.0.1";
 
         //establecer la conexión
         $this->con = new PDO("pgsql:host=$host;port=5432;dbname=$database;user=$uid;password=$pwd");
@@ -402,6 +402,11 @@ class gestionEducativa
     public function getMaxIdEjec()
     {
         return getMaxIdEjecQuery($this->con);
+    }
+
+    public function getMunicipioIdPlan($id_plan)
+    {
+        return getMunicipioIdPlanQuery($this->con, $id_plan);
     }
 
     public function getNodos($id_plan)
