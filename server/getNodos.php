@@ -6,7 +6,8 @@ $api = new gestionEducativa();
 if(isset($_POST['id_plan'])) {
   $json = $api->getNodos($_POST['id_plan']);
 }
-else if(isset($_POST['add'])) {
+
+if(isset($_POST['add'])) {
 
   $nodo = $_POST['nodo'];
 
@@ -24,9 +25,7 @@ else if(isset($_POST['add'])) {
 
   $municipio = $api->getMunicipioIdPlan($_POST['id_plan']);
 
-  print_r($municipio);
-
-  $json = $api->addNodos($nodo, $latitud, $longitud, $municipio[0]);
+  $json = $api->addNodos($nodo, $latitud, $longitud, $municipio[0]['id_municipio']);
 }
 
 echo json_encode($json);

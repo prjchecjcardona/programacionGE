@@ -923,7 +923,8 @@ function addNodosQuery($con, $nodo, $latitud, $longitud, $id_municipio)
 {
     $sql = "INSERT INTO public.nodo(
     id_nodo, nodo, latitud, longitud, id_municipio)
-    VALUES ((nextval('seq_nodo'), '$nodo', '$latitud', '$longitud', $id_municipio);";
+    VALUES (nextval('seq_nodo'), '$nodo', '$latitud', '$longitud', $id_municipio);";
+
 
     return insertQuery($con, $sql);
 }

@@ -2,6 +2,7 @@ $(document).ready(function () {
   /* Functions */
   checkLogged();
   getTipoGestion();
+  getNodos();
   getDetallePlaneacion();
   getTotal("#tipoPoblacion input[type=number]", true);
   getTotal("#caracteristicasPoblacion input[type=number]", false);
@@ -394,7 +395,7 @@ function getNodos() {
     },
     dataType: "json",
     success: function (response) {
-      $('#nodo').html(`option selected>Seleccione</option>`);
+      $('#nodo').html(`<option selected>Seleccione</option>`);
       if(response.length > 0) {
         response.forEach(e => {
           $('#nodo').append(
@@ -411,20 +412,22 @@ function addNodo() {
     type: "POST",
     url: "server/getNodos.php",
     data: `${$("#formRegistrarNodo").serialize()}&id_plan=${id_plan}&add=`,
-    dataType: "json"
-  }).done(function(response){
-    if (response.error == 0){
-      swal({
-        type: "success",
-        title: response.message
-      });
-    }else{
-      swal({
-        type: "error",
-        title: response.message
-      });
-      console.log(response.error_message);
+    dataType: "json",
+    success: function (response) {
+      if (response.error == 0){
+        swal({
+          type: "success",
+          title: response.message
+        });
+      }else{
+        swal({
+          type: "error",
+          title: response.message
+        });
+      }
     }
+  }).done (function () {
+    $('#modalCrearNodo').modal();
   });
 }
 
